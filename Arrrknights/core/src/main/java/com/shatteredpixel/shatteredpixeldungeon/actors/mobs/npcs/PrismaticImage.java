@@ -183,7 +183,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 		damage = super.defenseProc(enemy, damage);
-		if (hero.belongings.armor != null){
+		if (hero !=null && hero.belongings.armor != null){//change from budding
 			return hero.belongings.armor.proc( enemy, this, damage );
 		} else {
 			return damage;

@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
+import com.shatteredpixel.shatteredpixeldungeon.items.quest.CorpseDust;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -321,7 +322,7 @@ public class AlchemyScene extends PixelScene {
 		@Override
 		public void onSelect( Item item ) {
 			synchronized (inputs) {
-				if (item != null && inputs[0] != null) {
+				if (item != null && inputs[0] != null && !(item instanceof CorpseDust)) {//change from budding
 					for (int i = 0; i < inputs.length; i++) {
 						if (inputs[i].item == null) {
 							if (item instanceof Dart) {

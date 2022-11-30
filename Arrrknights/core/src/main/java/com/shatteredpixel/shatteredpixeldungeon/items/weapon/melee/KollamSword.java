@@ -93,7 +93,7 @@ public class KollamSword extends MeleeWeapon {
                 Char ch = Actor.findChar(cell);
                 if (ch != null&& !(ch instanceof Hero) && ch instanceof Mob && ch.alignment != Char.Alignment.ALLY) {
                     if (!ch.isImmune(Corruption.class)) {
-                        boolean chance = true;
+                        boolean chance = false;//change from budding
                         if (!setbouns() && Random.Int(2) != 0) chance = true;
                         else if (setbouns()) chance = true;
 

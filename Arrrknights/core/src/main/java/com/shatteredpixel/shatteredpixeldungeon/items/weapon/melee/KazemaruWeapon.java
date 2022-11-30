@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hallucination;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -15,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.BatSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BeeSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BreakerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -22,10 +24,11 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class KazemaruWeapon extends MeleeWeapon {
+    public static boolean kazemaruweaponisally =false;//change from budding
     {
         image = ItemSpriteSheet.POMBBAY;
-        hitSound = Assets.Sounds.HIT_BONK;
-        hitSoundPitch = 1f;
+        hitSound = Assets.Sounds.HIT_SLASH;
+        hitSoundPitch = 1.11f;
 
         tier = 4;
     }
@@ -54,13 +57,13 @@ public class KazemaruWeapon extends MeleeWeapon {
             int spawnd = 0;
             while (respawnPoints.size() > 0 && spawnd == 0) {
                 int index = Random.index(respawnPoints);
-
+                if (attacker instanceof Hero || attacker.alignment == Char.Alignment.ALLY) kazemaruweaponisally = true;//change from budding
                 KazemaruSummon summon = new KazemaruSummon();
                 summon.GetWeaponLvl(buffedLvl());
                 summon.GetTarget(defender);
                 GameScene.add(summon);
                 ScrollOfTeleportation.appear(summon, respawnPoints.get(index));
-
+                kazemaruweaponisally = false;//change from budding
 
                 respawnPoints.remove(index);
                 spawnd++;
@@ -78,7 +81,7 @@ public class KazemaruWeapon extends MeleeWeapon {
 
             flying = true;
             state = WANDERING;
-            alignment = Alignment.ALLY;
+            if (kazemaruweaponisally) alignment = Alignment.ALLY;//change from budding
         }
 
         @Override
@@ -92,10 +95,23 @@ public class KazemaruWeapon extends MeleeWeapon {
         public int damageRoll() {
             return Random.NormalIntRange(maxLvl + 1, 20 + (maxLvl * 5));
         }
-
+        @Override//change from budding
+        public int attackSkill( Char target ){return (kazemaruweaponisally)?(Dungeon.hero.attackSkill(target)):(9+Dungeon.depth);}//change from budding
         public void GetWeaponLvl(int wlvl) {
             maxLvl = wlvl;
         }
-        public void GetTarget(Char t) {target = t.id();}
+        public void GetTarget(Char t) {target = t.pos;}//change from budding
+    }
+    private static final String KAZEMARU = "kazemaru";//change from budding
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        bundle.put(KAZEMARU, kazemaruweaponisally);//change from budding
+    }
+
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        super.restoreFromBundle(bundle);
+        if (bundle.contains(KAZEMARU)) kazemaruweaponisally=bundle.getBoolean(KAZEMARU);//change from budding
     }
 }

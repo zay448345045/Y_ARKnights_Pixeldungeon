@@ -40,8 +40,8 @@ public class Challenges {
 	public static final int DECISIVE_BATTLE	= 512;
 	public static final int TACTICAL_UPGRADE = 1024;
 	public static final int SHADOW = 2048;
-
-	public static final int MAX_VALUE           = 4095; // 다 합쳐야댐!!
+    public static final int TEST = 4096;
+	public static final int MAX_VALUE           = 8191; // 다 합쳐야댐!!
 
 	public static final String[] NAME_IDS = {
 			"special_boss",
@@ -55,18 +55,19 @@ public class Challenges {
 			"no_herbalism",
 			"swarm_intelligence",
 			"darkness",
-			"no_scrolls"
+			"no_scrolls",
+			"test"//change from budding
 	};
 
 	public static final int[] MASKS = {
-			SPECIAL_BOSS, CHAMPION_ENEMIES, DECISIVE_BATTLE, TACTICAL_UPGRADE, SHADOW, NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS
+			SPECIAL_BOSS, CHAMPION_ENEMIES, DECISIVE_BATTLE, TACTICAL_UPGRADE, SHADOW, NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS,TEST
 	};
 
 	public static int activeChallenges(){
 		int chCount = 0;
 		for (int ch : Challenges.MASKS){
 			if ((Dungeon.challenges & ch) != 0) chCount++;
-		}
+		}if ((Dungeon.challenges & 4096)!=0) chCount=0;
 		return chCount;
 	}
 
@@ -76,7 +77,7 @@ public class Challenges {
 			return true;
 		}
 
-		if (Dungeon.eazymode == 1 && item instanceof Certificate) {
+		if ((Dungeon.eazymode == 1  || Dungeon.isChallenged(TEST))&& item instanceof Certificate) {//change from budding
 			return true;
 		}
 

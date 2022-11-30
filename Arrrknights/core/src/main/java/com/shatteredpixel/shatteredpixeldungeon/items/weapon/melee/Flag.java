@@ -75,7 +75,7 @@ public class Flag extends MeleeWeapon  {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (Random.Int(15) < 2 + backchane) {
-            Ballistica trajectory = new Ballistica(curUser.pos, defender.pos, Ballistica.STOP_TARGET);
+            Ballistica trajectory = new Ballistica(attacker/*curUser*/.pos, defender.pos, Ballistica.STOP_TARGET);//change from budding
             trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
             WandOfBlastWave.throwChar(defender, trajectory, 2+(level() / 5)); // 넉백 효과
             backchane = 0;

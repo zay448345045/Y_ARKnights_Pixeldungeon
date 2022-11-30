@@ -71,7 +71,7 @@ public class LoneJourney extends MeleeWeapon {
 
         super.execute(hero, action);
 
-        if (action.equals(AC_SP) && this.isEquipped(hero)) {
+        if (action.equals(AC_SP) && this.isEquipped(hero) && charge >= chargeCap) {//change from budding
             GameScene.show(
                     new WndOptions(Messages.get(this, "name"),
                             Messages.get(this, "wnddesc"),

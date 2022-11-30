@@ -65,7 +65,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-import sun.util.resources.cldr.dua.CalendarData_dua_CM;
+//import sun.util.resources.cldr.dua.CalendarData_dua_CM;
 
 public class AnnihilationGear extends Item {
 
@@ -495,7 +495,7 @@ public class Spriteex extends MissileWeapon {
      public Weapon.Augment WeaponAug() {
       if (Dungeon.hero.belongings.weapon == null) return Weapon.Augment.NONE;
       if (Dungeon.hero.belongings.weapon instanceof Pickaxe) return Weapon.Augment.NONE;
-       Weapon.Augment wep = ((MeleeWeapon)curUser.belongings.weapon).augment;
+       Weapon.Augment wep = ((MeleeWeapon)Dungeon.hero.belongings.weapon).augment;//change from budding
        return wep;
      }
 

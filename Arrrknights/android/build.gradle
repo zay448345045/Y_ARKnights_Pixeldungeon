@@ -67,6 +67,7 @@ android {
 configurations { natives }
 
 dependencies {
+    implementation 'cat.ereza:customactivityoncrash:2.3.0'
     implementation project(':core')
 
     implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"

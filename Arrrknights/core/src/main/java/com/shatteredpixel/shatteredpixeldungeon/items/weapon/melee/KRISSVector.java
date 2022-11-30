@@ -81,7 +81,7 @@ public class KRISSVector extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (mode == 2) {
-            defender.damage(attacker.damageRoll(), attacker);
+            defender.damage(attacker.damageRoll()- defender.drRoll(), attacker);//change from budding
         }
         return super.proc(attacker, defender, damage);
     }

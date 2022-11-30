@@ -598,7 +598,8 @@ public class Hero extends Char {
             float bouns = 1f;
             ChenCombo combo = buff(ChenCombo.class);
             if (combo != null) bouns += combo.getComboCount() * 0.02f;
-
+            float maxbouns = 1f + pointsInTalent(Talent.DRAGONS_SWORD) * 0.1f;//change from budding
+            if (bouns > maxbouns) bouns = maxbouns;//change from budding
             accuracy *= bouns;
         }
 
@@ -686,7 +687,7 @@ public class Hero extends Char {
 
         if (buff(IronSkin.class) != null) dr += Random.NormalIntRange(0,2);
 
-        if (hasTalent(Talent.TACTICAL_SHIELD)) {
+        if (hasTalent(Talent.TACTICAL_SHIELD) && belongings.armor!=null) {//change from budding
             int drplus = belongings.armor.buffedLvl() * 2;
             drplus = Math.min(drplus, 1 + pointsInTalent(Talent.TACTICAL_SHIELD) * 3);
             dr += Random.NormalIntRange(0,drplus);
@@ -897,9 +898,18 @@ public class Hero extends Char {
         if (belongings.weapon instanceof Gluttony) {
             if (Random.Int(6) == 0) ((Gluttony) belongings.weapon).SPCharge(1); }
 
-        if (belongings.weapon instanceof Echeveria && STR() >= ((Echeveria) belongings.weapon).STRReq()) ((Echeveria) belongings.weapon).SPCharge( (int)(1*time));
-        if (belongings.weapon instanceof Suffering && STR() >= ((Suffering) belongings.weapon).STRReq()) ((Suffering) belongings.weapon).SPCharge((int)(2*time));
-
+        if (belongings.weapon instanceof Echeveria && STR() >= ((Echeveria) belongings.weapon).STRReq())
+            Echeveria.partialcharge_ech+=time;//change from budding
+        if (Echeveria.partialcharge_ech >=1){//change from budding
+            ((Echeveria) belongings.weapon).SPCharge( (int)(Echeveria.partialcharge_ech));//change from budding
+            Echeveria.partialcharge_ech-=(int)(Echeveria.partialcharge_ech);//change from budding
+        }//change from budding
+        if (belongings.weapon instanceof Suffering && STR() >= ((Suffering) belongings.weapon).STRReq())
+            Suffering.partialcharge_suf+=(2*time);//change from budding
+        if (Suffering.partialcharge_suf >=1){//change from budding
+            ((Suffering) belongings.weapon).SPCharge( (int)(Suffering.partialcharge_suf));//change from budding
+            Suffering.partialcharge_suf-=(int)(Suffering.partialcharge_suf);//change from budding
+        }//change from budding
         if (subClass == HeroSubClass.HEAT) {
             Heat heat = buff(Heat.class);
             if (heat == null) {
@@ -1677,7 +1687,7 @@ public class Hero extends Char {
                     mob.damage(Math.min(drRoll(), mob.HT / 3), this);
                     if (!enemy.isAlive() && enemy instanceof Ghoul == false) {
                         CellEmitter.center(enemy.pos).burst(BlastParticle.FACTORY, 10);
-                        enemy.sprite.killAndErase();
+                        //enemy.sprite.killAndErase();//change from budding
                     }
                 }
             }
@@ -1732,7 +1742,7 @@ public class Hero extends Char {
 
         // 첸 특성
 
-        if (hasTalent(Talent.SCOLDING) && buffs(Talent.ScoldingCooldown.class) == null && HT / 2 >= HP) {
+        if (hasTalent(Talent.SCOLDING) && buff(Talent.ScoldingCooldown.class) == null && HT / 2 >= HP) {//change from budding
             for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
                 if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
                     Buff.prolong(mob, Amok.class, pointsInTalent(Talent.SCOLDING));
@@ -2273,7 +2283,7 @@ public class Hero extends Char {
 
             HP = AnkhHP;
 
-            //ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dieing again.
+            //ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dying again.
             PotionOfHealing.cure(this);
             Buff.detach(this, Paralysis.class);
             Buff.affect(this, Barrier.class).incShield(barrior);

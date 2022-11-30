@@ -108,12 +108,14 @@ public class Monk extends Mob {
 	
 	@Override
 	protected boolean act() {
+		
+		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && Camouflage.CamoFlageEnemy(this)) Buff.affect(this, Camouflage.class, 10f);//change from budding;originally behind the super
+		
 		boolean result = super.act();
 		if (buff(Focus.class) == null && state == HUNTING && focusCooldown <= 0) {
 			Buff.affect( this, Focus.class );
 		}
 
-		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && Camouflage.CamoFlageEnemy(this)) Buff.affect(this, Camouflage.class, 10f);
 		return result;
 	}
 	

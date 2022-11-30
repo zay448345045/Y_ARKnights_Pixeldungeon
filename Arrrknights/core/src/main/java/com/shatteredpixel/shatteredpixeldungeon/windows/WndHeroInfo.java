@@ -224,7 +224,7 @@ public class WndHeroInfo extends WndTabbed {
 
 		public TalentInfoTab( HeroClass cls ){
 			super();
-			title = PixelScene.renderTextBlock(Messages.titleCase(Messages.get(WndHeroInfo.class, "talents")), 9);
+			title = PixelScene.renderTextBlock(Messages.titleCase(Messages.get(WndHero.class, "talents")), 9);//change from budding
 			title.hardlight(TITLE_COLOR);
 			add(title);
 

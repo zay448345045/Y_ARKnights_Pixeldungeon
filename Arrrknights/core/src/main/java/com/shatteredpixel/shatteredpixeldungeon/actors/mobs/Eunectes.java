@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -67,6 +68,8 @@ public class Eunectes extends Mob {
             Buff.affect(this, Barrier.class).setShield(400);
             isBarrier = true;
         }
+        LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);//change from budding
+        if (lock != null) lock.addTime(dmg*0.3f);
     }
 
     @Override

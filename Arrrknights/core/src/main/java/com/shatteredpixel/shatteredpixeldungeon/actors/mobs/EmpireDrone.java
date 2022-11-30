@@ -70,7 +70,7 @@ public class EmpireDrone extends Mob {
 
                 LastPos = Dungeon.hero.pos;
                 sprite.parent.addToBack(new TargetedCell(LastPos, 0xFF0000));
-                sprite.zap( enemy.pos );
+                sprite.zap( LastPos );//change from budding
 
                 // 몬스터 어그로
                 for (Mob mob : Dungeon.level.mobs) {

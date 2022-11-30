@@ -76,7 +76,7 @@ public class StoneOfIntuition extends InventoryStone {
 	
 	public class WndGuess extends Window {
 		
-		private static final int WIDTH = 120;
+		private static final int WIDTH = 140;
 		private static final int BTN_SIZE = 20;
 		
 		public WndGuess(final Item item){
@@ -116,7 +116,7 @@ public class StoneOfIntuition extends InventoryStone {
 			guess.visible = false;
 			guess.icon( new ItemSprite(item) );
 			guess.enable(false);
-			guess.setRect(0, 100, WIDTH, 20);
+			guess.setRect(0, 120, WIDTH, 20);//change from budding
 			add(guess);
 			
 			float left;
@@ -155,9 +155,15 @@ public class StoneOfIntuition extends InventoryStone {
 				rows = 1;
 				top += BTN_SIZE/2f;
 				left = (WIDTH - BTN_SIZE*unIDed.size())/2f;
-			} else {
+			} else if (unIDed.size() <=10) {//change from budding
 				rows = 2;
 				left = (WIDTH - BTN_SIZE*((unIDed.size()+1)/2))/2f;
+			} else if (unIDed.size() <=15){//change from budding
+				rows = 3;
+				left = (WIDTH - BTN_SIZE*5)/2f;
+			} else {
+				rows = 4;
+				left = (WIDTH - BTN_SIZE*5)/2f;
 			}
 			
 			for (final Class<?extends Item> i : unIDed){
@@ -187,9 +193,13 @@ public class StoneOfIntuition extends InventoryStone {
 					}
 					top += BTN_SIZE;
 				}
+				else if (rows >= 3 && placed%5==0){//change from budding
+					placed = 0;
+					top += BTN_SIZE;
+				}
 			}
 			
-			resize(WIDTH, 120);
+			resize(WIDTH, 140);//change from budding
 			
 		}
 		

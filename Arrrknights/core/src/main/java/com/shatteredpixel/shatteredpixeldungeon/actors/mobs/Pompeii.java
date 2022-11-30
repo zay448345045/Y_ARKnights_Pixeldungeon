@@ -21,6 +21,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
@@ -154,6 +155,8 @@ public class Pompeii extends Mob {
             restorecooldown = 10;
             GameScene.flash(0x80FF0000);
         }
+        LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);//change from budding
+        if (lock != null) lock.addTime(dmg*0.3f);
     }
 
     @Override

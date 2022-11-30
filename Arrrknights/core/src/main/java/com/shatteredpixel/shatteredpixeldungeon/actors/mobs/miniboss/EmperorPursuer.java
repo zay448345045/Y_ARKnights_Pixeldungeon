@@ -132,7 +132,7 @@ public class EmperorPursuer extends Mob {
                     enemy.damage(Random.NormalIntRange(16, 32), new EmperorPursuer.DarkBolt());
                 }
                 else enemy.damage(Random.NormalIntRange(4, 10), new EmperorPursuer.DarkBolt());
-                if (!enemy.isAlive() && enemy == Dungeon.hero) {
+                if (!Dungeon.hero.isAlive()) {//change from budding
                     Dungeon.fail(getClass());
                     GLog.n(Messages.get(Char.class, "kill", name()));
                 }

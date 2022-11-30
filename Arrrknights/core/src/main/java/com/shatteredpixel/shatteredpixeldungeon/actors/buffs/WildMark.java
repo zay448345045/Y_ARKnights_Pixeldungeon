@@ -81,6 +81,7 @@ public class WildMark extends Buff implements ActionIndicator.Action {
 
         if (pcharge >= chargeTurn) {
             charge++;
+			if (charge > maxcharge) charge=maxcharge;//change from budding
             pcharge -= 100;
         }
 
@@ -90,6 +91,7 @@ public class WildMark extends Buff implements ActionIndicator.Action {
 
      public void gainCharge() {
         charge++;
+		if (charge > maxcharge) charge=maxcharge;//change from budding
          ActionIndicator.setAction(this);
      }
 
@@ -114,7 +116,7 @@ public class WildMark extends Buff implements ActionIndicator.Action {
         public void onSelect(Integer target) {
 
             WildMark ss = Dungeon.hero.buff(WildMark.class);
-            if (target != null) {
+            if (target != null && ss.charge>0) {//change from budding
 
                     Ballistica shot = new Ballistica(Dungeon.hero.pos, target, Ballistica.PROJECTILE);
                     int cell = shot.collisionPos;

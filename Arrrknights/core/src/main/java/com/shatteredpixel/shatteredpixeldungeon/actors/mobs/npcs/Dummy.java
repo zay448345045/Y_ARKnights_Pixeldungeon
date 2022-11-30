@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
@@ -25,12 +26,19 @@ public class Dummy extends Mob {
     public void beckon(int cell) {
         //do nothing
     }
+    public static boolean kkdy=false;//change from budding
+    @Override
+    public void damage( int dmg, Object src ){//change from budding
+        kkdy=true;//considering more change than just invincibility;protect it from blooming enchantment&battlemage,etc
+        super.damage(dmg,src);
+        kkdy=false;
+    }
 
     @Override
     protected boolean act() {
         if (Camouflage.CamoFlageEnemy(this)) Buff.affect(this, Camouflage.class, 10f);
-
-        HP = Math.min(HP+50, HT);
+        int theheal = 50;
+        HP = Math.min(HP+theheal, HT);
         return super.act();
     }
 
@@ -47,5 +55,6 @@ public class Dummy extends Mob {
         immunities.add( Sleep.class );
         immunities.add( Terror.class );
         immunities.add( Vertigo.class );
+        immunities.add(Corruption.class);//change from budding
     }
 }

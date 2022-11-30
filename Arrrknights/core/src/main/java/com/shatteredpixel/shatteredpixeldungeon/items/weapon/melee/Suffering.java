@@ -39,6 +39,7 @@ import java.util.ArrayList;
 
 public class Suffering extends MeleeWeapon {
     public static final String AC_ZAP = "ZAP";
+    public static float partialcharge_suf=0;//change from budding
     {
         image = ItemSpriteSheet.FLAMMETTA;
         hitSound = Assets.Sounds.HIT_SHOTGUN;

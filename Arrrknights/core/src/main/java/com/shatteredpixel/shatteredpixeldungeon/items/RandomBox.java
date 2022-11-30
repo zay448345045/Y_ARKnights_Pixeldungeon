@@ -87,7 +87,9 @@ public class RandomBox extends Item {
         int chance = Random.IntRange(0, 50);
 
         chance += Random.IntRange(-5, Dungeon.hero.STR);
-        chance += Random.IntRange(0, Dungeon.hero.belongings.weapon.buffedLvl() * 8);
+        int weaponbuffedlvl8 = 0;//change from budding
+        if (Dungeon.hero.belongings.weapon != null) weaponbuffedlvl8=Dungeon.hero.belongings.weapon.buffedLvl() * 8;
+        chance += Random.IntRange(0, weaponbuffedlvl8);
 
         Weapon n;
 
@@ -103,7 +105,9 @@ public class RandomBox extends Item {
         int upchacne = Random.IntRange(0,25);
 
         upchacne += Random.IntRange(-10, Dungeon.depth);
-        upchacne += Random.IntRange(-5, Dungeon.hero.belongings.armor.buffedLvl() * 3);
+        int armorbuffedlvl3 =-5;//change from budding
+        if (Dungeon.hero.belongings.armor !=null)armorbuffedlvl3 = Dungeon.hero.belongings.armor.buffedLvl() * 3;
+        upchacne += Random.IntRange(-5,armorbuffedlvl3 );
 
         if(upchacne > 35) n.level(4);
         else if(upchacne > 20) n.level(3);

@@ -35,6 +35,7 @@ public class WolfPack extends Skill {
 
         @Override
         public void onSelect(Integer target) {
+			if (curUser == null) curUser = Dungeon.hero;//change from budding
             if (target != null && target != curUser.pos) {
                 Ballistica route = new Ballistica(curUser.pos, target, Ballistica.PROJECTILE);
                 int cell = route.collisionPos;

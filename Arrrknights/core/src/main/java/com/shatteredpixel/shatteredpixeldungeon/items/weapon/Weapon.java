@@ -150,11 +150,11 @@ abstract public class Weapon extends KindOfWeapon {
 						Statistics.enemiesSlain++;
 						Badges.validateMonstersSlain();
 						Statistics.qualifiedForNoKilling = false;
-						if (((Mob) defender).EXP > 0 && curUser.lvl <= ((Mob) defender).maxLvl) {
-							curUser.sprite.showStatus(CharSprite.POSITIVE, Messages.get(defender, "exp", ((Mob) defender).EXP));
-							curUser.earnExp(((Mob) defender).EXP, defender.getClass());
+						if (((Mob) defender).EXP > 0 && Dungeon.hero.lvl <= ((Mob) defender).maxLvl) {//change from budding
+							Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(defender, "exp", ((Mob) defender).EXP));
+							Dungeon.hero.earnExp(((Mob) defender).EXP, defender.getClass());
 						} else {
-							curUser.earnExp(0, defender.getClass());
+							Dungeon.hero.earnExp(0, defender.getClass());
 						}
 					}
 				}
@@ -310,9 +310,9 @@ abstract public class Weapon extends KindOfWeapon {
 		if (Dungeon.hero.pointsInTalent(Talent.STRONGMAN) + 1 >= 2) req--;
 		if (Dungeon.hero.pointsInTalent(Talent.STRONGMAN) + 1 >= 4) req--;
 
-		if (Dungeon.hero.hasTalent(Talent.CHAINSAW_EXTEND)) {
+		/*if (Dungeon.hero.hasTalent(Talent.CHAINSAW_EXTEND)) {
 			req += 5 - Dungeon.hero.pointsInTalent(Talent.CHAINSAW_EXTEND);
-		}
+		}*/  //change from budding
 
 		return req;
 	}
@@ -340,7 +340,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 	@Override
 	public boolean doPickUp(Hero hero) {
-		if (hero.hasTalent(Talent.POLICE_SENSE)) this.cursedKnown=true;
+		if (hero.hasTalent(Talent.POLICE_SENSE)) if(hero.pointsInTalent(Talent.POLICE_SENSE)==2) this.cursedKnown=true;//change from budding
 		return super.doPickUp(hero);
 	}
 

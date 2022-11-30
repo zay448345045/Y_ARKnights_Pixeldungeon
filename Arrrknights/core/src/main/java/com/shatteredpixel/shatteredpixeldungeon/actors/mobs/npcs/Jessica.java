@@ -72,7 +72,7 @@ public class Jessica extends NPC {
                 });
                 new Gold(800).doPickUp(Dungeon.hero);
                 NormalMagazine m = Dungeon.hero.belongings.getItem(NormalMagazine.class);
-                m.detachAll(Dungeon.hero.belongings.backpack);
+                m.detach(Dungeon.hero.belongings.backpack);//change from budding
                 QuestClear = true;
             }
             else {
@@ -110,7 +110,7 @@ public class Jessica extends NPC {
                 new Gold(900).doPickUp(Dungeon.hero);
 
                 MeatPie m = Dungeon.hero.belongings.getItem(MeatPie.class);
-                m.detachAll(Dungeon.hero.belongings.backpack);
+                m.detach(Dungeon.hero.belongings.backpack);//change from budding
                 QuestClear = true;
             }
             else {

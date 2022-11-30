@@ -30,7 +30,10 @@ public class ForceCatalyst extends Spell {
     {
         image = ItemSpriteSheet.FORCE_CATALYST;
     }
-
+    @Override//change from budding
+    public ArrayList<String> actions(Hero hero ) {
+        return super.actions( hero );
+    }
     @Override
     protected void onCast(Hero hero) {
         updateQuickslot();

@@ -713,7 +713,9 @@ public abstract class Mob extends Char {
 		if (buff(Camouflage.class) != null) {
 			dmg *= 0.5f; }
 
-		if (src instanceof Mob) dmg *= RingOfCommand.damageMultiplier(Dungeon.hero);
+		if (src instanceof Mob )
+			if (((Mob) src).alignment == Alignment.ALLY && src != this)//change from budding
+				dmg *= RingOfCommand.damageMultiplier(Dungeon.hero);
 		
 		super.damage( dmg, src );
 	}

@@ -35,11 +35,12 @@ public class SuperAdvanceguard extends Runestone {
             GLog.h(Messages.get(this, "advanceguard"));
         }
         else if (cell == Dungeon.hero.pos) {
-            Item item = Dungeon.hero.belongings.getItem(Ankh.class);
+            Item item;do {
+			item = Dungeon.hero.belongings.getItem(Ankh.class);
             if (item != null) item.detachAll(Dungeon.hero.belongings.backpack);
-            Dungeon.hero.sprite.killAndErase();
+			}while (item != null);//change from budding;originally only once but ankh can't stack
             Dungeon.hero.die(this);
-
+            Dungeon.hero.sprite.killAndErase();//change from budding ;originally before the die
             Dungeon.level.map[cell] = Terrain.WELL;
             GameScene.updateMap(cell);
             WellWater.seed(cell, 1, WaterOfAdvanceguard.class, Dungeon.level);

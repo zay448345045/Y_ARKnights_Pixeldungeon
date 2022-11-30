@@ -57,7 +57,7 @@ public class Talu_BlackSnake extends Mob {
         spriteClass = FistSprite.Burning.class;
 
         HP = HT = 2500;
-
+        defenseSkill = 32;//change from budding
         EXP = 100;
 
         //so that allies can attack it. States are never actually used.
@@ -98,8 +98,9 @@ public class Talu_BlackSnake extends Mob {
 
     @Override
     public int defenseSkill(Char enemy) {
-        if (Dungeon.level.map[this.pos] == Terrain.WATER) return 16;
-        return 32; }
+        return (int)(super.defenseSkill(enemy)*((Dungeon.level.map[this.pos] == Terrain.WATER)?0.5:1));//change from budding
+        /*if (Dungeon.level.map[this.pos] == Terrain.WATER) return 16;
+        return 32; */}
 
     @Override
     public int drRoll() { return Random.NormalIntRange(0, 20); }

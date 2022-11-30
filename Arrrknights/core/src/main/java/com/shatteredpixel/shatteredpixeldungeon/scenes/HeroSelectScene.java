@@ -202,8 +202,8 @@ public class HeroSelectScene extends PixelScene {
 		challengeButton.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 21, 21);
 		challengeButton.visible = false;
 
-		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
-			add(challengeButton);
+		if (true/*DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)*/){
+			add(challengeButton);//change from budding ;convenient for test
 		} else {
 			Dungeon.challenges = 0;
 			SPDSettings.challenges(0);

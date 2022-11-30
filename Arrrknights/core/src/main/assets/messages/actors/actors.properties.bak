@@ -441,9 +441,6 @@ actors.buffs.closerangeshot.name=근접사격
 actors.buffs.closerangeshot.active=첸은 주위에 적이 있으면 사격의 피해량이 대폭 상승합니다.\n\n현재 상태: 활성화
 actors.buffs.closerangeshot.passive=첸은 주위에 적이 있으면 사격의 피해량이 대폭 상승합니다.\n\n현재 상태: 비활성화
 
-actors.buffs.nervousimpairment.name=신경손상
-actors.buffs.nervousimpairment.desc=신경손상이 지속되는 상태입니다. 최대치에 도달하면 큰 충격을 받게될 것입니다.\n현재 손상도 : %d%%
-
 
 
 ###hero
@@ -791,7 +788,7 @@ actors.hero.talent.knight_body.desc=_+1:_ 최대 체력이 _10_ 증가합니다.
 actors.hero.talent.quick_tactics.title=속공전술
 actors.hero.talent.quick_tactics.desc=_+1:_ 빛의 인장 사용시 획득하는 신속이 5 턴에서 _6 턴_으로 증가합니다.\n\n_+2:_ 빛의 인장 사용시 획득하는 신속이 5 턴에서 _7 턴_으로 증가합니다.\n\n_+3:_ 빛의 인장 사용시 획득하는 신속이 5 턴에서 _8 턴_으로 증가합니다.\n\n_+3:_ 빛의 인장 사용시 획득하는 신속이 5 턴에서 _9 턴_으로 증가합니다.\n\n또한, 빛의 인장 사용에 턴을 소모하지 않게됩니다.
 actors.hero.talent.blessed_champion.title=축복받은 용사
-actors.hero.talent.blessed_champion.desc=_+1:_ 빛의 인장 발동시 _15 턴_의 축복을 얻습니다.\n\n_+2:_ 빛의 인장 발동시 _25 턴_의 축복을 얻습니다.\n\n_+3:_ 빛의 인장 발동시 _35 턴_의 축복을 얻습니다.\n\n_+4:_ 빛의 인장 발동시 _45 턴_의 축복을 얻습니다.
+actors.hero.talent.blessed_champion.desc=_+1:_ 빛의 인장 발동시 _10 턴_의 축복을 얻습니다.\n\n_+2:_ 빛의 인장 발동시 _20 턴_의 축복을 얻습니다.\n\n_+3:_ 빛의 인장 발동시 _30 턴_의 축복을 얻습니다.\n\n_+4:_ 빛의 인장 발동시 _40 턴_의 축복을 얻습니다.
 
 // 니어 3차 서브클래스
 actors.hero.talent.flash_spear.title=섬광의 창
@@ -1193,7 +1190,7 @@ actors.mobs.npcs.dobermann.say=미안하군. 지금은 바빠.
 actors.mobs.npcs.jessica.name=제시카
 actors.mobs.npcs.jessica.desc=블랙스틸의 정식 오퍼레이터. 상호 교류 프로젝트의 일환으로 로도스 아일랜드에 주재하며 수련 중이다.\n\n_퀘스트가 있는 NPC입니다._
 actors.mobs.npcs.jessica.say=아, 안녕하세요!
-actors.mobs.npcs.jessica.quest=제시카 :\n\n아, 안녕하세요! 저기 혹시... _표준 탄약통_이 있으신가요? 가져다 주시면 탄약값은 드릴게요...
+actors.mobs.npcs.jessica.quest=제시카 :\n\n아, 안녕하세요! 저기 혹시... _표준 탄약통_이 있으신가요? 훈련을 해야되는데 탄약이 슬슬 부족해서... 가져다주시면 대금은 치뤄드릴게요.
 actors.mobs.npcs.jessica.result=제시카 :\n\n가, 감사합니다! 이걸 받아주세요.\n_합성옥 800개_ 에요.
 actors.mobs.npcs.jessica.quest2=제시카 :\n\n아, 안녕하세요! 저기 혹시... _염국 훈제고기_가 있으신가요? 한 번 먹어보고 싶어가지고... 가져다주시면 좋은 걸 드릴게요.
 actors.mobs.npcs.jessica.result2=제시카 :\n\n가, 감사합니다! 여기 _제가 사용하던 총기 액세서리_ 와 _합성옥 900개_ 에요. 받아주세요.
@@ -1816,12 +1813,6 @@ actors.mobs.thebiguglything.name=거못무
 actors.mobs.thebiguglything.desc=\n\n\n\n\n주마마의 야심작. 쓸데없이 큰 기계 괴수, 대제사장이 조종하고 있다.\n\n불에 약해보입니다.
 actors.mobs.thebiguglything.rage=기계가 폭주한다!
 actors.mobs.thebiguglything.fire_ready=대제사장이 원거리 공격을 준비한다!
-
-
-
-// 심해 1
-actors.mobs.floatingseadrifter.name=부해의 항해자
-actors.mobs.floatingseadrifter.desc=그들의 후대는 공기 속에서 헤엄치는데 더 능숙할 것 같다.\n이 공중형 적은 공격시 신경손상을 유발하며, 근접 무기로 공격하기는 어려워보입니다.
 
 
 

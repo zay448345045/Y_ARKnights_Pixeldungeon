@@ -110,6 +110,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RhodesSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ImmortalShield;//change from budding
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
@@ -629,7 +630,8 @@ public abstract class Char extends Actor {
 			Buff.detach(this, MagicalSleep.class);
 			if (this.isAlive()){
 				if (this.buff(Dream.class) != null) {
-					this.damage(Random.NormalIntRange(8 + Dungeon.hero.lvl, 12 + Dungeon.hero.lvl * 2), this);
+					dmg+=Random.NormalIntRange(8 + Dungeon.hero.lvl, 12 + Dungeon.hero.lvl * 2);//change from budding
+					//this.damage(Random.NormalIntRange(8 + Dungeon.hero.lvl, 12 + Dungeon.hero.lvl * 2), this);
 					Buff.detach(this, Dream.class);
 				}}
 		}
@@ -668,7 +670,7 @@ public abstract class Char extends Actor {
 		}
 
 		shielded -= dmg;
-		HP -= dmg;
+		if (!Dummy.kkdy && !ImmortalShield.isImmortal(this))HP -= dmg;//change from budding
 		
 		if (sprite != null) {
 			sprite.showStatus(HP > HT / 2 ?

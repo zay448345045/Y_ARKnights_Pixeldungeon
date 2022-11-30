@@ -74,7 +74,8 @@ public class MinosFury extends MeleeWeapon {
     private final WndBag.Listener itemSelector = new WndBag.Listener()  {
         @Override
         public void onSelect(final Item item) {
-            if (item != null && !item.isEquipped(Dungeon.hero) && drbouns < 20) {
+            Item mi=Dungeon.hero.belongings.getItem(MinosFury.class);//change from budding
+            if (item != null && !item.isEquipped(Dungeon.hero) && drbouns < 20 && item !=mi) {
                 drbouns += 2;
                 item.detach(Dungeon.hero.belongings.backpack);
             }

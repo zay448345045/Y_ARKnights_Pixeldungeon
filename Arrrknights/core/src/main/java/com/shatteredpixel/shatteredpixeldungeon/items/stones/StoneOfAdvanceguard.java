@@ -25,10 +25,11 @@ public class StoneOfAdvanceguard extends Runestone {
         Char mob = Actor.findChar(cell);
         if (mob != null) {
             if (mob instanceof Hero) {
-                Item item = Dungeon.hero.belongings.getItem(Ankh.class);
-                if (item != null) item.detachAll(Dungeon.hero.belongings.backpack);
-                mob.sprite.killAndErase();
+                Item item;do{
+				item = Dungeon.hero.belongings.getItem(Ankh.class);
+                if (item != null) item.detachAll(Dungeon.hero.belongings.backpack);}while (item != null);//change from budding;originally only once but ankh can't stack
                 mob.die(this);
+				mob.sprite.killAndErase();//change from budding ;originally before the die
                 Dungeon.level.drop(new Gold(200), cell).sprite.drop();
                 GLog.p(Messages.get(this, "hit"));
                 for (int i = 0; i < 5; i++){

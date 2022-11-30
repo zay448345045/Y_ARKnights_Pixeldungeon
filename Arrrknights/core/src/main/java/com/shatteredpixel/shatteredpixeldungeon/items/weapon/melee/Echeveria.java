@@ -43,6 +43,7 @@ import java.util.ArrayList;
 
 public class Echeveria extends MeleeWeapon{
     public static final String AC_SUMON = "SUMON";
+    public static float partialcharge_ech = 0;//change from budding
     {
         image = ItemSpriteSheet.ECHEVERIA;
         hitSound = Assets.Sounds.ATK_SPIRITBOW;

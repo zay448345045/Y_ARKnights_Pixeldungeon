@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
@@ -109,6 +110,8 @@ public class Tomimi extends Mob {
             summonSubject(57, new TomimiTower());
             tomimitower = 2;
         }
+        LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);//change from budding
+        if (lock != null) lock.addTime(dmg*0.3f);
     }
 
     @Override

@@ -25,11 +25,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.MephistoSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollPane;
@@ -49,7 +51,7 @@ import java.util.Locale;
 public class WndHero extends WndTabbed {
 	
 	private static final int WIDTH		= 120;
-	private static final int HEIGHT		= 120;
+	private static final int HEIGHT		= 150;
 	
 	private StatsTab stats;
 	private TalentsTab talents;
@@ -140,6 +142,9 @@ public class WndHero extends WndTabbed {
 			statSlot( Messages.get(this, "depth"), Statistics.deepestFloor );
 
 			pos += GAP;
+			Hunger hungerlist = Buff.affect(hero,Hunger.class);//change from budding
+			statSlot(Messages.get(this,"hungeroutlook"),hungerlist.hunger()+"/"+Hunger.STARVING);//change from budding
+			statSlot(Messages.get(this,"enemies"),Statistics.enemiesSlain);//change from budding
 		}
 
 		private void statSlot( String label, String value ) {

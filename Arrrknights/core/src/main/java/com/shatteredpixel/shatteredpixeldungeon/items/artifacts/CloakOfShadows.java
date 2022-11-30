@@ -306,15 +306,15 @@ public class CloakOfShadows extends Artifact {
 
 			//barrier every 2/1 turns, to a max of 3/5
 			if (((Hero)target).hasTalent(Talent.PROTECTIVE_SHADOWS)){
-				SkillBook Book = curUser.belongings.getItem(SkillBook.class);
+				SkillBook Book = Dungeon.hero.belongings.getItem(SkillBook.class);//change from budding
 				artsInc += 0.25f * ((Hero) target).pointsInTalent(Talent.PROTECTIVE_SHADOWS);
 				if (artsInc >= 1 ){
 					artsInc = 0;
 					if (Book != null) {
 						Book.SetCharge(1);
 					}
-					if (curUser.HT/2 > curUser.HP) {
-						curUser.HP+=1;
+					if (Dungeon.hero.HT/2 > Dungeon.hero.HP) {//change from budding
+						Dungeon.hero.HP+=1;//change from budding
 					}
 				}
 			}

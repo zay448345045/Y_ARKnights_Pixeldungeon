@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
+import com.shatteredpixel.shatteredpixeldungeon.items.quest.Rose;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -267,7 +268,7 @@ public class DriedRose extends Artifact {
 		if (ghost == null){
 			return super.status();
 		} else {
-			return (int)((ghost.HP+partialCharge)*100) / ghost.HT + "%";
+			return ((ghost.HP*100) / ghost.HT) + "%";//change from budding
 		}
 	}
 	
@@ -543,7 +544,7 @@ public class DriedRose extends Artifact {
 			updateRose();
 			HP = HT;
 		}
-		
+
 		private void updateRose(){
 			if (rose == null) {
 				rose = Dungeon.hero.belongings.getItem(DriedRose.class);
@@ -704,11 +705,11 @@ public class DriedRose extends Artifact {
 			
 			return stealth;
 		}
-		
+		int plusblock=0;//change from budding
 		@Override
 		public int drRoll() {
 			int block = 0;
-			int plusblock = rose.level();
+			if (rose != null)plusblock=rose.level();//change from budding
 			if (rose != null && rose.armor != null){
 				block += Random.NormalIntRange( rose.armor.DRMin(), rose.armor.DRMax());
 			}
@@ -846,12 +847,13 @@ public class DriedRose extends Artifact {
 		
 		private static final String DEFEND_POS = "defend_pos";
 		private static final String MOVING_TO_DEFEND = "moving_to_defend";
-		
+		private static final String PLUS_BLOCK = "plus_block";//change from budding
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(DEFEND_POS, defendingPos);
 			bundle.put(MOVING_TO_DEFEND, movingToDefendPos);
+			bundle.put(PLUS_BLOCK,plusblock);//change from budding
 		}
 		
 		@Override
@@ -859,6 +861,7 @@ public class DriedRose extends Artifact {
 			super.restoreFromBundle(bundle);
 			if (bundle.contains(DEFEND_POS)) defendingPos = bundle.getInt(DEFEND_POS);
 			movingToDefendPos = bundle.getBoolean(MOVING_TO_DEFEND);
+			plusblock=bundle.getInt(PLUS_BLOCK);//change from budding
 		}
 		
 		{

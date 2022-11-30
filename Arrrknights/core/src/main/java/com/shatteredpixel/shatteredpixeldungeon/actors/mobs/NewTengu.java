@@ -477,7 +477,7 @@ public class NewTengu extends Mob {
     //expects to be called once per turn;
     public boolean canUseAbility() {
 
-        if (HP > HT / 2) return false;
+        if (HP > HT / 2 || ((NewPrisonBossLevel) Dungeon.level).state() != NewPrisonBossLevel.State.FIGHT_ARENA ) return false;//change from budding
         if (MineThrow == 1) return true;
 
         if (abilitiesUsed >= targetAbilityUses() && !Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
@@ -1189,7 +1189,7 @@ public class NewTengu extends Mob {
                     if (PathFinder.distance[cell] < Integer.MAX_VALUE) {
                         Char ch = Actor.findChar(cell);
                         if (ch != null && !(ch instanceof NewTengu)) {
-                            FloatingText.show(p.x, p.y, bombPos, "적 감지...", CharSprite.NEGATIVE);
+                            FloatingText.show(p.x, p.y, bombPos, "发现敌人...", CharSprite.NEGATIVE);
                             timer--; }}}
             } else {
                 PathFinder.buildDistanceMap(bombPos, BArray.not(Dungeon.level.solid, null), 2);

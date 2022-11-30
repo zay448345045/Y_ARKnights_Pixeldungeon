@@ -132,6 +132,7 @@ public class Blacksmith extends NPC {
 					tell( Messages.get(this, "gold_2") );
 				} else {
 					if (pick.isEquipped( Dungeon.hero )) {
+						if (pick.cursed) pick.cursed=false;//change from budding
 						pick.doUnequip( Dungeon.hero, false );
 					}
 					pick.detach( Dungeon.hero.belongings.backpack );

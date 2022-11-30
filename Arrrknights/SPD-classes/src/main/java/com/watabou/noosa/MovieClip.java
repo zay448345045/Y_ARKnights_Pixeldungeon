@@ -23,7 +23,7 @@ package com.watabou.noosa;
 
 import com.watabou.utils.RectF;
 
-import sun.security.ssl.Debug;
+//import sun.security.ssl.Debug;
 
 public class MovieClip extends Image {
 

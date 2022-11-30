@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
@@ -108,6 +109,8 @@ public class TheBigUglyThing extends Mob {
             GameScene.flash(0x80FF0000);
             Buff.affect(this, Barrier.class).setShield(1000);
         }
+        LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);//change from budding
+        if (lock != null) lock.addTime(dmg*0.3f);
     }
 
     @Override

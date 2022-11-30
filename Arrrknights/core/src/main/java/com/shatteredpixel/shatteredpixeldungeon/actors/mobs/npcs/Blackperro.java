@@ -3,6 +3,9 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -18,7 +21,15 @@ public class Blackperro extends NPC {
         properties.add(Char.Property.IMMOVABLE);
         properties.add(Property.NPC);
     }
-
+    private boolean brush_res =false;//change from budding
+    @Override//change from budding
+    protected boolean act(){//change from budding
+        if (!brush_res){
+            brush_res=true;
+            Buff.detach(Dungeon.hero, MindVision.class);
+        }
+        return super.act();
+    }
     @Override
     public int defenseSkill(Char enemy) {
         return INFINITE_EVASION;

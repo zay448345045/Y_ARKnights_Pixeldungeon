@@ -46,7 +46,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import javax.jws.soap.SOAPBinding;
+//import javax.jws.soap.SOAPBinding;
 
 public class Shadow extends Mob {
     {
@@ -96,10 +96,10 @@ public class Shadow extends Mob {
         return attackSkillTable[ShadowLevel];
     }
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return defenseSkillTable[ShadowLevel];
-    }
+    //@Override
+    //public int defenseSkill(Char enemy) {
+    //    return defenseSkillTable[ShadowLevel];
+    //}//change from budding
 
     @Override
     public int damageRoll() {
@@ -189,7 +189,7 @@ public class Shadow extends Mob {
 
         shadow.ShadowLevel = level;
         shadow.HT = shadow.HP = HPTable[level];
-
+        shadow.defenseSkill=defenseSkillTable[level];//change from budding
         shadow.ExitPos = pos;
         shadow.pos = pos;
 
@@ -228,8 +228,8 @@ public class Shadow extends Mob {
 
         @Override
         public int defenseSkill(Char enemy) {
-            return defenseSkillTable[ShadowLevel] * 2;
-        }
+            return super.defenseSkill(enemy) * 2;
+        }//change from budding
 
         @Override
         protected boolean act() {
@@ -401,7 +401,7 @@ public class Shadow extends Mob {
 
         @Override
         public void die(Object cause) {
-            if (!UseSkill && !(cause instanceof Chasm)) {
+            if (!UseSkill && (cause != Chasm.class)) {//change from budding
                 new Flare(8, 32).color(0xFFFF66, true).show(sprite, 2f);
                 CellEmitter.get(this.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 
@@ -458,8 +458,8 @@ public class Shadow extends Mob {
 
         @Override
         public int defenseSkill(Char enemy) {
-            return defenseSkillTable[ShadowLevel] * 2;
-        }
+            return super.defenseSkill(enemy) * 2;
+        }//change from budding
 
         @Override
         public int attackProc(Char enemy, int damage) {
