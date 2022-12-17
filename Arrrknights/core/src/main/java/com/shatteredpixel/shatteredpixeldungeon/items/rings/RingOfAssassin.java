@@ -17,7 +17,7 @@ public class RingOfAssassin extends Ring {
                     new DecimalFormat("#.##").format(100f * (Math.pow(1.06f, soloBuffedBonus()) - 1f)));
         } else {
             return Messages.get(this, "typical_stats",
-                    new DecimalFormat("#.##").format(5f));
+                    new DecimalFormat("#.##").format(6f));
         }
     }
 

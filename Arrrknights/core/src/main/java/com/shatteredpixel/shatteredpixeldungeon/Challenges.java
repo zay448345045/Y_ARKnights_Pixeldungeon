@@ -67,7 +67,7 @@ public class Challenges {
 		int chCount = 0;
 		for (int ch : Challenges.MASKS){
 			if ((Dungeon.challenges & ch) != 0) chCount++;
-		}if ((Dungeon.challenges & 4096)!=0) chCount=0;
+		}if ((Dungeon.challenges & 4096)!=0) chCount=0;//change from budding
 		return chCount;
 	}
 
