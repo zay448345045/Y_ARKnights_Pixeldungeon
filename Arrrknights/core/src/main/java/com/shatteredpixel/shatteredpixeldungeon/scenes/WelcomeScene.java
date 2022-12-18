@@ -187,10 +187,10 @@ public class WelcomeScene extends PixelScene {
 			//fixes a bug from v0.9.0- where champion badges would rarely not save
 			if (highestChalInRankings > 0){
 				Badges.loadGlobal();
-				if (highestChalInRankings >= 1) Badges.addGlobal(Badges.Badge.CHAMPION_1);
-				if (highestChalInRankings >= 3) Badges.addGlobal(Badges.Badge.CHAMPION_2);
-				if (highestChalInRankings >= 6) Badges.addGlobal(Badges.Badge.CHAMPION_3);
-				if (highestChalInRankings >= 8) Badges.addGlobal(Badges.Badge.CHAMPION_4);
+				if (highestChalInRankings >= 1) Badges.unlock(Badges.Badge.CHAMPION_1);
+				if (highestChalInRankings >= 3) Badges.unlock(Badges.Badge.CHAMPION_2);
+				if (highestChalInRankings >= 6) Badges.unlock(Badges.Badge.CHAMPION_3);
+				if (highestChalInRankings >= 8) Badges.unlock(Badges.Badge.CHAMPION_4);
 				Badges.saveGlobal();
 			}
 		}
