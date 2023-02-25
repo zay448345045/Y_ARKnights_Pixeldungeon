@@ -42,6 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Annoying;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Displacing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.contamination;
@@ -497,6 +498,11 @@ abstract public class Weapon extends KindOfWeapon {
 			if (Dungeon.hero.belongings.weapon instanceof ThermiteBlade && Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
 				if (Dungeon.hero.belongings.getItem(IsekaiItem.class).isEquipped(Dungeon.hero))
 					multi *= 3;
+			}
+			if (Dungeon.hero.belongings.getItem(RingOfMistress.class) != null){
+				if (Dungeon.hero.belongings.getItem(RingOfMistress.class).isEquipped(Dungeon.hero)){
+					multi *= RingOfMistress.SPMultiplier(Dungeon.hero);
+				}
 			}
 			return multi;
 		}

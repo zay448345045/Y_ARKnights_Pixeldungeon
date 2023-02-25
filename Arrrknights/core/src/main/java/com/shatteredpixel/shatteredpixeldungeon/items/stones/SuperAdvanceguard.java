@@ -17,7 +17,7 @@ import java.awt.Dialog;
 public class SuperAdvanceguard extends Runestone {
     private static ItemSprite.Glowing COL = new ItemSprite.Glowing( 0xE6E6FA );
     {
-        image = ItemSpriteSheet.GOLD;
+        image = ItemSpriteSheet.STONE_SUPERADV;
     }
 
     @Override

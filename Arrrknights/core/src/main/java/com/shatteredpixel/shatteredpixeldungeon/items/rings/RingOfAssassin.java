@@ -14,7 +14,7 @@ public class RingOfAssassin extends Ring {
     public String statsInfo() {
         if (isIdentified()){
             return Messages.get(this, "stats",
-                    new DecimalFormat("#.##").format(100f * (Math.pow(1.06f, soloBuffedBonus()) - 1f)));
+                    new DecimalFormat("#.##").format(100f * (Math.pow(1.06f, soloBuffedBonus()) - 1f)),2*soloBuffedBonus());
         } else {
             return Messages.get(this, "typical_stats",
                     new DecimalFormat("#.##").format(6f));

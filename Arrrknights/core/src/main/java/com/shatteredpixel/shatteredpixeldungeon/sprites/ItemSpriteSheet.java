@@ -654,6 +654,7 @@ public class ItemSpriteSheet {
 	public static final int STONE_FLOCK         = STONES+9;
 	public static final int STONE_INTUITION     = STONES+10;
 	public static final int STONE_SHOCK         = STONES+11;
+	public static final int STONE_SUPERADV         = STONES+12;
 	static {
 		for (int i = STONES; i < STONES+31; i++)
 			assignItemRect(i, 14, 12);

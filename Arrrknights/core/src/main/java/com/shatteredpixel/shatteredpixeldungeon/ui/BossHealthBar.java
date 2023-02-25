@@ -71,7 +71,7 @@ public class BossHealthBar extends Component {
 		hp = new Image(asset, 15, 19, 47, 4);
 		add(hp);
 
-		skull = new Image(asset, 5, 18, 6, 6);
+		skull = new Image(asset, 2, 16, 12, 9);
 		add(skull);
 
 		blood = new Emitter();
@@ -90,8 +90,8 @@ public class BossHealthBar extends Component {
 		hp.x = shieldedHP.x = rawShielding.x = bar.x+15;
 		hp.y = shieldedHP.y = rawShielding.y = bar.y+6;
 
-		skull.x = bar.x+5;
-		skull.y = bar.y+5;
+		skull.x = bar.x+2;
+		skull.y = bar.y+3;
 	}
 
 	@Override

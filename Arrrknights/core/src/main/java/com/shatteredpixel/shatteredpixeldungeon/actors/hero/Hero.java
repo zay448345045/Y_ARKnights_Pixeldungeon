@@ -839,6 +839,16 @@ public class Hero extends Char {
             }
         }
 
+        if (Dungeon.hero.belongings.getItem(RingOfAssassin.class) != null) {
+            if (Dungeon.hero.belongings.getItem(RingOfAssassin.class).isEquipped(Dungeon.hero)) {
+                if (((Mob) enemy).surprisedBy(this)){
+                    if (Random.Int(100) < Dungeon.hero.belongings.getItem(RingOfAssassin.class).level() * 2 + 2) {
+                        return 0;
+                    }
+                }
+            }
+        }
+
         if (belongings.weapon != null) {
 
             return belongings.weapon.speedFactor(this);
