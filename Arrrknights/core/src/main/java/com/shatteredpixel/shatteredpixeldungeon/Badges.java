@@ -1439,7 +1439,7 @@ public class Badges {
 
 	private static void displayBadge( Badge badge ) {
 		
-		if (badge == null || !Dungeon.customSeedText.isEmpty() || !is_not_test) {
+		if (badge == null/* || !Dungeon.customSeedText.isEmpty()*/ || !is_not_test) {
 			return;
 		}
 		
@@ -1477,7 +1477,7 @@ public class Badges {
 	}
 	
 	public static void unlock( Badge badge ){
-		if (!isUnlocked(badge) && !Dungeon.customSeedText.isEmpty() && is_not_test){
+		if (!isUnlocked(badge)/* && !Dungeon.customSeedText.isEmpty()*/ && is_not_test){
 			global.add( badge );
 			saveNeeded = true;
 		}

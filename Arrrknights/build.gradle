@@ -11,16 +11,16 @@ buildscript {
 allprojects {
 
     ext {
-        appName = '明日方舟地牢注解版'
-        appPackageName = 'com.shatteredpixel.tomorrowpixel'
+        appName = '昨日碎梦地牢-S'
+        appPackageName = 'com.shatteredpixel.yesterdaypixel'
 
-        appVersionCode = 221130
-        appVersionName = '0.4.5WIP-AnnotationEX9'
+        appVersionCode = 221134
+        appVersionName = 'Y-0.4.5-EX9'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
         appAndroidCompileSDK = 30
-        appAndroidMinSDK = 14
+        appAndroidMinSDK = 14   //隔壁是9
         appAndroidTargetSDK = 30
 
         gdxVersion = '1.9.10'
