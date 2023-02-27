@@ -21,7 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.ui;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
+import com.watabou.noosa.audio.Sample;
 
 public class RedButton extends StyledButton {
 			
@@ -32,5 +34,14 @@ public class RedButton extends StyledButton {
 	public RedButton( String label, int size ){
 		super( Chrome.Type.RED_BUTTON, label, size);
 	}
-	
+
+	protected void onTouchDown() {
+		bg.brightness( 1.2f );
+		Sample.INSTANCE.play( Assets.Sounds.CLICK );
+	}
+
+	protected void onTouchUp() {
+		bg.resetColor();
+	}
+
 }
