@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -62,6 +63,18 @@ public abstract class KindofMisc extends EquipableItem {
 			} else {
 				equipFull = true;
 			}
+		}else if(this instanceof ROR2item){
+			if(hero.belongings.misc != null){
+				if (hero.belongings.misc instanceof Artifact && hero.belongings.artifact == null){
+					hero.belongings.artifact = (Artifact) hero.belongings.misc;
+					hero.belongings.misc = null;
+				}else if (hero.belongings.misc instanceof Ring && hero.belongings.ring == null){
+					hero.belongings.ring = (Ring) hero.belongings.misc;
+					hero.belongings.misc = null;
+				}else {
+					equipFull = true;
+				}
+			}
 		}
 
 		if (equipFull) {
@@ -81,6 +94,16 @@ public abstract class KindofMisc extends EquipableItem {
 				enabled[0] = false; //disable artifact
 			} else if (this instanceof Artifact && hero.belongings.misc instanceof Artifact){
 				enabled[2] = false; //disable ring
+			} else if(this instanceof ROR2item){
+				int slot = Dungeon.quickslot.getSlot(KindofMisc.this);
+				detach(hero.belongings.backpack);
+				if (hero.belongings.misc.doUnequip(hero, true, false)) {
+					doEquip(hero);
+				} else {
+					collect();
+				}
+				if (slot != -1) Dungeon.quickslot.setSlot(slot, KindofMisc.this);
+				updateQuickslot();
 			}
 
 			GameScene.show(
@@ -129,6 +152,8 @@ public abstract class KindofMisc extends EquipableItem {
 			} else if (this instanceof Ring){
 				if (hero.belongings.ring == null)   hero.belongings.ring = (Ring) this;
 				else                                hero.belongings.misc = (Ring) this;
+			} else if (this instanceof ROR2item){
+				hero.belongings.misc = (ROR2item) this;
 			}
 
 			detach( hero.belongings.backpack );

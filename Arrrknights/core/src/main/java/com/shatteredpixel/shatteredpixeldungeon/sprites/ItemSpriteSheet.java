@@ -941,7 +941,12 @@ public class ItemSpriteSheet {
 		assignItemRect(ICE_BOX,   	  16, 16);
 	}
 
-	                                                                                    //16 free slots
+	private static final int ROR2ITEMS       =                                   xy(1, 32);  //16 slots
+	public static final int LUCKYLEAF        = ROR2ITEMS +0;
+
+	static{
+		assignItemRect(LUCKYLEAF,        16, 16);
+	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {

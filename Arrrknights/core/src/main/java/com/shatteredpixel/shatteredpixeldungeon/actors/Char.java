@@ -86,6 +86,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfDragonsBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -486,7 +487,12 @@ public abstract class Char extends Actor {
 			return true;
 		}
 
-		float acuRoll = Random.Float( acuStat );
+		float acuRoll;
+		if (attacker.buff(LuckyLeaf.LuckyLeafBuff.class) != null){
+			acuRoll=Math.max(Random.Float( acuStat ),Random.Float( acuStat ));
+		}else{
+			acuRoll = Random.Float( acuStat );
+		}
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
 		if (attacker.buff(  Hex.class) != null) acuRoll *= 0.8f;
 		if (Dungeon.hero.hasTalent(Talent.RESTRICTION))  {
@@ -497,8 +503,13 @@ public abstract class Char extends Actor {
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
 
-		
-		float defRoll = Random.Float( defStat );
+
+		float defRoll;
+		if (defender.buff(LuckyLeaf.LuckyLeafBuff.class) != null){
+			defRoll = Math.max(Random.Float( defStat ),Random.Float( defStat ));
+		}else{
+			defRoll = Random.Float( defStat );
+		}
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (defender.buff(ExecutMode.class) != null) defRoll *= 1.3f;
 		if (defender instanceof Hero && Dungeon.hero.belongings.weapon instanceof AssassinsBlade && Dungeon.hero.belongings.armor instanceof LeatherArmor) defRoll *= 1.1f;

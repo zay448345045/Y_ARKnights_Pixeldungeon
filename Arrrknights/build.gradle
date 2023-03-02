@@ -14,7 +14,7 @@ allprojects {
         appName = '昨日碎梦地牢-S'
         appPackageName = 'com.shatteredpixel.yesterdaypixel'
 
-        appVersionCode = 221138
+        appVersionCode = 221139
         appVersionName = 'Y-0.4.5-EX9'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8

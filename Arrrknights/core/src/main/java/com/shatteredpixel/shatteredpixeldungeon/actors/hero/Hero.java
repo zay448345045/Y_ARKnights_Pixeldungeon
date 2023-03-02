@@ -177,6 +177,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
@@ -660,14 +661,25 @@ public class Hero extends Char {
         int dr = 0;
 
         if (belongings.armor != null) {
-            int armDr = Random.NormalIntRange(belongings.armor.DRMin(), belongings.armor.DRMax());
+            int armDr;
+            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
+                armDr = Math.max(Random.NormalIntRange(belongings.armor.DRMin(), belongings.armor.DRMax()),Random.NormalIntRange(belongings.armor.DRMin(), belongings.armor.DRMax()));
+            }
+            else {
+                armDr = Random.NormalIntRange(belongings.armor.DRMin(), belongings.armor.DRMax());
+            }
             if (STR() < belongings.armor.STRReq()) {
                 armDr -= 2 * (belongings.armor.STRReq() - STR());
             }
             if (armDr > 0) dr += armDr;
         }
         if (belongings.weapon != null) {
-            int wepDr = Random.NormalIntRange(0, belongings.weapon.defenseFactor(this));
+            int wepDr;
+            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null) {
+                wepDr = Math.max(Random.NormalIntRange(0, belongings.weapon.defenseFactor(this)),Random.NormalIntRange(0, belongings.weapon.defenseFactor(this)));
+            }else{
+                wepDr = Random.NormalIntRange(0, belongings.weapon.defenseFactor(this));
+            }
             if (STR() < ((Weapon) belongings.weapon).STRReq()) {
                 wepDr -= 2 * (((Weapon) belongings.weapon).STRReq() - STR());
             }
@@ -721,10 +733,18 @@ public class Hero extends Char {
         int dmg;
 
         if (wep != null) {
-            dmg = wep.damageRoll(this);
+            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
+                dmg=Math.max(wep.damageRoll(this),wep.damageRoll(this));
+            }else{
+                dmg = wep.damageRoll(this);
+            }
             if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
         } else {
-            dmg = RingOfForce.damageRoll(this);
+            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
+                dmg=Math.max(RingOfForce.damageRoll(this),RingOfForce.damageRoll(this));
+            }else{
+                dmg = RingOfForce.damageRoll(this);
+            }
         }
         if (dmg < 0) dmg = 0;
 
