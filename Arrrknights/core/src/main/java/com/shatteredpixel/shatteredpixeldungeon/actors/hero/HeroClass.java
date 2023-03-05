@@ -68,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -187,6 +188,7 @@ import java.util.concurrent.TimeoutException;
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			new LuckyLeaf().collect();
+			new Behemoth().collect();
 		}
 	}
 

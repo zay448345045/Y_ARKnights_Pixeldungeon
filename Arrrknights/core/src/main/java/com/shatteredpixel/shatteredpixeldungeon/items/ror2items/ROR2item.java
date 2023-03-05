@@ -12,6 +12,8 @@ import com.watabou.utils.Bundle;
 
 public class ROR2item extends KindofMisc {
 
+    public int tier;//白=1 绿=2 红=3 黄=4 橙=5 蓝=6 蓝主动=7 紫=8
+
     protected Buff passiveBuff;
 
     public void activate( Char ch ) {

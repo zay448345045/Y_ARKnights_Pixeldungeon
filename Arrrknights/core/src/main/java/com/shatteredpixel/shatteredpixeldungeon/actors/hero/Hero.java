@@ -85,6 +85,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.Bonk;
@@ -156,9 +157,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
@@ -177,6 +180,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -1627,6 +1631,37 @@ public class Hero extends Char {
             WildMark mark = buff(WildMark.class);
             if (mark != null) {
                 mark.Charged(pointsInTalent(Talent.WIND_ROAD) * 7.5f);
+            }
+        }
+
+        if(buff(Behemoth.BehemothBuff.class)!=null){
+            if (Dungeon.level.heroFOV[enemy.pos]) {
+                CellEmitter.center(enemy.pos).burst(BlastParticle.FACTORY, 30);
+            }
+            ArrayList<Char> affected = new ArrayList<>();
+            for (int n : PathFinder.NEIGHBOURS9) {
+                int c = enemy.pos + n;
+                if (c >= 0 && c < Dungeon.level.length()) {
+                    Char ch = Actor.findChar(c);
+                    if (ch != null) {
+                        affected.add(ch);
+                    }
+                }
+            }
+            for (Char ch : affected){
+                //if they have already been killed by another bomb
+                if(!ch.isAlive()){
+                    continue;
+                }
+
+                int dmg = (int) Math.round(damage*0.6);
+
+                dmg -= ch.drRoll();
+
+                if (dmg > 0 && ch!=Dungeon.hero) {
+                    ch.damage(dmg, Bomb.class);
+                }
+
             }
         }
 
