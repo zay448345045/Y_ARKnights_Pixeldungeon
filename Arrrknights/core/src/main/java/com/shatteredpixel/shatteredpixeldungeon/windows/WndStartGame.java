@@ -346,6 +346,11 @@ public class WndStartGame extends Window {
 							heroLoadout.icon(new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null));
 							heroMisc.icon(new Image(Assets.Environment.TILES_SEWERS, 112, 96, 16, 16 ));
 							break;
+						case RABBIT:
+							heroItem.icon(new ItemSprite(ItemSpriteSheet.ASSASSINS_BLADE, null));
+							heroLoadout.icon(new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null));
+							heroMisc.icon(new Image(Assets.Environment.TILES_SEWERS, 112, 96, 16, 16 ));
+							break;
 					}
 
 					layout();

@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.shatteredpixel.yesterdaypixel.indev",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 230318,
+      "versionName": "Y-0.4.5-EX9-230318-INDEV",
+      "outputFile": "Arrrknights-vY-0.4.5-EX9-230318-INDEV.apk"
+    }
+  ],
+  "elementType": "File"
+}

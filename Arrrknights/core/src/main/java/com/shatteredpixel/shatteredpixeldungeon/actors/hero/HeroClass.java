@@ -100,6 +100,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.EX42;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.NEARL_AXE;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.PatriotSpear;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RhodesSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SakuraSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ShadowFirmament;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SnowHunter;
@@ -125,7 +126,8 @@ import java.util.concurrent.TimeoutException;
 	HUNTRESS( "huntress", HeroSubClass.SNIPER, HeroSubClass.WARDEN, HeroSubClass.STOME ),
 	ROSECAT("rosecat", HeroSubClass.DESTROYER, HeroSubClass.GUARDIAN, HeroSubClass.WAR),
 	NEARL("nearl", HeroSubClass.KNIGHT, HeroSubClass.SAVIOR, HeroSubClass.FLASH),
-	 CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER);
+	 CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER),
+	RABBIT("rabbit", HeroSubClass.KILLER);
 
 	private String title;
 	private HeroSubClass[] subClasses;
@@ -170,6 +172,10 @@ import java.util.concurrent.TimeoutException;
 			case CHEN:
 				initChen(hero);
 				break;
+
+			case RABBIT:
+				initRabbit(hero);
+				break;
 		}
 
 	}
@@ -189,6 +195,7 @@ import java.util.concurrent.TimeoutException;
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			new LuckyLeaf().collect();
 			new Behemoth().collect();
+			new TomeOfMastery().collect();
 		}
 	}
 
@@ -208,6 +215,8 @@ import java.util.concurrent.TimeoutException;
 				return Badges.Badge.MASTERY_NEARL;
 			case CHEN:
 				return Badges.Badge.MASTERY_CHEN;
+			case RABBIT:
+				return Badges.Badge.MASTERY_RABBIT;
 		}
 		return null;
 	}
@@ -405,6 +414,27 @@ import java.util.concurrent.TimeoutException;
 		 new DewVial().collect();
 	 }
 
+	 private void initRabbit(Hero hero)
+	 {
+		 (hero.belongings.weapon = new RhodesSword()).identify();
+
+		 new PotionBandolier().collect();
+		 Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
+
+		 new VelvetPouch().collect();
+		 Dungeon.LimitedDrops.VELVET_POUCH.drop();
+
+		 new PotionOfStrength().identify();
+		 new PotionOfExperience().identify();
+		 new ScrollOfUpgrade().identify();
+
+		 SkillBook skillB;
+		 skillB = new SkillBook();
+		 skillB.quantity(1).collect();
+		 Dungeon.quickslot.setSlot(0,skillB);
+		 new DewVial().collect();
+	 }
+
 	public String title() {
 		return Messages.get(HeroClass.class, title);
 	}
@@ -454,6 +484,8 @@ import java.util.concurrent.TimeoutException;
 				return Assets.Sprites.NEARL;
 			case CHEN:
 				return Assets.Sprites.CHEN;
+			case RABBIT:
+				return Assets.Sprites.RABBIT;
 		}
 	}
 
@@ -473,6 +505,8 @@ import java.util.concurrent.TimeoutException;
 				return Assets.Sprites.NEARL;
 			case CHEN:
 				return Assets.Sprites.CHEN;
+			case RABBIT:
+				return Assets.Sprites.RABBIT;
 		}
 	}
 
@@ -492,6 +526,8 @@ import java.util.concurrent.TimeoutException;
 				return Assets.Splashes.NEARL;
 			case CHEN:
 				return Assets.Splashes.CHEN;
+			case RABBIT:
+				return Assets.Splashes.RABBIT;
 		}
 	}
 	
@@ -551,6 +587,8 @@ import java.util.concurrent.TimeoutException;
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_NEARL);
 			case CHEN:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_CHEN);
+			case RABBIT:
+				return true;
 		}
 	}
 	
@@ -570,6 +608,8 @@ import java.util.concurrent.TimeoutException;
 				return Messages.get(HeroClass.class, "nearl_unlock");
 			case CHEN:
 				return Messages.get(HeroClass.class, "chen_unlock");
+			case RABBIT:
+				return Messages.get(HeroClass.class, "rabbit_unlock");
 		}
 	}
 

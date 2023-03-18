@@ -188,6 +188,9 @@ public class StartScene extends PixelScene {
 						case CHEN: //첸포인트
 							hero = new Image(Icons.CHEN.get());
 							break;
+						case RABBIT: //첸포인트
+							hero = new Image(Icons.RABBIT.get());
+							break;
 					}
 					add(hero);
 					
@@ -222,6 +225,9 @@ public class StartScene extends PixelScene {
 							break;
 						case CHEN: //첸포인트
 							hero = new Image(Icons.CHEN.get());
+							break;
+						case RABBIT: //첸포인트
+							hero = new Image(Icons.RABBIT.get());
 							break;
 					}
 

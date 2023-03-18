@@ -55,14 +55,16 @@ public class Badges {
 		MASTERY_ROSECAT,
 		MASTERY_NEARL,
 		MASTERY_CHEN,
+		MASTERY_RABBIT,
 //한 줄당 16칸, 모든 위치는 현재 좌표보다 1을 빼서 추가할것
 		//bronze
 		UNLOCK_MAGE                 ( 1 ),
 		UNLOCK_ROGUE                ( 2 ),
 		UNLOCK_HUNTRESS             ( 3 ),
-		UNLOCK_ROSECAT             ( 19 ),
-		UNLOCK_NEARL               (20),
-		UNLOCK_CHEN               (22),
+		UNLOCK_ROSECAT             	( 19),
+		UNLOCK_NEARL               	( 20),
+		UNLOCK_CHEN               	( 22),
+		UNLOCK_RABBIT				( 24),
 		MONSTERS_SLAIN_1            ( 4 ),
 		MONSTERS_SLAIN_2            ( 5 ),
 		GOLD_COLLECTED_1            ( 6 ),
@@ -109,6 +111,7 @@ public class Badges {
 		BOSS_SLAIN_1_ROSECAT,
 		BOSS_SLAIN_1_NEARL,
 		BOSS_SLAIN_1_CHEN,
+		BOSS_SLAIN_1_RABBIT,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 69, true ),
 		GAMES_PLAYED_1              ( 70, true ),
 		CERTIFICATE_2               (71),
@@ -155,6 +158,7 @@ public class Badges {
 		BOSS_SLAIN_3_FLASH,
 		BOSS_SLAIN_3_SWORDMASTER,
 		BOSS_SLAIN_3_SPSHOOTER,
+		BOSS_SLAIN_3_KILLER,
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 112, true ),
 		GAMES_PLAYED_2              ( 113, true ),
 
@@ -165,6 +169,7 @@ public class Badges {
 		ROSE_CHAMPION1              ( 118, true ),
 		NEARL_CHAMPION1              ( 119, true ),
 		CHEN_CHAMPION1              ( 22, true ),//change from budding
+		RABBIT_CHAMPION1              ( 125, true ),
 
 		GOLD_COLLECTED_5              ( 120 ),
 
@@ -187,6 +192,7 @@ public class Badges {
 		VICTORY_ROSECAT,
 		VICTORY_NEARL,
 		VICTORY_CHEN,
+		VICTORY_RABBIT,
 		VICTORY_ALL_CLASSES         ( 162, true ),
 		GAMES_PLAYED_3              ( 163, true ),
 		CHAMPION_1                  ( 164 ),
@@ -200,6 +206,7 @@ public class Badges {
 		ROSE_CHAMPION2              ( 171, true ),
 		NEARL_CHAMPION2              ( 172, true ),
 		CHEN_CHAMPION2              ( 22, true ),//change from budding
+		RABBIT_CHAMPION2              ( 176, true ),
 
 		SIESTA_PART2              ( 173),
 		GAVIAL_PART2              ( 174 ),
@@ -222,6 +229,7 @@ public class Badges {
 		ROSE_CHAMPION3              ( 218, true ),
 		NEARL_CHAMPION3              ( 219, true ),
 		CHEN_CHAMPION3              ( 22, true ),//change from budding
+		RABBIT_CHAMPION3              ( 210, true ),
 
 		//Puple
 		Get_25_STONES                (256),
@@ -856,7 +864,8 @@ public class Badges {
 						isUnlocked( Badge.BOSS_SLAIN_3_HEAT) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_WILD) &&
 						isUnlocked( Badge.BOSS_SLAIN_3_STOME) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_FLASH)
+						isUnlocked( Badge.BOSS_SLAIN_3_FLASH)&&
+						isUnlocked(Badge.BOSS_SLAIN_3_KILLER)
 				) {
 
 					badge = Badge.BOSS_SLAIN_3_ALL_SUBCLASSES;
@@ -891,6 +900,9 @@ public class Badges {
 			break;
 		case CHEN:
 			badge = Badge.MASTERY_CHEN;
+			break;
+		case RABBIT:
+			badge = Badge.MASTERY_RABBIT;
 			break;
 		}
 		unlock(badge);
@@ -929,6 +941,12 @@ public class Badges {
 			displayBadge( Badge.UNLOCK_CHEN );}
 	}
 
+	public static void validateRabbitUnlock(){
+		if(!isUnlocked(Badge.UNLOCK_RABBIT)){
+			displayBadge(Badge.UNLOCK_RABBIT);
+		}
+	}
+
 	public static void validateMasteryCombo( int n ) {
 		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {
 			Badge badge = Badge.MASTERY_COMBO;
@@ -964,6 +982,9 @@ public class Badges {
 		case CHEN:
 			badge = Badge.VICTORY_CHEN;
 			break;
+		case RABBIT:
+			badge = Badge.VICTORY_RABBIT;
+			break;
 		}
 		local.add( badge );
 		unlock(badge);
@@ -973,8 +994,9 @@ public class Badges {
 			global.contains( Badge.VICTORY_ROGUE ) &&
 			global.contains( Badge.VICTORY_HUNTRESS ) &&
 			global.contains( Badge.VICTORY_ROSECAT ) &&
-		   global.contains( Badge.VICTORY_NEARL ) &&
-			global.contains( Badge.VICTORY_CHEN )
+		    global.contains( Badge.VICTORY_NEARL ) &&
+			global.contains( Badge.VICTORY_CHEN )&&
+			global.contains(Badge.VICTORY_RABBIT)
 		){
 
 			badge = Badge.VICTORY_ALL_CLASSES;
@@ -1348,6 +1370,18 @@ public class Badges {
 					badge = Badge.CHEN_CHAMPION3;
 				}
 				break;
+			case RABBIT:
+				if (challenges >= 1) {
+					badge = Badge.RABBIT_CHAMPION1;
+				}
+				if (challenges >= 3) {
+					unlock(badge);
+					badge = Badge.RABBIT_CHAMPION2;
+				}
+				if (challenges >= 6) {
+					unlock(badge);
+					badge = Badge.RABBIT_CHAMPION3;
+				}
 			default:
 				break;
 		}
