@@ -221,8 +221,20 @@ public enum Talent {
 	//Chen T4-SMASTER
 	UP_EX1(307,4), UP_EX2(308,4), UP_EX3(309,4), AWAKE(310,3),
 	//Chen T4-SPSHOT
-	TAC_SHOT(311,4), TECHNICAL(312,4), ZERO_RANGE_SHOT(313,4), BF_RULL(314,3);
+	TAC_SHOT(311,4), TECHNICAL(312,4), ZERO_RANGE_SHOT(313,4), BF_RULL(314,3),
 
+	//Rabbit T1
+	FULL_STRENGTH(320),DEDUCTION(321),INDUCTION(322),SIMPLE_COMBO(323),
+	//Rabbit T2
+	INSTANT_MEAL(324),LICK_BLOOD(325),SINISTER_ARROW(326),OCCULTISM(327),VIOLINIST(328),
+	//RABBIT T3
+	FAST_TRIM(329,3),SLEEVE_TRICK(330,3),
+	//Rabbit T4
+	NOCTURNE(331,3),MINUET(332,3),
+	//Killer T3
+	LINGER_ON(333,3),ACCURATE_HIT(334,3),DANGER_DANCE(335,3),
+	//Killer T4
+	RHAPSODY(336,4),SYMPHONY(337,4);
 
 
 	public static class ImprovisedProjectileCooldown extends FlavourBuff{};
@@ -760,6 +772,8 @@ public enum Talent {
 			case CHEN:
 				Collections.addAll(tierTalents, PARING, POLICE_SENSE, CONTINUOUS_CUT, ZANTETSUKEN, GENIUS);
 				break;
+			case RABBIT:
+				Collections.addAll(tierTalents,FULL_STRENGTH,DEDUCTION,INDUCTION,SIMPLE_COMBO,GENIUS);
 		}
 		for (Talent talent : tierTalents){
 			talents.get(0).put(talent, 0);
@@ -788,6 +802,9 @@ public enum Talent {
 				break;
 			case CHEN:
 				Collections.addAll(tierTalents, LATENT_MEAL, SCOLDING, DRAGONS_SWORD, GALLOP, TARGET_FOCUSING);
+				break;
+			case RABBIT:
+				Collections.addAll(tierTalents,INSTANT_MEAL,LICK_BLOOD,SINISTER_ARROW,OCCULTISM,VIOLINIST);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -818,6 +835,9 @@ public enum Talent {
 			case CHEN:
 				Collections.addAll(tierTalents);
 				break;
+			case RABBIT:
+				Collections.addAll(tierTalents,FAST_TRIM,SLEEVE_TRICK);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -846,6 +866,9 @@ public enum Talent {
 				break;
 			case CHEN:
 				Collections.addAll(tierTalents);
+				break;
+			case RABBIT:
+				Collections.addAll(tierTalents,NOCTURNE,MINUET);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -929,6 +952,9 @@ public enum Talent {
 			case SPSHOOTER:
 				Collections.addAll(tierTalents, GORGEOUS_VACATION, TAC_DEF, PINPOINT, FRUGALITY, WATER_PLAY);
 				break;
+			case KILLER:
+				Collections.addAll(tierTalents, LINGER_ON,ACCURATE_HIT,DANGER_DANCE);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -996,6 +1022,9 @@ public enum Talent {
 				break;
 			case SPSHOOTER:
 				Collections.addAll(tierTalents, TAC_SHOT, TECHNICAL, ZERO_RANGE_SHOT, BF_RULL);
+				break;
+			case KILLER:
+				Collections.addAll(tierTalents, RHAPSODY,SYMPHONY);
 				break;
 		}
 		for (Talent talent : tierTalents){
