@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 
@@ -35,15 +36,28 @@ public class Regeneration extends Buff {
 	}
 	
 	private static final float REGENERATION_DELAY = 10;
+
+	private static int finalregamt = 1;
 	
 	@Override
 	public boolean act() {
+
+		if(Dungeon.hero.hasTalent(Talent.LICK_BLOOD)){
+			if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==1){
+				if(Dungeon.hero.HP*3<Dungeon.hero.HT) finalregamt = 3;
+				else if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 2;
+			}else if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==2){
+				if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 3;
+				else if(Dungeon.hero.HP*4<Dungeon.hero.HT*3) finalregamt = 2;
+			}
+		}
+
 		if (target.isAlive()) {
 
 			if (target.HP < regencap() && !((Hero)target).isStarving()) {
 				LockedFloor lock = target.buff(LockedFloor.class);
 				if (target.HP > 0 && (lock == null || lock.regenOn())) {
-					target.HP += 1;
+					target.HP += finalregamt;
 					if (target.HP == regencap()) {
 						((Hero) target).resting = false;
 					}

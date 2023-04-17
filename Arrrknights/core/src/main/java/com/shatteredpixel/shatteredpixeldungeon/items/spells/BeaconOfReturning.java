@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
@@ -144,6 +145,8 @@ public class BeaconOfReturning extends Spell {
 			Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
 			if (buff != null) buff.detach();
 			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+			if (buff != null) buff.detach();
+			buff = Dungeon.hero.buff(RabbitTime.class);
 			if (buff != null) buff.detach();
 			
 			InterlevelScene.mode = InterlevelScene.Mode.RETURN;

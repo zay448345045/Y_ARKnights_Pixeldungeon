@@ -105,6 +105,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SakuraSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ShadowFirmament;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SnowHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SwordofArtorius;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.LightKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.NormalMagazine;
@@ -196,6 +197,8 @@ import java.util.concurrent.TimeoutException;
 			new LuckyLeaf().collect();
 			new Behemoth().collect();
 			new TomeOfMastery().collect();
+			new PotionOfExperience().quantity(39).collect();
+			new PotionOfStrength().quantity(10).collect();
 		}
 	}
 
@@ -416,7 +419,9 @@ import java.util.concurrent.TimeoutException;
 
 	 private void initRabbit(Hero hero)
 	 {
-		 (hero.belongings.weapon = new RhodesSword()).identify();
+		 (hero.belongings.weapon = new Violin()).identify();
+
+		 new RhodesSword().identify().collect();
 
 		 new PotionBandolier().collect();
 		 Dungeon.LimitedDrops.POTION_BANDOLIER.drop();

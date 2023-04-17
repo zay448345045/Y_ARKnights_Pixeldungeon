@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Oblivion;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RadiantKnight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Shadows;
@@ -1036,6 +1037,8 @@ public abstract class Level implements Bundlable {
 			
 			Swiftthistle.TimeBubble bubble =
 					Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+
+			RabbitTime rabbittime = Dungeon.hero.buff(RabbitTime.class);
 			
 			if (bubble != null){
 				
@@ -1053,7 +1056,15 @@ public abstract class Level implements Bundlable {
 				
 				timeFreeze.setDelayedPress(cell);
 				
-			} else {
+			}else if(rabbittime != null){
+
+				Sample.INSTANCE.play(Assets.Sounds.TRAP);
+
+				discover(cell);
+
+				rabbittime.setDelayedPress(cell);
+			}
+			else {
 
 				if (Dungeon.hero.pos == cell) {
 					Dungeon.hero.interrupt();

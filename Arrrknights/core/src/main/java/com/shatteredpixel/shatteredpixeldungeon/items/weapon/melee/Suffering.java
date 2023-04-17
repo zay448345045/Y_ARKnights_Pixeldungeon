@@ -216,6 +216,7 @@ public class Suffering extends MeleeWeapon {
         if (buff != null) buff.detach();
         buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
         if (buff != null) buff.detach();
+        //rabbittime在这里不取消的话会怎么样？
 
         if (Dungeon.hero.buff(Bonk.BonkBuff.class) != null) Buff.detach(Dungeon.hero, Bonk.BonkBuff.class);
 

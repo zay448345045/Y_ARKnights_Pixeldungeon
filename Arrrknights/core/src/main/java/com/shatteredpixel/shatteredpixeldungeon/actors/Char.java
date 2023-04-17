@@ -59,6 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SeethingBurst;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
@@ -110,6 +111,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.KollamSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ThermiteBlade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RhodesSword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ImmortalShield;//change from budding
@@ -421,7 +423,22 @@ public abstract class Char extends Actor {
 								return super.act();
 							}
 						}.attachTo(this);
-				}}
+					}
+				}
+			}
+
+			if(!enemy.isAlive()){
+				if(this instanceof Hero){
+						new FlavourBuff(){
+							{actPriority = VFX_PRIO;}
+							public boolean act() {
+								if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.KILLER){
+									Buff.affect(target, RabbitTime.class).add(5f);
+								}
+								return super.act();
+							}
+						}.attachTo(this);
+				}
 			}
 
 			if (!enemy.isAlive() && visibleFight) {
@@ -485,7 +502,15 @@ public abstract class Char extends Actor {
 			return false;
 		} else if (acuStat >= INFINITE_ACCURACY){
 			return true;
+		}else if(attacker instanceof Hero){//直接把天赋效果加在这里可能有点太丑陋了
+			if(Dungeon.hero.pointsInTalent(Talent.SIMPLE_COMBO)==2){
+				if(Dungeon.hero.buff(Violin.InstantViolin.class)!=null){
+					return true;
+				}
+			}
 		}
+
+
 
 		float acuRoll;
 		if (attacker.buff(LuckyLeaf.LuckyLeafBuff.class) != null){

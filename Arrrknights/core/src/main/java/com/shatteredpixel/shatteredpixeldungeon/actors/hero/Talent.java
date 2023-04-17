@@ -55,7 +55,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -68,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.audio.Sample;
@@ -249,6 +252,7 @@ public enum Talent {
 	public static class SilShotCooldown extends FlavourBuff{};
 	public static class PushAttackCooldown extends FlavourBuff{};
 	public static class foodIdentify extends CounterBuff{};
+	public static class rabbitIdentify extends CounterBuff{};
 	public static class BlazeBurstBuff extends CounterBuff{};
 	public static class ScoldingCooldown extends FlavourBuff{};
 
@@ -516,6 +520,10 @@ public enum Talent {
 
 		if (hero.subClass == HeroSubClass.DESTROYER)
 			Buff.affect(hero, Rose_Force.class, 10f);
+
+		if(hero.hasTalent(INSTANT_MEAL)){
+			Buff.affect(hero, Swiftthistle.TimeBubble.class).bufftime(Dungeon.hero.pointsInTalent(INSTANT_MEAL)+1);
+		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
@@ -662,6 +670,13 @@ public enum Talent {
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
 		}
+
+		if( (item instanceof Scroll || item instanceof Potion) && !item.isIdentified() && hero.hasTalent(DEDUCTION) ) {
+			if(!item.collected && Random.Int(4) <= hero.pointsInTalent(DEDUCTION)) {//这么写应该是50%和75%吧(心虚
+				item.identify();
+				hero.sprite.emitter().burst(Speck.factory(Speck.QUESTION),1);
+			}
+		}
 	}
 
 	//note that IDing can happen in alchemy scene, so be careful with VFX here
@@ -727,6 +742,15 @@ public enum Talent {
 					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG, 0.75f, 1.2f);
 				}
 				enemy.buff(FollowupStrikeTracker.class).detach();
+			}
+		}
+
+		if(hero.hasTalent(FULL_STRENGTH) && enemy instanceof Mob){
+			if (!hero.isHunger() && !hero.isStarving()){
+				dmg += Random.IntRange(1000 , hero.pointsInTalent(Talent.FULL_STRENGTH)+1000);
+			}
+			else if(hero.isHunger() && !hero.isStarving()){
+				dmg += Random.IntRange(100 , hero.pointsInTalent(Talent.FULL_STRENGTH)+100);
 			}
 		}
 

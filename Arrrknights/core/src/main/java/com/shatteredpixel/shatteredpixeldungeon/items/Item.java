@@ -52,7 +52,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Noisemaker;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.ShockBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.ShrapnelBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.WoollyBomb;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -106,6 +108,8 @@ public class Item implements Bundlable {
 	
 	public boolean cursed;
 	public boolean cursedKnown;
+
+	public boolean collected;
 	
 	// Unique items persist through revival
 	public boolean unique = false;
@@ -137,6 +141,18 @@ public class Item implements Bundlable {
 							this.identify();
 							GLog.i(Messages.get(Hero.class, "identify"));
 							Buff.detach(Dungeon.hero, Talent.foodIdentify.class);
+						}
+					}
+				}
+			}
+
+			if (hero.hasTalent(Talent.INDUCTION)) {
+				if (this.isIdentified() == false && Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
+					if (Dungeon.hero.buff(Talent.rabbitIdentify.class).count() > 7 - (hero.pointsInTalent(Talent.INDUCTION) * 2)) {
+						if (this instanceof MeleeWeapon || this instanceof Wand || this instanceof Ring || this instanceof Armor ||this instanceof Potion ||this instanceof Scroll) {
+							this.identify();
+							GLog.i(Messages.get(Hero.class, "rabbitidentify"));
+							Buff.detach(Dungeon.hero, Talent.rabbitIdentify.class);
 						}
 					}
 				}
@@ -247,6 +263,7 @@ public class Item implements Bundlable {
 		}
 
 		items.add( this );
+		collected = true;
 		Dungeon.quickslot.replacePlaceholder(this);
 		updateQuickslot();
 		Collections.sort( items, itemComparator );
@@ -437,6 +454,21 @@ public class Item implements Bundlable {
 			if (!isIdentified()) Talent.onItemIdentified(Dungeon.hero, this);
 		}
 
+		if (Dungeon.hero.hasTalent(Talent.INDUCTION)) {
+			if (Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
+				if (Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
+					Talent.rabbitIdentify counter = Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);
+					counter.countUp(1);
+				}
+			} else Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);
+			Talent.rabbitIdentify counter = Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);
+			counter.countUp(1);
+
+			if (counter.count() > 7 - (Dungeon.hero.pointsInTalent(Talent.SMARTMEALS) * 2)) {
+				GLog.i(Messages.get(Hero.class, "preparerabbitidentify"));
+			}
+		}
+
 		levelKnown = true;
 		cursedKnown = true;
 		
@@ -532,6 +564,7 @@ public class Item implements Bundlable {
 	private static final String CURSED			= "cursed";
 	private static final String CURSED_KNOWN	= "cursedKnown";
 	private static final String QUICKSLOT		= "quickslotpos";
+	private static final String COLLECTED		= "collected";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -540,6 +573,7 @@ public class Item implements Bundlable {
 		bundle.put( LEVEL_KNOWN, levelKnown );
 		bundle.put( CURSED, cursed );
 		bundle.put( CURSED_KNOWN, cursedKnown );
+		bundle.put( COLLECTED, collected );
 		if (Dungeon.quickslot.contains(this)) {
 			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
 		}
@@ -559,6 +593,8 @@ public class Item implements Bundlable {
 		}
 		
 		cursed	= bundle.getBoolean( CURSED );
+
+		collected = bundle.getBoolean(COLLECTED);
 
 		//only want to populate slot on first load.
 		if (Dungeon.hero == null) {

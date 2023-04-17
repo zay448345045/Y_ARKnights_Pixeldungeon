@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -149,7 +150,8 @@ public class Mimic extends Mob {
 		Dungeon.hero.sprite.operate(pos);
 		if (Dungeon.hero.invisible <= 0
 				&& Dungeon.hero.buff(Swiftthistle.TimeBubble.class) == null
-				&& Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class) == null){
+				&& Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class) == null
+				&&Dungeon.hero.buff(RabbitTime.class)==null){
 			return doAttack(Dungeon.hero);
 		} else {
 			sprite.idle();

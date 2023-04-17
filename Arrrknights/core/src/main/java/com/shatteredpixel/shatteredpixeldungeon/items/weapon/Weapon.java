@@ -497,13 +497,18 @@ abstract public class Weapon extends KindOfWeapon {
 			float multi = 1f;
 			if (Dungeon.hero.belongings.weapon instanceof ThermiteBlade && Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
 				if (Dungeon.hero.belongings.getItem(IsekaiItem.class).isEquipped(Dungeon.hero))
-					multi *= 3;
+					multi += 2;
 			}
 			if (Dungeon.hero.belongings.getItem(RingOfMistress.class) != null){
 				if (Dungeon.hero.belongings.getItem(RingOfMistress.class).isEquipped(Dungeon.hero)){
-					multi *= RingOfMistress.SPMultiplier(Dungeon.hero);
+					multi += RingOfMistress.SPMultiplier(Dungeon.hero)-1;
 				}
 			}
+
+			if(Dungeon.hero.hasTalent(Talent.OCCULTISM)){
+				multi += Dungeon.hero.pointsInTalent(Talent.OCCULTISM)*0.5;
+			}
+
 			return multi;
 		}
 

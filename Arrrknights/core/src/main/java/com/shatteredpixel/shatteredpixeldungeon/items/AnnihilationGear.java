@@ -334,6 +334,8 @@ public class Spriteex extends MissileWeapon {
         if (buff != null) buff.detach();
         buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
         if (buff != null) buff.detach();
+        //rabbittime在这里不取消的话会怎么样？
+        //反正也用不了歼灭战装备吧大概
 
         Invisibility.dispel();
         if (Dungeon.hero.buff(MeatPower_Stewed.class) != null) curUser.spendAndNext(0.7f);

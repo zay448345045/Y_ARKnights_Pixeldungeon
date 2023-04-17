@@ -289,6 +289,8 @@ public class CursedWand {
 					buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 					if (buff != null) buff.detach();
 
+					//rabbittime在这里不取消的话会怎么样？
+
 					InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 					InterlevelScene.returnDepth = depth;
 					InterlevelScene.returnPos = -1;

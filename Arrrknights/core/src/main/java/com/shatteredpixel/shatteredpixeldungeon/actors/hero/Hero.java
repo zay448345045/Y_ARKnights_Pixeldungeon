@@ -63,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LanceCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RadiantKnight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
@@ -201,6 +202,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.PatriotSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SHISHIOH;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SanktaBet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Suffering;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -873,6 +875,11 @@ public class Hero extends Char {
             }
         }
 
+        if(buff(Violin.InstantViolin.class)!=null){
+            buff(Violin.InstantViolin.class).detach();
+            return 0;
+        }
+
         if (belongings.weapon != null) {
 
             return belongings.weapon.speedFactor(this);
@@ -897,6 +904,12 @@ public class Hero extends Char {
         Swiftthistle.TimeBubble bubble = buff(Swiftthistle.TimeBubble.class);
         if (bubble != null) {
             bubble.processTime(time);
+            return;
+        }
+
+        RabbitTime rabbittime = buff(RabbitTime.class);
+        if(rabbittime != null) {
+            rabbittime.processTime(time);
             return;
         }
 
@@ -2264,6 +2277,9 @@ public class Hero extends Char {
 
     public boolean isStarving() {
         return Buff.affect(this, Hunger.class).isStarving();
+    }
+    public boolean isHunger(){
+        return Buff.affect(this, Hunger.class).isHunger();
     }
 
     @Override
