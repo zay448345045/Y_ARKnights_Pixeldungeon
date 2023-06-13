@@ -49,6 +49,15 @@ public class ROR2item extends KindofMisc {
         return true;
     }
 
+    @Override
+    public int value() {
+        int price = 200;
+        if (price < 1) {
+            price = 1;
+        }
+        return price;
+    }
+
     protected ROR2item.ROR2itemBuff passiveBuff() {
         return null;
     }

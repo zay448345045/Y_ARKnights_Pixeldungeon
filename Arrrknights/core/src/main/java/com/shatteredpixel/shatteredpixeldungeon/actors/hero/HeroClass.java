@@ -71,6 +71,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -203,6 +204,7 @@ import java.util.concurrent.TimeoutException;
 			new PotionOfExperience().identify().quantity(39).collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new ExplosiveSpear().quantity(99).collect();
+			new Recycler().collect();
 		}
 	}
 
