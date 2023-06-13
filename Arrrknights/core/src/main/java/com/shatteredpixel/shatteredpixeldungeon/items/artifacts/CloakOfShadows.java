@@ -73,7 +73,7 @@ public class CloakOfShadows extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if ((isEquipped( hero ))
+		if ((isEquipped( hero ))|| hero.hasTalent(Talent.LIGHT_CLOAK)
 				&& !cursed && (charge > 0 || activeBuff != null)) {
 			actions.add(AC_STEALTH);
 		}
@@ -95,12 +95,12 @@ public class CloakOfShadows extends Artifact {
 		if (action.equals( AC_STEALTH )) {
 
 			if (activeBuff == null){
-				if (!isEquipped(hero)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
+				if (!isEquipped(hero)&& !hero.hasTalent(Talent.LIGHT_CLOAK)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
 				else if (cursed)       GLog.i( Messages.get(this, "cursed") );
 				else if (charge <= 0) {
 					if (hero.hasTalent(Talent.LIGHT_CLOAK) && hero.buff(Talent.LightClockCooldown.class) == null) {
 						Buff.affect(hero, Camouflage.class, 10f);
-						Buff.affect(hero, Talent.LightClockCooldown.class, 250 - hero.pointsInTalent(Talent.LIGHT_CLOAK) * 50);
+						Buff.affect(hero, Talent.LightClockCooldown.class, 100);
 						hero.spend( 1f );
 						hero.sprite.operate( hero.pos );
 					}
@@ -141,6 +141,15 @@ public class CloakOfShadows extends Artifact {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
+			if (!collect || !hero.hasTalent(Talent.LIGHT_CLOAK)){
+				if (activeBuff != null){
+					activeBuff.detach();
+					activeBuff = null;
+				}
+			} else {
+				activate(hero);
+			}
+
 			return true;
 		} else
 			return false;
@@ -150,7 +159,8 @@ public class CloakOfShadows extends Artifact {
 	public boolean collect( Bag container ) {
 		if (super.collect(container)){
 			if (container.owner instanceof Hero
-					&& passiveBuff == null){
+					&& passiveBuff == null
+					&& ((Hero) container.owner).hasTalent(Talent.LIGHT_CLOAK)){
 				activate((Hero) container.owner);
 			}
 			return true;
@@ -184,6 +194,7 @@ public class CloakOfShadows extends Artifact {
 	@Override
 	public void charge(Hero target, float amount) {
 		if (charge < chargeCap) {
+			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_CLOAK)/3f;
 			partialCharge += 0.25f*amount;
 			if (partialCharge >= 1){
 				partialCharge--;
@@ -240,6 +251,9 @@ public class CloakOfShadows extends Artifact {
 					float chargeToGain = (1f / turnsToCharge);
 					if (Dungeon.hero.hasTalent(Talent.CLOCK_UPGRADE)) {
 						chargeToGain *= 1 + Dungeon.hero.pointsInTalent(Talent.CLOCK_UPGRADE) * 0.05f;
+					}
+					if (!isEquipped(Dungeon.hero)){
+						chargeToGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.LIGHT_CLOAK)/3f;
 					}
 					partialCharge += chargeToGain;
 				}

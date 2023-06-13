@@ -27,7 +27,8 @@ public class Glassate extends Food {
                 || Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)
                 || Dungeon.hero.hasTalent(Talent.FASTMEAL)
                 || Dungeon.hero.hasTalent(Talent.COMBAT_MEAL)
-                || Dungeon.hero.hasTalent(Talent.LATENT_MEAL)){
+                || Dungeon.hero.hasTalent(Talent.LATENT_MEAL)
+                || Dungeon.hero.hasTalent(Talent.INSTANT_MEAL)){
             return TIME_TO_EAT - 1;
         } else {
             return TIME_TO_EAT + 1;

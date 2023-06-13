@@ -341,7 +341,7 @@ public class StatusPane extends Component {
 			bg = new Image( Assets.Interfaces.MENU, 2, 2, 13, 11 );
 			add( bg );
 			
-			journalIcon = new Image( Assets.Interfaces.MENU, 31, 0, 11, 7);
+			journalIcon = new Image( Assets.Interfaces.MENU, 32, 1, 11, 7);
 			add( journalIcon );
 			
 			keyIcon = new KeyDisplay();

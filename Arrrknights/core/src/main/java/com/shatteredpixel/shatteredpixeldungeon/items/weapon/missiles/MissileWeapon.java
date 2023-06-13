@@ -274,6 +274,13 @@ abstract public class MissileWeapon extends Weapon {
 	
 	@Override
 	public float castDelay(Char user, int dst) {
+		if (user instanceof Hero && ((Hero) user).hasTalent(Talent.SINISTER_ARROW) && Dungeon.hero.justMoved){
+			if (Dungeon.hero.pointsInTalent(Talent.SINISTER_ARROW) == 1){
+				return speedFactor( user )/2;
+			}else if (Dungeon.hero.pointsInTalent(Talent.SINISTER_ARROW) == 2){
+				return 0;
+			}
+		}
 		return speedFactor( user );
 	}
 	
@@ -454,7 +461,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public boolean isUpgradable() {
-		return false;
+		return true;
 	}
 
 	@Override

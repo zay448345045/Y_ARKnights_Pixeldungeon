@@ -92,7 +92,7 @@ public class MagesStaff extends MeleeWeapon {
 			return  3*(tier+1) +    // 6 + 1
 					lvl*(tier);   //scaling unaffected
 		else
-		return  4*(tier+1) +    //8 + 2
+			return  4*(tier+1) +    //8 + 2
 				lvl*(tier+1);   //scaling unaffected
 	}
 
@@ -170,8 +170,8 @@ public class MagesStaff extends MeleeWeapon {
 			}
 		}
 
-		if (wand.curCharges >= wand.maxCharges && attacker instanceof Hero && Random.Int(8) < ((Hero) attacker).pointsInTalent(Talent.EXCESS_CHARGE)){
-			Buff.affect(attacker, Barrier.class).setShield(buffedLvl()*2);
+		if (attacker instanceof Hero && Random.Int(8) < ((Hero) attacker).pointsInTalent(Talent.EXCESS_CHARGE)){
+			Buff.affect(attacker, Barrier.class).setShield(wand.curCharges*2);
 		}
 
 		if (attacker instanceof Hero && ((Hero) attacker).hasTalent(Talent.MYSTICAL_CHARGE)){

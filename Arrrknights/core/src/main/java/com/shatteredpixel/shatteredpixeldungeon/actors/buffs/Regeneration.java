@@ -46,11 +46,13 @@ public class Regeneration extends Buff {
 			if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==1){
 				if(Dungeon.hero.HP*3<Dungeon.hero.HT) finalregamt = 3;
 				else if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 2;
+				else finalregamt = 1;
 			}else if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==2){
 				if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 3;
 				else if(Dungeon.hero.HP*4<Dungeon.hero.HT*3) finalregamt = 2;
+				else finalregamt = 1;
 			}
-		}
+		}//这写的nm什么玩意啊
 
 		if (target.isAlive()) {
 

@@ -276,6 +276,10 @@ public class Closure extends NPC {
                                             GameScene.show(new WndMessage(Messages.get(Closure.class, "fail_skin15", Dungeon.hero.heroClass.title())));
                                         }});}
                                 break;*/
+                            case 16: // 제껄룩 스킨
+                                    if(!Badges.isUnlocked(Badges.Badge.SKIN_LILITH)) {Badges.validatelilithskin();}
+                                    sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "hi"));
+                                    break;
 
                         }
                     }

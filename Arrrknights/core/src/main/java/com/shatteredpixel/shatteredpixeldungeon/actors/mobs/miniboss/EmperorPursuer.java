@@ -125,7 +125,7 @@ public class EmperorPursuer extends Mob {
 
     protected void zap() {
         if (enemy == null) return;
-            spend( 1f );
+        spend( 1f );
             if (hit(this, enemy, true)) {
 
                 if (enemy.buff(Weakness.class) != null && enemy.buff(Vulnerable.class) != null && enemy.buff(Hex.class) != null) {

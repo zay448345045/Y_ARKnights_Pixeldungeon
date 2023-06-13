@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DangerDanceBonus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dream;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ExecutMode;
@@ -427,13 +428,23 @@ public abstract class Char extends Actor {
 				}
 			}
 
+			if(Dungeon.hero.subClass == HeroSubClass.KILLER){
+				if(this instanceof Hero){
+					Buff.affect(this, DangerDanceBonus.class).add(4-Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+				}else if(enemy instanceof Hero){
+					Buff.affect(enemy,DangerDanceBonus.class).decrease(Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+				}
+			}
 			if(!enemy.isAlive()){
 				if(this instanceof Hero){
 						new FlavourBuff(){
 							{actPriority = VFX_PRIO;}
 							public boolean act() {
 								if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.KILLER){
-									Buff.affect(target, RabbitTime.class).add(5f);
+									Buff.affect(target, RabbitTime.class).add(0.5f);
+									if(Dungeon.hero.hasTalent(Talent.LINGER_ON)){
+										Buff.affect(target, RabbitTime.class).add(Dungeon.hero.pointsInTalent(Talent.LINGER_ON)*0.5f);
+									}
 								}
 								return super.act();
 							}
@@ -483,6 +494,15 @@ public abstract class Char extends Actor {
 					Buff.affect(enemy, FlametailSword.FlametaillBuff.class);
 				}
 			}
+
+			if(Dungeon.hero.subClass == HeroSubClass.KILLER){
+				if(enemy instanceof Hero){
+					Buff.affect(enemy, RabbitTime.class).add(0.2f+Dungeon.hero.pointsInTalent(Talent.LINGER_ON)*0.1f);
+					Buff.affect(enemy, DangerDanceBonus.class).add(4-Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+				}else if(this instanceof Hero){
+					Buff.affect(this,DangerDanceBonus.class).decrease(Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+				}
+			}
 			
 			return false;
 			
@@ -502,9 +522,16 @@ public abstract class Char extends Actor {
 			return false;
 		} else if (acuStat >= INFINITE_ACCURACY){
 			return true;
-		}else if(attacker instanceof Hero){//直接把天赋效果加在这里可能有点太丑陋了
+		}
+
+		if(attacker instanceof Hero){
 			if(Dungeon.hero.pointsInTalent(Talent.SIMPLE_COMBO)==2){
 				if(Dungeon.hero.buff(Violin.InstantViolin.class)!=null){
+					return true;
+				}
+			}
+			if(Dungeon.hero.hasTalent(Talent.ACCURATE_HIT)){
+				if(Dungeon.hero.buff(RabbitTime.class)!=null){
 					return true;
 				}
 			}
@@ -710,11 +737,14 @@ public abstract class Char extends Actor {
 		if (!Dummy.kkdy && !ImmortalShield.isImmortal(this))HP -= dmg;//change from budding
 		
 		if (sprite != null) {
-			sprite.showStatus(HP > HT / 2 ?
+			if(AntiMagic.RESISTS.contains(src.getClass())){
+				sprite.showStatus(CharSprite.MAGENTA,
+						Integer.toString(dmg + shielded));
+			}else{sprite.showStatus(HP > HT / 2 ?
 							CharSprite.WARNING :
 							CharSprite.NEGATIVE,
-					Integer.toString(dmg + shielded));
-		}
+					Integer.toString(dmg + shielded));}
+		}//显示伤害数字部分
 
 		if (HP < 0) HP = 0;
 

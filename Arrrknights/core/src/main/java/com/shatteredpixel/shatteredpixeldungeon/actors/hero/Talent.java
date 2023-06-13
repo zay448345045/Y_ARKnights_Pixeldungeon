@@ -618,7 +618,7 @@ public enum Talent {
 
 	public static void onArtifactUsed( Hero hero ){
 		if (hero.hasTalent(ENHANCED_RINGS)){
-			Buff.prolong(hero, EnhancedRings.class, 2.5f*hero.pointsInTalent(ENHANCED_RINGS));
+			Buff.prolong(hero, EnhancedRings.class, 5f*hero.pointsInTalent(ENHANCED_RINGS));
 		}
 	}
 
@@ -747,10 +747,10 @@ public enum Talent {
 
 		if(hero.hasTalent(FULL_STRENGTH) && enemy instanceof Mob){
 			if (!hero.isHunger() && !hero.isStarving()){
-				dmg += Random.IntRange(1000 , hero.pointsInTalent(Talent.FULL_STRENGTH)+1000);
+				dmg += Random.IntRange(0 , hero.pointsInTalent(Talent.FULL_STRENGTH)+1);
 			}
 			else if(hero.isHunger() && !hero.isStarving()){
-				dmg += Random.IntRange(100 , hero.pointsInTalent(Talent.FULL_STRENGTH)+100);
+				dmg += Random.IntRange(0 , hero.pointsInTalent(Talent.FULL_STRENGTH));
 			}
 		}
 

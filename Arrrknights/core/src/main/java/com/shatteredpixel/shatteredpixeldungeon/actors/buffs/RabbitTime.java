@@ -1,6 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -11,13 +13,13 @@ import com.watabou.utils.Bundle;
 import java.util.ArrayList;
 
 public class RabbitTime extends Buff{
-    public static float DURATION	= 5f;
     {
         type = buffType.POSITIVE;
         announced = true;
     }
 
     private float left;
+    private float totaltime = 0;
     ArrayList<Integer> presses = new ArrayList<>();
 
     @Override
@@ -27,14 +29,15 @@ public class RabbitTime extends Buff{
 
     @Override
     public float iconFadePercent() {
-        return Math.max(0, (5 - visualcooldown()) / 5);
+        return Math.max(0, (5 - left) / 5);
     }
 
     public void add(float time){
-        DURATION += time;
+        left += time;
+        totaltime += time;
     }
 
-    public void bufftime(float time) { left = time;}
+    public void set(float time) { left = time;}
 
 
 
@@ -47,15 +50,15 @@ public class RabbitTime extends Buff{
 
     @Override
     public String desc() {
-        return Messages.get(this, "desc", dispTurns(DURATION));
+        return Messages.get(this, "desc", dispTurns(left));
     }
 
     public void processTime(float time){
 
-        DURATION -= time;
+        left -= time;
 
         //use 1/1,000 to account for rounding errors
-        if (DURATION < -0.001f){
+        if (left < -0.001f){
             detach();
         }
 
@@ -75,6 +78,9 @@ public class RabbitTime extends Buff{
 
     @Override
     public void detach(){
+        if(Dungeon.hero.pointsInTalent(Talent.ACCURATE_HIT)==2){
+            Buff.affect(Dungeon.hero,Bless.class,totaltime);
+        }
         super.detach();
         triggerPresses();
         target.next();

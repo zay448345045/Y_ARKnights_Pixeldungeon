@@ -254,6 +254,7 @@ public class Badges {
 		SKIN_TOMIMI(300, false, true),
 		SKIN_FRANKA(302, false, true),
 		SKIN_WEEDY(303, false, true),
+		SKIN_LILITH(304,false,true),
 
 		//기타
 		SUPPORT;
@@ -1143,6 +1144,10 @@ public class Badges {
 		Badge badge = Badge.SKIN_FRANKA;
 		displayBadge( badge );
 	}
+	public static void validatelilithskin() {
+		Badge badge = Badge.SKIN_LILITH;
+		displayBadge( badge );
+	}
 
 	// 0.3.2버전의 스킨 관련 처리로 인해 추가된 구문입니다. 추후 필요없어질 수 있습니다.
 	public static void allskindestroy() {
@@ -1195,6 +1200,9 @@ public class Badges {
 		if(isUnlocked(Badge.SKIN_WEEDY)) {
 			global.remove(Badge.SKIN_WEEDY);
 		}
+		if(isUnlocked(Badge.SKIN_LILITH)) {
+			global.remove(Badge.SKIN_LILITH);
+		}
 
 		if (Badges.isUnlocked(Badge.SUPPORT)) {
 			Badges.validatetaluskin();
@@ -1211,6 +1219,7 @@ public class Badges {
 			Badges.validateschwazrskin();
 			Badges.validatearchskin();
 			Badges.validatefrankaskin();
+			Badges.validatelilithskin();
 		}
 
 		// 배지 파괴 후, 조건에 맞는 배지는 다시 획득합니다.
@@ -1229,6 +1238,7 @@ public class Badges {
 		if(!Badges.isUnlocked(Badge.SKIN_ARCH) && Badges.isUnlocked(Badge.GREY_CHAMPION1)) { Badges.validatearchskin();}
 		if(!Badges.isUnlocked(Badge.SKIN_TOMIMI) && Badges.isUnlocked(Badge.GAVIAL_PART2)) { Badges.validatetomimiskin();}
 		if(!Badges.isUnlocked(Badge.SKIN_FRANKA) && Badges.isUnlocked(Badge.USE_HEALBOX)) { Badges.validatefrankaskin();}
+		if(!Badges.isUnlocked(Badge.SKIN_LILITH)) { Badges.validatelilithskin();}
 	}
 
 	//necessary in order to display the happy end badge in the surface scene
@@ -1595,7 +1605,7 @@ public class Badges {
 
 	private static final Badge[][] skinBadgeReplacements = new Badge[][]{
 			{Badge.SKIN_BABOSKADI}, {Badge.SKIN_TALU}, {Badge.SKIN_NOVA}, {Badge.SKIN_SUSUU}, {Badge.SKIN_GRN}, {Badge.SKIN_LAPPY}, {Badge.SKIN_JESSI}, {Badge.SKIN_LEAF},
-			{Badge.SKIN_ASTESIA}, {Badge.SKIN_SPECTER}, {Badge.SKIN_MUDROCK}, {Badge.SKIN_SCHWARZ}, {Badge.SKIN_ARCH}, {Badge.SKIN_TOMIMI}, {Badge.SKIN_FRANKA}, {Badge.SKIN_WEEDY}
+			{Badge.SKIN_ASTESIA}, {Badge.SKIN_SPECTER}, {Badge.SKIN_MUDROCK}, {Badge.SKIN_SCHWARZ}, {Badge.SKIN_ARCH}, {Badge.SKIN_TOMIMI}, {Badge.SKIN_FRANKA}, {Badge.SKIN_WEEDY},{Badge.SKIN_LILITH}
 	};
 	
 	public static List<Badge> filterReplacedBadges( List<Badge> badges ) {

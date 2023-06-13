@@ -464,7 +464,7 @@ public class Item implements Bundlable {
 			Talent.rabbitIdentify counter = Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);
 			counter.countUp(1);
 
-			if (counter.count() > 7 - (Dungeon.hero.pointsInTalent(Talent.SMARTMEALS) * 2)) {
+			if (counter.count() >= 7 - (Dungeon.hero.pointsInTalent(Talent.SMARTMEALS) * 2)) {
 				GLog.i(Messages.get(Hero.class, "preparerabbitidentify"));
 			}
 		}

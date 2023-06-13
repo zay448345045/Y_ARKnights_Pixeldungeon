@@ -410,6 +410,7 @@ public class ItemSpriteSheet {
 	public static final int AMMO2 		= MISSILE_WEP+19;
 	public static final int LISKARM_DOLL 		= MISSILE_WEP+20;
 	public static final int HOLY_KNIFE 		= MISSILE_WEP+21;
+	public static final int EXPLOSIVE_SPEAR 		= MISSILE_WEP+22;
 	public static final int EX44 		= MISSILE_WEP+30;
 	
 	static{
@@ -440,6 +441,7 @@ public class ItemSpriteSheet {
 		assignItemRect(AMMO2,      16, 16);
 		assignItemRect(LISKARM_DOLL,      16, 16);
 		assignItemRect(HOLY_KNIFE,      16, 16);
+		assignItemRect(EXPLOSIVE_SPEAR,      16, 16);
 		assignItemRect(EX44,         24, 24);
 	}
 	
@@ -949,6 +951,13 @@ public class ItemSpriteSheet {
 
 	static{
 		assignItemRect(LUCKYLEAF,        16, 16);
+	}
+
+	private static final int ROR2ITEMS_YELLOW       =                                   xy(1, 33);  //16 slots
+	public static final int PERFORATOR        = ROR2ITEMS_YELLOW +0;
+
+	static{
+		assignItemRect(PERFORATOR,        16, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

@@ -56,7 +56,7 @@ public class WoundsofWar extends Artifact {
                 else if (cursed) GLog.i(Messages.get(this, "cursed"));
                 else if (charge < 1) GLog.i(Messages.get(this, "no_charge"));
                 else {
-                    PathFinder.buildDistanceMap( hero.pos, BArray.not( Dungeon.level.solid, null ), 4 );
+                    PathFinder.buildDistanceMap( hero.pos, BArray.not( Dungeon.level.solid, null ), 5 );
                     for (int i = 0; i < PathFinder.distance.length; i++) {
                         if (PathFinder.distance[i] < Integer.MAX_VALUE) {
                             Char ch = Actor.findChar(i);
@@ -71,7 +71,7 @@ public class WoundsofWar extends Artifact {
                     updateQuickslot();
 
                     exp+=50;
-                    if (exp >= 50 + level() * 50 && level() < levelCap) upgrade();
+                    if (exp >= 50 + (level()/3) * 50 && level() < levelCap) upgrade();
 
                     curUser.spendAndNext(1f);
                 }
@@ -102,7 +102,7 @@ public class WoundsofWar extends Artifact {
             if (activeBuff == null && (lock == null || lock.regenOn()) && !(Dungeon.depth >= 26 && Dungeon.depth <= 30)) {
                 if (charge < chargeCap && !cursed) {
                     // 200 턴마다 100%충전 (기본)
-                    float chargeGain = 0.0045f + level() * 0.0001f;
+                    float chargeGain = 0.0045f + level() * 0.0002f;
                     chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
                     partialCharge += chargeGain;
 

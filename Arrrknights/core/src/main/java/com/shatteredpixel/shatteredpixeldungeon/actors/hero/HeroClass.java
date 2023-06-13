@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -107,6 +108,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SnowHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SwordofArtorius;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ExplosiveSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.LightKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.NormalMagazine;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
@@ -196,9 +198,11 @@ import java.util.concurrent.TimeoutException;
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			new LuckyLeaf().collect();
 			new Behemoth().collect();
+			new Perforator().collect();
 			new TomeOfMastery().collect();
-			new PotionOfExperience().quantity(39).collect();
-			new PotionOfStrength().quantity(10).collect();
+			new PotionOfExperience().identify().quantity(39).collect();
+			new PotionOfStrength().identify().quantity(10).collect();
+			new ExplosiveSpear().quantity(99).collect();
 		}
 	}
 
@@ -420,6 +424,7 @@ import java.util.concurrent.TimeoutException;
 	 private void initRabbit(Hero hero)
 	 {
 		 (hero.belongings.weapon = new Violin()).identify();
+		 hero.belongings.weapon.activate(hero);
 
 		 new RhodesSword().identify().collect();
 
@@ -472,6 +477,7 @@ import java.util.concurrent.TimeoutException;
 				case 14: return Assets.Sprites.TMM;
 				case 15: return Assets.Sprites.FRK;
 				case 16: return Assets.Sprites.WED;
+				case 17: return Assets.Sprites.LILITH;
 			}
 		}
 		switch (this) {

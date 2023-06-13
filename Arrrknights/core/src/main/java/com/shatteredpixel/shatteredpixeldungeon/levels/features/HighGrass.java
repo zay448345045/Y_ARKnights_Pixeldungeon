@@ -138,6 +138,9 @@ public class HighGrass {
 					Buff.prolong(hero, Invisibility.class, 3 + hero.belongings.armor.buffedLvl()/2);
 					Sample.INSTANCE.play( Assets.Sounds.MELD );
 				}
+				if(hero.hasTalent(Talent.NOCTURNE)){
+					Buff.prolong(hero, Invisibility.class, hero.pointsInTalent(Talent.NOCTURNE)*2-1);
+				}
 			}
 			
 		}

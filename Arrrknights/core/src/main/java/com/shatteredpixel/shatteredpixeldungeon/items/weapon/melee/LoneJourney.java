@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -26,7 +27,7 @@ public class LoneJourney extends MeleeWeapon {
         defaultAction = AC_SP;
 
         tier = 5;
-        RCH = 2;
+        RCH = 3;
     }
 
     //Essentially it's a tier 4 weapon, with tier 3 base max damage, and tier 5 scaling.
@@ -53,6 +54,8 @@ public class LoneJourney extends MeleeWeapon {
             Buff.detach(attacker, JourneyBuff_heavy.class);
             Buff.affect(defender, Silence.class, 2f);
         }
+
+        defender.damage(defender.drRoll()/2, WandOfMagicMissile.class);//这样应该能算是魔法伤害吧大概
 
         SPCharge(20);
         updateQuickslot();

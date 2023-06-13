@@ -22,8 +22,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Shuriken extends MissileWeapon {
@@ -45,7 +49,12 @@ public class Shuriken extends MissileWeapon {
 	
 	@Override
 	public float speedFactor(Char owner) {
-		if (owner instanceof Hero && ((Hero) owner).justMoved)  return 0;
+		if (owner instanceof Hero && ((Hero) owner).justMoved){
+			if(Dungeon.hero.hasTalent(Talent.SINISTER_ARROW)){
+				Buff.affect(Dungeon.hero,Swiftthistle.TimeBubble.class).bufftime(Dungeon.hero.pointsInTalent(Talent.SINISTER_ARROW));
+			}
+			return 0;
+		}
 		else                                                    return super.speedFactor(owner);
 	}
 }

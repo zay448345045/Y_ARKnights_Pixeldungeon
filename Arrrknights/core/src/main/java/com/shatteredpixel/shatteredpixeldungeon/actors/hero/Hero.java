@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
@@ -48,6 +49,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CloserangeShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DangerDanceBonus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Fury;
@@ -83,10 +86,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.Bonk;
@@ -183,10 +188,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -261,6 +268,7 @@ public class Hero extends Char {
     public static final int TOMIMI = 14;
     public static final int FRANKA = 15;
     public static final int WEEDY = 16;
+    public static final int LILITH = 17;
 
     {
         actPriority = HERO_PRIO;
@@ -645,6 +653,25 @@ public class Hero extends Char {
             evasion *= 1f + (0.1f * pointsInTalent(Talent.GALEFORCE));
         }
 
+        if(hasTalent(Talent.SYMPHONY)){
+            int enemies = 0;
+            for(Char ch : Dungeon.level.mobs) {
+                if (Dungeon.level.adjacent(ch.pos, pos) && canAttack(ch)) {
+                    enemies++;
+                }
+            }
+            evasion *= 1f + enemies*pointsInTalent(Talent.SYMPHONY)*0.05f;
+
+            if (!Dungeon.level.adjacent(enemy.pos, pos)) {
+                evasion *= 1.5f;
+            }
+        }
+
+        if(buff(DangerDanceBonus.class)!=null){
+            DangerDanceBonus DDbonus = buff(DangerDanceBonus.class);
+            evasion+= DDbonus.getcount();
+        }
+
         return Math.round(evasion);
     }
 
@@ -700,7 +727,7 @@ public class Hero extends Char {
         if (block != null) dr += block.blockingRoll();
 
         if (buff(HoldFast.class) != null) {
-            dr += Random.NormalIntRange(0, 2 * pointsInTalent(Talent.HOLD_FAST));
+            dr += 2 * pointsInTalent(Talent.HOLD_FAST);
         }
 
         if (buff(IronSkin.class) != null) dr += Random.NormalIntRange(0,2);
@@ -1675,6 +1702,38 @@ public class Hero extends Char {
                     ch.damage(dmg, Bomb.class);
                 }
 
+            }
+        }
+
+        if(buff(Perforator.PerforatorBuff.class)!=null){
+            if(Random.IntRange(0,10)==0){
+                enemy.damage(damage*5, WandOfLightning.class);
+                Camera.main.shake( 2, 0.3f );
+                this.sprite.centerEmitter().burst( SparkParticle.FACTORY, 15 );
+                enemy.sprite.parent.addToFront( new Lightning( this.sprite.center(), enemy.sprite.center(), null ) );
+                Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
+            }
+        }
+
+        if(Dungeon.hero.hasTalent(Talent.SLEEVE_TRICK)){
+            if(Random.Int(100)<Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*5){
+                switch (Random.Int(5)){
+                    case 0:
+                        Buff.affect(enemy, Bleeding.class).set(Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+                        break;
+                    case 1:
+                        Buff.affect(enemy, Blindness.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+                        break;
+                    case 2:
+                        Buff.affect(enemy, Cripple.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+                        break;
+                    case 3:
+                        Buff.affect(enemy, Vertigo.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+                        break;
+                    case 4:
+                        Buff.affect(enemy, Paralysis.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+                        break;
+                }
             }
         }
 

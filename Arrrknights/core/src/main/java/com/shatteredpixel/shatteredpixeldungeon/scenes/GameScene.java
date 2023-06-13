@@ -181,68 +181,69 @@ public class GameScene extends PixelScene {
 			return;
 		}
 
-		if (Dungeon.depth == 5)
-		{
-			Music.INSTANCE.play(Assets.Music.BOSS, true);
-		}
-		else if (Dungeon.depth == 10)
-		{
-			Music.INSTANCE.play(Assets.Music.BOSS2, true);
-		}
-		else if (Dungeon.depth == 15)
-		{
-			if (Dungeon.hero.CharSkin== Hero.MUDROCK) 	Music.INSTANCE.play(Assets.Music.BOSS3_MUDROCKSP, true);
-			else Music.INSTANCE.play(Assets.Music.BOSS3, true);
-		}
-		else if (Dungeon.depth == 20)
-		{
-			Music.INSTANCE.play(Assets.Music.BOSS4, true);
-		}
-		else if (Dungeon.depth == 25 || Dungeon.depth == 26)
-		{
-			Music.INSTANCE.play(Assets.Music.BOSS5, true);
-		}
-		else if (Dungeon.depth == 35)
-		{
-			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.BOSS6_SARGON, true);
-			else Music.INSTANCE.play(Assets.Music.BOSS6_SIESTA, true);
-		}
-		else if (Dungeon.depth == 40)
-		{
-			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.BOSS6_SARGON2, true);
-			else Music.INSTANCE.play(Assets.Music.BOSS6_SIESTA2, true);
-		}
-		else if (Dungeon.depth >= 1 && Dungeon.depth < 5)
-		{
-			Music.INSTANCE.play(Assets.Music.GAME, true);
-		}
-		else if (Dungeon.depth >= 6 && Dungeon.depth < 10)
-		{
-			Music.INSTANCE.play(Assets.Music.GAME2, true);
-		}
-		else if (Dungeon.depth >= 11 && Dungeon.depth < 15)
-		{
-			Music.INSTANCE.play(Assets.Music.GAME3, true);
-		}
-		else if (Dungeon.depth >= 16 && Dungeon.depth < 20)
-		{
-			Music.INSTANCE.play(Assets.Music.GAME4, true);
-		}
-		else if (Dungeon.depth >= 21 && Dungeon.depth < 25)
-		{
-			Music.INSTANCE.play(Assets.Music.GAME5, true);
-		}
-		else if (Dungeon.depth >= 27 && Dungeon.depth < 31) {
-			Music.INSTANCE.play(Assets.Music.RHODOS, true);
-		}
-		else if (Dungeon.depth >= 31 && Dungeon.depth < 35) {
-			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.GAME6_SARGON1, true);
-			else Music.INSTANCE.play(Assets.Music.GAME6_SIESTA, true);
-		}
-		else if (Dungeon.depth >= 36 && Dungeon.depth < 40) {
-			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.GAME6_SARGON2, true);
-			else Music.INSTANCE.play(Assets.Music.GAME6_SIESTA2, true);
-		}
+//		if (Dungeon.depth == 5)
+//		{
+//			Music.INSTANCE.play(Assets.Music.BOSS, true);
+//		}
+//		else if (Dungeon.depth == 10)
+//		{
+//			Music.INSTANCE.play(Assets.Music.BOSS2, true);
+//		}
+//		else if (Dungeon.depth == 15)
+//		{
+//			if (Dungeon.hero.CharSkin== Hero.MUDROCK) 	Music.INSTANCE.play(Assets.Music.BOSS3_MUDROCKSP, true);
+//			else Music.INSTANCE.play(Assets.Music.BOSS3, true);
+//		}
+//		else if (Dungeon.depth == 20)
+//		{
+//			Music.INSTANCE.play(Assets.Music.BOSS4, true);
+//		}
+//		else if (Dungeon.depth == 25 || Dungeon.depth == 26)
+//		{
+//			Music.INSTANCE.play(Assets.Music.BOSS5, true);
+//		}
+//		else if (Dungeon.depth == 35)
+//		{
+//			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.BOSS6_SARGON, true);
+//			else Music.INSTANCE.play(Assets.Music.BOSS6_SIESTA, true);
+//		}
+//		else if (Dungeon.depth == 40)
+//		{
+//			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.BOSS6_SARGON2, true);
+//			else Music.INSTANCE.play(Assets.Music.BOSS6_SIESTA2, true);
+//		}
+//		else if (Dungeon.depth >= 1 && Dungeon.depth < 5)
+//		{
+//			Music.INSTANCE.play(Assets.Music.GAME, true);
+//		}
+//		else if (Dungeon.depth >= 6 && Dungeon.depth < 10)
+//		{
+//			Music.INSTANCE.play(Assets.Music.GAME2, true);
+//		}
+//		else if (Dungeon.depth >= 11 && Dungeon.depth < 15)
+//		{
+//			Music.INSTANCE.play(Assets.Music.GAME3, true);
+//		}
+//		else if (Dungeon.depth >= 16 && Dungeon.depth < 20)
+//		{
+//			Music.INSTANCE.play(Assets.Music.GAME4, true);
+//		}
+//		else if (Dungeon.depth >= 21 && Dungeon.depth < 25)
+//		{
+//			Music.INSTANCE.play(Assets.Music.GAME5, true);
+//		}
+//		else if (Dungeon.depth >= 27 && Dungeon.depth < 31) {
+//			Music.INSTANCE.play(Assets.Music.RHODOS, true);
+//		}
+//		else if (Dungeon.depth >= 31 && Dungeon.depth < 35) {
+//			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.GAME6_SARGON1, true);
+//			else Music.INSTANCE.play(Assets.Music.GAME6_SIESTA, true);
+//		}
+//		else if (Dungeon.depth >= 36 && Dungeon.depth < 40) {
+//			if (Dungeon.extrastage_Gavial) Music.INSTANCE.play(Assets.Music.GAME6_SARGON2, true);
+//			else Music.INSTANCE.play(Assets.Music.GAME6_SIESTA2, true);
+//		}
+		Music.INSTANCE.play(Assets.Music.GAME, true);
 
 		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
@@ -535,13 +536,11 @@ public class GameScene extends PixelScene {
 				}
 				if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.bossLevel() && Dungeon.depth == 25)
 				{
-					if (Dungeon.mboss4 == 1 || Dungeon.mboss9 == 1 || Dungeon.mboss14 == 1 || Dungeon.mboss19 == 1)
-					GLog.n(Messages.get(this, "miniboss"));
+					if (Dungeon.mboss4 == 1 || Dungeon.mboss9 == 1 || Dungeon.mboss14 == 1 || Dungeon.mboss19 == 1)  GLog.n(Messages.get(this, "miniboss"));
 				}
 				if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.depth == 25 && Dungeon.bossLevel())
 				{
-					if (Dungeon.mboss4 == 1 && Dungeon.mboss9 == 1 && Dungeon.mboss14 == 1 && Dungeon.mboss19 == 1)
-					GLog.n(Messages.get(this, "miniboss_final"));
+					if (Dungeon.mboss4 == 1 && Dungeon.mboss9 == 1 && Dungeon.mboss14 == 1 && Dungeon.mboss19 == 1) GLog.n(Messages.get(this, "miniboss_final"));
 				}
 
 				int spawnersAbove = Statistics.spawnersAlive;

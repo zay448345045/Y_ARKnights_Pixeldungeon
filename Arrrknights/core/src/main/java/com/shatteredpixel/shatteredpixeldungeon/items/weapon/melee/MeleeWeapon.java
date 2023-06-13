@@ -76,6 +76,9 @@ public class MeleeWeapon extends Weapon {
 			if (exStr > 0) {
 				damage += Random.IntRange( 0, exStr );
 			}
+			if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
+				damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
+			}
 		}
 		
 		return damage;
@@ -91,7 +94,8 @@ public class MeleeWeapon extends Weapon {
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Weapon.class, "too_heavy");
 			} else if (Dungeon.hero.STR() > STRReq()){
-				info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
+				if (curUser.hasTalent(Talent.STRONGMAN)) info += " " + Messages.get(Weapon.class, "excess_str", (Dungeon.hero.STR() - STRReq())* (curUser.pointsInTalent(Talent.STRONGMAN)+1));
+				else info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
 			}
 		} else {
 			info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_unknown", tier, min(0), max(0), STRReq(0));

@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -12,6 +13,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Chains;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -43,10 +46,14 @@ public class Violin extends MeleeWeapon {
 
         usesTargeting = true;
         defaultAction = AC_CAST;
+
+        chargeCap=1;
+        charge=1;
     }
 
-    private int arts = 2;
-    private int artscap = 4;
+    private float particalArts = 0;
+
+    protected Buff passiveBuff;
 
     @Override
     public int max(int lvl) {
@@ -56,13 +63,12 @@ public class Violin extends MeleeWeapon {
 
     @Override
     public int proc(Char attacker, Char defender, int damage) {
-        SPCharge(1);
         return super.proc(attacker, defender, damage);
     }
 
     public void SPCharge(int n) {
-        arts += n;
-        if (artscap < arts) arts = artscap;
+        charge += n;
+        if (chargeCap < charge) charge = chargeCap;
         updateQuickslot();
     }
 
@@ -98,22 +104,21 @@ public class Violin extends MeleeWeapon {
 
     @Override
     public String status() {
-        return arts + "/" + artscap;
+        return charge + "/" + chargeCap;
     }
 
-    private static final String CHARGE = "arts";
+    private static final String PARTICALARTS = "particalarts";
 
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
-        bundle.put(CHARGE, arts);
+        bundle.put( PARTICALARTS , particalArts );
     }
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
         super.restoreFromBundle(bundle);
-        if (artscap > 0) arts = Math.min(artscap, bundle.getInt(CHARGE));
-        else arts = bundle.getInt(CHARGE);
+        particalArts = bundle.getFloat(PARTICALARTS);
     }
 
     private CellSelector.Listener caster = new CellSelector.Listener(){
@@ -136,7 +141,7 @@ public class Violin extends MeleeWeapon {
                     if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
                         Buff.affect(curUser,InstantViolin.class);
                     }
-                    arts -= 1;
+                    charge -= 1;
                     updateQuickslot();
                 }
                 throwSound();
@@ -177,6 +182,13 @@ public class Violin extends MeleeWeapon {
         }
 
         final int pulledPos = bestPos;
+        int pullDistance = Dungeon.level.distance(enemy.pos, pulledPos);
+        if (pullDistance > Dungeon.hero.lvl) {
+            GLog.w( Messages.get(this, "not_long_enough") );
+            return;
+        } else {
+            updateQuickslot();
+        }
 
         hero.busy();
         hero.sprite.parent.add(new Chains(hero.sprite.center(), enemy.sprite.center(), new Callback() {
@@ -187,7 +199,7 @@ public class Violin extends MeleeWeapon {
                         Dungeon.level.occupyCell(enemy);
                         Dungeon.observe();
                         GameScene.updateFog();
-                        hero.spendAndNext(1f);
+                        //hero.spendAndNext(1f);
                     }
                 }));
                 hero.next();
@@ -195,7 +207,81 @@ public class Violin extends MeleeWeapon {
         }));
     }
 
-    public static class InstantViolin extends Buff {
+    public static class InstantViolin extends Buff {}
 
+    public class ViolinBuff extends Buff{}
+
+    protected ViolinBuff passiveBuff(){return new violinRecharge();}
+
+    @Override
+    public void activate(Char ch){
+        passiveBuff = passiveBuff();
+        passiveBuff.attachTo(ch);
+    }
+
+    @Override
+    public boolean collect( Bag container ) {
+        if (super.collect(container)){
+            if (container.owner instanceof Hero
+                    && passiveBuff == null)
+            {
+                activate((Hero) container.owner);
+            }
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    @Override
+    protected void onDetach() {
+        if (passiveBuff != null){
+            passiveBuff.detach();
+            passiveBuff = null;
+        }
+    }
+
+    public void charge(Hero target, float amount) {
+        if (charge < chargeCap) {
+            if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_CLOAK)/3f;
+            particalArts += 0.25f*amount;
+            if (particalArts >= 1){
+                particalArts--;
+                charge++;
+                updateQuickslot();
+            }
+        }
+    }
+
+    public class violinRecharge extends ViolinBuff{
+        @Override
+        public boolean act() {
+            chargeCap=1+Dungeon.hero.lvl/10;
+            if (charge < chargeCap) {
+                LockedFloor lock = target.buff(LockedFloor.class);
+                if ((lock == null || lock.regenOn())  && !(Dungeon.depth >= 26 && Dungeon.depth <= 30)) {
+                    float missing = (chargeCap - charge);
+                    float turnsToCharge = (50f - Dungeon.hero.lvl/5f - missing - Dungeon.hero.pointsInTalent(Talent.VIOLINIST)*2f);
+                    float chargeToGain = (1f / turnsToCharge);
+                    particalArts += chargeToGain;
+                }
+
+                if (particalArts >= 1) {
+                    charge++;
+                    particalArts -= 1;
+                    if (charge == chargeCap){
+                        particalArts = 0;
+                    }
+
+                }
+            } else
+                particalArts = 0;
+
+            updateQuickslot();
+
+            spend( TICK );
+
+            return true;
+        }
     }
 }

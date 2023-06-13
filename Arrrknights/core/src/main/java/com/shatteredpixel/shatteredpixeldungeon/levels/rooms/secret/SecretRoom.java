@@ -44,7 +44,7 @@ public abstract class SecretRoom extends SpecialRoom {
 
 	//this is the number of secret rooms per region (whole value),
 	// plus the chance for an extra secret room (fractional value)
-	private static float[] baseRegionSecrets = new float[]{2f, 2.25f, 2.5f, 2.75f, 3.0f, 0f, 3.0f, 3.0f};
+	private static float[] baseRegionSecrets = new float[]{4f, 4f, 4f, 4f, 4f, 0f, 4f, 4f};
 	private static int[] regionSecretsThisRun = new int[8];
 	
 	public static void initForRun(){
