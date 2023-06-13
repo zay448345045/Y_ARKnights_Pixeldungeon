@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class Recycler extends ROR2equipment{
     {
         tier = 5;
-        image = ItemSpriteSheet.ARTIFACT_THORNS;
+        image = ItemSpriteSheet.RECYCLER;
         charge = 100;
         partialCharge = 0;
         chargeCap = 100;

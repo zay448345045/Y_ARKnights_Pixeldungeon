@@ -945,9 +945,16 @@ public class ItemSpriteSheet {
 		assignItemRect(ICE_BOX,   	  16, 16);
 	}
 
-	private static final int ROR2ITEMS       =                                   xy(1, 32);  //16 slots
-	public static final int LUCKYLEAF        = ROR2ITEMS +0;
-	public static final int BEHEMOTH        = ROR2ITEMS +2;
+	private static final int ROR2ITEMS_RED       =                                   xy(1, 32);  //16 slots
+	public static final int LUCKYLEAF        = ROR2ITEMS_RED +0;
+	public static final int BEHEMOTH        = ROR2ITEMS_RED +2;
+
+	static{
+		assignItemRect(LUCKYLEAF,        16, 16);
+	}
+
+	private static final int ROR2ITEMS_ORANGE       =                                   xy(17, 32);  //16 slots
+	public static final int RECYCLER        = ROR2ITEMS_ORANGE +0;
 
 	static{
 		assignItemRect(LUCKYLEAF,        16, 16);
