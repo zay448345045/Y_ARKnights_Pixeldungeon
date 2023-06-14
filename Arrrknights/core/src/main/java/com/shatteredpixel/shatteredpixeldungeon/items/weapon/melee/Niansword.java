@@ -28,7 +28,7 @@ public class Niansword extends MeleeWeapon {
 
     @Override
     public int defenseFactor( Char owner ) {
-        return 2+buffedLvl() / 2;    // 0 + 0.
+        return 2+buffedLvl();    // 0 + 0.
     }
 
     public String statsInfo(){

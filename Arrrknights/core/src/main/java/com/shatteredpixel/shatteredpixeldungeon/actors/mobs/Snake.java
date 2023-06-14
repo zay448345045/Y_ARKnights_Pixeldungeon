@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BabyBugSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -66,6 +67,15 @@ public class Snake extends Mob {
 	public int attackSkill( Char target ) {
 		return 10;
 	}
+	@Override
+	public int defenseSkill(Char enemy) {
+		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) {
+			if (enemySeen && state != SLEEPING && paralysed == 0) {
+				return INFINITE_EVASION;
+			}
+		}
+		return 35;
+	}
 
 	private static int dodges = 0;
 
@@ -84,7 +94,9 @@ public class Snake extends Mob {
 		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) {
 			if ((enemySeen && state != SLEEPING && paralysed == 0)
 					&& ((src instanceof Wand && enemy == Dungeon.hero)
-					|| (src instanceof Char && enemy == src))) {
+					|| (src instanceof Char && enemy == src)
+					|| (src instanceof Weapon)
+			)) {
 				GLog.n(Messages.get(this, "noticed"));
 			} else {
 				super.damage(dmg, src);

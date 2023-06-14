@@ -1776,7 +1776,7 @@ public class Hero extends Char {
 
         if (belongings.weapon instanceof Niansword) {
             int dmg = Random.IntRange(0, 3 + belongings.weapon.buffedLvl() * 3);
-            int dr = Math.max(enemy.drRoll(), enemy.drRoll());
+            int dr = Math.min(enemy.drRoll(), enemy.drRoll());
             enemy.damage(dmg - dr, this);
         }
 

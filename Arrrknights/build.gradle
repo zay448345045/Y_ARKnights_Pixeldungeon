@@ -15,7 +15,7 @@ allprojects {
         appPackageName = 'com.shatteredpixel.yesterdaypixel'
 
         appVersionCode = 230613
-        appVersionName = 'Y-0.4.5-EX9-230613'
+        appVersionName = 'Y-0.4.5-EX9-230614'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
