@@ -73,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -213,6 +214,7 @@ import java.util.concurrent.TimeoutException;
 			new R4C().identify().collect();
 			new Castlebreaker().identify().collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
+			new TitanicKnurl().collect();
 		}
 	}
 

@@ -189,6 +189,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
@@ -353,6 +354,10 @@ public class Hero extends Char {
 
         if (buff(ElixirOfMight.HTBoost.class) != null) {
             HT += buff(ElixirOfMight.HTBoost.class).boost();
+        }
+
+        if (buff(TitanicKnurl.TitanicKnurlBuff.class) != null) {
+            HT += 40;
         }
 
         if (boostHP) {

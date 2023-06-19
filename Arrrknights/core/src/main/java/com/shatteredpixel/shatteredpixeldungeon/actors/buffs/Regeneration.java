@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 
 public class Regeneration extends Buff {
 	
@@ -41,18 +42,18 @@ public class Regeneration extends Buff {
 	
 	@Override
 	public boolean act() {
-
+		finalregamt = 1;
 		if(Dungeon.hero.hasTalent(Talent.LICK_BLOOD)){
 			if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==1){
-				if(Dungeon.hero.HP*3<Dungeon.hero.HT) finalregamt = 3;
-				else if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 2;
-				else finalregamt = 1;
+				if(Dungeon.hero.HP*3<Dungeon.hero.HT) finalregamt += 2;
+				else if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt ++;
 			}else if(Dungeon.hero.pointsInTalent(Talent.LICK_BLOOD)==2){
-				if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt = 3;
-				else if(Dungeon.hero.HP*4<Dungeon.hero.HT*3) finalregamt = 2;
-				else finalregamt = 1;
+				if(Dungeon.hero.HP*2<Dungeon.hero.HT) finalregamt += 2;
+				else if(Dungeon.hero.HP*4<Dungeon.hero.HT*3) finalregamt ++;
 			}
 		}//这写的nm什么玩意啊
+
+		if(Dungeon.hero.buffs(TitanicKnurl.TitanicKnurlBuff.class) != null) finalregamt += 1;
 
 		if (target.isAlive()) {
 

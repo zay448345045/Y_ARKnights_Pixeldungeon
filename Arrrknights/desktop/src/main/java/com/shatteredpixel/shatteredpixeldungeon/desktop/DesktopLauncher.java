@@ -80,12 +80,12 @@ public class DesktopLauncher {
 					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
 							title + " wasn't able to initialize it's graphics display, sorry about that!\n\n" +
 									"This usually happens when a computer's graphics card does not support OpenGL 2.0+, or has misconfigured graphics drivers.\n\n" +
-									"If you're certain the game should be working on your computer, feel free to message the developer (Evan@ShatteredPixel.com)\n\n" +
+									"If you're certain the game should be working on your computer, feel free to message the developer (github.com/SPnova2013)\n\n" +
 									"version: " + Game.version, "ok", "error", false);
 				} else {
 					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
 							title + " has run into an error it can't recover from and has crashed, sorry about that!\n\n" +
-									"If you could, please email this error message to the developer (Evan@ShatteredPixel.com):\n\n" +
+									"If you could, please send this error message to the developer (github.com/SPnova2013):\n\n" +
 									"version: " + Game.version + "\n" +
 									exceptionMsg,
 							"ok", "error", false);
@@ -119,14 +119,14 @@ public class DesktopLauncher {
 		String basePath = "";
 		if (SharedLibraryLoader.isWindows) {
 			if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-				basePath = "Application Data/.shatteredpixel/Tomorrow RogueNight/";
+				basePath = "Application Data/.shatteredpixel/Yesterday RogueNight/";
 			} else {
-				basePath = "AppData/Roaming/.shatteredpixel/Tomorrow RogueNight/";
+				basePath = "AppData/Roaming/.shatteredpixel/Yesterday RogueNight/";
 			}
 		} else if (SharedLibraryLoader.isMac) {
-			basePath = "Library/Application Support/Tomorrow RogueNight/";
+			basePath = "Library/Application Support/Yesterday RogueNight/";
 		} else if (SharedLibraryLoader.isLinux) {
-			basePath = ".shatteredpixel/Tomorrow-RogueNight/";
+			basePath = ".shatteredpixel/Yesterday-RogueNight/";
 		}
 
 		//copy over prefs from old file location from legacy desktop codebase

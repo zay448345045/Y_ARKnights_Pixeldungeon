@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -67,15 +68,7 @@ public class Snake extends Mob {
 	public int attackSkill( Char target ) {
 		return 10;
 	}
-	@Override
-	public int defenseSkill(Char enemy) {
-		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) {
-			if (enemySeen && state != SLEEPING && paralysed == 0) {
-				return INFINITE_EVASION;
-			}
-		}
-		return 35;
-	}
+
 
 	private static int dodges = 0;
 
