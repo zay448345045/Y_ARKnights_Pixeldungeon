@@ -7,7 +7,7 @@ public class TitanicKnurl extends ROR2item{
     {
         tier = 4;
 
-        image = ItemSpriteSheet.HEAMYO;
+        image = ItemSpriteSheet.TITANICKNURL;
     }
 
     @Override
