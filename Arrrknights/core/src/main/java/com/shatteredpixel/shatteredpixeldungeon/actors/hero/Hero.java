@@ -357,7 +357,7 @@ public class Hero extends Char {
         }
 
         if (buff(TitanicKnurl.TitanicKnurlBuff.class) != null) {
-            HT += 40;
+            HT += 20;
         }
 
         if (boostHP) {

@@ -12,9 +12,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Firewall;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.FrostLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Jessica;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Gglow;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Lilith;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Phantom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_PhantomShadow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Npc_Astesia;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.RlyehText;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.SkinModel;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Weedy;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -178,6 +180,7 @@ public class NewRhodesLevel2 extends Level {
         Closure.spawn(this, 3682);
         SkinModel.spawn(this, 3751);
         Firewall.spawn(this, 3882);
+        NPC_Lilith.spawn(this, 3970);
         Weedy.spawn(this, 3971);
         Dummy.spawn(this, 4286);
         Dummy.spawn(this, 4354);
@@ -186,6 +189,7 @@ public class NewRhodesLevel2 extends Level {
         FrostLeaf.spawn(this, 4305);
         NPC_Phantom.spawn(this, 3010);
         NPC_Gglow.spawn(this, 3964);
+        RlyehText.spawn(this,4297);
 
         if (Random.Int(2) == 0) Npc_Astesia.spawn(this, 3004);
         else Npc_Astesia.spawn(this, 3218);

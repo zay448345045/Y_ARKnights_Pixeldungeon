@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MeatCutlet;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.ingredients.Egg;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
@@ -446,9 +447,9 @@ import java.util.concurrent.TimeoutException;
 		 new VelvetPouch().collect();
 		 Dungeon.LimitedDrops.VELVET_POUCH.drop();
 
-		 new PotionOfStrength().identify();
-		 new PotionOfExperience().identify();
-		 new ScrollOfUpgrade().identify();
+		 new PotionOfInvisibility().identify();
+		 new PotionOfHaste().identify();
+		 new ScrollOfIdentify().identify();
 
 		 SkillBook skillB;
 		 skillB = new SkillBook();

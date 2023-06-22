@@ -59,6 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.AquaBlast;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.OathofFire;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.PurgatoryKnife;
@@ -169,7 +170,7 @@ public class ShopRoom extends SpecialRoom {
 			if (Random.Int(5) < 4) { w = (MeleeWeapon) Generator.random(Generator.wepTiers[1]); }
 	     	else w = new Enfild();
 			itemsToSpawn.add( Generator.random(Generator.misTiers[1]).quantity(2).identify() );
-            itemsToSpawn.add( new LeatherArmor().identify() );
+            itemsToSpawn.add( new LeatherArmor().inscribe().upgrade(2).identify() );
 			if (Dungeon.isChallenged(Challenges.NO_HERBALISM)) itemsToSpawn.add( new StoneOfAugmentation() );
 			break;
 			
@@ -177,19 +178,19 @@ public class ShopRoom extends SpecialRoom {
 			w = (MeleeWeapon) Generator.random(Generator.wepTiers[2]);
 			itemsToSpawn.add(new Ragesawblade().quantity(1).identify());
 			itemsToSpawn.add(new PurgatoryKnife().quantity(1).identify());
-			itemsToSpawn.add( new MailArmor().identify() );
+			itemsToSpawn.add( new MailArmor().inscribe().upgrade(2).identify() );
 			break;
 			
 		case 16:
 			w = (MeleeWeapon) Generator.random(Generator.wepTiers[3]);
 			itemsToSpawn.add( Generator.random(Generator.misTiers[3]).quantity(2).identify() );
-			itemsToSpawn.add( new ScaleArmor().identify() );
+			itemsToSpawn.add( new ScaleArmor().inscribe().upgrade(2).identify() );
 			break;
 
 		case 20: case 21:
 			w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 			itemsToSpawn.add( Generator.random(Generator.misTiers[4]).quantity(2).identify() );
-			itemsToSpawn.add( new PlateArmor().identify() );
+			itemsToSpawn.add( new PlateArmor().inscribe().upgrade(2).identify() );
 			itemsToSpawn.add( new Torch() );
 			itemsToSpawn.add( new Torch() );
 			if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) itemsToSpawn.add( new Torch() );
@@ -199,14 +200,14 @@ public class ShopRoom extends SpecialRoom {
 			if (Dungeon.extrastage_Gavial) {
 				w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 				itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
-				itemsToSpawn.add(new PlateArmor().identify());
+				itemsToSpawn.add(new PlateArmor().inscribe().upgrade(2).identify());
 				itemsToSpawn.add(new PotionOfHolyFuror());
 				break;
 			}
 			else {
 				w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 				itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
-				itemsToSpawn.add(new PlateArmor().identify());
+				itemsToSpawn.add(new PlateArmor().inscribe().upgrade(2).identify());
 				itemsToSpawn.add(new ScrollOfUpgrade());
 				itemsToSpawn.add(new ScrollOfUpgrade());
 				break;
@@ -216,7 +217,7 @@ public class ShopRoom extends SpecialRoom {
 				if (Dungeon.extrastage_Gavial) {
 					w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 					itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
-					itemsToSpawn.add(new PlateArmor().identify());
+					itemsToSpawn.add(new PlateArmor().inscribe().upgrade(2).identify());
 					itemsToSpawn.add(new PortableCover());
 					itemsToSpawn.add(new PortableCover());
 					break;
@@ -227,9 +228,10 @@ public class ShopRoom extends SpecialRoom {
 				itemsToSpawn.add( new AquaBlast().quantity(6));
 				break;
 		}
-		w.enchant(null);
+		w.enchant();
 		w.cursed = false;
-		w.level(0);
+		w.level(2);
+		w.levelKnown = true;
 		w.identify();
 		itemsToSpawn.add(w);
 		
@@ -313,11 +315,11 @@ public class ShopRoom extends SpecialRoom {
 		switch (Random.Int(10)){
 			case 0:
 				rare = Generator.random( Generator.Category.WAND );
-				rare.level( 0 );
+				rare.level( 2 );
 				break;
 			case 1:
 				rare = Generator.random(Generator.Category.RING);
-				rare.level( 0 );
+				rare.level( 2 );
 				break;
 			case 2:
 				rare = Generator.random( Generator.Category.ARTIFACT );
@@ -327,6 +329,7 @@ public class ShopRoom extends SpecialRoom {
 		}
 		rare.cursed = false;
 		rare.cursedKnown = true;
+		rare.levelKnown = true;
 		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) itemsToSpawn.add( rare );
 
 		//hard limit is 63 items + 1 shopkeeper, as shops can't be bigger than 8x8=64 internally

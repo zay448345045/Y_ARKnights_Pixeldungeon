@@ -30,6 +30,11 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.MeatCutlet;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -101,8 +106,11 @@ public class Shopkeeper extends NPC {
 
 	//shopkeepers are greedy!
 	public static int sellPrice(Item item){
-		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) return item.value() * 5 * (Dungeon.depth / 5 + 1);
-		return item.value() * 7 * (Dungeon.depth / 5 + 1);
+		int price;
+		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) price = item.value() * 5 * (Dungeon.depth / 5 + 1);
+		else price = item.value() * 7 * (Dungeon.depth / 5 + 1);
+		if(item instanceof MeleeWeapon || item instanceof Armor || item instanceof Wand || item instanceof Ring) price /= 2;
+		return price;
 	}
 	
 	public static WndBag sell() {
