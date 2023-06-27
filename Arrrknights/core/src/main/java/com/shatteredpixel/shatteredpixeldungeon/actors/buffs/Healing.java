@@ -21,7 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -44,8 +47,11 @@ public class Healing extends Buff {
 	}
 	
 	@Override
-	public boolean act(){
-		
+	public boolean act() {
+
+		if (target instanceof Hero && Dungeon.hero.buff(Aegis.AegisBuff.class) != null){
+			Aegis.addShield(healingThisTick());
+		}
 		target.HP = Math.min(target.HT, target.HP + healingThisTick());
 
 		if (target.HP == target.HT && target instanceof Hero){

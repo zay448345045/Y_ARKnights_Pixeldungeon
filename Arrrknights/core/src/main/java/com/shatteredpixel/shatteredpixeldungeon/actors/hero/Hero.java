@@ -186,6 +186,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
@@ -1666,6 +1667,9 @@ public class Hero extends Char {
             if (hasTalent(Talent.HEAT_OF_ABSORPTION) && heat.state() == Heat.State.OVERHEAT) {
                 int heal = Math.min(10, (int) ((damage + BounsDamage) * (0.01f + (pointsInTalent(Talent.HEAT_OF_ABSORPTION) * 0.01f))));
                 if (heal > 0) {
+                    if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                        Aegis.addShield(heal);
+                    }
                     HP = Math.min(HP + heal, HT);
                     sprite.showStatus(CharSprite.POSITIVE, "+%dHP", heal);
                 }

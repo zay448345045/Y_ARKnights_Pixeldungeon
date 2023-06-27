@@ -490,6 +490,8 @@ public class Assets {
 		public static final String NPC_IRENE	= "sprites/npc_irene.png";
 		public static final String NPC_LILITH = "sprites/lilith-anime.png";
 		public static final String NPC_TEXT = "sprites/textsprite.png";
+
+		public static final String NPC_KOTOBANAKU = "sprites/kotobanaku.png";
 		public static final String TEXAS_SHOPKEEPER	= "sprites/texas_shopkeeper.png";
 
 		public static final String SARKAZ_SENTINEL	= "sprites/Sarkaz_Sentinel.png";

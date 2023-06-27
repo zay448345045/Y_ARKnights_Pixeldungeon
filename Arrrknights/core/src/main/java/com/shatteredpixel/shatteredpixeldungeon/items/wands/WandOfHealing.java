@@ -7,9 +7,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dirk;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -77,6 +79,9 @@ public class WandOfHealing extends DamageWand {
             } else {
                 Heal /= 2;
             }
+            if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                Aegis.addShield(Heal);
+            }
             Dungeon.hero.HP = Math.min(Dungeon.hero.HP + Heal, Dungeon.hero.HT);
             Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2 + buffedLvl() / 2);
             Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", Heal);
@@ -88,7 +93,7 @@ public class WandOfHealing extends DamageWand {
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
         if (Random.Int(4) < 2)
-        Buff.prolong( defender, Weakness.class, 1f+staff.buffedLvl() / 2);
+            Buff.prolong( defender, Weakness.class, 1f+staff.buffedLvl() / 2);
     }
 
     protected int initialCharges() {

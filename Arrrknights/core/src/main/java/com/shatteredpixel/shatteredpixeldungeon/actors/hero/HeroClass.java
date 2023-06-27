@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticG
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
@@ -204,18 +205,17 @@ import java.util.concurrent.TimeoutException;
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			new LuckyLeaf().collect();
-			new Behemoth().collect();
 			new Perforator().collect();
 			new TomeOfMastery().collect();
 			new PotionOfExperience().identify().quantity(39).collect();
 			new PotionOfStrength().identify().quantity(10).collect();
+			new PotionOfHealing().identify().quantity(99).collect();
 			new ExplosiveSpear().quantity(99).collect();
 			new Recycler().collect();
-			new MidnightSword().identify().collect();
-			new R4C().identify().collect();
-			new Castlebreaker().identify().collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new TitanicKnurl().collect();
+			new Aegis().collect();
+			new Behemoth().collect();
 		}
 	}
 

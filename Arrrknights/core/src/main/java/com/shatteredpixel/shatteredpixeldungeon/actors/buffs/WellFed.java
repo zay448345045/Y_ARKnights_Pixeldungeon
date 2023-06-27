@@ -23,6 +23,8 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
@@ -43,6 +45,9 @@ public class WellFed extends Buff {
 			detach();
 			return true;
 		} else if (left % 18 == 0){
+			if (target instanceof Hero && Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+				Aegis.addShield(1);
+			}
 			target.HP = Math.min(target.HT, target.HP + 1);
 		}
 		

@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfCommand;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepenedSleep;
@@ -663,10 +664,12 @@ public abstract class Mob extends Char {
 			if (enemy != Dungeon.hero){
 				restoration = Math.round(restoration * 0.5f*Dungeon.hero.pointsInTalent(Talent.SOUL_SIPHON)/3f);
 			}
-			else restoration = 0;
 
 			if (restoration > 0) {
 				Buff.affect(Dungeon.hero, Hunger.class).affectHunger(restoration*Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)/3f);
+				if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null) {
+					Aegis.addShield(restoration*0.4f);
+				}
 				Dungeon.hero.HP = (int) Math.ceil(Math.min(Dungeon.hero.HT, Dungeon.hero.HP + (restoration * 0.4f)));
 				Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			}
@@ -861,6 +864,9 @@ public abstract class Mob extends Char {
 		if (cause == Dungeon.hero && Dungeon.hero.belongings.weapon instanceof BladeDemon) {
 			if (((BladeDemon) Dungeon.hero.belongings.weapon).isSwiching()) {
 				int Heal = Random.IntRange(1,3+Dungeon.hero.belongings.weapon.buffedLvl());
+				if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+					Aegis.addShield(Heal);
+				}
 				Dungeon.hero.HP = Math.min(Dungeon.hero.HP + Heal, Dungeon.hero.HT);
 				Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.HEALING),  2);
 				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", Heal);

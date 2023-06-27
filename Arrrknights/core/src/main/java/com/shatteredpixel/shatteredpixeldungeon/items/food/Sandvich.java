@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -50,6 +51,9 @@ public class Sandvich extends Food {
     }
 
     public static void effect(Hero hero){
+        if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+            Aegis.addShield(hero.HT / 5.0f);
+        }
         hero.HP = Math.min( hero.HP + hero.HT / 5, hero.HT );
         hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
     }

@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -62,6 +63,9 @@ public class DivineAvatar extends MeleeWeapon {
                 }
 
                 int heal = Dungeon.hero.HT / 5;
+                if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                    Aegis.addShield(heal);
+                }
                 Dungeon.hero.HP = Math.min(Dungeon.hero.HP + heal, Dungeon.hero.HT);
                 Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", heal);
 

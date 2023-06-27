@@ -9,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -62,6 +63,9 @@ public class Flag extends MeleeWeapon  {
                     Item.SetCharge(5+level() * 2);
                 }
                 int heal = Dungeon.hero.HT / 10;
+                if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                    Aegis.addShield(heal);
+                }
                 Dungeon.hero.HP = Math.min(Dungeon.hero.HP + heal, Dungeon.hero.HT);
                 Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", heal);
                 Sample.INSTANCE.play(Assets.Sounds.SKILL_BASIC);

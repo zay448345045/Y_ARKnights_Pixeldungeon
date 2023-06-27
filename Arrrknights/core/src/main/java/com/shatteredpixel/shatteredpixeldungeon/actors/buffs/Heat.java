@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
@@ -60,6 +61,9 @@ public class Heat extends Buff implements ActionIndicator.Action {
                 int Heal = overheatlife;
                 if (Dungeon.hero.hasTalent(Talent.HEAT_OF_RECOVERY)) {
                     Heal *= 1f + (Dungeon.hero.pointsInTalent(Talent.HEAT_OF_RECOVERY) * 0.2f);
+                }
+                if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                    Aegis.addShield(Heal);
                 }
                 target.HP = Math.min(target.HP + Heal, target.HT);
                 target.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", Heal);

@@ -846,26 +846,33 @@ public class Badges {
 				local.add( badge );
 				unlock(badge);
 
-				if (isUnlocked( Badge.BOSS_SLAIN_3_GLADIATOR ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_BERSERKER ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_WARLOCK ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_CHAOS ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_BATTLEMAGE ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_FREERUNNER ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_ASSASSIN ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_SNIPER ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_WARDEN ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_DESTROY ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_GUARDIAN ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_WAR ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_KNIGHT ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_SAVIOR ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_SWORDMASTER ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_SPSHOOTER ) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_HEAT) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_WILD) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_STOME) &&
-						isUnlocked( Badge.BOSS_SLAIN_3_FLASH)&&
+				if ((isUnlocked( Badge.BOSS_SLAIN_3_GLADIATOR ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_BERSERKER ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_HEAT))
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_WARLOCK ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_CHAOS ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_BATTLEMAGE ))
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_FREERUNNER ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_ASSASSIN ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_WILD))
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_SNIPER ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_WARDEN ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_STOME))
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_DESTROY ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_GUARDIAN ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_WAR ) )
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_KNIGHT ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_SAVIOR ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_FLASH))
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_SWORDMASTER ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_SPSHOOTER ))
+						&&
 						isUnlocked(Badge.BOSS_SLAIN_3_KILLER)
 				) {
 

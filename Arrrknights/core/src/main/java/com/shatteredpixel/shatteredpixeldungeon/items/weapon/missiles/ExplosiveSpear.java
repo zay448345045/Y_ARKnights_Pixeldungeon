@@ -80,17 +80,7 @@ public class ExplosiveSpear extends MissileWeapon{
                 if (!curUser.shoot( enemy, this )) {
                     super.onThrow( cell );//
                 } else {
-                    fuse = null;
-                    rangedHit( enemy, cell );
-                    explode(cell);
-                    int dmg = Random.NormalIntRange(8 + Dungeon.depth, 16 + Dungeon.depth*2);
-                    IsekaiItem.IsekaiBuff BombBuff = Dungeon.hero.buff( IsekaiItem.IsekaiBuff.class);
-                    if (BombBuff != null) {
-                        dmg += BombBuff.itemLevel() * 4;
-                    }
-                    dmg*=2;
-                    dmg -= enemy.drRoll();
-                    enemy.damage(dmg,this);
+                    Buff.append(Dungeon.hero, StickOn.class).setup(enemy, Dungeon.depth);
                 }
             }
         } else
@@ -106,7 +96,7 @@ public class ExplosiveSpear extends MissileWeapon{
         return super.doPickUp(hero);
     }
 
-    public void explode(int cell){
+    public void explode(int cell, boolean stick){
         //We're blowing up, so no need for a fuse anymore.
         this.fuse = null;
 
@@ -164,7 +154,9 @@ public class ExplosiveSpear extends MissileWeapon{
                 if (ch.pos != cell){
                     dmg = Math.round(dmg*0.67f);
                 }
-
+                if (ch.pos == cell && stick){
+                    dmg *=2;
+                }
                 dmg*=2;
                 dmg -= ch.drRoll();
 
@@ -256,7 +248,7 @@ public class ExplosiveSpear extends MissileWeapon{
             for (Heap heap : Dungeon.level.heaps.valueList()) {
                 if (heap.items.contains(exspear)) {
                     heap.remove(exspear);
-                    exspear.explode(heap.pos);
+                    exspear.explode(heap.pos, false);
                     diactivate();
                     Actor.remove(this);
                     return true;
@@ -268,6 +260,53 @@ public class ExplosiveSpear extends MissileWeapon{
             Actor.remove( this );
             return true;
         }
+    }
+
+    public static class StickOn extends Buff{
+
+        private Char victim;
+        private int explodeDepth;
+        private int left;
+
+        public void setup( Char victim, int explodeDepth){
+            this.victim = victim;
+            this.explodeDepth = explodeDepth;
+            left = 3;
+        }
+
+        @Override
+        public boolean act() {
+            if (explodeDepth == Dungeon.depth){
+                left--;
+                if (left <= 0){
+                    ExplosiveSpear exps = new ExplosiveSpear();
+                    exps.explode(victim.pos, true);
+                    next();
+                    detach();
+                    return false;
+                }
+            }
+            spend( TICK );
+            return true;
+        }
+
+        private static final String VICTIM = "victim";
+        private static final String EXPLODEN_DEPTH = "explode_depth";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(VICTIM, victim);
+            bundle.put(EXPLODEN_DEPTH, explodeDepth);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            victim = (Char) bundle.get(VICTIM);
+            explodeDepth = bundle.getInt(EXPLODEN_DEPTH);
+        }
+
     }
 
 }

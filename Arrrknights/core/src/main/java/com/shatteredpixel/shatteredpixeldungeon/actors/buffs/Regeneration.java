@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 
 public class Regeneration extends Buff {
@@ -53,13 +54,16 @@ public class Regeneration extends Buff {
 			}
 		}//这写的nm什么玩意啊
 
-		if(Dungeon.hero.buffs(TitanicKnurl.TitanicKnurlBuff.class) != null) finalregamt += 1;
+		if(Dungeon.hero.buff(TitanicKnurl.TitanicKnurlBuff.class) != null) finalregamt += 1;
 
 		if (target.isAlive()) {
 
 			if (target.HP < regencap() && !((Hero)target).isStarving()) {
 				LockedFloor lock = target.buff(LockedFloor.class);
 				if (target.HP > 0 && (lock == null || lock.regenOn())) {
+					if (target instanceof Hero && Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+						Aegis.addShield(finalregamt);
+					}
 					target.HP += finalregamt;
 					if (target.HP == regencap()) {
 						((Hero) target).resting = false;

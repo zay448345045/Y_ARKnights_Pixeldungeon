@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.ChargrilledMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.FrozenCarpaccio;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfDragonsBlood;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -92,6 +93,9 @@ public class Burning extends Buff implements Hero.Doom {
 
 		if (target.buff(ElixirOfDragonsBlood.Dragonsblood.class) != null) {
 			int Heal = Random.NormalIntRange(1, 2);
+			if (target instanceof Hero && Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+				Aegis.addShield(Heal);
+			}
 			target.HP = Math.min(target.HP + Heal, target.HT);
 		}
 		

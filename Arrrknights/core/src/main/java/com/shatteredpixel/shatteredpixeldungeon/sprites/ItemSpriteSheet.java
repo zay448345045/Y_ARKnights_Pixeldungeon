@@ -946,11 +946,13 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int ROR2ITEMS_RED       =                                   xy(1, 32);  //16 slots
-	public static final int LUCKYLEAF        = ROR2ITEMS_RED +0;
+	public static final int LUCKYLEAF       = ROR2ITEMS_RED +0;
+	public static final int AEGIS			= ROR2ITEMS_RED +1;
 	public static final int BEHEMOTH        = ROR2ITEMS_RED +2;
 
 	static{
 		assignItemRect(LUCKYLEAF,        16, 16);
+		assignItemRect(AEGIS,        16, 16);
 		assignItemRect(BEHEMOTH,        16, 16);
 	}
 

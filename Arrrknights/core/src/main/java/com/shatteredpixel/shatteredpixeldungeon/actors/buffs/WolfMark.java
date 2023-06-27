@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 import com.shatteredpixel.shatteredpixeldungeon.items.ArmorUpKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
@@ -149,6 +150,9 @@ public class WolfMark extends FlavourBuff implements ActionIndicator.Action  {
 
             if (hero.hasTalent(Talent.TRACKER)) {
                 int heal = 1 + hero.pointsInTalent(Talent.TRACKER) * 3;
+                if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                    Aegis.addShield(heal);
+                }
                 hero.HP = Math.min(hero.HP + heal, hero.HT);
                 hero.sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 1);
                 hero.sprite.showStatus(CharSprite.POSITIVE, Integer.toString(heal));

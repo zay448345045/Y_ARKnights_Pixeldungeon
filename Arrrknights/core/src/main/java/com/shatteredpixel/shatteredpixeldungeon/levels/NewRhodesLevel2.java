@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Firewall;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.FrostLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Jessica;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Gglow;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_KotobaNaku;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Lilith;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_Phantom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC_PhantomShadow;
@@ -186,6 +187,7 @@ public class NewRhodesLevel2 extends Level {
         Dummy.spawn(this, 4354);
         Jessica.spawn(this, 4295);
         Dobermann.spawn(this, 4298);
+        NPC_KotobaNaku.spawn(this,4302);
         FrostLeaf.spawn(this, 4305);
         NPC_Phantom.spawn(this, 3010);
         NPC_Gglow.spawn(this, 3964);

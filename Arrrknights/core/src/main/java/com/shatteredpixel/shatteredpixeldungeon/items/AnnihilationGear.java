@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourg
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfCorrupting;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorruption;
@@ -357,6 +358,9 @@ public class Spriteex extends MissileWeapon {
             Buff.affect(enemy, Weakness.class, 7f);
         }
         if (Dungeon.hero.buff(MeatPower_Frozen.class) != null) {
+            if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                Aegis.addShield(Dungeon.hero.HT/20.0f);
+            }
             Dungeon.hero.HP += Dungeon.hero.HT / 20;
             Dungeon.hero.updateHT(true);
         }
