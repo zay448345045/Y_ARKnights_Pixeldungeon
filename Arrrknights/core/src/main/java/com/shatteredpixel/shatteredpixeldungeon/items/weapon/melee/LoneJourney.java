@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -55,7 +56,8 @@ public class LoneJourney extends MeleeWeapon {
             Buff.affect(defender, Silence.class, 2f);
         }
 
-        defender.damage(defender.drRoll()/2, WandOfMagicMissile.class);//这样应该能算是魔法伤害吧大概
+        WandOfMagicMissile womm = new WandOfMagicMissile();
+        defender.damage(defender.drRoll()/2, womm);//这样应该能算是魔法伤害吧大概
 
         SPCharge(20);
         updateQuickslot();

@@ -66,7 +66,7 @@ public class RingKit extends Item {
                         do {
                             rings[1] = (Ring) Generator.random(Generator.Category.RING);
                         }
-                        while (rings[1].getClass() == item.getClass());
+                        while (rings[1].getClass() == item.getClass() || rings[1].getClass() == rings[0].getClass());
 
 
                         rings[0].identify();

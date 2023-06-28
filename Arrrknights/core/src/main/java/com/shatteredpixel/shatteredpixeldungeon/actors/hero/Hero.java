@@ -1716,7 +1716,8 @@ public class Hero extends Char {
 
         if(buff(Perforator.PerforatorBuff.class)!=null){
             if(Random.IntRange(0,10)==0){
-                enemy.damage(damage*5, WandOfLightning.class);
+                WandOfLightning wol = new WandOfLightning();
+                enemy.damage(damage*5, wol);
                 Camera.main.shake( 2, 0.3f );
                 this.sprite.centerEmitter().burst( SparkParticle.FACTORY, 15 );
                 enemy.sprite.parent.addToFront( new Lightning( this.sprite.center(), enemy.sprite.center(), null ) );

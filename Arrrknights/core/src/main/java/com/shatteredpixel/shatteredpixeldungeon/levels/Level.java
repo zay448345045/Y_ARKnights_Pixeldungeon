@@ -68,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourg
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
@@ -217,6 +218,7 @@ public abstract class Level implements Bundlable {
 				if (Dungeon.depth / 5 == enchChapter &&
 						Dungeon.seed % 4 + 1 == Dungeon.depth % 5) {
 					addItemToSpawn(new StoneOfEnchantment());
+					addItemToSpawn(new ScrollOfTransmutation());
 				}
 
 				if (Dungeon.depth == ((Dungeon.seed % 3) + 1)) {

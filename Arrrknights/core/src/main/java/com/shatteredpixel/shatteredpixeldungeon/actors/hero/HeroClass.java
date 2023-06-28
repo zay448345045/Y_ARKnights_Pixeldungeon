@@ -81,12 +81,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.SuperAdvanceguard;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.AssassinsBlade;
@@ -210,12 +212,14 @@ import java.util.concurrent.TimeoutException;
 			new PotionOfExperience().identify().quantity(39).collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new PotionOfHealing().identify().quantity(99).collect();
+			new ScrollOfTransmutation().identify().quantity(99).collect();
 			new ExplosiveSpear().quantity(99).collect();
 			new Recycler().collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new TitanicKnurl().collect();
 			new Aegis().collect();
 			new Behemoth().collect();
+			new WandOfLightning().identify().collect();
 		}
 	}
 

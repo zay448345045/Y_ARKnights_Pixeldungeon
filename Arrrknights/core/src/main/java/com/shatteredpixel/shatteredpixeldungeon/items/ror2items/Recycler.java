@@ -287,7 +287,7 @@ public class Recycler extends ROR2equipment{
             LockedFloor lock = target.buff(LockedFloor.class);
             if (activeBuff == null && (lock == null || lock.regenOn()) && !(Dungeon.depth >= 26 && Dungeon.depth <= 30)) {
                 if (charge < chargeCap && !cursed) {
-                    float chargeGain = 0.1f;
+                    float chargeGain = 0.3f;
                     partialCharge += chargeGain;
 
                     if (partialCharge > 1 && charge < chargeCap) {
