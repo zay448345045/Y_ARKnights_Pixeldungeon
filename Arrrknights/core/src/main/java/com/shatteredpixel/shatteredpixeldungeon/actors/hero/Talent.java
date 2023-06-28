@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
@@ -38,9 +39,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Levitation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Rose_Force;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WildMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -751,6 +754,28 @@ public enum Talent {
 			}
 			else if(hero.isHunger() && !hero.isStarving()){
 				dmg += Random.IntRange(0 , hero.pointsInTalent(Talent.FULL_STRENGTH));
+			}
+		}
+
+		if(Dungeon.hero.hasTalent(Talent.SLEEVE_TRICK)){
+			if(Random.Int(100)<Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*5){
+				switch (Random.Int(5)){
+					case 0:
+						Buff.affect(enemy, Bleeding.class).set(Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+						break;
+					case 1:
+						Buff.affect(enemy, Blindness.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+						break;
+					case 2:
+						Buff.affect(enemy, Cripple.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+						break;
+					case 3:
+						Buff.affect(enemy, Vertigo.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+						break;
+					case 4:
+						Buff.affect(enemy, Paralysis.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
+						break;
+				}
 			}
 		}
 

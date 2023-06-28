@@ -295,9 +295,7 @@ public class Generator {
         SKL_T2(0, SkillBook.class),
         SKL_T3(0, SkillBook.class),
         SKL_RND(0, SkillBook.class),
-
         ACCESSORIES(0, Accessories.class),
-
         N_INGREDINETS(0,Ingredients.class);
 
         public Class<?>[] classes;

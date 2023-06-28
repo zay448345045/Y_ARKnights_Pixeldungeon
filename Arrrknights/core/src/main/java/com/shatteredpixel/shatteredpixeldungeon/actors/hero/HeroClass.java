@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MeatCutlet;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.ingredients.Egg;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
@@ -70,10 +71,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticG
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Raincoat;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
@@ -206,20 +210,28 @@ import java.util.concurrent.TimeoutException;
 		Dungeon.LimitedDrops.FOOD_BAG.drop();
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
-			new LuckyLeaf().collect();
-			new Perforator().collect();
 			new TomeOfMastery().collect();
+			new ScrollOfTransmutation().identify().quantity(99).collect();
+			new ExplosiveSpear().quantity(99).collect();
+			new WandOfLightning().identify().collect();
+			new RingOfAccuracy().identify().upgrade(28).collect();
+			//potions
+			new PotionOfLiquidFlame().identify().quantity(99).collect();
+			new PotionOfFrost().identify().quantity(99).collect();
 			new PotionOfExperience().identify().quantity(39).collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new PotionOfHealing().identify().quantity(99).collect();
-			new ScrollOfTransmutation().identify().quantity(99).collect();
-			new ExplosiveSpear().quantity(99).collect();
+			new PotionOfMindVision().identify().quantity(99).collect();
+			//ror2
 			new Recycler().collect();
-			new RingOfAccuracy().identify().upgrade(28).collect();
+			new LuckyLeaf().collect();
+			new Perforator().collect();
 			new TitanicKnurl().collect();
 			new Aegis().collect();
 			new Behemoth().collect();
-			new WandOfLightning().identify().collect();
+			new APRounds().collect();
+			new Crowbar().collect();
+			new Raincoat().collect();
 		}
 	}
 

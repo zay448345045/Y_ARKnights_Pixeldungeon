@@ -190,6 +190,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -1611,7 +1612,7 @@ public class Hero extends Char {
             default:
         }
 
-        if (hasTalent(Talent.SAVIOR_BELIEF) && enemy.buff(Roots.class) != null || enemy.buff(Paralysis.class) != null) {
+        if (hasTalent(Talent.SAVIOR_BELIEF) && (enemy.buff(Roots.class) != null || enemy.buff(Paralysis.class) != null)) {
             BounsDamage = damage * (pointsInTalent(Talent.SAVIOR_BELIEF) * 0.15f);
         }
 
@@ -1683,68 +1684,9 @@ public class Hero extends Char {
             }
         }
 
-        if(buff(Behemoth.BehemothBuff.class)!=null){
-            if (Dungeon.level.heroFOV[enemy.pos]) {
-                CellEmitter.center(enemy.pos).burst(BlastParticle.FACTORY, 30);
-            }
-            ArrayList<Char> affected = new ArrayList<>();
-            for (int n : PathFinder.NEIGHBOURS9) {
-                int c = enemy.pos + n;
-                if (c >= 0 && c < Dungeon.level.length()) {
-                    Char ch = Actor.findChar(c);
-                    if (ch != null) {
-                        affected.add(ch);
-                    }
-                }
-            }
-            for (Char ch : affected){
-                //if they have already been killed by another bomb
-                if(!ch.isAlive()){
-                    continue;
-                }
-
-                int dmg = (int) Math.round(damage*0.6);
-
-                dmg -= ch.drRoll();
-
-                if (dmg > 0 && ch!=Dungeon.hero) {
-                    ch.damage(dmg, Bomb.class);
-                }
-
-            }
-        }
-
-        if(buff(Perforator.PerforatorBuff.class)!=null){
-            if(Random.IntRange(0,10)==0){
-                WandOfLightning wol = new WandOfLightning();
-                enemy.damage(damage*5, wol);
-                Camera.main.shake( 2, 0.3f );
-                this.sprite.centerEmitter().burst( SparkParticle.FACTORY, 15 );
-                enemy.sprite.parent.addToFront( new Lightning( this.sprite.center(), enemy.sprite.center(), null ) );
-                Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
-            }
-        }
-
-        if(Dungeon.hero.hasTalent(Talent.SLEEVE_TRICK)){
-            if(Random.Int(100)<Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*5){
-                switch (Random.Int(5)){
-                    case 0:
-                        Buff.affect(enemy, Bleeding.class).set(Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
-                        break;
-                    case 1:
-                        Buff.affect(enemy, Blindness.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
-                        break;
-                    case 2:
-                        Buff.affect(enemy, Cripple.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
-                        break;
-                    case 3:
-                        Buff.affect(enemy, Vertigo.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
-                        break;
-                    case 4:
-                        Buff.affect(enemy, Paralysis.class, Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
-                        break;
-                }
-            }
+        if(belongings.misc instanceof ROR2item){
+            ROR2item r2i = (ROR2item)belongings.misc;
+            damage = r2i.attackProc(this, enemy, damage);
         }
 
         damage += BounsDamage;

@@ -15,10 +15,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -38,7 +40,9 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShadowSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -422,21 +426,73 @@ public class Shadow extends Mob {
             spriteClass = ShadowSprite.ShadowSPT.class;
             immunities.add(Blindness.class);
         }
+        protected boolean hasRaged = false;
+        @Override
+        public int damageRoll() {
+            return buff(Undying.class) != null ?
+                    Random.NormalIntRange( MinDamageTable[ShadowLevel], MaxDamageTable[ShadowLevel] )*2 :
+                    Random.NormalIntRange(MinDamageTable[ShadowLevel], MaxDamageTable[ShadowLevel]);
+        }
+        @Override
+        public void die(Object cause) {
+            super.die(cause);
+
+            if (cause == Chasm.class){
+                hasRaged = true; //don't let enrage trigger for chasm deaths
+            }
+        }
 
         @Override
         public void damage(int dmg, Object src) {
-            dmg *= 0.5f;
+            if (buff(Undying.class) != null) {
+                dmg = 0;
+            }else{
+                dmg *= 0.5f;
+            }
             super.damage(dmg, src);
+        }
+        @Override
+        public synchronized boolean isAlive() {
+            if (HP > 0){
+                return true;
+            } else {
+                if (!hasRaged){
+                    triggerEnrage();
+                }
+                return !buffs(Undying.class).isEmpty();
+            }
+        }
+        protected void triggerEnrage(){
+            Buff.append(this, Undying.class,10);
+            if (Dungeon.level.heroFOV[pos]) {
+                sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged_" + (Random.Int(4)+1)) );
+            }
+            spend( TICK );
+            hasRaged = true;
         }
 
         @Override
         protected boolean act() {
-            if (HP < HT / 4) HP += ShadowLevel * 3;
-            else if (HP < HT / 2) HP += ShadowLevel * 2;
-            else HP += ShadowLevel;
+            if(buffs(Shadow.Undying.class).isEmpty()){
+                if (HP < HT / 4) HP += Math.max(0,(ShadowLevel-1) * 3);
+                else if (HP < HT / 2) HP += Math.max(0,(ShadowLevel-1) * 2);
+                else HP += Math.max(0,(ShadowLevel-1));
 
-            HP = Math.min(HP, HT);
+                HP = Math.min(HP, HT);}
             return super.act();
+        }
+        private static final String HAS_RAGED = "has_raged";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(HAS_RAGED, hasRaged);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            hasRaged = bundle.getBoolean(HAS_RAGED);
         }
     }
 
@@ -470,6 +526,46 @@ public class Shadow extends Mob {
             }
 
             return super.attackProc(enemy, damage);
+        }
+    }
+
+    public static class Undying extends FlavourBuff{
+        {
+            type = buffType.POSITIVE;
+            announced = true;
+        }
+        protected float left;
+        private static final String LEFT	= "left";
+        @Override
+        public void storeInBundle( Bundle bundle ) {
+            super.storeInBundle( bundle );
+            bundle.put( LEFT, left );
+        }
+        @Override
+        public void restoreFromBundle( Bundle bundle ) {
+            super.restoreFromBundle(bundle);
+            left = bundle.getFloat( LEFT );
+        }
+        @Override
+        public boolean act() {
+            spend( TICK );
+            left -= TICK;
+            if (left <= 0) {
+                target.die(null);
+            }
+            return true;
+        }
+        @Override
+        public int icon() {
+            return BuffIndicator.AMOK;
+        }
+        @Override
+        public String toString() {
+            return Messages.get(this, "name");
+        }
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc");
         }
     }
 }
