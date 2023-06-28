@@ -109,7 +109,7 @@ public class Shopkeeper extends NPC {
 		int price;
 		if (!Dungeon.isChallenged(Challenges.NO_HERBALISM)) price = item.value() * 5 * (Dungeon.depth / 5 + 1);
 		else price = item.value() * 7 * (Dungeon.depth / 5 + 1);
-		if(item instanceof MeleeWeapon || item instanceof Armor || item instanceof Wand || item instanceof Ring) price /= 2;
+		if(item instanceof MeleeWeapon || item instanceof Armor || item instanceof Wand || item instanceof Ring) price /= 3;
 		return price;
 	}
 	

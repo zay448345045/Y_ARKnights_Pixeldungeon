@@ -232,6 +232,15 @@ import java.util.concurrent.TimeoutException;
 			new APRounds().collect();
 			new Crowbar().collect();
 			new Raincoat().collect();
+			//bags
+			new PotionBandolier().collect();
+			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
+			new VelvetPouch().collect();
+			Dungeon.LimitedDrops.VELVET_POUCH.drop();
+			new MagicalHolster().collect();
+			Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
+			new ScrollHolder().collect();
+			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
 		}
 	}
 
