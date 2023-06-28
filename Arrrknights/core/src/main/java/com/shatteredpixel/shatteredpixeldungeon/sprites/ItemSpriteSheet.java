@@ -950,11 +950,13 @@ public class ItemSpriteSheet {
 	public static final int LUCKYLEAF       = ROR2ITEMS_RED +0;
 	public static final int AEGIS			= ROR2ITEMS_RED +1;
 	public static final int BEHEMOTH        = ROR2ITEMS_RED +2;
+	public static final int RAINCOAT        = ROR2ITEMS_RED +3;
 
 	static{
 		assignItemRect(LUCKYLEAF,        16, 16);
 		assignItemRect(AEGIS,        16, 16);
 		assignItemRect(BEHEMOTH,        16, 16);
+		assignItemRect(RAINCOAT,        16, 16);
 	}
 
 	private static final int ROR2ITEMS_ORANGE       =                                   xy(17, 32);  //16 slots
@@ -971,6 +973,15 @@ public class ItemSpriteSheet {
 	static{
 		assignItemRect(PERFORATOR,        16, 16);
 		assignItemRect(TITANICKNURL,        16, 16);
+	}
+
+	private static final int ROR2ITEMS_WHITE       =                                   xy(17, 33);  //16 slots
+	public static final int APROUNDS        = ROR2ITEMS_WHITE +0;
+	public static final int CROWBAR        = ROR2ITEMS_WHITE +1;
+
+	static{
+		assignItemRect(APROUNDS,        16, 16);
+		assignItemRect(CROWBAR,        16, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

@@ -7,7 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class Crowbar extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.CROWBAR;
     }
 
     @Override

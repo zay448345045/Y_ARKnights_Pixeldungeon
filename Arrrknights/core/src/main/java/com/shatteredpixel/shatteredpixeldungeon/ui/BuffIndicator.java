@@ -101,6 +101,7 @@ public class BuffIndicator extends Component {
 	public static final int SILENCE    = 53;
 	public static final int COOL_TIME    = 54;
 	public static final int RABBIT_TIME    = 55;
+	public static final int RAINCOAT_BUFF    = 56;
 
 	public static final int SIZE	= 7;
 	
