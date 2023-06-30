@@ -13,7 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 public class OddOpal extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.ODD_OPAL;
     }
 
     @Override

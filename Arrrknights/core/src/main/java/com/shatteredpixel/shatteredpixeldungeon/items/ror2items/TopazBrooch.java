@@ -8,7 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class TopazBrooch extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.TOPAZ_BROOCH;
     }
     @Override
     public void uponKill(Char attacker, Char defender, int damage ) {

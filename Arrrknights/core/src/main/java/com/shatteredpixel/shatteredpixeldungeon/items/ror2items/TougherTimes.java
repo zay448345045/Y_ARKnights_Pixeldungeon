@@ -7,7 +7,7 @@ import com.watabou.utils.Random;
 public class TougherTimes extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.TOUGHER_TIMES;
     }
 
     @Override

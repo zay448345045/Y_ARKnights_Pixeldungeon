@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Gasoline extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.GASOLINE;
     }
 
     @Override

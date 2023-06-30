@@ -978,10 +978,18 @@ public class ItemSpriteSheet {
 	private static final int ROR2ITEMS_WHITE       =                                   xy(17, 33);  //16 slots
 	public static final int APROUNDS        = ROR2ITEMS_WHITE +0;
 	public static final int CROWBAR        = ROR2ITEMS_WHITE +1;
+	public static final int TOUGHER_TIMES        = ROR2ITEMS_WHITE +2;
+	public static final int ODD_OPAL        = ROR2ITEMS_WHITE +3;
+	public static final int TOPAZ_BROOCH        = ROR2ITEMS_WHITE +4;
+	public static final int GASOLINE        = ROR2ITEMS_WHITE +5;
 
 	static{
 		assignItemRect(APROUNDS,        16, 16);
 		assignItemRect(CROWBAR,        16, 16);
+		assignItemRect(TOUGHER_TIMES,        16, 16);
+		assignItemRect(ODD_OPAL,        16, 16);
+		assignItemRect(TOPAZ_BROOCH,        16, 16);
+		assignItemRect(GASOLINE,        16, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
