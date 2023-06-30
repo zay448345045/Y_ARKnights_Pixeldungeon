@@ -51,6 +51,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hallucination;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HuntingMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LanceCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
@@ -89,6 +90,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfDr
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -425,6 +427,10 @@ public abstract class Char extends Actor {
 							}
 						}.attachTo(this);
 					}
+					if(h.belongings.misc instanceof ROR2item){
+						ROR2item r2i = (ROR2item)h.belongings.misc;
+						r2i.uponKill(this, enemy, effectiveDamage);
+					}
 				}
 			}
 
@@ -551,6 +557,7 @@ public abstract class Char extends Actor {
 			float phan = 1f - (Dungeon.hero.pointsInTalent(Talent.RESTRICTION) * 0.05f);
 			acuRoll *= phan; }
 		if (attacker.buff(Hallucination.class) != null) acuRoll *= 0.65f;
+		if (attacker.buff(HuntingMark.class) != null) acuRoll *= 0.80f;
 		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)){
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
@@ -566,6 +573,7 @@ public abstract class Char extends Actor {
 		if (defender.buff(ExecutMode.class) != null) defRoll *= 1.3f;
 		if (defender instanceof Hero && Dungeon.hero.belongings.weapon instanceof AssassinsBlade && Dungeon.hero.belongings.armor instanceof LeatherArmor) defRoll *= 1.1f;
 		if (defender.buff(  Hex.class) != null) defRoll *= 0.8f;
+		if (defender.buff(  HuntingMark.class) != null) defRoll *= 0.8f;
 		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)){
 			defRoll *= buff.evasionAndAccuracyFactor();
 		}
@@ -738,7 +746,7 @@ public abstract class Char extends Actor {
 		
 		if (sprite != null) {
 			if(AntiMagic.RESISTS.contains(src.getClass())){
-				sprite.showStatus(CharSprite.MAGENTA,
+				sprite.showStatus(CharSprite.MAGIC,
 						Integer.toString(dmg + shielded));
 			}else{sprite.showStatus(HP > HT / 2 ?
 							CharSprite.WARNING :

@@ -62,6 +62,10 @@ public class ROR2item extends KindofMisc {
         return damage;
     }
 
+    public void uponKill( Char attacker, Char defender, int damage ) { }
+
+    public int defenseProc( Char attacker, Char defender, int damage ) { return damage; }
+
     protected ROR2item.ROR2itemBuff passiveBuff() {
         return null;
     }

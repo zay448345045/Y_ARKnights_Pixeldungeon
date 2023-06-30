@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
@@ -81,6 +82,9 @@ public class Regeneration extends Buff {
 					delay -= regenBuff.itemLevel()*0.81f;
 					delay /= RingOfEnergy.artifactChargeMultiplier(target);
 				}
+			}
+			if(Dungeon.hero.resting && Dungeon.hero.hasTalent(Talent.FAST_TRIM)){
+				delay *= (1 - Dungeon.hero.pointsInTalent(Talent.FAST_TRIM)/10.0f);
 			}
 			spend( delay );
 			

@@ -139,7 +139,9 @@ public class Dungeon {
 		SCROLL_HOLDER,
 		POTION_BANDOLIER,
 		MAGICAL_HOLSTER,
-		FOOD_BAG;
+		FOOD_BAG,
+		EQUIPMENTS_BAG
+		;
 
 		public int count = 0;
 

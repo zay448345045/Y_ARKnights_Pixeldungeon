@@ -131,7 +131,7 @@ public class Shadow extends Mob {
 
     public static Shadow random(){
         int c = Random.Int(6);
-        switch (c) {
+        switch (6) {
             default: case 0:
                 return new TypeBlaze();
             case 1:
@@ -144,6 +144,8 @@ public class Shadow extends Mob {
                 return new TypeRose();
             case 5:
                 return new TypeNearl();
+            case 6:
+                return new TypeSPT();
         }
     }
 
@@ -464,6 +466,7 @@ public class Shadow extends Mob {
         }
         protected void triggerEnrage(){
             Buff.append(this, Undying.class,10);
+            sprite.add(CharSprite.State.BLACK_FOG);
             if (Dungeon.level.heroFOV[pos]) {
                 sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged_" + (Random.Int(4)+1)) );
             }

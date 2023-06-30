@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.ShieldHalo;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.TorchHalo;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BloodParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
@@ -65,8 +66,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	public static final int NEGATIVE	= 0xFF0000;
 	public static final int WARNING		= 0xFF8800;
 	public static final int NEUTRAL		= 0xFFFF00;
-
-	public static final int MAGENTA 	= 0xFF00FF;
+	public static final int MAGIC 		= 0xFF00FF;
 	
 	public static final float DEFAULT_MOVE_INTERVAL = 0.1f;
 	private static float moveInterval = DEFAULT_MOVE_INTERVAL;
@@ -83,7 +83,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, TALU_BOSS, HIKARI
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, TALU_BOSS, HIKARI, BLACK_FOG, HUNTING_MARK
 	}
 	private int stunStates = 0;
 	
@@ -107,6 +107,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter taluboss;
 	protected Emitter taluboss2;
 	protected Emitter hikari;
+	protected Emitter blackfog;
+	protected Emitter huntingmark;
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
@@ -420,6 +422,14 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				hikari = emitter();
 				hikari.pour(ElmoParticle.FACTORY, 0.03f);
 				break;
+			case BLACK_FOG:
+				blackfog = emitter();
+				blackfog.pour(ShadowParticle.UP, 0.02f);
+				break;
+			case HUNTING_MARK:
+				huntingmark = emitter();
+				huntingmark.pour(BloodParticle.BURST, 0.02f);
+				break;
 		}
 	}
 	
@@ -498,6 +508,18 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case HIKARI:
 				if (hikari != null){
 					hikari.on = false;
+				}
+				break;
+			case BLACK_FOG:
+				if (blackfog != null){
+					blackfog.on = false;
+					blackfog = null;
+				}
+				break;
+			case HUNTING_MARK:
+				if (huntingmark != null){
+					huntingmark.on = false;
+					huntingmark = null;
 				}
 				break;
 		}

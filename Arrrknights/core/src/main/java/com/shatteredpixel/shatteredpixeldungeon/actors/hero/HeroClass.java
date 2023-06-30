@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.custom.misc.PotionOfSuperExp;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
@@ -50,6 +51,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.EquipmentsBag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.FoodBag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
@@ -75,11 +77,15 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Gasoline;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.OddOpal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Raincoat;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -213,12 +219,23 @@ import java.util.concurrent.TimeoutException;
 			new TomeOfMastery().collect();
 			new ScrollOfTransmutation().identify().quantity(99).collect();
 			new ExplosiveSpear().quantity(99).collect();
-			new WandOfLightning().identify().collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
+			new MidnightSword().identify().collect();
+			//bags
+			new PotionBandolier().collect();
+			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
+			new VelvetPouch().collect();
+			Dungeon.LimitedDrops.VELVET_POUCH.drop();
+			new MagicalHolster().collect();
+			Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
+			new ScrollHolder().collect();
+			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
+			new EquipmentsBag().collect();
+			Dungeon.LimitedDrops.EQUIPMENTS_BAG.drop();
 			//potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
 			new PotionOfFrost().identify().quantity(99).collect();
-			new PotionOfExperience().identify().quantity(39).collect();
+			new PotionOfSuperExp().identify().collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new PotionOfHealing().identify().quantity(99).collect();
 			new PotionOfMindVision().identify().quantity(99).collect();
@@ -232,15 +249,10 @@ import java.util.concurrent.TimeoutException;
 			new APRounds().collect();
 			new Crowbar().collect();
 			new Raincoat().collect();
-			//bags
-			new PotionBandolier().collect();
-			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
-			new VelvetPouch().collect();
-			Dungeon.LimitedDrops.VELVET_POUCH.drop();
-			new MagicalHolster().collect();
-			Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
-			new ScrollHolder().collect();
-			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
+			new Gasoline().collect();
+			new TopazBrooch().collect();
+			new TougherTimes().collect();
+			new OddOpal().collect();
 		}
 	}
 
@@ -463,8 +475,6 @@ import java.util.concurrent.TimeoutException;
 	 {
 		 (hero.belongings.weapon = new Violin()).identify();
 		 hero.belongings.weapon.activate(hero);
-
-		 new RhodesSword().identify().collect();
 
 		 new PotionBandolier().collect();
 		 Dungeon.LimitedDrops.POTION_BANDOLIER.drop();

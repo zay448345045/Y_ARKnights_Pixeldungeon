@@ -192,6 +192,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
@@ -207,6 +208,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gluttony;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.KRISSVector;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Niansword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.PatriotSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SHISHIOH;
@@ -1843,6 +1845,11 @@ public class Hero extends Char {
             Buff.affect(this, Talent.ScoldingCooldown.class, 300f);
         }
 
+        if(belongings.misc instanceof ROR2item){
+            ROR2item r2i = (ROR2item)belongings.misc;
+            damage = r2i.defenseProc(enemy, this, damage);
+        }
+
         return damage;
     }
 
@@ -1935,7 +1942,12 @@ public class Hero extends Char {
                 dmg *= 0.95f - (pointsInTalent(Talent.HEAT_OF_PROTECTION) * 0.05f);
             }
         }
-
+        if(buff(TougherTimes.TougherTimesBuff.class)!=null){
+            if(Random.Int(100) < 15){
+                dmg = 0;
+                Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
+            }
+        }
 
         int preHP = HP + shielding();
         super.damage(dmg, src);
