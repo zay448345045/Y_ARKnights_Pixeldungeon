@@ -14,7 +14,7 @@ import com.watabou.utils.Random;
 public class StunGrenade extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.STUN_GRENADE;
     }
     @Override
     public int attackProc(Char attacker, Char defender, int damage ) {

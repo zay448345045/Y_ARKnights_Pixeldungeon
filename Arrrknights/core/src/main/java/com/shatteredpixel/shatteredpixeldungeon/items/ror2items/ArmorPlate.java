@@ -6,7 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class ArmorPlate extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.ARMOR_PLATE_ROR2;
     }
     @Override
     public int defenseProc(Char attacker, Char defender, int damage ) {

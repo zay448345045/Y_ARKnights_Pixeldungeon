@@ -16,7 +16,7 @@ import com.watabou.utils.Random;
 public class TriTipDagger extends ROR2item{
     {
         tier = 1;
-        image = ItemSpriteSheet.UNDONE_MARK;
+        image = ItemSpriteSheet.TRITIP_DAGGER;
     }
     @Override
     public int attackProc(Char attacker, Char defender, int damage ) {

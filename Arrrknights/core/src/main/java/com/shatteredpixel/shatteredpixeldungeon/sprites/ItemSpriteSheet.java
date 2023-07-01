@@ -982,6 +982,9 @@ public class ItemSpriteSheet {
 	public static final int ODD_OPAL        = ROR2ITEMS_WHITE +3;
 	public static final int TOPAZ_BROOCH        = ROR2ITEMS_WHITE +4;
 	public static final int GASOLINE        = ROR2ITEMS_WHITE +5;
+	public static final int ARMOR_PLATE_ROR2        = ROR2ITEMS_WHITE +6;
+	public static final int TRITIP_DAGGER        = ROR2ITEMS_WHITE +7;
+	public static final int STUN_GRENADE        = ROR2ITEMS_WHITE +8;
 
 	static{
 		assignItemRect(APROUNDS,        16, 16);
@@ -990,6 +993,9 @@ public class ItemSpriteSheet {
 		assignItemRect(ODD_OPAL,        16, 16);
 		assignItemRect(TOPAZ_BROOCH,        16, 16);
 		assignItemRect(GASOLINE,        16, 16);
+		assignItemRect(ARMOR_PLATE_ROR2,        16, 16);
+		assignItemRect(TRITIP_DAGGER,        16, 16);
+		assignItemRect(STUN_GRENADE,        16, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
