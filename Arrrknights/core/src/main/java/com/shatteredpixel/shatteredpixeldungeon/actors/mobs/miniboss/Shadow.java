@@ -131,7 +131,7 @@ public class Shadow extends Mob {
 
     public static Shadow random(){
         int c = Random.Int(6);
-        switch (6) {
+        switch (c) {
             default: case 0:
                 return new TypeBlaze();
             case 1:
@@ -144,8 +144,6 @@ public class Shadow extends Mob {
                 return new TypeRose();
             case 5:
                 return new TypeNearl();
-            case 6:
-                return new TypeSPT();
         }
     }
 

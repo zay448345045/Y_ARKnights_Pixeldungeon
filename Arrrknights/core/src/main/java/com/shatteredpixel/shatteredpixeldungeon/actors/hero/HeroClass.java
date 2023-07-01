@@ -75,6 +75,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ArmorPlate;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Gasoline;
@@ -83,9 +84,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.OddOpal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Raincoat;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TriTipDagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -253,6 +256,9 @@ import java.util.concurrent.TimeoutException;
 			new TopazBrooch().collect();
 			new TougherTimes().collect();
 			new OddOpal().collect();
+			new TriTipDagger().collect();
+			new StunGrenade().collect();
+			new ArmorPlate().collect();
 		}
 	}
 
