@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.PursuerRoom
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.RoseRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.VaultRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.BeachRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.EntranceRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.ExitRoom;
@@ -132,6 +133,7 @@ public abstract class RegularLevel extends Level {
 			initRooms.add(new MiniShopRoom());
 		}
 
+		if (Dungeon.depth == 1) initRooms.add(new VaultRoom());
 		if (Dungeon.depth == 13) initRooms.add(new RoseRoom());
 		if (Dungeon.depth == 14) initRooms.add(new MagicGloemRoom());
 		if (Dungeon.depth == 24) initRooms.add(new PursuerRoom());

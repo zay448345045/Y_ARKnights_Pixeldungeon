@@ -83,6 +83,8 @@ public class CursedWand {
 	private static float UNCOMMON_CHANCE = 10.3f;
 	private static float RARE_CHANCE = 0.09f;
 	private static float VERY_RARE_CHANCE = 0.01f;
+	protected static int solidRarity = -1;
+	protected static int solidType = -1;
 
 	public static void cursedZap(final Item origin, final Char user, final Ballistica bolt, final Callback afterZap){
 
@@ -101,7 +103,7 @@ public class CursedWand {
 	}
 
 	public static boolean cursedEffect(final Item origin, final Char user, final int targetPos){
-		switch (Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE})){
+		switch ((solidRarity != -1) ? solidRarity : Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE})){
 			case 0: default:
 				return commonEffect(origin, user, targetPos);
 			case 1:
@@ -114,7 +116,7 @@ public class CursedWand {
 	}
 
 	private static boolean commonEffect(final Item origin, final Char user, final int targetPos){
-		switch(Random.Int(4)){
+		switch((solidType != -1) ? solidType : Random.Int(4)){
 
 			//anti-entropy
 			case 0: default:
@@ -170,7 +172,7 @@ public class CursedWand {
 	}
 
 	private static boolean uncommonEffect(final Item origin, final Char user, final int targetPos){
-		switch(Random.Int(4)){
+		switch((solidType != -1) ? solidType : Random.Int(4)){
 
 			//Random plant
 			case 0: default:
@@ -240,7 +242,7 @@ public class CursedWand {
 	}
 
 	private static boolean rareEffect(final Item origin, final Char user, final int targetPos){
-		switch(Random.Int(4)){
+		switch((solidType != -1) ? solidType : Random.Int(4)){
 
 			//sheep transformation
 			case 0: default:
@@ -310,7 +312,7 @@ public class CursedWand {
 	}
 
 	private static boolean veryRareEffect(final Item origin, final Char user, final int targetPos){
-		switch(Random.Int(4)){
+		switch((solidType != -1) ? solidType : Random.Int(4)){
 
 			//great forest fire!
 			case 0: default:
@@ -426,4 +428,8 @@ public class CursedWand {
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 
+	public static void confirmSolid(int rarity, int type){
+		solidRarity = rarity;
+		solidType = type;
+	}
 }

@@ -81,6 +81,10 @@ public abstract class Wand extends Item {
 	private float availableUsesToID = USES_TO_ID/2f;
 
 	protected int collisionProperties = Ballistica.MAGIC_BOLT;
+
+	public boolean solidified = false;
+	public int solidrarity = -1;
+	public int solidtype = -1;
 	
 	{
 		defaultAction = AC_ZAP;
@@ -239,6 +243,10 @@ public abstract class Wand extends Item {
 
 		if (cursed && cursedKnown) {
 			desc += "\n\n" + Messages.get(Wand.class, "cursed");
+			desc += (solidified? Messages.get(Wand.class, "solid"):Messages.get(Wand.class, "notsolid"));
+			if(solidified){
+				desc += "\n\n" + Messages.get(Wand.class, "solidified") + Messages.get(Wand.class, "solidified"+solidrarity+"-"+solidtype);
+			}
 		} else if (!isIdentified() && cursedKnown){
 			desc += "\n\n" + Messages.get(Wand.class, "not_cursed");
 		}
@@ -424,6 +432,9 @@ public abstract class Wand extends Item {
 	private static final String CUR_CHARGE_KNOWN    = "curChargeKnown";
 	private static final String PARTIALCHARGE       = "partialCharge";
 	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
+	private static final String SOLIDIFIED = "solidified";
+	private static final String SOLIDRARITY = "solidrarity";
+	private static final String SOLIDTYPE = "solidtype";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -434,6 +445,9 @@ public abstract class Wand extends Item {
 		bundle.put( CUR_CHARGE_KNOWN, curChargeKnown );
 		bundle.put( PARTIALCHARGE , partialCharge );
 		bundle.put(CURSE_INFUSION_BONUS, curseInfusionBonus );
+		bundle.put( SOLIDIFIED, solidified );
+		bundle.put( SOLIDRARITY , solidrarity );
+		bundle.put(SOLIDTYPE, solidtype );
 	}
 	
 	@Override
@@ -446,6 +460,9 @@ public abstract class Wand extends Item {
 		curChargeKnown = bundle.getBoolean( CUR_CHARGE_KNOWN );
 		partialCharge = bundle.getFloat( PARTIALCHARGE );
 		curseInfusionBonus = bundle.getBoolean(CURSE_INFUSION_BONUS);
+		solidified = bundle.getBoolean(SOLIDIFIED);
+		solidrarity = bundle.getInt(SOLIDRARITY);
+		solidtype = bundle.getInt(SOLIDTYPE);
 	}
 	
 	@Override
@@ -512,6 +529,7 @@ public abstract class Wand extends Item {
 						if (!curWand.cursedKnown){
 							GLog.n(Messages.get(Wand.class, "curse_discover", curWand.name()));
 						}
+						if(curWand.solidified) CursedWand.confirmSolid(((Wand) curItem).solidrarity, ((Wand) curItem).solidtype);
 						CursedWand.cursedZap(curWand,
 								curUser,
 								new Ballistica(curUser.pos, target, Ballistica.MAGIC_BOLT),

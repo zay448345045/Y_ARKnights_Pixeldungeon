@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -66,7 +67,9 @@ public class WaterOfTransmutation extends WellWater {
 			item = changeSeed( (Plant.Seed)item );
 		} else if (item instanceof Artifact) {
 			item = changeArtifact( (Artifact)item );
-		} else {
+		} else if (item instanceof ROR2item) {
+			item = changeROR2item( (ROR2item)item );
+		}else {
 			item = null;
 		}
 		
@@ -236,6 +239,19 @@ public class WaterOfTransmutation extends WellWater {
 			} while (n.getClass() == p.getClass());
 			return n;
 		}
+	}
+
+	private ROR2item changeROR2item( ROR2item a ) {
+		ROR2item n = Generator.randomR2i();
+
+		if (n != null && !Challenges.isItemBlocked(n)){
+			n.cursedKnown = a.cursedKnown;
+			n.cursed = a.cursed;
+			n.levelKnown = a.levelKnown;
+			return n;
+		}
+
+		return null;
 	}
 	
 	@Override

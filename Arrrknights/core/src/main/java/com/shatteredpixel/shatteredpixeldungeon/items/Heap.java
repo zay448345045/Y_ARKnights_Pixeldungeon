@@ -43,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.journal.DocumentPage;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -425,6 +426,8 @@ public class Heap implements Bundlable {
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "wand") );
 				else if (peek() instanceof Ring)
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "ring") );
+				else if (peek() instanceof ROR2item)
+					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "r2i") );
 				else
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "skl") );
 			case TOMB:

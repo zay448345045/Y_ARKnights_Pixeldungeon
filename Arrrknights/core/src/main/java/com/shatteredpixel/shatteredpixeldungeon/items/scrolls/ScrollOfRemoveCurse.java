@@ -84,6 +84,9 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 				}
 			}
 			if (item instanceof Wand){
+				((Wand) item).solidified = false;
+				((Wand) item).solidrarity = -1;
+				((Wand) item).solidtype = -1;
 				((Wand) item).updateLevel();
 			}
 		}

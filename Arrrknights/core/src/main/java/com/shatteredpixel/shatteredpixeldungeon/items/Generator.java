@@ -124,6 +124,23 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ArmorPlate;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Gasoline;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.OddOpal;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Raincoat;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Recycler;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TriTipDagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -138,6 +155,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.Recycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAffection;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
@@ -224,6 +242,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarJournalist
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WintersScar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ExplosiveSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ForceCube;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
@@ -296,7 +315,8 @@ public class Generator {
         SKL_T3(0, SkillBook.class),
         SKL_RND(0, SkillBook.class),
         ACCESSORIES(0, Accessories.class),
-        N_INGREDINETS(0,Ingredients.class);
+        N_INGREDINETS(0,Ingredients.class),
+        ROR2ITEM(1,ROR2item.class);
 
         public Class<?>[] classes;
 
@@ -475,24 +495,24 @@ public class Generator {
             WEP_T4.probs = new float[]{4, 5, 4, 4, 3, 4, 4, 4, 3, 3, 2, 4, 2, 3, 4};
 
             WEP_T5.classes = new Class<?>[]{
-                    Greatsword.class,
-                    Laevateinn.class,
-                    ShadowFirmament.class,
-                    DeepAbyss.class,
-                    Greatshield.class,
-                    Gauntlet.class,
-                    Decapitator.class,
-                    WintersScar.class,
-                    SwordofArtorius.class,
-                    DivineAvatar.class,
-                    R4C.class,
-                    RadiantSpear.class,
-                    KRISSVector.class,
-                    LoneJourney.class,
-                    Echeveria.class,
-                    Suffering.class
+                    Greatsword.class,//4
+                    Laevateinn.class,//3
+                    ShadowFirmament.class,//3
+                    DeepAbyss.class,//4
+                    Greatshield.class,//4
+                    Gauntlet.class,//4
+                    Decapitator.class,//4
+                    WintersScar.class,//3
+                    SwordofArtorius.class,//3
+                    DivineAvatar.class,//4
+                    R4C.class,//4
+                    RadiantSpear.class,//4
+                    KRISSVector.class,//3
+                    LoneJourney.class,//3
+                    Echeveria.class,//3
+                    Suffering.class//3
             };
-            WEP_T5.probs = new float[]{4, 3, 3, 4, 4, 4, 4, 3, 3, 4, 4, 4, 3, 3, 3, 3};
+            WEP_T5.probs = new float[]{4, 3, 3, 4, 4, 4, 4, 3, 3, 4, 4, 4, 3, 3, 3, 3};//56
 
             //see Generator.randomArmor
             ARMOR.classes = new Class<?>[]{
@@ -537,9 +557,10 @@ public class Generator {
             MIS_T5.classes = new Class<?>[]{
                     Trident.class,
                     ThrowingHammer.class,
-                    ForceCube.class
+                    ForceCube.class,
+                    ExplosiveSpear.class
             };
-            MIS_T5.probs = new float[]{6, 5, 4};
+            MIS_T5.probs = new float[]{6, 5, 4, 2};
 
             FOOD.classes = new Class<?>[]{
                     Food.class,
@@ -670,6 +691,36 @@ public class Generator {
                     Potato.class
             };
             N_INGREDINETS.probs = new float[]{1, 1,1};
+
+            ROR2ITEM.classes = new Class<?>[]{
+                    //white
+                    APRounds.class,
+                    ArmorPlate.class,
+                    Crowbar.class,
+                    Gasoline.class,
+                    OddOpal.class,
+                    StunGrenade.class,
+                    TopazBrooch.class,
+                    TougherTimes.class,
+                    TriTipDagger.class,
+                    //red
+                    Aegis.class,
+                    Behemoth.class,
+                    LuckyLeaf.class,
+                    Raincoat.class,
+                    //yellow
+                    Perforator.class,
+                    TitanicKnurl.class,
+                    //orange
+                    Recycler.class,
+                    };
+            ROR2ITEM.defaultProbs = new float[]
+                    {10, 10, 10, 10, 10, 10, 10, 10, 10,//white
+                    1, 1, 1, 1,//red
+                    1, 1,//yellow
+                    3,//orange
+                    };
+            ROR2ITEM.probs = ROR2ITEM.defaultProbs.clone();
         }
     }
 
@@ -722,6 +773,9 @@ public class Generator {
                 Item item = randomArtifact();
                 //if we're out of artifacts, return a ring instead.
                 return item != null ? item : random(Category.RING);
+            case ROR2ITEM:
+                item = randomR2i();
+                return item != null ? item : random(Category.ARTIFACT);
             default:
                 int i = Random.chances(cat.probs);
                 if (i == -1) {
@@ -823,6 +877,30 @@ public class Generator {
         Category cat = Category.ARTIFACT;
         for (int i = 0; i < cat.classes.length; i++) {
             if (cat.classes[i].equals(artifact) && cat.probs[i] > 0) {
+                cat.probs[i] = 0;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ROR2item randomR2i() {
+
+        Category cat = Category.ROR2ITEM;
+        int i = Random.chances(cat.probs);
+
+        if (i == -1) {
+            return null;
+        }
+
+        cat.probs[i] = 0;
+        return (ROR2item) Reflection.newInstance((Class<? extends ROR2item>) cat.classes[i]).random();
+
+    }
+    public static boolean removeR2i(Class<? extends ROR2item> ror2items) {
+        Category cat = Category.ROR2ITEM;
+        for (int i = 0; i < cat.classes.length; i++) {
+            if (cat.classes[i].equals(ror2items) && cat.probs[i] > 0) {
                 cat.probs[i] = 0;
                 return true;
             }

@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RipperDemon;
@@ -117,17 +118,20 @@ public class Violin extends MeleeWeapon {
     }
 
     private static final String PARTICALARTS = "particalarts";
+    private static final String MARKED = "marked";
 
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put( PARTICALARTS , particalArts );
+        bundle.put( MARKED , marked );
     }
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
         super.restoreFromBundle(bundle);
         particalArts = bundle.getFloat(PARTICALARTS);
+        marked = bundle.getInt(MARKED);
     }
 
     private CellSelector.Listener caster = new CellSelector.Listener(){
@@ -145,8 +149,7 @@ public class Violin extends MeleeWeapon {
 
                 final Ballistica chain = new Ballistica(curUser.pos, target, Ballistica.STOP_TARGET);
                 if (Actor.findChar( chain.collisionPos ) != null){
-                    ProcessHuntingMark(Actor.findChar( chain.collisionPos ));
-                    //Buff.affect(Actor.findChar( chain.collisionPos ), HuntingMark.class,5+Dungeon.hero.pointsInTalent(Talent.RHAPSODY));
+                    //ProcessHuntingMark(Actor.findChar( chain.collisionPos ));
                     if(Dungeon.level.adjacent(curUser.pos, target) && Dungeon.hero.hasTalent(Talent.MINUET)){
                         int paratime = Math.max(0,Dungeon.hero.pointsInTalent(Talent.MINUET)*2-3);
                         if(paratime>0) {
@@ -162,7 +165,7 @@ public class Violin extends MeleeWeapon {
                     if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
                         Buff.affect(curUser,InstantViolin.class);
                     }
-                    charge = 1;
+                    charge--;
                     updateQuickslot();
                 }
                 throwSound();
@@ -225,6 +228,7 @@ public class Violin extends MeleeWeapon {
                 Dungeon.level.occupyCell(ch);
             }
         }), -1);
+        ProcessHuntingMark(ch);
     }
 
     //pulls an enemy to a position along the chain's path, as close to the hero as possible
@@ -232,6 +236,8 @@ public class Violin extends MeleeWeapon {
 
         if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
             GLog.w( Messages.get(this, "cant_pull") );
+            ProcessHuntingMark(enemy);
+            charge++;
             return;
         }
 
@@ -248,6 +254,7 @@ public class Violin extends MeleeWeapon {
 
         if (bestPos == -1) {
             GLog.i(Messages.get(this, "does_nothing"));
+            charge++;
             return;
         }
 
@@ -255,6 +262,7 @@ public class Violin extends MeleeWeapon {
         int pullDistance = Dungeon.level.distance(enemy.pos, pulledPos);
         if (pullDistance > (int)Math.floor((Math.sqrt(8*Dungeon.hero.lvl + 1)-1)/2f)+Dungeon.hero.pointsInTalent(Talent.VIOLINIST)*2+1) {
             GLog.w( Messages.get(this, "not_long_enough") );
+            charge++;
             return;
         } else {
             updateQuickslot();
@@ -275,15 +283,19 @@ public class Violin extends MeleeWeapon {
                 hero.next();
             }
         }));
+        ProcessHuntingMark(enemy);
     }
 
     public void ProcessHuntingMark(Char enemy){
-        if(marked< 1 +
-                ((Dungeon.hero.pointsInTalent(Talent.RHAPSODY)>=2) ? 1:0) +
-                ((Dungeon.hero.buff(RabbitTime.class)!=null) ? Math.abs(Dungeon.hero.pointsInTalent(Talent.RHAPSODY)-2):0))
-        {
-            Buff.affect(enemy, HuntingMark.class, 5+ Dungeon.hero.pointsInTalent(Talent.RHAPSODY));
-            marked++;
+        if(Dungeon.hero.subClass == HeroSubClass.KILLER ) {
+            if(enemy.buff(HuntingMark.class) != null){
+                Buff.prolong(enemy, HuntingMark.class, 5 + Dungeon.hero.pointsInTalent(Talent.RHAPSODY));
+            }else if (marked < 1 +
+                    ((Dungeon.hero.pointsInTalent(Talent.RHAPSODY) >= 2) ? 1 : 0) +
+                    ((Dungeon.hero.buff(RabbitTime.class) != null) ? Math.abs(Dungeon.hero.pointsInTalent(Talent.RHAPSODY) - 2) : 0)) {
+                Buff.affect(enemy, HuntingMark.class, 5 + Dungeon.hero.pointsInTalent(Talent.RHAPSODY));
+                marked++;
+            }
         }
     }
 

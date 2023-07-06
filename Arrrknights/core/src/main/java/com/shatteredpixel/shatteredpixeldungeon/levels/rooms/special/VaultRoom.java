@@ -58,16 +58,22 @@ public class VaultRoom extends SpecialRoom {
 		Random.shuffle(prizeClasses);
 		
 		Item i1, i2;
+		Item i3, i4;
 		i1 = prize();
 		i2 = prize();
+		i3 = prize();
+		i4 = prize();
 
 		int i1Pos, i2Pos;
+		int i3Pos, i4Pos;
 		int doorPos = level.pointToCell(entrance());
 		do {
 			int neighbourIdx = Random.Int(PathFinder.CIRCLE8.length);
 			i1Pos = c + PathFinder.CIRCLE8[neighbourIdx];
 			i2Pos = c + PathFinder.CIRCLE8[(neighbourIdx+4)%8];
-		} while (level.adjacent(i1Pos, doorPos) || level.adjacent(i2Pos, doorPos));
+			i3Pos = c + PathFinder.CIRCLE8[(neighbourIdx+2)%8];
+			i4Pos = c + PathFinder.CIRCLE8[(neighbourIdx+6)%8];
+		} while (level.adjacent(i1Pos, doorPos) || level.adjacent(i2Pos, doorPos) || level.adjacent(i3Pos, doorPos) || level.adjacent(i4Pos, doorPos));
 
 		level.drop( i1, i1Pos ).type = Heap.Type.CRYSTAL_CHEST;
 		if (Random.Int(10) == 0){
@@ -75,8 +81,20 @@ public class VaultRoom extends SpecialRoom {
 		} else {
 			level.drop(i2, i2Pos).type = Heap.Type.CRYSTAL_CHEST;
 		}
+		if (Random.Int(10) == 0){
+			level.mobs.add(Mimic.spawnAt(i3Pos, i3, CrystalMimic.class));
+		} else {
+			level.drop(i3, i3Pos).type = Heap.Type.CRYSTAL_CHEST;
+		}
+		if (Random.Int(10) == 0){
+			level.mobs.add(Mimic.spawnAt(i4Pos, i4, CrystalMimic.class));
+		} else {
+			level.drop(i4, i4Pos).type = Heap.Type.CRYSTAL_CHEST;
+		}
 		Painter.set(level, i1Pos, Terrain.PEDESTAL);
 		Painter.set(level, i2Pos, Terrain.PEDESTAL);
+		Painter.set(level, i3Pos, Terrain.PEDESTAL);
+		Painter.set(level, i4Pos, Terrain.PEDESTAL);
 
 		level.addItemToSpawn( new CrystalKey( Dungeon.depth ) );
 		
@@ -98,5 +116,6 @@ public class VaultRoom extends SpecialRoom {
 			Arrays.asList(Generator.Category.WAND,
 					Generator.Category.RING,
 					Generator.Category.ARTIFACT,
-					Generator.Category.SKL_RND));
+					Generator.Category.SKL_RND,
+					Generator.Category.ROR2ITEM));
 }

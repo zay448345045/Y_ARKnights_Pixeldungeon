@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.Brew;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.Elixir;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -46,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.RatKingRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -76,7 +78,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 				item instanceof Wand ||
 				item instanceof Plant.Seed ||
 				item instanceof Runestone ||
-				item instanceof Artifact;
+				item instanceof Artifact ||
+				item instanceof ROR2item;
 	}
 	
 	@Override
@@ -107,7 +110,12 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		} else if (item instanceof Artifact) {
 			changeArtifact( (Artifact)item );
 			return;
-		} else {
+		}
+		else if (item instanceof ROR2item) {
+			changeROR2item( (ROR2item)item );
+			return;
+		}
+		else {
 			result = null;
 		}
 		
@@ -426,6 +434,75 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			public void onBackPressed() {
 			}
 		});
+	}
+
+	private void changeROR2item( ROR2item a ) {
+		final ROR2item[] ror2items = new ROR2item[3];
+		int safecount = 0;
+		Generator.Category cat = Generator.Category.ROR2ITEM;
+		do{
+			int i = Random.chances(cat.probs);
+			//if no artifacts are left, return null
+			if (i == -1) {
+				GLog.n( Messages.get(this, "nothing") );
+				return;
+			}
+			ror2items[0] = (ROR2item) Reflection.newInstance((Class<? extends ROR2item>) cat.classes[i]).random();
+			safecount++;
+		}while ((Challenges.isItemBlocked(ror2items[0]) || ror2items[0].getClass() == a.getClass()) && safecount<=10);
+		safecount = 0;
+		do{
+			int j = Random.chances(cat.probs);
+			//if no artifacts are left, return null
+			if (j == -1) {
+				return;
+			}
+			ror2items[1] = (ROR2item) Reflection.newInstance((Class<? extends ROR2item>) cat.classes[j]).random();
+			safecount++;
+		}while ((Challenges.isItemBlocked(ror2items[1]) || ror2items[1].getClass() == a.getClass() || ror2items[1].getClass() == ror2items[0].getClass() ) && safecount<=10);
+		safecount = 0;
+		do{
+			int k = Random.chances(cat.probs);
+			//if no artifacts are left, return null
+			if (k == -1) {
+				return;
+			}
+			ror2items[2] = (ROR2item) Reflection.newInstance((Class<? extends ROR2item>) cat.classes[k]).random();
+			safecount++;
+		}while ((Challenges.isItemBlocked(ror2items[2]) || ror2items[2].getClass() == a.getClass() || ror2items[2].getClass() == ror2items[0].getClass() || ror2items[2].getClass() == ror2items[1].getClass()) && safecount<=10);
+		GameScene.show(new WndOptions(Messages.titleCase(ScrollOfTransmutation.this.name()),
+				Messages.get(this, "inv_title") ,
+				ror2items[0].name(),
+				ror2items[1].name(),
+				ror2items[2].name()) {
+
+			@Override
+			protected void onSelect(int index) {
+				ROR2item n = ror2items[index];
+				n.levelKnown = a.levelKnown;
+				n.cursedKnown = a.cursedKnown;
+				n.cursed = a.cursed;
+				if (a.isEquipped(Dungeon.hero)) {
+					a.cursed = false; //to allow it to be unequipped
+					((EquipableItem) a).doUnequip(Dungeon.hero, false);
+					((EquipableItem) n).doEquip(Dungeon.hero);
+				} else {
+					a.detach(Dungeon.hero.belongings.backpack);
+					if (!n.collect()) {
+						Dungeon.level.drop(n, curUser.pos).sprite.drop();
+					}
+					n.identify();
+					Sample.INSTANCE.play(Assets.Sounds.EVOKE);
+				}
+				Generator.removeR2i(n.getClass());
+			}
+
+			@Override
+			public void onBackPressed() {
+			}
+		});
+
+
 	}
 	
 	private Plant.Seed changeSeed( Plant.Seed s ) {

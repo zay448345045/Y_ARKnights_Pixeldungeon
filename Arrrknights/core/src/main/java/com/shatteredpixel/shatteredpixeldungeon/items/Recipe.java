@@ -64,6 +64,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.spells.BeaconOfReturning;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.BlastSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.ChaosCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.FeatherFall;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.ForceCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.InstantRecharge;
@@ -215,6 +216,7 @@ public abstract class Recipe {
             new AquaBlast.Recipe(),
             new BeaconOfReturning.Recipe(),
             new CurseInfusion.Recipe(),
+            new CurseSolidifying.Recipe(),
             new FeatherFall.Recipe(),
             new MagicalInfusion.Recipe(),
             new MagicalArmord.Recipe(),
