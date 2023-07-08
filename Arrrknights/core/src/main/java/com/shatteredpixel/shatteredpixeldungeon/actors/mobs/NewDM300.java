@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookMentalBurst;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookNervous;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookReflow;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookRockfailHammer;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookWolfPack;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.LloydsBeacon;
@@ -634,6 +635,9 @@ public class NewDM300 extends Mob {
                 break;
             case NEARL:
                 Dungeon.level.drop(new BookDawn(), pos).sprite.drop(pos);
+                break;
+            case RABBIT:
+                Dungeon.level.drop(new BookUnwelcomeGift(), pos).sprite.drop(pos);
                 break;
         }
 

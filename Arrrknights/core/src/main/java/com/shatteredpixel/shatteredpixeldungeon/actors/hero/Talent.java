@@ -566,7 +566,7 @@ public enum Talent {
 		if (hero.hasTalent(RESTORED_WILLPOWER)){
 			BrokenSeal.WarriorShield shield = hero.buff(BrokenSeal.WarriorShield.class);
 			if (shield != null){
-				int shieldToGive = Math.round(shield.maxShield() * 0.33f*(1+hero.pointsInTalent(RESTORED_WILLPOWER)));
+				int shieldToGive = Math.round(shield.maxShield() * hero.pointsInTalent(RESTORED_WILLPOWER));
 				shield.supercharge(shieldToGive);
 			}
 			Buff.detach(hero, Burning.class);

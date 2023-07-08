@@ -41,7 +41,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Closure_FoodBo
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Closure_IdentifyBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Closure_PotionBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Closure_ScrollBox;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookFoodPrep;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -228,6 +230,8 @@ import java.util.concurrent.TimeoutException;
 			new MidnightSword().identify().collect();
 			new CurseSolidifying().quantity(99).collect();
 			new WandOfMagicMissile().upgrade(10).identify().collect();
+			new BookBountyHunter().collect();
+			new BookUnwelcomeGift().collect();
 			//bags
 			new PotionBandolier().collect();
 			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();

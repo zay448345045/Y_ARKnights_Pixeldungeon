@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import com.badlogic.gdx.graphics.g3d.particles.values.UnweightedMeshSpawnShapeValue;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -100,6 +101,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.ChainHook;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.CrimsonCutter;
@@ -139,6 +141,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.NeverBackDown;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Reflow;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.RockfailHammer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Spikes;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.UnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.WolfPack;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.EveryoneTogether;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.ExtremeSharpness;
@@ -744,7 +747,7 @@ public class Hero extends Char {
         if (hasTalent(Talent.TACTICAL_SHIELD) && belongings.armor!=null) {//change from budding
             int drplus = belongings.armor.buffedLvl() * 2;
             drplus = Math.min(drplus, 1 + pointsInTalent(Talent.TACTICAL_SHIELD) * 3);
-            dr += Random.NormalIntRange(0,drplus);
+            dr += drplus;
         }
 
         if (hasTalent(Talent.SHIELD_OF_LIGHT)) {
@@ -2874,6 +2877,9 @@ public class Hero extends Char {
             case 20:
                 SK1 = new SoulAbsorption();
                 break;
+            case 21:
+                SK1 = new BountyHunter();
+                break;
         }
     }
 
@@ -2941,6 +2947,9 @@ public class Hero extends Char {
                 break;
             case 20:
                 SK2 = new BreaktheDawn();
+                break;
+            case 21:
+                SK2 = new UnwelcomeGift();
                 break;
         }
     }

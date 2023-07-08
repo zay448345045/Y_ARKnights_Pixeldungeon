@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.LiveStart;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
@@ -903,6 +904,11 @@ public abstract class Mob extends Char {
 		if (Dungeon.hero.lvl <= maxLvl && buff(Lucky.LuckProc.class) != null){
 			Dungeon.level.drop(Lucky.genLoot(), pos).sprite.drop();
 			Lucky.showFlare(sprite);
+		}
+		//bounty hunter skill logic
+		if (Dungeon.hero.lvl <= maxLvl && buff(BountyHunter.PriceOnHead.class) != null){
+			Dungeon.level.drop(BountyHunter.genLoot(), pos).sprite.drop();
+			BountyHunter.showFlare(sprite);
 		}
 
 		//soul eater talent

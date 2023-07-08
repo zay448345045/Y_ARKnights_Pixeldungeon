@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookExecutionMode;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookFate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookHikari;
@@ -316,7 +317,9 @@ public class Goo extends Mob {
 			case NEARL:
 				Dungeon.level.drop(new BookHikari(), pos).sprite.drop(pos);
 				break;
-
+			case RABBIT:
+				Dungeon.level.drop(new BookBountyHunter(), pos).sprite.drop(pos);
+				break;
 		}
 		
 		Badges.validateBossSlain();
