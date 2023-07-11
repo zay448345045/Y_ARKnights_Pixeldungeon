@@ -141,6 +141,7 @@ public class CursedWand {
 					if (user != null && !user.properties().contains(Char.Property.IMMOVABLE)) {
 						ScrollOfTeleportation.teleportChar(user);
 					} else {
+						if(solidType != -1) return true;
 						return cursedEffect(origin, user, targetPos);
 					}
 				} else {
@@ -148,6 +149,7 @@ public class CursedWand {
 					if (ch != null && !ch.properties().contains(Char.Property.IMMOVABLE)) {
 						ScrollOfTeleportation.teleportChar(ch);
 					} else {
+						if(solidType != -1) return true;
 						return cursedEffect(origin, user, targetPos);
 					}
 				}
@@ -183,6 +185,7 @@ public class CursedWand {
 						&& Dungeon.level.traps.get(pos) == null) {
 					Dungeon.level.plant((Plant.Seed) Generator.randomUsingDefaults(Generator.Category.SEED), pos);
 				} else {
+					if(solidType != -1) return true;
 					return cursedEffect(origin, user, targetPos);
 				}
 
@@ -221,6 +224,7 @@ public class CursedWand {
 						Sample.INSTANCE.play(Assets.Sounds.BURNING);
 					}
 				} else {
+					if(solidType != -1) return true;
 					return cursedEffect(origin, user, targetPos);
 				}
 				return true;
@@ -263,6 +267,7 @@ public class CursedWand {
 					Sample.INSTANCE.play(Assets.Sounds.PUFF);
 					Sample.INSTANCE.play(Assets.Sounds.SHEEP);
 				} else {
+					if(solidType != -1) return true;
 					return cursedEffect(origin, user, targetPos);
 				}
 				return true;
@@ -344,6 +349,7 @@ public class CursedWand {
 					if (!candidates.isEmpty()){
 						spawnCell = Random.element(candidates);
 					} else {
+						if(solidType != -1) return true;
 						return cursedEffect(origin, user, targetPos);
 					}
 				}

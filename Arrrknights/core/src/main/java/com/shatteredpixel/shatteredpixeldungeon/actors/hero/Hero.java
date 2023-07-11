@@ -143,6 +143,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.RockfailHammer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Spikes;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.UnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.WolfPack;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.CaerbannogNoSekai;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.EveryoneTogether;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.ExtremeSharpness;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.NigetRaid;
@@ -2988,6 +2989,9 @@ public class Hero extends Char {
                 break;
             case 10:
                 SK3 = new ShiningSun();
+                break;
+            case 11:
+                SK3 = new CaerbannogNoSekai();
                 break;
         }
 

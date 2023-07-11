@@ -59,6 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSuzuran;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfVigna;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfWeedy;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfValstrax;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfDisintegration;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
@@ -124,6 +125,8 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add(StaffOfTime.class );
 		RESISTS.add(StaffOfSuzuran.class );
 		RESISTS.add(StaffOfPodenco.class );
+
+		RESISTS.add(StaffOfValstrax.class);
 
 		RESISTS.add( DM100.LightningBolt.class );
 		RESISTS.add( Shaman.EarthenBolt.class );

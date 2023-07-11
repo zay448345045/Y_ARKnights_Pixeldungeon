@@ -90,9 +90,9 @@ public abstract class KindofMisc extends EquipableItem {
 			enabled[2] = miscs[2] != null;
 
 			//force swapping with the same type of item if 2x of that type is already present
-			if (this instanceof Ring && hero.belongings.misc instanceof Ring){
+			if (this instanceof Ring && (hero.belongings.misc instanceof Ring || hero.belongings.misc instanceof ROR2item)){
 				enabled[0] = false; //disable artifact
-			} else if (this instanceof Artifact && hero.belongings.misc instanceof Artifact){
+			} else if (this instanceof Artifact && (hero.belongings.misc instanceof Artifact || hero.belongings.misc instanceof ROR2item)){
 				enabled[2] = false; //disable ring
 			} else if(this instanceof ROR2item){
 				int slot = Dungeon.quickslot.getSlot(KindofMisc.this);

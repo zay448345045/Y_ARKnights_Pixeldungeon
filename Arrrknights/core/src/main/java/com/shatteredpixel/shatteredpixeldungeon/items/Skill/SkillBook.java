@@ -31,7 +31,7 @@ public class SkillBook extends Item {
     }
 
     private static final String AC_ACT = "ACT";
-    public int charge = 30;
+    public int charge = 130;
     public int chargeCap = 150;
 
     @Override
@@ -95,7 +95,7 @@ public class SkillBook extends Item {
                                     } else {
                                         float chargeDown = 100 / (RingOfSunLight.SPBonus(Dungeon.hero));
                                         if (chargeDown < 15) chargeDown = 15;
-                                        charge -= chargeDown;
+                                        //charge -= chargeDown;
                                         updateQuickslot();
                                         hero.SK3.doSkill();
                                         Talent.onSkillUsed(Dungeon.hero);
