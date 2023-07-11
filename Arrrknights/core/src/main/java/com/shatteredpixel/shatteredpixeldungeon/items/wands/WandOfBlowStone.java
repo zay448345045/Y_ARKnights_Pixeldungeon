@@ -12,7 +12,7 @@ import com.watabou.utils.Random;
 
 public class WandOfBlowStone extends DamageWand{
     {
-        image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
+        image = ItemSpriteSheet.WAND_BLOW_STONE;
     }
     @Override
     public int min(int lvl) {

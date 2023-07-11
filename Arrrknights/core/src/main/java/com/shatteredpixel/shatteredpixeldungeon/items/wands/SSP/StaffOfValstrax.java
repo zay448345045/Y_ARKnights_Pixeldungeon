@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class StaffOfValstrax extends DamageWand {
     private static ItemSprite.Glowing COL = new ItemSprite.Glowing(0xFF3333);
     {
-        image = ItemSpriteSheet.WAND_FIREBOLT;
+        image = ItemSpriteSheet.WAND_VALSTRAX;
         collisionProperties = Ballistica.PROJECTILE;
     }
     @Override

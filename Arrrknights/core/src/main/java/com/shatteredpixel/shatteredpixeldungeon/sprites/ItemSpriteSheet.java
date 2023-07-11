@@ -157,6 +157,7 @@ public class ItemSpriteSheet {
 	public static final int KIT             = SINGLE_USE+14;
 	public static final int AMULET          = SINGLE_USE+15;
 	public static final int RINGKIT          = SINGLE_USE+16;
+	public static final int SAKURAPROOF          = SINGLE_USE+17;
 	static{
 		assignItemRect(ANKH,            10, 16);
 		assignItemRect(STYLUS,          16, 16);
@@ -175,6 +176,7 @@ public class ItemSpriteSheet {
 		assignItemRect(KIT,             16, 15);
 		assignItemRect(AMULET,          16, 16);
 		assignItemRect(RINGKIT,          16, 16);
+		assignItemRect(SAKURAPROOF,          16, 16);
 	}
 	
 	private static final int BOMBS          =                               xy(1, 5);   //16 slots
@@ -508,6 +510,8 @@ public class ItemSpriteSheet {
 	public static final int WAND_MOSTIMA    = WANDS+16;
 	public static final int WAND_LAVA    = WANDS+17;
 	public static final int WAND_PODENCO    = WANDS+18;
+	public static final int WAND_BLOW_STONE    = WANDS+19;
+	public static final int WAND_VALSTRAX    = WANDS+20;
 	static {
 		for (int i = WANDS; i < WANDS+31; i++)
 			assignItemRect(i, 16, 16);
