@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
+import com.shatteredpixel.shatteredpixeldungeon.items.SakuraProof;
 import com.shatteredpixel.shatteredpixeldungeon.items.StaffKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Blandfruit;
@@ -405,7 +406,7 @@ public class QuickRecipe extends Component {
 				result.add(null);
 				result.add(new QuickRecipe(new ForceCatalyst.Recipe(), new ArrayList<>(Arrays.asList(new Weapon.PlaceHolder(), new ArcaneCatalyst())), new ForceCatalyst()));
 				result.add(new QuickRecipe(new ChaosCatalyst.Recipe()));
-				result.add(null);
+				result.add(new QuickRecipe(new SakuraProof.Recipe()));
 				result.add(null);
 				result.add(new QuickRecipe(new StaffKit.Recipe(), new ArrayList<>(Arrays.asList(new Wand.PlaceHolder(), new ArcaneCatalyst())), new StaffKit()));
 				result.add(new QuickRecipe(new StaffKit.Recipe(), new ArrayList<>(Arrays.asList(new MetalShard(), new ArcaneCatalyst())), new StaffKit()));

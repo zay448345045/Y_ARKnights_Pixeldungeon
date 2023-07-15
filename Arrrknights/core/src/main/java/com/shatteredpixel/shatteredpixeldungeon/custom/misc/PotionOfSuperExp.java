@@ -32,7 +32,6 @@ public class PotionOfSuperExp extends Potion {
 
     {
         icon = ItemSpriteSheet.Icons.POTION_EXP;
-
         bones = false;
     }
 

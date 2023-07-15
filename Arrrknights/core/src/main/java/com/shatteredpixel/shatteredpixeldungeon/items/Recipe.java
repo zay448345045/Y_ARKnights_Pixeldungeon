@@ -241,6 +241,7 @@ public abstract class Recipe {
             new BlastSpell.Recipe(),
             new InstantRecharge.Recipe(),
             new PortableCover.Recipe(),
+            new SakuraProof.Recipe(),
     };
 
     private static Recipe[] threeIngredientRecipes = new Recipe[]{

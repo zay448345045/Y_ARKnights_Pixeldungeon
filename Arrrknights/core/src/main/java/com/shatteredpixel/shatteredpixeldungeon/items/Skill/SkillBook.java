@@ -31,7 +31,7 @@ public class SkillBook extends Item {
     }
 
     private static final String AC_ACT = "ACT";
-    public int charge = 130;
+    public int charge = 30;
     public int chargeCap = 150;
 
     @Override
@@ -45,13 +45,6 @@ public class SkillBook extends Item {
     public void execute(Hero hero, String action) {
         super.execute(hero, action);
         if (action.equals(AC_ACT)) {
-
-/*            if (hero.buff(NervousImpairment.class) == null) {
-                Buff.affect(hero, NervousImpairment.class);
-            }
-            else {
-                hero.buff(NervousImpairment.class).Sum(25);
-            }*/
 
             GameScene.show(
                     new WndOptions(Messages.get(this, "name"),
@@ -95,7 +88,7 @@ public class SkillBook extends Item {
                                     } else {
                                         float chargeDown = 100 / (RingOfSunLight.SPBonus(Dungeon.hero));
                                         if (chargeDown < 15) chargeDown = 15;
-                                        //charge -= chargeDown;
+                                        charge -= chargeDown;
                                         updateQuickslot();
                                         hero.SK3.doSkill();
                                         Talent.onSkillUsed(Dungeon.hero);
