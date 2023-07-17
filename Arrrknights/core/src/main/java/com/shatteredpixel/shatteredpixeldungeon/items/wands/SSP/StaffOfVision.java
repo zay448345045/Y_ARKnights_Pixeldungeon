@@ -29,7 +29,7 @@ import com.watabou.utils.Random;
 
 public class StaffOfVision extends Wand {
     {
-        image = ItemSpriteSheet.WAND_WARDING;
+        image = ItemSpriteSheet.WAND_VISION;
     }
     protected int initialCharges() {
         return 3;

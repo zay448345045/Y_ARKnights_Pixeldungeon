@@ -24,7 +24,7 @@ import java.nio.file.AccessMode;
 
 public class NaginataAndFan extends MeleeWeapon{
     {
-        image = ItemSpriteSheet.NAGINATA;
+        image = ItemSpriteSheet.NAGINATA_AND_FAN;
         hitSound = Assets.Sounds.HIT_SPEAR;
         hitSoundPitch = 1.18f;
 

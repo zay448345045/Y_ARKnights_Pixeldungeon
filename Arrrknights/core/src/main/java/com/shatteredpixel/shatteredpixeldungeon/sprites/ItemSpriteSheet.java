@@ -310,6 +310,7 @@ public class ItemSpriteSheet {
 	public static final int PANDA       = WEP_TIER4+15;
 	public static final int SCENE       = WEP_TIER4+16;
 	public static final int REVOLVER       = WEP_TIER4+17;
+	public static final int NAGINATA_AND_FAN       = WEP_TIER4+18;
 	static{
 		assignItemRect(LONGSWORD,       16, 16);
 		assignItemRect(BATTLE_AXE,      16, 16);
@@ -329,6 +330,7 @@ public class ItemSpriteSheet {
 		assignItemRect(PANDA,        16, 16);
 		assignItemRect(SCENE,        16, 16);
 		assignItemRect(REVOLVER,        16, 16);
+		assignItemRect(NAGINATA_AND_FAN,        16, 16);
 	}
 
 	private static final int WEP_TIER5      =                               xy(1, 10);   //8 slots
@@ -512,6 +514,7 @@ public class ItemSpriteSheet {
 	public static final int WAND_PODENCO    = WANDS+18;
 	public static final int WAND_BLOW_STONE    = WANDS+19;
 	public static final int WAND_VALSTRAX    = WANDS+20;
+	public static final int WAND_VISION    = WANDS+21;
 	static {
 		for (int i = WANDS; i < WANDS+31; i++)
 			assignItemRect(i, 16, 16);
