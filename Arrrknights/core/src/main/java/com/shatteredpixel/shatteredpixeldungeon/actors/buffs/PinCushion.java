@@ -46,6 +46,18 @@ public class PinCushion extends Buff {
 		items.add(projectile);
 	}
 
+	public Item grabOne(){
+		Item item = items.remove(0);
+		if (items.isEmpty()){
+			detach();
+		}
+		return item;
+	}
+
+	public boolean sthSticking(){
+		return !items.isEmpty();
+	}
+
 	@Override
 	public void detach() {
 			for (Item item : items) {

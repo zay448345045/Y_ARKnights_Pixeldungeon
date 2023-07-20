@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
@@ -7,6 +8,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WolfMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -27,33 +30,58 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnc
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
 public class StaffOfMageHand extends Wand {
     {
-        image = ItemSpriteSheet.WAND_MOSTIMA;
+        image = ItemSpriteSheet.ARTIFACT_BEACON;
         collisionProperties = Ballistica.STOP_TARGET | Ballistica.STOP_SOLID;
     }
     @Override
     protected void onZap( Ballistica bolt ) {
         int before = Dungeon.level.map[bolt.collisionPos];
 
-        //路径推动
-        int beamdis = Dungeon.level.distance(Dungeon.hero.pos, bolt.collisionPos);
-        wandattack(bolt.collisionPos, beamdis);
-        Dungeon.level.pressCell(bolt.collisionPos);
-
         Char ch = Actor.findChar( bolt.collisionPos );
         if (ch != null) {
+            if(ch instanceof Mob) {
+                //偷取物品
+                if(ch.buff(MageHandStolenTracker.class) == null) {
+                    ((Mob) ch).rollToDropLoot();
+                    Buff.affect(ch, MageHandStolenTracker.class);
+                }
+                //拿取投掷物
+                while (ch.buff(PinCushion.class) != null) {
+                    Item item = ch.buff(PinCushion.class).grabOne();
 
-            //偷取物品
+                    if (item.doPickUp(Dungeon.hero)) {
+                        Dungeon.hero.spend(-Item.TIME_TO_PICK_UP); //casting the spell already takes a turn
+                        GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", item.name())) );
+
+                    } else {
+                        GLog.w(Messages.get(this, "cant_grab"));
+                        Dungeon.level.drop(item, ch.pos).sprite.drop();
+                        return;
+                    }
+                }
+                if(Dungeon.hero.buff(WolfMark.class)!=null){
+                    WolfMark WM = Dungeon.hero.buff(WolfMark.class);
+                    if(WM.object == ch.id()){
+                        WM.detach();
+                        Sample.INSTANCE.play( Assets.Sounds.ITEM );
+                    }
+                }
+            }
         }
 
         //念力拾物
@@ -80,25 +108,30 @@ public class StaffOfMageHand extends Wand {
             GameScene.ripple( bolt.collisionPos );
         }
 
-        //偷取掉落物
+        //路径推动
+        int beamdis = Dungeon.level.distance(Dungeon.hero.pos, bolt.collisionPos);
+        wandattack(bolt.collisionPos, beamdis);
+        Dungeon.level.pressCell(bolt.collisionPos);
     }
 
     private void transport( Heap heap ) {
-        Item item = heap.pickUp();
-        if (item.doPickUp( curUser )) {
+        while(!heap.isEmpty()){
+            Item item = heap.pickUp();
+            if (item.doPickUp( curUser )) {
 
-            if (item instanceof Dewdrop) {
-                // Do nothing
-            } else {
-                if (((item instanceof ScrollOfUpgrade || item instanceof ScrollOfEnchantment) && ((Scroll)item).isKnown()) ||
-                        ((item instanceof PotionOfStrength || item instanceof ElixirOfMight || item instanceof PotionOfAdrenalineSurge) && ((Potion)item).isKnown())) {
+                if (item instanceof Dewdrop) {
+                    // Do nothing
                 } else {
+                    if (((item instanceof ScrollOfUpgrade || item instanceof ScrollOfEnchantment) && ((Scroll)item).isKnown()) ||
+                            ((item instanceof PotionOfStrength || item instanceof ElixirOfMight || item instanceof PotionOfAdrenalineSurge) && ((Potion)item).isKnown())) {
+                    } else {
 
+                    }
                 }
+                GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", item.name())) );
+            } else {
+                Dungeon.level.drop( item, curUser.pos ).sprite.drop();
             }
-
-        } else {
-            Dungeon.level.drop( item, curUser.pos ).sprite.drop();
         }
     }
 
@@ -133,4 +166,6 @@ public class StaffOfMageHand extends Wand {
             SpellSprite.show(attacker, SpellSprite.CHARGE);
         }
     }
+
+    public static class MageHandStolenTracker extends Buff{}
 }

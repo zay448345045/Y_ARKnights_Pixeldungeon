@@ -147,7 +147,7 @@ public class Item implements Bundlable {
 			}
 
 			if (hero.hasTalent(Talent.INDUCTION)) {
-				if (this.isIdentified() == false && Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
+				if (!this.isIdentified() && Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
 					if (Dungeon.hero.buff(Talent.rabbitIdentify.class).count() > 7 - (hero.pointsInTalent(Talent.INDUCTION) * 2)) {
 						if (this instanceof MeleeWeapon || this instanceof Wand || this instanceof Ring || this instanceof Armor ||this instanceof Potion ||this instanceof Scroll) {
 							this.identify();
@@ -464,7 +464,7 @@ public class Item implements Bundlable {
 			Talent.rabbitIdentify counter = Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);
 			counter.countUp(1);
 
-			if (counter.count() >= 7 - (Dungeon.hero.pointsInTalent(Talent.SMARTMEALS) * 2)) {
+			if (counter.count() == 7 - (Dungeon.hero.pointsInTalent(Talent.INDUCTION) * 2)) {
 				GLog.i(Messages.get(Hero.class, "preparerabbitidentify"));
 			}
 		}

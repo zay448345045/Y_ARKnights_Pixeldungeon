@@ -75,6 +75,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepenedSleep;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -877,6 +878,7 @@ public abstract class Mob extends Char {
 	
 	public void rollToDropLoot(){
 		if (Dungeon.hero.lvl > maxLvl + 2) return;
+		if(buff(StaffOfMageHand.MageHandStolenTracker.class)!=null) return;
 		
 		float lootChance = this.lootChance;
 		lootChance *= RingOfWealth.dropChanceMultiplier( Dungeon.hero );

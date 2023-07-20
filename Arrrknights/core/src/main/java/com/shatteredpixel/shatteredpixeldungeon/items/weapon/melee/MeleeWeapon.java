@@ -94,7 +94,7 @@ public class MeleeWeapon extends Weapon {
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Weapon.class, "too_heavy");
 			} else if (Dungeon.hero.STR() > STRReq()){
-				if (curUser.hasTalent(Talent.STRONGMAN)) info += " " + Messages.get(Weapon.class, "excess_str", (Dungeon.hero.STR() - STRReq())* (curUser.pointsInTalent(Talent.STRONGMAN)+1));
+				if (Dungeon.hero.hasTalent(Talent.STRONGMAN)) info += " " + Messages.get(Weapon.class, "excess_str", (Dungeon.hero.STR() - STRReq())* (Dungeon.hero.pointsInTalent(Talent.STRONGMAN)+1));
 				else info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
 			}
 		} else {

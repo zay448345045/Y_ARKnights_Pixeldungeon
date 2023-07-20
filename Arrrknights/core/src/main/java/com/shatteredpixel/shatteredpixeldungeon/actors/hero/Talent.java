@@ -507,6 +507,7 @@ public enum Talent {
 					}
 				}
 			}
+			Buff.prolong(hero, Light.class, 10+hero.pointsInTalent(SHINING_MEAL)*10);
 		}
 
 		if (hero.hasTalent(COMBAT_MEAL)){

@@ -64,6 +64,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.IronSkin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.KnightSKILL;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LanceCharge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
@@ -1409,6 +1410,10 @@ public class Hero extends Char {
             if (buff != null) buff.detach();
             buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
             if (buff != null) buff.detach();
+            //rabbittime在这里不取消可以让它继承至另一层
+            //但为了安全(同时也因为我的技术力不足)，这里去掉了它踩踏格子的记录
+            RabbitTime rbt = Dungeon.hero.buff(RabbitTime.class);
+            if (rbt != null) rbt.erasePresses();
 
 
             InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
@@ -1458,6 +1463,10 @@ public class Hero extends Char {
                 if (buff != null) buff.detach();
                 buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
                 if (buff != null) buff.detach();
+                //rabbittime在这里不取消可以让它继承至另一层
+                //但为了安全(同时也因为我的技术力不足)，这里去掉了它踩踏格子的记录
+                RabbitTime rbt = Dungeon.hero.buff(RabbitTime.class);
+                if (rbt != null) rbt.erasePresses();
 
                 if (Dungeon.depth != 27) InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
                 else InterlevelScene.mode = InterlevelScene.Mode.ASCEND_27;
@@ -1939,6 +1948,10 @@ public class Hero extends Char {
             }
             dmg *= redu;
             dmg -= 2;
+        }
+
+        if(Dungeon.hero.hasTalent(Talent.PROTECTIONOFLIGHT) && buff(Light.class) != null) {
+            dmg -= pointsInTalent(Talent.PROTECTIONOFLIGHT);
         }
 
         if (buff(Heat.class) != null) {

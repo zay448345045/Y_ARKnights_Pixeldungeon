@@ -61,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticG
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ArmorPlate;
@@ -87,6 +88,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutat
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfValstrax;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlowStone;
@@ -96,6 +99,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.EX42;
@@ -189,30 +193,6 @@ import com.watabou.utils.DeviceCompat;
 		Dungeon.LimitedDrops.FOOD_BAG.drop();
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
-			new TomeOfMastery().collect();
-			new ExplosiveSpear().quantity(99).collect();
-			new RingOfAccuracy().identify().upgrade(28).collect();
-			new RingOfHaste().identify().upgrade(28).collect();
-			new TimekeepersHourglass().identify().collect();
-			new EtherealChains().identify().collect();
-			new MidnightSword().identify().collect();
-			new NaginataAndFan().identify().collect();
-			new CurseSolidifying().quantity(99).collect();
-			new BookBountyHunter().collect();
-			new BookUnwelcomeGift().collect();
-			new BookCaerbannogNoSekai().collect();
-			new SakuraProof().collect();
-			new WandOfWarding().identify().collect();
-			new WandOfMagicMissile().upgrade(10).identify().collect();
-			new WandOfFireblast().upgrade(10).identify().collect();
-			new WandOfBlowStone().identify().collect();
-			new StaffOfVision().identify().collect();
-			new StaffOfVision().upgrade(10).identify().collect();
-			new StaffOfValstrax().identify().collect();
-			//scrolls
-			new ScrollOfUpgrade().identify().quantity(99).collect();
-			new ScrollOfTransmutation().identify().quantity(99).collect();
-			new ScrollOfRecharging().identify().quantity(99).collect();
 			//bags
 			new PotionBandolier().collect();
 			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
@@ -224,6 +204,35 @@ import com.watabou.utils.DeviceCompat;
 			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
 			new EquipmentsBag().collect();
 			Dungeon.LimitedDrops.EQUIPMENTS_BAG.drop();
+			//
+			new TomeOfMastery().collect();
+			new ExplosiveSpear().quantity(99).collect();
+			new RingOfAccuracy().identify().upgrade(28).collect();
+			new RingOfHaste().identify().upgrade(28).collect();
+			new RingOfWealth().identify().upgrade(28).collect();
+			new TimekeepersHourglass().identify().collect();
+			new EtherealChains().identify().collect();
+			new MidnightSword().identify().collect();
+			new FlametailSword().identify().collect();
+			new NaginataAndFan().identify().collect();
+			new CurseSolidifying().quantity(99).collect();
+			new BookBountyHunter().collect();
+			new BookUnwelcomeGift().collect();
+			new BookCaerbannogNoSekai().collect();
+			new SakuraProof().collect();
+			new WandOfWarding().identify().collect();
+			new WandOfMagicMissile().upgrade(10).identify().collect();
+			new WandOfFireblast().upgrade(10).identify().collect();
+			new WandOfBlowStone().identify().collect();
+			new StaffOfTime().identify().collect();
+			new StaffOfVision().identify().collect();
+			new StaffOfVision().upgrade(10).identify().collect();
+			new StaffOfValstrax().identify().collect();
+			new StaffOfMageHand().identify().upgrade(10).collect();
+			//scrolls
+			new ScrollOfUpgrade().identify().quantity(99).collect();
+			new ScrollOfTransmutation().identify().quantity(99).collect();
+			new ScrollOfRecharging().identify().quantity(99).collect();
 			//potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
 			new PotionOfFrost().identify().quantity(99).collect();

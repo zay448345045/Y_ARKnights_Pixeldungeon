@@ -294,6 +294,9 @@ abstract public class MissileWeapon extends Weapon {
 				PinCushion p = Buff.affect(enemy, PinCushion.class);
 				if (p.target == enemy){
 					if (!redknife) p.stick(this);
+					if (!p.sthSticking()){
+						Buff.detach(enemy, PinCushion.class);
+					}
 					return;
 				}
 			}

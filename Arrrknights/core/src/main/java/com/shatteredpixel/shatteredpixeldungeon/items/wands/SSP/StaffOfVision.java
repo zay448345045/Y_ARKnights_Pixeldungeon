@@ -91,6 +91,7 @@ public class StaffOfVision extends Wand {
             ward.sprite.emitter().burst(MagicMissile.WardParticle.UP, ward.tier);
             Dungeon.level.pressCell(target);
             ward.viewDistance = 6 + buffedLvl();
+            ward.observe();
         }
     }
 
@@ -133,6 +134,10 @@ public class StaffOfVision extends Wand {
             properties.add(Property.INORGANIC);
 
             viewDistance = 6;
+        }
+
+        private void observe(){
+            GameScene.updateFog(this.pos, 6+wandLevel);
         }
 
         @Override

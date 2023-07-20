@@ -56,9 +56,11 @@ public class Violin extends MeleeWeapon {
         usesTargeting = true;
         defaultAction = AC_CAST;
 
-        chargeCap=1;
-        charge=1;
+//        chargeCap=1;
+//        charge=1;
     }
+    public int chargeCap = 1;
+    public int charge = 1;
 
     private float particalArts = 0;
     public int marked = 0;
@@ -74,12 +76,6 @@ public class Violin extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         return super.proc(attacker, defender, damage);
-    }
-
-    public void SPCharge(int n) {
-        charge += n;
-        if (chargeCap < charge) charge = chargeCap;
-        updateQuickslot();
     }
 
     @Override
@@ -158,7 +154,7 @@ public class Violin extends MeleeWeapon {
                         Ballistica trajectory = new Ballistica(target, curUser.pos, Ballistica.STOP_TARGET);
                         trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
                         moveChar(Actor.findChar( chain.collisionPos ), trajectory, 1, curUser.pos, false, false);
-                        curUser.spendAndNext(TICK);
+                        //curUser.spendAndNext(TICK);
                     }else{
                         chainEnemy( chain, curUser, Actor.findChar( chain.collisionPos ));
                     }

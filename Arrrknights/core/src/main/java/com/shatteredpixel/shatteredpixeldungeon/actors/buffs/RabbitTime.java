@@ -38,9 +38,7 @@ public class RabbitTime extends Buff{
     }
 
     public void set(float time) { left = time;}
-
-
-
+    public void erasePresses(){presses.clear();}
 
 
     @Override
