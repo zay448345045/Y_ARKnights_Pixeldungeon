@@ -18,7 +18,7 @@ public class WardSprite_Vision extends MobSprite {
     public WardSprite_Vision() {
         super();
 
-        texture(Assets.Sprites.WARDS);
+        texture(Assets.Sprites.VISION_WARDS);
 
         TextureFilm frames = new TextureFilm(texture, 42, 32);
 
