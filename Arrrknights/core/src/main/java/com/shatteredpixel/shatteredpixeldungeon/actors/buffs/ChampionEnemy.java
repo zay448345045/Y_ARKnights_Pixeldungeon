@@ -26,9 +26,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -67,8 +69,7 @@ public abstract class ChampionEnemy extends Buff {
 	public String desc() {
 		return Messages.get(this, "desc");
 	}
-
-	public void onAttackProc(Char enemy ){
+	public void onAttackProc(Char enemy, int damage ){
 
 	}
 
@@ -109,6 +110,22 @@ public abstract class ChampionEnemy extends Buff {
 			m.state = m.WANDERING;
 		}
 	}
+	public static void rollForHonor(Mob m){
+		if (Dungeon.mobsToChampion <= 0) Dungeon.mobsToChampion = 8;
+
+		Dungeon.mobsToChampion--;
+
+		if (true){//Dungeon.mobsToChampion <= 0
+			switch (Random.Int(2)){
+				//case 0: default:    Buff.affect(m, R2Blazing.class);      break;
+				case 1: default:
+					Buff.affect(m, R2Overloading.class);
+					Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT/2);
+					break;
+			}
+			m.state = m.WANDERING;
+		}
+	}
 
 	public static class Blazing extends ChampionEnemy {
 
@@ -117,7 +134,7 @@ public abstract class ChampionEnemy extends Buff {
 		}
 
 		@Override
-		public void onAttackProc(Char enemy) {
+		public void onAttackProc(Char enemy, int damage) {
 			Buff.affect(enemy, Burning.class).reignite(enemy);
 		}
 
@@ -256,4 +273,69 @@ public abstract class ChampionEnemy extends Buff {
 		}
 	}
 
+	public static class R2Blazing extends ChampionEnemy {
+		{
+			color = 0xFF6600;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, Burning.class).reignite(enemy);
+		}
+		@Override
+		public boolean act() {
+			GameScene.add(Blob.seed(target.pos, 3, Fire.class));
+			spend(TICK);
+			return true;
+		}
+		{
+			immunities.add(Burning.class);
+		}
+	}
+	public static class R2Overloading extends ChampionEnemy {
+		{
+			color = 0x55AAFF;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.append(enemy, R2Overloading.BlazingBomb.class).setup(enemy, damage, Dungeon.depth);
+		}
+		@Override
+		public boolean act() {
+			target.HP = Math.min(target.HT/2, target.HP);
+			spend(TICK);
+			return true;
+		}
+		public static class BlazingBomb extends Buff{
+			private Char victim;
+			private int explodeDepth;
+			private int left;
+			private int damage;
+
+			public void setup( Char victim,int damage, int explodeDepth){
+				this.victim = victim;
+				this.explodeDepth = explodeDepth;
+				this.damage = damage;
+				left = 3;
+			}
+			@Override
+			public boolean act() {
+				if (explodeDepth == Dungeon.depth){
+					left--;
+					if (left <= 0){
+						WandOfLightning wol = new WandOfLightning();
+						victim.damage(damage,wol);
+						if (victim==Dungeon.hero && !Dungeon.hero.isAlive()) {
+							Dungeon.fail( getClass() );
+							GLog.n( Messages.get(this, "blazingbomb_kill") );
+						}
+						next();
+						detach();
+						return false;
+					}
+				}
+				spend( TICK );
+				return true;
+			}
+		}
+	}
 }

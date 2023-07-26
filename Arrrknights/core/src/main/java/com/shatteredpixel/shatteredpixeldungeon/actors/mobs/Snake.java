@@ -56,6 +56,7 @@ public class Snake extends Mob {
 
 		immunities.add(Silence.class);
 		immunities.add(ChampionEnemy.Giant.class);
+		immunities.add(ChampionEnemy.R2Overloading.class);
 		properties.add(Property.INFECTED);
 	}
 	

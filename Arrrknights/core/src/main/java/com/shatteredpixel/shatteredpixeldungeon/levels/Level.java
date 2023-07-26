@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.levels;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -480,6 +481,9 @@ public abstract class Level implements Bundlable {
 		Mob m = Reflection.newInstance(mobsToSpawn.remove(0));
 		if (Dungeon.isChallenged(Challenges.CHAMPION_ENEMIES) && !(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
 			ChampionEnemy.rollForChampion(m);
+		}
+		if (Dungeon.isSPChallenged(SPChallenges.HONOR) && !(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
+			ChampionEnemy.rollForHonor(m);
 		}
 		return m;
 	}

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2021 Evan Debenham
+ * Copyright (C) 2014-2022 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,37 +29,37 @@ import com.shatteredpixel.shatteredpixeldungeon.Rankings;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
-import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndChallenges;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndHero;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndHeroInfo;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndTabbed;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndSPChallenges;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
+import com.watabou.noosa.ui.Component;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class HeroSelectScene extends PixelScene {
 
@@ -70,7 +70,8 @@ public class HeroSelectScene extends PixelScene {
 	private ArrayList<StyledButton> heroBtns = new ArrayList<>();
 	private StyledButton startBtn;
 	private IconButton infoButton;
-	private IconButton challengeButton;
+	private IconButton btnOptions;
+	private GameOptions optionsPane;
 	private IconButton chnageButton;
 	private IconButton btnExit;
 	private int change;
@@ -153,9 +154,14 @@ public class HeroSelectScene extends PixelScene {
 				super.onClick();
 				TomorrowRogueNight.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
 			}
+
+			//@Override
+			protected String hoverText() {
+				return Messages.titleCase(Messages.get(WndKeyBindings.class, "hero_info"));
+			}
 		};
 		infoButton.visible = false;
-		infoButton.setSize(21, 21);
+		infoButton.setSize(20, 21);
 		add(infoButton);
 
 		HeroClass[] classes = HeroClass.values();
@@ -179,35 +185,40 @@ public class HeroSelectScene extends PixelScene {
 			i++;
 		}
 
-		challengeButton = new IconButton(
-				Icons.get( SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+		optionsPane = new GameOptions();
+		optionsPane.visible = optionsPane.active = false;
+		optionsPane.layout();
+		optionsPane.setPos(heroBtnleft, 0);
+		add(optionsPane);
+
+		btnOptions = new IconButton(Icons.get(Icons.PREFS)){
 			@Override
 			protected void onClick() {
-				TomorrowRogueNight.scene().addToFront(new WndChallenges(SPDSettings.challenges(), true) {
-					public void onBackPressed() {
-						super.onBackPressed();
-						icon(Icons.get(SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
-					}
-				} );
+				super.onClick();
+				optionsPane.visible = !optionsPane.visible;
+				optionsPane.active = !optionsPane.active;
 			}
 
 			@Override
-			public void update() {
-				if( !visible && GamesInProgress.selectedClass != null){
-					visible = true;
-				}
-				super.update();
+			protected void onPointerDown() {
+				super.onPointerDown();
+			}
+
+			@Override
+			protected void onPointerUp() {
+				updateOptionsColor();
+			}
+
+			//@Override
+			protected String hoverText() {
+				return Messages.get(HeroSelectScene.class, "options");
 			}
 		};
-		challengeButton.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 21, 21);
-		challengeButton.visible = false;
+		btnOptions.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 20, 21);
+		updateOptionsColor();
+		btnOptions.visible = false;
 
-		if (true/*DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)*/){
-			add(challengeButton);//change from budding ;convenient for test
-		} else {
-			Dungeon.challenges = 0;
-			SPDSettings.challenges(0);
-		}
+		add(btnOptions);
 
 		chnageButton = new IconButton(
 				Icons.get( Icons.HERO_CHANGES)){
@@ -250,6 +261,14 @@ public class HeroSelectScene extends PixelScene {
 
 	}
 
+	private void updateOptionsColor(){
+		if (SPDSettings.challenges() != 0){
+			btnOptions.icon().hardlight(2f, 1.33f, 0.5f);
+		} else {
+			btnOptions.icon().resetColor();
+		}
+	}
+
 	private void setSelectedHero(HeroClass cl){
 		GamesInProgress.selectedClass = cl;
 
@@ -268,17 +287,19 @@ public class HeroSelectScene extends PixelScene {
 		infoButton.visible = true;
 		infoButton.setPos(startBtn.right(), startBtn.top());
 
-		challengeButton.visible = true;
-		challengeButton.setPos(startBtn.left()-challengeButton.width(), startBtn.top());
-	}
+		btnOptions.visible = true;
+		btnOptions.setPos(startBtn.left()-btnOptions.width(), startBtn.top());
 
+		optionsPane.setPos(optionsPane.left(), startBtn.top() - optionsPane.height() - 2);
+		PixelScene.align(optionsPane);
+	}
 	private void ChangeHero() {
 		GamesInProgress.selectedClass = null;
 
 		background.visible = false;
 		startBtn.visible = false;
 		infoButton.visible = false;
-		challengeButton.visible = false;
+		btnOptions.visible = false;
 
 		if (change == 0) change = 1;
 		else change = 0;
@@ -309,6 +330,8 @@ public class HeroSelectScene extends PixelScene {
 
 	}
 
+
+
 	private float uiAlpha;
 
 	@Override
@@ -329,7 +352,8 @@ public class HeroSelectScene extends PixelScene {
 			}
 			startBtn.alpha(alpha);
 			btnExit.icon().alpha(alpha);
-			challengeButton.icon().alpha(alpha);
+			optionsPane.alpha(alpha);
+			btnOptions.icon().alpha(alpha);
 			infoButton.icon().alpha(alpha);
 		}
 	}
@@ -416,4 +440,109 @@ public class HeroSelectScene extends PixelScene {
 			}
 		}
 	}
+
+	private class GameOptions extends Component {
+
+		private NinePatch bg;
+
+		private ArrayList<StyledButton> buttons;
+		private ArrayList<ColorBlock> spacers;
+
+		@Override
+		protected void createChildren() {
+
+			bg = Chrome.get(Chrome.Type.GREY_BUTTON_TR);
+			add(bg);
+
+			buttons = new ArrayList<>();
+			spacers = new ArrayList<>();
+			if (true){
+
+				StyledButton dailyButton = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "daily"), 6){
+					@Override
+					protected void onClick() {
+						TomorrowRogueNight.scene().addToFront(new WndSPChallenges(SPDSettings.spchallenges(), true) {
+							public void onBackPressed() {
+								super.onBackPressed();
+								//icon(Icons.get(SPDSettings.spchallenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+								updateOptionsColor();
+							}
+						} );
+					}
+				};
+				dailyButton.leftJustify = true;
+				dailyButton.icon(Icons.get(Icons.TALENT));
+				add(dailyButton);
+				buttons.add(dailyButton);
+
+				StyledButton challengeButton = new StyledButton(Chrome.Type.BLANK, Messages.get(WndChallenges.class, "title"), 6){
+					@Override
+					protected void onClick() {
+						TomorrowRogueNight.scene().addToFront(new WndChallenges(SPDSettings.challenges(), true) {
+							public void onBackPressed() {
+								super.onBackPressed();
+								icon(Icons.get(SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+								updateOptionsColor();
+							}
+						} );
+					}
+				};
+				challengeButton.leftJustify = true;
+				challengeButton.icon(Icons.get(SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+				add(challengeButton);
+				buttons.add(challengeButton);
+			}
+
+			for (int i = 1; i < buttons.size(); i++){
+				ColorBlock spc = new ColorBlock(1, 1, 0xFF000000);
+				add(spc);
+				spacers.add(spc);
+			}
+		}
+
+		@Override
+		protected void layout() {
+			super.layout();
+
+			bg.x = x;
+			bg.y = y;
+
+			int width = 0;
+			for (StyledButton btn : buttons){
+				if (width < btn.reqWidth()) width = (int)btn.reqWidth();
+			}
+			width += bg.marginHor();
+
+			int top = (int)y + bg.marginTop() - 1;
+			int i = 0;
+			for (StyledButton btn : buttons){
+				btn.setRect(x+bg.marginLeft(), top, width - bg.marginHor(), 16);
+				top = (int)btn.bottom();
+				if (i < spacers.size()) {
+					spacers.get(i).size(btn.width(), 1);
+					spacers.get(i).x = btn.left();
+					spacers.get(i).y = PixelScene.align(btn.bottom()-0.5f);
+					i++;
+				}
+			}
+
+			this.width = width;
+			this.height = top+bg.marginBottom()-y-1;
+			bg.size(this.width, this.height);
+
+		}
+
+		private void alpha( float value ){
+			bg.alpha(value);
+
+			for (StyledButton btn : buttons){
+				btn.alpha(value);
+			}
+
+			for (ColorBlock spc : spacers){
+				spc.alpha(value);
+			}
+		}
+	}
+
 }

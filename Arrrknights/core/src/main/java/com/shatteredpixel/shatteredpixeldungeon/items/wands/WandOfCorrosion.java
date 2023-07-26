@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
@@ -56,7 +57,7 @@ public class WandOfCorrosion extends Wand {
 	protected void onZap(Ballistica bolt) {
 		CorrosiveGas gas = Blob.seed(bolt.collisionPos, 50 + 10 * buffedLvl(), CorrosiveGas.class);
 		CellEmitter.get(bolt.collisionPos).burst(Speck.factory(Speck.CORROSION), 10 );
-		gas.setStrength(2 + buffedLvl());
+		gas.setStrength((Dungeon.isSPChallenged(SPChallenges.GLASS)) ? 10 + 5*buffedLvl() : 2 + buffedLvl());
 		GameScene.add(gas);
 		Sample.INSTANCE.play(Assets.Sounds.GAS);
 

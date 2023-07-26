@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Bones;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -344,7 +345,7 @@ public class Hero extends Char {
     public Hero() {
         super();
 
-        HP = HT = 20;
+        HP = HT = (Dungeon.isSPChallenged(SPChallenges.GLASS)) ? 2 : 20;
         //HP = HT = 2000;
         STR = STARTING_STR;
 
@@ -377,6 +378,7 @@ public class Hero extends Char {
         if (hasTalent(Talent.KNIGHT_BODY)) {
             HT += pointsInTalent(Talent.KNIGHT_BODY) * 10;
         }
+        if(Dungeon.isSPChallenged(SPChallenges.GLASS)) HT = Math.round(HT/10f);
         HP = Math.min(HP, HT);
     }
 
@@ -1698,6 +1700,7 @@ public class Hero extends Char {
                 mark.Charged(pointsInTalent(Talent.WIND_ROAD) * 7.5f);
             }
         }
+        if(Dungeon.isSPChallenged(SPChallenges.GLASS)) damage*=5;
 
         if(belongings.misc instanceof ROR2item){
             ROR2item r2i = (ROR2item)belongings.misc;
@@ -2393,7 +2396,7 @@ public class Hero extends Char {
         }
 
         if (ankh != null && ankh.isBlessed()) {
-            int AnkhHP = HT/10;
+            int AnkhHP = Math.max(HT/10, 1);
             int barrior = this.HT/2;
             if (hasTalent(Talent.RESURGENCE)) {
                 AnkhHP *= 1 + pointsInTalent(Talent.RESURGENCE) * 3;

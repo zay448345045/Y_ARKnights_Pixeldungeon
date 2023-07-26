@@ -52,6 +52,10 @@ public abstract class ShieldBuff extends Buff {
 		if (this.shielding <= shield) this.shielding = shield;
 		if (target != null) target.needsShieldUpdate = true;
 	}
+	public void hardSetShield( int shield ) {
+		this.shielding = shield;
+		if (target != null) target.needsShieldUpdate = true;
+	}
 	
 	public void incShield(){
 		incShield(1);

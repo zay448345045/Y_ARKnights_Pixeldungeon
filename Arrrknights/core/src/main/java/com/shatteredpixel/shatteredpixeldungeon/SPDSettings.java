@@ -158,6 +158,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static final String KEY_LAST_CLASS	= "last_class";
 	public static final String KEY_CHALLENGES	= "challenges";
+	public static final String KEY_SPCHALLENGES	= "spchallenges";
 	public static final String KEY_INTRO		= "intro";
 	public static final String KEY_COIN		= "coins";
 
@@ -182,9 +183,15 @@ public class SPDSettings extends GameSettings {
 	public static void challenges( int value ) {
 		put( KEY_CHALLENGES, value );
 	}
+	public static void spchallenges( int value ) {
+		put( KEY_SPCHALLENGES, value );
+	}
 	
 	public static int challenges() {
 		return getInt( KEY_CHALLENGES, 0, 0, Challenges.MAX_VALUE );
+	}
+	public static int spchallenges() {
+		return getInt( KEY_SPCHALLENGES, 0, 0, SPChallenges.MAX_VALUE );
 	}
 
 	public static void supportNagged( boolean value ) {

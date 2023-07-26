@@ -179,6 +179,7 @@ public class Dungeon {
 	}
 
 	public static int challenges;
+	public static int spchallenges;
 	public static int mobsToChampion;
 
 	public static Hero hero;
@@ -232,6 +233,7 @@ public class Dungeon {
 
 		version = Game.versionCode;
 		challenges = SPDSettings.challenges();
+		spchallenges = SPDSettings.spchallenges();
 		mobsToChampion = -1;
 
 		seed = DungeonSeed.randomSeed();
@@ -316,6 +318,9 @@ public class Dungeon {
 
 	public static boolean isChallenged( int mask ) {
 		return (challenges & mask) != 0;
+	}
+	public static boolean isSPChallenged( int mask ) {
+		return (spchallenges & mask) != 0;
 	}
 	
 	public static Level newLevel() {
@@ -586,6 +591,7 @@ public class Dungeon {
 	private static final String VERSION		= "version";
 	private static final String SEED		= "seed";
 	private static final String CHALLENGES	= "challenges";
+	private static final String SPCHALLENGES	= "spchallenges";
 	private static final String MOBS_TO_CHAMPION	= "mobs_to_champion";
 	private static final String HERO		= "hero";
 	private static final String GOLD		= "gold";
@@ -633,6 +639,7 @@ public class Dungeon {
 			bundle.put( VERSION, version );
 			bundle.put( SEED, seed );
 			bundle.put( CHALLENGES, challenges );
+			bundle.put( SPCHALLENGES, spchallenges );
 			bundle.put( MOBS_TO_CHAMPION, mobsToChampion );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
@@ -760,8 +767,9 @@ public class Dungeon {
 		QuickSlotButton.reset();
 
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
+		Dungeon.spchallenges = bundle.getInt( SPCHALLENGES );
 		Dungeon.mobsToChampion = bundle.getInt( MOBS_TO_CHAMPION );
-		
+
 		Dungeon.level = null;
 		Dungeon.depth = -1;
 		
@@ -911,6 +919,7 @@ public class Dungeon {
 		info.depth = bundle.getInt( DEPTH );
 		info.version = bundle.getInt( VERSION );
 		info.challenges = bundle.getInt( CHALLENGES );
+		info.spchallenges = bundle.getInt( SPCHALLENGES );
 		Hero.preview( info, bundle.getBundle( HERO ) );
 		Statistics.preview( info, bundle );
 	}

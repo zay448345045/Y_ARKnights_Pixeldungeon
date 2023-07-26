@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -294,7 +295,10 @@ public class WandOfWarding extends Wand {
 			spend( 1f );
 
 			//always hits
-			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 4*wandLevel );
+			int dmg = (Dungeon.isSPChallenged(SPChallenges.GLASS)) ?
+					Random.NormalIntRange( 10 + 5*wandLevel, 40 + 20*wandLevel )
+					:
+					Random.NormalIntRange( 2 + wandLevel, 8 + 4*wandLevel );
 			enemy.damage( dmg, this );
 			if (enemy.isAlive()){
 				Wand.processSoulMark(enemy, wandLevel, 1);

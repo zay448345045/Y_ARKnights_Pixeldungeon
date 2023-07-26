@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -720,6 +721,9 @@ public abstract class Mob extends Char {
 				dmg *= 1.5f + (Dungeon.hero.pointsInTalent(Talent.CHIMERA) * 0.1f);
 			}
 			else dmg *= 1.5f;
+		}
+		if (Dungeon.isSPChallenged(SPChallenges.GLASS) && src instanceof Wand) {
+			dmg *= 5f;
 		}
 
 		if (Dungeon.hero.hasTalent(Talent.MIND_CRASH)) {

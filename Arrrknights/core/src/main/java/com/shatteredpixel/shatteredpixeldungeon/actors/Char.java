@@ -611,7 +611,7 @@ public abstract class Char extends Actor {
 		}
 		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
 			damage *= buff.meleeDamageFactor();
-			buff.onAttackProc( enemy );
+			buff.onAttackProc( enemy, damage );
 		}
 
 		if (Dungeon.hero.hasTalent(Talent.RESTRICTION)) {

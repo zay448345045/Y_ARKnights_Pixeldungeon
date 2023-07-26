@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands.SP;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -307,7 +308,10 @@ public class StaffOfMayer extends Wand
             spend( 1f );
 
             //always hits
-            int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 3*wandLevel );
+            int dmg = (Dungeon.isSPChallenged(SPChallenges.GLASS)) ?
+                    Random.NormalIntRange( 10 + 5*wandLevel, 40 + 15*wandLevel )
+                    :
+                    Random.NormalIntRange( 2 + wandLevel, 8 + 4*wandLevel );
             enemy.damage( dmg, this );
             if (enemy.isAlive()){
                 Wand.processSoulMark(enemy, wandLevel, 1);
@@ -409,7 +413,10 @@ public class StaffOfMayer extends Wand
             for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
                 Char ch = findChar( pos + PathFinder.NEIGHBOURS8[i] );
                 if (ch != null && ch.isAlive()) {
-                    int damage = Random.NormalIntRange(4 + wandLevel + (tier * 4), 8 + wandLevel* (2 * (tier+1)));
+                    int damage = (Dungeon.isSPChallenged(SPChallenges.GLASS)) ?
+                            Random.NormalIntRange(5*(4 + wandLevel + (tier * 4)), 5*(8 + wandLevel* (2 * (tier+1))))
+                            :
+                            Random.NormalIntRange(4 + wandLevel + (tier * 4), 8 + wandLevel* (2 * (tier+1)));
                     ch.damage( damage, this );
                     if (ch == Dungeon.hero && !ch.isAlive()) {
                         heroKilled = true;
