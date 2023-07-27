@@ -22,16 +22,26 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.FrostBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -42,7 +52,7 @@ public abstract class ChampionEnemy extends Buff {
 		type = buffType.POSITIVE;
 	}
 
-	protected int color;
+	public int color;
 
 	@Override
 	public int icon() {
@@ -111,17 +121,27 @@ public abstract class ChampionEnemy extends Buff {
 		}
 	}
 	public static void rollForHonor(Mob m){
-		if (Dungeon.mobsToChampion <= 0) Dungeon.mobsToChampion = 8;
+		if (Dungeon.mobsToHonor <= 0) Dungeon.mobsToHonor = Random.IntRange(7,10);
 
-		Dungeon.mobsToChampion--;
+		Dungeon.mobsToHonor--;
 
-		if (true){//Dungeon.mobsToChampion <= 0
-			switch (Random.Int(2)){
-				//case 0: default:    Buff.affect(m, R2Blazing.class);      break;
-				case 1: default:
+		if (Dungeon.mobsToHonor <= 0){
+			switch (Random.Int(7)){
+				case 0: default:    Buff.affect(m, R2Blazing.class);      break;
+				case 1:
 					Buff.affect(m, R2Overloading.class);
 					Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT/2);
 					break;
+				case 2:     Buff.affect(m, R2Glacial.class);      break;
+				case 3:     Buff.affect(m, R2Malachite.class);      break;
+				case 4:     Buff.affect(m, R2Celestine.class);      break;
+				case 5:
+					if(Random.Int(2)==0){
+						Buff.affect(m, R2Perfected.class);
+						Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT);
+					}
+					break;
+				case 6:     Buff.affect(m, R2Mending.class);      break;
 			}
 			m.state = m.WANDERING;
 		}
@@ -335,6 +355,145 @@ public abstract class ChampionEnemy extends Buff {
 				}
 				spend( TICK );
 				return true;
+			}
+		}
+	}
+	public static class R2Glacial extends ChampionEnemy {
+		{
+			color = 0xCCEEFF;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, Chill.class, 2f);
+		}
+		@Override
+		public void detach() {
+			Bomb bomb = new GlacialBomb();
+			Actor.addDelayed(bomb.fuse = new Bomb.Fuse().ignite(bomb), 2);
+			Dungeon.level.drop(bomb, target.pos);
+			super.detach();
+		}
+		public class GlacialBomb extends Bomb {
+			{
+				image = ItemSpriteSheet.FROST_BOMB;
+			}
+			@Override
+			public void explode(int cell) {
+				PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 2 );
+				for (int i = 0; i < PathFinder.distance.length; i++) {
+					if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+						Char ch = Actor.findChar(i);
+						if (ch != null){
+							ch.damage(Dungeon.depth, this);
+							Buff.affect(ch, Frost.class, 2f);
+						}
+					}
+				}
+			}
+			@Override
+			public boolean doPickUp(Hero hero) {
+				return false;
+			}
+			@Override
+			public String desc() {
+				return Messages.get(this, "desc");
+			}
+		}
+	}
+	public static class R2Malachite extends ChampionEnemy {
+		{
+			color = 0x005500;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, DisableHealing.class).set(enemy.HP, DisableHealing.DURATION);
+		}
+	}
+	public static class R2Celestine extends ChampionEnemy {
+		{
+			color = 0x006688;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, Cripple.class, 1f);
+		}
+		@Override
+		public boolean act() {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (Dungeon.level.distance(target.pos, mob.pos) <= 3
+						&& mob.buff(R2Celestine.class) == null) {
+					Buff.prolong(mob, Vanish.class, 2f);
+				}
+			}
+			spend(TICK);
+			return true;
+		}
+	}
+	public static class R2Perfected extends ChampionEnemy {
+		{
+			color = 0x7777DD;
+		}
+		@Override
+		public boolean act() {
+			target.HP = Math.min(1, target.HP);
+			spend(TICK);
+			return true;
+		}
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, Cripple.class, 1f);
+			Buff.affect(enemy, Vulnerable.class, 1f);
+		}
+	}
+	public static class R2Mending extends ChampionEnemy {
+		{
+			color = 0x99FF00;
+		}
+		@Override
+		public boolean act() {
+			for (Mob mob : Dungeon.level.mobs) {
+				if (Dungeon.level.distance(target.pos, mob.pos) <= 2
+						&& mob.buff(R2Mending.class) == null) {
+					mob.HP++;
+					mob.HP=Math.min(mob.HP, mob.HT);
+					mob.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
+				}
+			}
+			spend(TICK);
+			return true;
+		}
+		@Override
+		public void detach() {
+			Bomb bomb = new MendingBomb();
+			Actor.addDelayed(bomb.fuse = new Bomb.Fuse().ignite(bomb), 2);
+			Dungeon.level.drop(bomb, target.pos);
+			super.detach();
+		}
+		public class MendingBomb extends Bomb {
+			{
+				image = ItemSpriteSheet.FROST_BOMB;
+			}
+			@Override
+			public void explode(int cell) {
+				PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 2 );
+				for (int i = 0; i < PathFinder.distance.length; i++) {
+					if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+						Char ch = Actor.findChar(i);
+						if (ch != null){
+							ch.HP+=ch.HT/5;
+							ch.HP=Math.min(ch.HP,ch.HT);
+							ch.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
+						}
+					}
+				}
+			}
+			@Override
+			public boolean doPickUp(Hero hero) {
+				return false;
+			}
+			@Override
+			public String desc() {
+				return Messages.get(this, "desc");
 			}
 		}
 	}

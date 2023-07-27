@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Fanatic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -338,6 +339,7 @@ public class Heap implements Bundlable {
 				((Potion) item).shatter(pos);
 				frozen = true;
 			} else if (item instanceof Bomb){
+				if(item instanceof ChampionEnemy.R2Glacial.GlacialBomb || item instanceof ChampionEnemy.R2Mending.MendingBomb) continue;
 				((Bomb) item).fuse = null;
 				frozen = true;
 			}

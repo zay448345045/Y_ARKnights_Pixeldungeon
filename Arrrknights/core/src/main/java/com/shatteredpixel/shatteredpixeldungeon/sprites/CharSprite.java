@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.effects.DarkBlock;
 import com.shatteredpixel.shatteredpixeldungeon.effects.EmoIcon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
@@ -83,7 +84,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, TALU_BOSS, HIKARI, BLACK_FOG, HUNTING_MARK
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, TALU_BOSS, HIKARI, BLACK_FOG, HUNTING_MARK, VANISH
 	}
 	private int stunStates = 0;
 	
@@ -115,6 +116,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected TorchHalo light;
 	protected ShieldHalo shield;
 	protected AlphaTweener invisible;
+	protected AlphaTweener vanish;
 	protected Flare aura;
 	
 	protected EmoIcon emo;
@@ -430,6 +432,16 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				huntingmark = emitter();
 				huntingmark.pour(BloodParticle.BURST, 0.02f);
 				break;
+			case VANISH:
+				if (vanish != null) {
+					vanish.killAndErase();
+				}
+				vanish = new AlphaTweener( this, 0f, 0.4f );
+				if (parent != null){
+					parent.add(vanish);
+				} else
+					alpha( 0.4f );
+				break;
 		}
 	}
 	
@@ -522,6 +534,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 					huntingmark = null;
 				}
 				break;
+			case VANISH:
+				if (vanish != null) {
+					vanish.killAndErase();
+					vanish = null;
+				}
+				alpha( 1f );
+				break;
 		}
 	}
 
@@ -585,6 +604,19 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				emo.visible = visible;
 			}
 		}
+		if (ch != null){
+			for (ChampionEnemy buff : ch.buffs(ChampionEnemy.class)) {
+				if(buff instanceof ChampionEnemy.R2Blazing||
+						buff instanceof ChampionEnemy.R2Overloading||
+						buff instanceof ChampionEnemy.R2Glacial||
+						buff instanceof ChampionEnemy.R2Malachite||
+						buff instanceof ChampionEnemy.R2Celestine||
+						buff instanceof ChampionEnemy.R2Perfected||
+						buff instanceof ChampionEnemy.R2Mending) {
+					hardlight(buff.color);
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -592,6 +624,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		super.resetColor();
 		if (invisible != null){
 			alpha(0.4f);
+		}
+		if (vanish != null){
+			alpha(0f);
 		}
 	}
 	

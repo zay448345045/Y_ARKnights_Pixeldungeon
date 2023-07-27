@@ -181,6 +181,7 @@ public class Dungeon {
 	public static int challenges;
 	public static int spchallenges;
 	public static int mobsToChampion;
+	public static int mobsToHonor;
 
 	public static Hero hero;
 	public static Level level;
@@ -235,6 +236,7 @@ public class Dungeon {
 		challenges = SPDSettings.challenges();
 		spchallenges = SPDSettings.spchallenges();
 		mobsToChampion = -1;
+		mobsToHonor = -1;
 
 		seed = DungeonSeed.randomSeed();
 
@@ -593,6 +595,7 @@ public class Dungeon {
 	private static final String CHALLENGES	= "challenges";
 	private static final String SPCHALLENGES	= "spchallenges";
 	private static final String MOBS_TO_CHAMPION	= "mobs_to_champion";
+	private static final String MOBS_TO_HONOR	= "mobs_to_honor";
 	private static final String HERO		= "hero";
 	private static final String GOLD		= "gold";
 	private static final String DEPTH		= "depth";
@@ -641,6 +644,7 @@ public class Dungeon {
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( SPCHALLENGES, spchallenges );
 			bundle.put( MOBS_TO_CHAMPION, mobsToChampion );
+			bundle.put( MOBS_TO_HONOR, mobsToHonor );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
@@ -769,6 +773,7 @@ public class Dungeon {
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
 		Dungeon.spchallenges = bundle.getInt( SPCHALLENGES );
 		Dungeon.mobsToChampion = bundle.getInt( MOBS_TO_CHAMPION );
+		Dungeon.mobsToHonor = bundle.getInt( MOBS_TO_HONOR );
 
 		Dungeon.level = null;
 		Dungeon.depth = -1;
