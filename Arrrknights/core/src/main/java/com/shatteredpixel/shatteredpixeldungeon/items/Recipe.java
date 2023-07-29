@@ -241,7 +241,6 @@ public abstract class Recipe {
             new BlastSpell.Recipe(),
             new InstantRecharge.Recipe(),
             new PortableCover.Recipe(),
-            new SakuraProof.Recipe(),
     };
 
     private static Recipe[] threeIngredientRecipes = new Recipe[]{
@@ -257,7 +256,8 @@ public abstract class Recipe {
             new Glassate.Recipe(),
             new ElixirsOfSoulProtection.Recipe(),
             new ElixirsOfIronSkin.Recipe(),
-            new KollamSword.Recipe()
+            new KollamSword.Recipe(),
+            new SakuraProof.Recipe(),
     };
 
     public static Recipe findRecipe(ArrayList<Item> ingredients) {

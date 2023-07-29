@@ -878,6 +878,11 @@ public abstract class Mob extends Char {
 				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", Heal);
 			}
 		}
+		if(Dungeon.isSPChallenged(SPChallenges.SPITE)){
+			Bomb bomb = new Bomb();
+			Actor.addDelayed(bomb.fuse = new Bomb.Fuse().ignite(bomb), 2);
+			Dungeon.level.drop(bomb, this.pos);
+		}
 	}
 	
 	public void rollToDropLoot(){

@@ -151,7 +151,8 @@ public class Item implements Bundlable {
 					if (Dungeon.hero.buff(Talent.rabbitIdentify.class).count() > 7 - (hero.pointsInTalent(Talent.INDUCTION) * 2)) {
 						if (this instanceof MeleeWeapon || this instanceof Wand || this instanceof Ring || this instanceof Armor ||this instanceof Potion ||this instanceof Scroll) {
 							this.identify();
-							GLog.i(Messages.get(Hero.class, "rabbitidentify"));
+							GLog.i(Messages.get(Hero.class, "rabbitidentify", this));
+							Badges.validateItemLevelAquired( this );
 							Buff.detach(Dungeon.hero, Talent.rabbitIdentify.class);
 						}
 					}

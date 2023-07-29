@@ -30,7 +30,7 @@ public class WandOfBlowStone extends DamageWand{
         if (ch != null) {
             processSoulMark(ch, chargesPerCast());
             int damage = damageRoll() - ch.drRoll();
-            if(damage>0) ch.damage(damage, this);
+            if(damage>0) ch.damage(damage, Dungeon.hero);
             Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f) );
             ch.sprite.burst(0xFFFFFFFF, buffedLvl() + 5);
         } else {

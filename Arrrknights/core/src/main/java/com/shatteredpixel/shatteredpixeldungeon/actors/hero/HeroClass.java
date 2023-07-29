@@ -88,6 +88,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutat
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfValstrax;
@@ -222,7 +224,7 @@ import com.watabou.utils.DeviceCompat;
 			new SakuraProof().collect();
 			new WandOfWarding().identify().collect();
 			new WandOfMagicMissile().upgrade(10).identify().collect();
-			new WandOfFireblast().upgrade(10).identify().collect();
+			new StaffOfSkyfire().upgrade(10).identify().collect();
 			new WandOfBlowStone().identify().collect();
 			new StaffOfTime().identify().collect();
 			new StaffOfVision().identify().collect();
@@ -233,6 +235,7 @@ import com.watabou.utils.DeviceCompat;
 			new ScrollOfUpgrade().identify().quantity(99).collect();
 			new ScrollOfTransmutation().identify().quantity(99).collect();
 			new ScrollOfRecharging().identify().quantity(99).collect();
+			new WeaponTransform().quantity(99).collect();
 			//potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
 			new PotionOfFrost().identify().quantity(99).collect();
