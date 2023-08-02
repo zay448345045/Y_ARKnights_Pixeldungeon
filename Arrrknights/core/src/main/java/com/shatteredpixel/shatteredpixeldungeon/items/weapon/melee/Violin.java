@@ -158,9 +158,6 @@ public class Violin extends MeleeWeapon {
                     }else{
                         chainEnemy( chain, curUser, Actor.findChar( chain.collisionPos ));
                     }
-                    if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
-                        Buff.affect(curUser,InstantViolin.class);
-                    }
                     charge--;
                     updateQuickslot();
                 }
@@ -225,6 +222,10 @@ public class Violin extends MeleeWeapon {
             }
         }), -1);
         ProcessHuntingMark(ch);
+        if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
+            Buff.affect(curUser,InstantViolin.class);
+        }
+        Dungeon.hero.spendAndNext(TICK);
     }
 
     //pulls an enemy to a position along the chain's path, as close to the hero as possible
@@ -280,6 +281,9 @@ public class Violin extends MeleeWeapon {
             }
         }));
         ProcessHuntingMark(enemy);
+        if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
+            Buff.affect(curUser,InstantViolin.class);
+        }
     }
 
     public void ProcessHuntingMark(Char enemy){

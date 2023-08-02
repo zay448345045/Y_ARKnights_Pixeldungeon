@@ -252,7 +252,6 @@ public class Recycler extends ROR2equipment{
                 if (result == null){
                     //This shouldn't ever trigger
                     GLog.n( Messages.get(ScrollOfTransmutation.class, "nothing") );
-                    curItem.collect( curUser.belongings.backpack );
                 } else {
                     if (item.isEquipped(Dungeon.hero)){
                         item.cursed = false; //to allow it to be unequipped

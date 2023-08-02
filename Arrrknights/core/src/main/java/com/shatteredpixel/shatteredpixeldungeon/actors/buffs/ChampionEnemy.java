@@ -46,6 +46,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import java.util.ArrayList;
+
 public abstract class ChampionEnemy extends Buff {
 
 	{
@@ -419,11 +421,15 @@ public abstract class ChampionEnemy extends Buff {
 		}
 		@Override
 		public boolean act() {
+			ArrayList<Char> affected = new ArrayList<>();
 			for (Mob mob : Dungeon.level.mobs) {
 				if (Dungeon.level.distance(target.pos, mob.pos) <= 3
 						&& mob.buff(R2Celestine.class) == null) {
-					Buff.prolong(mob, Vanish.class, 2f);
+					affected.add(mob);
 				}
+			}
+			for ( Char ch : affected ){
+				Buff.prolong(ch, Vanish.class, 2f);
 			}
 			spend(TICK);
 			return true;
@@ -451,13 +457,17 @@ public abstract class ChampionEnemy extends Buff {
 		}
 		@Override
 		public boolean act() {
+			ArrayList<Char> affected = new ArrayList<>();
 			for (Mob mob : Dungeon.level.mobs) {
 				if (Dungeon.level.distance(target.pos, mob.pos) <= 2
 						&& mob.buff(R2Mending.class) == null) {
-					mob.HP++;
-					mob.HP=Math.min(mob.HP, mob.HT);
-					mob.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
+					affected.add(mob);
 				}
+			}
+			for ( Char ch : affected ){
+				ch.HP++;
+				ch.HP=Math.min(ch.HP, ch.HT);
+				ch.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
 			}
 			spend(TICK);
 			return true;

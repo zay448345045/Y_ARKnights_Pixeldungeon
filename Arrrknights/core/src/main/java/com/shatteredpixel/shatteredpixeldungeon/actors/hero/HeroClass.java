@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.APRounds;
@@ -108,6 +109,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.EX42;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MidnightSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.NEARL_AXE;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.NaginataAndFan;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.R4C;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ExplosiveSpear;
@@ -231,6 +233,8 @@ import com.watabou.utils.DeviceCompat;
 			new StaffOfVision().upgrade(10).identify().collect();
 			new StaffOfValstrax().identify().collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
+			new R4C().identify().collect();
+			new RingOfFuror().identify().upgrade(5).collect();
 			//scrolls
 			new ScrollOfUpgrade().identify().quantity(99).collect();
 			new ScrollOfTransmutation().identify().quantity(99).collect();
