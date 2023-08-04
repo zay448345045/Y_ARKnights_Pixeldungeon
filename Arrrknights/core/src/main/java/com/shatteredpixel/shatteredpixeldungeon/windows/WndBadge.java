@@ -174,6 +174,9 @@ public class WndBadge extends Window {
 			case SKIN_LILITH:
 				Dungeon.hero.CharSkin = Hero.LILITH;
 				break;
+			case SKIN_KAYOKO:
+				Dungeon.hero.CharSkin = Hero.KAYOKO;
+				break;
 		}
 	}
 }

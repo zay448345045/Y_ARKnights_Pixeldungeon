@@ -537,6 +537,7 @@ import com.watabou.utils.DeviceCompat;
 				case 15: return Assets.Sprites.FRK;
 				case 16: return Assets.Sprites.WED;
 				case 17: return Assets.Sprites.LILITH;
+				case 18: return Assets.Sprites.KAYOKO;
 			}
 		}
 		switch (this) {

@@ -5,7 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.utils.Bundle;
 
-public class ROR2equipment extends ROR2item{
+abstract public class ROR2equipment extends ROR2item{
 
     protected Buff activeBuff;
     //the current artifact charge
