@@ -542,6 +542,6 @@ public class Assets {
 		public static final String FRK	= "sprites/franka.png";
 		public static final String WED	= "sprites/weedy_skin.png";
 		public static final String LILITH	= "sprites/lilith-anime.png";
-		public static final String KAYOKO	= "sprites/lilith-anime.png";
+		public static final String KAYOKO	= "sprites/kayoko-anime.png";
 	}
 }
