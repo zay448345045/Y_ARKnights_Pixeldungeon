@@ -62,6 +62,7 @@ public class HeroSprite extends CharSprite {
 	public void updateArmor() {
 		texture(Dungeon.hero.heroClass.spritesheet());
 		TextureFilm film = new TextureFilm(tiers(), Dungeon.hero.tier(), 36, 34);
+		if(Dungeon.hero.CharSkin == Hero.HINA) film = new TextureFilm(texture, 50, 40);
 
 		idle = new Animation( 7, true );
 		idle.frames( film, 41, 42, 43, 44, 45, 46, 41, 42, 43, 44, 45, 46, 41, 42, 43, 44, 45, 46, 41, 42, 43, 44, 45, 46, 41, 42, 43, 47, 48, 46 );
