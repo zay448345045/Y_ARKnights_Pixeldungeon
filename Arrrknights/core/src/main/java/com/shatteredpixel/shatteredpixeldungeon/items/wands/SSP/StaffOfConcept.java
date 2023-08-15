@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class StaffOfConcept extends Wand {
     {
-        image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
+        image = ItemSpriteSheet.WAND_CONCEPT;
     }
 
     @Override

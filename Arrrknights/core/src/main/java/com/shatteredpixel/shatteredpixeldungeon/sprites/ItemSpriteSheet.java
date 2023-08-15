@@ -515,6 +515,7 @@ public class ItemSpriteSheet {
 	public static final int WAND_BLOW_STONE    = WANDS+19;
 	public static final int WAND_VALSTRAX    = WANDS+20;
 	public static final int WAND_VISION    = WANDS+21;
+	public static final int WAND_CONCEPT	=WANDS+22;
 	static {
 		for (int i = WANDS; i < WANDS+31; i++)
 			assignItemRect(i, 16, 16);
