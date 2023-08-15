@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.ror2items;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -10,7 +11,7 @@ public class ArmorPlate extends ROR2item{
     }
     @Override
     public int defenseProc(Char attacker, Char defender, int damage ) {
-        damage -= 5;
+        damage -= (1+ Dungeon.depth/5);
         return damage;
     }
 

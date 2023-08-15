@@ -155,6 +155,7 @@ public class Hunger extends Buff implements Hero.Doom {
 	public int hunger() {
 		return (int)Math.ceil(level);
 	}
+	public void increaseHungerPartical(int times){partialDamage += times*STEP * target.HT/1000f;}
 
 	@Override
 	public int icon() {

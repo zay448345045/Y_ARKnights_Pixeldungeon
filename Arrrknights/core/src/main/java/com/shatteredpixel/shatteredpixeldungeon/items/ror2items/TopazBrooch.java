@@ -1,9 +1,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.ror2items;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+
+import java.util.function.DoubleUnaryOperator;
 
 public class TopazBrooch extends ROR2item{
     {
@@ -12,7 +15,7 @@ public class TopazBrooch extends ROR2item{
     }
     @Override
     public void uponKill(Char attacker, Char defender, int damage ) {
-        Buff.affect(attacker, Barrier.class).incShield(10);
+        Buff.affect(attacker, Barrier.class).incShield(3+ Dungeon.depth/5);
     }
 
     @Override

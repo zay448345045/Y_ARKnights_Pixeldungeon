@@ -63,7 +63,8 @@ public class SealOfLight extends Artifact {
                 if (!isEquipped(hero))
                     GLog.i(Messages.get(Artifact.class, "need_to_equip"));
                 else if (cursed) GLog.i(Messages.get(this, "cursed"));
-                else if (charge < 100) GLog.i(Messages.get(this, "no_charge"));
+                else if (charge < 100 && !(Dungeon.hero.hasTalent(Talent.RADIANTHERO) && Dungeon.hero.buff(Talent.RadiantHeroCooldown.class) == null && curUser.HP*2<curUser.HT)
+                ) GLog.i(Messages.get(this, "no_charge"));
                 else {
                     Buff.affect(hero, RadiantKnight.class, RadiantKnight.DURATION);
 
@@ -94,7 +95,12 @@ public class SealOfLight extends Artifact {
                     else hero.spendAndNext(1f);
                     GameScene.flash( 0x80FFFFFF );
                     Sample.INSTANCE.play(Assets.Sounds.SKILL_BABYNIGHT);
-                    charge = 0;
+                    if(charge < 100){
+                        float CoolDown = 900 - (curUser.pointsInTalent(Talent.RADIANTHERO) * 150);
+                        Buff.affect(curUser, Talent.RadiantHeroCooldown.class, CoolDown);
+                    }else {
+                        charge = 0;
+                    }
                     updateQuickslot();
                 }
             }

@@ -40,7 +40,7 @@ public class WandOfBlowStone extends DamageWand{
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-        defender.damage(damage/3, curUser);
+        defender.damage(damage/3, Dungeon.hero);
     }
     protected int initialCharges() {
         return 1;

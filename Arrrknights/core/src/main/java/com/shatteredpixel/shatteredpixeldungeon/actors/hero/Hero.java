@@ -1582,7 +1582,9 @@ public class Hero extends Char {
                 }
             }
         }
-
+        if (hasTalent(Talent.FLASH_SPEAR) && Random.Int(20) < pointsInTalent(Talent.FLASH_SPEAR)) {
+            Buff.affect(enemy, Blindness.class, 1);
+        }
         if (enemy.buff(Blindness.class) != null && hasTalent(Talent.FLASH_SPEAR)) {
             BounsDamage += damage * (pointsInTalent(Talent.FLASH_SPEAR) * 0.1f);
         }
@@ -1811,19 +1813,6 @@ public class Hero extends Char {
             }
         }
 
-        if (HP <= HT/2) {
-        if(hasTalent(Talent.RADIANTHERO)) {
-            if (buff(RadiantKnight.class) == null && buff(Talent.RadiantHeroCooldown.class) == null && hasTalent(Talent.RADIANTHERO)) {
-                Buff.affect(this, RadiantKnight.class, RadiantKnight.DURATION);
-
-                float CoolDown = 900 - (pointsInTalent(Talent.RADIANTHERO) * 150);
-                Buff.affect(this, Talent.RadiantHeroCooldown.class, CoolDown);
-
-                GameScene.flash( 0x80FFFFFF );
-                Sample.INSTANCE.play(Assets.Sounds.SKILL_BABYNIGHT);
-            }
-        }}
-
         // 천마의 날개
         if (hasTalent(Talent.PEGASUS_WING)) {
             SealOfLight Seal = this.belongings.getItem(SealOfLight.class);
@@ -1953,6 +1942,7 @@ public class Hero extends Char {
             }
             dmg *= redu;
             dmg -= 2;
+            dmg -= pointsInTalent(Talent.HOPELIGHT);
         }
 
         if(Dungeon.hero.hasTalent(Talent.PROTECTIONOFLIGHT) && buff(Light.class) != null) {

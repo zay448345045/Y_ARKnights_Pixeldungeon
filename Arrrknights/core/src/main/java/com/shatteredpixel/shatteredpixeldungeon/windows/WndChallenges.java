@@ -129,6 +129,13 @@ public class WndChallenges extends Window {
 							new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
 					);
 				}
+				@Override
+				public boolean onLongClick() {
+					TomorrowRogueNight.scene().add(
+							new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
+					);
+					return true;
+				}
 
 				@Override
 				protected void layout() {

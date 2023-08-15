@@ -88,10 +88,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurs
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfValstrax;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfVision;
@@ -100,6 +102,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
@@ -233,12 +237,14 @@ import com.watabou.utils.DeviceCompat;
 			new StaffOfVision().upgrade(10).identify().collect();
 			new StaffOfValstrax().identify().collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
+			new StaffOfConcept().identify().collect();
 			new R4C().identify().collect();
 			new RingOfFuror().identify().upgrade(5).collect();
 			//scrolls
 			new ScrollOfUpgrade().identify().quantity(99).collect();
 			new ScrollOfTransmutation().identify().quantity(99).collect();
 			new ScrollOfRecharging().identify().quantity(99).collect();
+			new ScrollOfEnchantment().identify().quantity(99).collect();
 			new WeaponTransform().quantity(99).collect();
 			//potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
