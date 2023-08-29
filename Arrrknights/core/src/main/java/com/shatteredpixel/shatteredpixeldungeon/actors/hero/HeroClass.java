@@ -107,6 +107,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overea
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FreshInspiration;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.EX42;
@@ -134,8 +135,9 @@ import com.watabou.utils.DeviceCompat;
 	HUNTRESS( "huntress", HeroSubClass.SNIPER, HeroSubClass.WARDEN, HeroSubClass.STOME ),
 	ROSECAT("rosecat", HeroSubClass.DESTROYER, HeroSubClass.GUARDIAN, HeroSubClass.WAR),
 	NEARL("nearl", HeroSubClass.KNIGHT, HeroSubClass.SAVIOR, HeroSubClass.FLASH),
-	 CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER),
-	RABBIT("rabbit", HeroSubClass.KILLER);
+	CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER),
+	RABBIT("rabbit", HeroSubClass.KILLER),
+	MIDORI("midori", HeroSubClass.MARKSMIDORI, HeroSubClass.KEYANIMATOR);
 
 	private String title;
 	private HeroSubClass[] subClasses;
@@ -183,6 +185,10 @@ import com.watabou.utils.DeviceCompat;
 
 			case RABBIT:
 				initRabbit(hero);
+				break;
+
+			case MIDORI:
+				initMidori(hero);
 				break;
 		}
 
@@ -291,6 +297,8 @@ import com.watabou.utils.DeviceCompat;
 				return Badges.Badge.MASTERY_CHEN;
 			case RABBIT:
 				return Badges.Badge.MASTERY_RABBIT;
+			case MIDORI:
+				return Badges.Badge.MASTERY_MIDORI;
 		}
 		return null;
 	}
@@ -509,6 +517,15 @@ import com.watabou.utils.DeviceCompat;
 		 Dungeon.quickslot.setSlot(0,skillB);
 		 new DewVial().collect();
 	 }
+	 private void initMidori(Hero hero) {
+		 (hero.belongings.weapon = new FreshInspiration()).identify();
+
+		 SkillBook skillB;
+		 skillB = new SkillBook();
+		 skillB.quantity(1).collect();
+		 Dungeon.quickslot.setSlot(0,skillB);
+		 new DewVial().collect();
+	 }
 
 	public String title() {
 		return Messages.get(HeroClass.class, title);
@@ -564,6 +581,8 @@ import com.watabou.utils.DeviceCompat;
 				return Assets.Sprites.CHEN;
 			case RABBIT:
 				return Assets.Sprites.RABBIT;
+			case MIDORI:
+				return Assets.Sprites.MIDORI;
 		}
 	}
 
@@ -585,6 +604,8 @@ import com.watabou.utils.DeviceCompat;
 				return Assets.Sprites.CHEN;
 			case RABBIT:
 				return Assets.Sprites.RABBIT;
+			case MIDORI:
+				return Assets.Sprites.MIDORI;
 		}
 	}
 
@@ -606,6 +627,8 @@ import com.watabou.utils.DeviceCompat;
 				return Assets.Splashes.CHEN;
 			case RABBIT:
 				return Assets.Splashes.RABBIT;
+			case MIDORI:
+				return Assets.Splashes.MIDORI;
 		}
 	}
 	
@@ -666,6 +689,8 @@ import com.watabou.utils.DeviceCompat;
 			case CHEN:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_CHEN);
 			case RABBIT:
+				return true;
+			case MIDORI:
 				return true;
 		}
 	}

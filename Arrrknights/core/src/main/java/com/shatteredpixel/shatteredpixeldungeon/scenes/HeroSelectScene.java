@@ -406,8 +406,11 @@ public class HeroSelectScene extends PixelScene {
 				case CHEN: //첸포인트
 					icon(new Image(Icons.CHEN.get()));
 					break;
-				case RABBIT: //첸포인트
+				case RABBIT:
 					icon(new Image(Icons.RABBIT.get()));
+					break;
+				case MIDORI:
+					icon(new Image(Icons.MIDORI.get()));
 					break;
 			}
 

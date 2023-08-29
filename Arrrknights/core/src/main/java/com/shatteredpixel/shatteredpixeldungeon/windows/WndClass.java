@@ -165,6 +165,9 @@ public class WndClass extends WndTabbed {
 				case RABBIT:
 					message = HeroSubClass.KILLER.desc();
 					break;
+				case MIDORI:
+					message = HeroSubClass.MARKSMIDORI.desc() + "\n\n" + HeroSubClass.KEYANIMATOR.desc();
+					break;
 			}
 
 			RenderedTextBlock text = PixelScene.renderTextBlock( 6 );

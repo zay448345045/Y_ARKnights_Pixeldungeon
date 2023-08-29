@@ -240,7 +240,25 @@ public enum Talent {
 	//Killer T3
 	LINGER_ON(333,3),ACCURATE_HIT(334,3),DANGER_DANCE(335,3),
 	//Killer T4
-	RHAPSODY(336,4),SYMPHONY(337,4);
+	RHAPSODY(336,4),SYMPHONY(337,4),
+
+	//Midori T1
+	POWER_MEAL(352),GUN_WIKI(353),TEMP_RELOAD(354),BAYONET(355),
+	//Midori T2
+	RELOAD_MEAL(356),BULLET_SUPPLY(357),FREE_FIRE(358),XTRM_MEASURES(359),PROFICIENCY(360),
+	//Midori T3
+	HONED_ARTS(361,3),INSPIRATION(362,3),
+	//Midori T3		MarksMidori
+	SMOKE_BOMB(363,3),FULL_FIREPOWER(364,3),MYSTERY_SHOT(365,3),
+	//Midori T3		KeyAnimator
+	SUPERB_ARTS(366,3),PIE_IN_THE_PAPER(367,3),POTATO_AIM(368,3),
+	//Midori T4
+	DEVELOP_BONUS(369,3),IMPACT_BULLET(370,3),
+	//Midori T4		MarksMidori
+	SKILL_ENHANCEMENT(371,4),OPTICAL_SIGHT(372,4),
+	//Midori T4		KeyAnimator
+	PAPER_BULLET(373,4),INSPIRATION_FLASHBACK(374,4),
+	;
 
 
 	public static class ImprovisedProjectileCooldown extends FlavourBuff{};
@@ -824,6 +842,8 @@ public enum Talent {
 				break;
 			case RABBIT:
 				Collections.addAll(tierTalents,FULL_STRENGTH,DEDUCTION,INDUCTION,SIMPLE_COMBO,GENIUS);
+			case MIDORI:
+				Collections.addAll(tierTalents,POWER_MEAL,GUN_WIKI,TEMP_RELOAD,BAYONET);
 		}
 		for (Talent talent : tierTalents){
 			talents.get(0).put(talent, 0);
@@ -855,6 +875,9 @@ public enum Talent {
 				break;
 			case RABBIT:
 				Collections.addAll(tierTalents,INSTANT_MEAL,LICK_BLOOD,SINISTER_ARROW,OCCULTISM,VIOLINIST);
+				break;
+			case MIDORI:
+				Collections.addAll(tierTalents,RELOAD_MEAL,BULLET_SUPPLY,FREE_FIRE,XTRM_MEASURES,PROFICIENCY);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -888,6 +911,9 @@ public enum Talent {
 			case RABBIT:
 				Collections.addAll(tierTalents,FAST_TRIM,SLEEVE_TRICK);
 				break;
+			case MIDORI:
+				Collections.addAll(tierTalents,HONED_ARTS,INSPIRATION);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -919,6 +945,9 @@ public enum Talent {
 				break;
 			case RABBIT:
 				Collections.addAll(tierTalents,NOCTURNE,MINUET);
+				break;
+			case MIDORI:
+				Collections.addAll(tierTalents,DEVELOP_BONUS,IMPACT_BULLET);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1005,6 +1034,12 @@ public enum Talent {
 			case KILLER:
 				Collections.addAll(tierTalents, LINGER_ON,ACCURATE_HIT,DANGER_DANCE);
 				break;
+			case MARKSMIDORI:
+				Collections.addAll(tierTalents, SMOKE_BOMB,FULL_FIREPOWER,MYSTERY_SHOT);
+				break;
+			case KEYANIMATOR:
+				Collections.addAll(tierTalents, SUPERB_ARTS,PIE_IN_THE_PAPER,POTATO_AIM);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -1075,6 +1110,12 @@ public enum Talent {
 				break;
 			case KILLER:
 				Collections.addAll(tierTalents, RHAPSODY,SYMPHONY);
+				break;
+			case MARKSMIDORI:
+				Collections.addAll(tierTalents, SKILL_ENHANCEMENT,OPTICAL_SIGHT);
+				break;
+			case KEYANIMATOR:
+				Collections.addAll(tierTalents, PAPER_BULLET,INSPIRATION_FLASHBACK);
 				break;
 		}
 		for (Talent talent : tierTalents){

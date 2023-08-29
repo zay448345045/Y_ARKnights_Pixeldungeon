@@ -74,6 +74,7 @@ public enum Icons {
 	RISKARM_S,
 	CHEN_S,
 	RABBIT_S,
+	MIDORI_S,
 
 	//main menu icons
 	ENTER,
@@ -109,6 +110,7 @@ public enum Icons {
 	RISKARM,
 	CHEN,
 	RABBIT,
+	MIDORI,
 	HYPER,
 	MONNY,
 
@@ -260,6 +262,9 @@ public enum Icons {
 			case RABBIT_S:
 				icon.frame( icon.texture.uvRect( 160, 48, 176, 64 ) );
 				break;
+			case MIDORI_S:
+				icon.frame( icon.texture.uvRect( 160, 48, 176, 64 ) );
+				break;
 			case ENTER:
 			icon.frame( icon.texture.uvRect( 0, 64, 16, 80 ) );
 			break;
@@ -364,6 +369,9 @@ public enum Icons {
 			case RABBIT:
 				icon.frame(icon.texture.uvRect(160, 128, 180, 148));
 				break;
+			case MIDORI:
+				icon.frame(icon.texture.uvRect(160, 128, 180, 148));
+				break;
 			//변경화면 아이콘들
 			case BUG_KILL:
 				icon.frame(icon.texture.uvRect(40, 148, 60, 168));
@@ -424,8 +432,10 @@ public enum Icons {
 			return get(NEARLS_S);
 		case CHEN: //첸포인트
 			return get(CHEN_S);
-		case RABBIT: //첸포인트
+		case RABBIT:
 			return get(RABBIT_S);
+		case MIDORI:
+			return get(MIDORI_S);
 		default:
 			return get(WARRIOR);
 		}

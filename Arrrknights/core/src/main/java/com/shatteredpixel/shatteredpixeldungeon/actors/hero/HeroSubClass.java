@@ -61,7 +61,11 @@ public enum HeroSubClass {
 	SWORDMASTER,
 	SPSHOOTER,
 
-	KILLER;
+	KILLER,
+
+	MARKSMIDORI,
+	KEYANIMATOR,
+	;
 
 	public String title() {
 		return Messages.get(this, name());
