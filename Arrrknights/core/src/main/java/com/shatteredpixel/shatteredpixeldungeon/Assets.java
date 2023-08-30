@@ -308,7 +308,7 @@ public class Assets {
 		public static final String NEARL	= "splashes/nearl.png";
 		public static final String CHEN	= "splashes/chen.jpg";
 		public static final String RABBIT	= "splashes/caerbannog.jpg";
-		public static final String MIDORI	= "splashes/midori.jpg";
+		public static final String MIDORI	= "splashes/midori.png";
 	}
 
 	public static class Sprites {

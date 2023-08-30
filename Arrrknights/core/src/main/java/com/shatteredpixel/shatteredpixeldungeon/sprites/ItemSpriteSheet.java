@@ -224,6 +224,7 @@ public class ItemSpriteSheet {
 	public static final int YATO     = WEP_TIER1+7;
 	public static final int NEARL_AXE     = WEP_TIER1+8;
 	public static final int VIOLIN     = WEP_TIER1+9;
+	public static final int FINSPIRATION	= WEP_TIER1+10;
 	static{
 		assignItemRect(WORN_SHORTSWORD, 16, 16);
 		assignItemRect(EX41, 			16, 16);

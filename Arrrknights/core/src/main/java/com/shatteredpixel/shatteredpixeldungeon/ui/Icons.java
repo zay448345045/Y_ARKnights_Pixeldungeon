@@ -263,7 +263,7 @@ public enum Icons {
 				icon.frame( icon.texture.uvRect( 160, 48, 176, 64 ) );
 				break;
 			case MIDORI_S:
-				icon.frame( icon.texture.uvRect( 160, 48, 176, 64 ) );
+				icon.frame( icon.texture.uvRect( 176, 48, 192, 64 ) );
 				break;
 			case ENTER:
 			icon.frame( icon.texture.uvRect( 0, 64, 16, 80 ) );
@@ -370,7 +370,7 @@ public enum Icons {
 				icon.frame(icon.texture.uvRect(160, 128, 180, 148));
 				break;
 			case MIDORI:
-				icon.frame(icon.texture.uvRect(160, 128, 180, 148));
+				icon.frame(icon.texture.uvRect(180, 128, 200, 148));
 				break;
 			//변경화면 아이콘들
 			case BUG_KILL:

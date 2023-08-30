@@ -17,9 +17,8 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class FreshInspiration extends GunWeapon{
-    public static final String AC_REMOVE = "REMOVE";
     {
-        image = ItemSpriteSheet.R4C;
+        image = ItemSpriteSheet.FINSPIRATION;
         hitSound = Assets.Sounds.HIT_AR;
         hitSoundPitch = 0.9f;
 
