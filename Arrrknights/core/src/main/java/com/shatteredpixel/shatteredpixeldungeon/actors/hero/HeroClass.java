@@ -106,6 +106,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FreshInspiration;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
@@ -226,7 +227,7 @@ import com.watabou.utils.DeviceCompat;
 			new RingOfWealth().identify().upgrade(28).collect();
 			new TimekeepersHourglass().identify().collect();
 			new EtherealChains().identify().collect();
-			new MidnightSword().identify().collect();
+			new Enfild2().identify().collect();
 			new FlametailSword().identify().collect();
 			new NaginataAndFan().identify().collect();
 			new CurseSolidifying().quantity(99).collect();
@@ -255,7 +256,7 @@ import com.watabou.utils.DeviceCompat;
 			//potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
 			new PotionOfFrost().identify().quantity(99).collect();
-			new PotionOfSuperExp().identify().collect();
+			new PotionOfExperience().identify().quantity(99).collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new PotionOfHealing().identify().quantity(99).collect();
 			new PotionOfMindVision().identify().quantity(99).collect();
@@ -519,6 +520,7 @@ import com.watabou.utils.DeviceCompat;
 	 }
 	 private void initMidori(Hero hero) {
 		 (hero.belongings.weapon = new FreshInspiration()).identify();
+		 hero.belongings.weapon.activate(hero);
 
 		 SkillBook skillB;
 		 skillB = new SkillBook();

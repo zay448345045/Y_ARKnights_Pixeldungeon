@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SandalsOfNature;
@@ -54,6 +55,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.C1_9mm;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.DP27;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FreshInspiration;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.GunWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.R4C;
@@ -108,7 +110,8 @@ public class WndBag extends WndTabbed {
 		RECYCLABLE,
 		NOT_EQUIPPED,
 		ALCHEMYKIT_ONLY,
-		GUN
+		GUN,
+		AMMO
 	}
 
 	protected static final int COLS_P   = 5;
@@ -476,6 +479,7 @@ public class WndBag extends WndTabbed {
 						mode == Mode.ALCHEMYKIT_ONLY && (item instanceof MeleeWeapon || item instanceof MissileWeapon || item instanceof Armor || item instanceof Plant.Seed
 								|| item instanceof Runestone || item instanceof Wand || item instanceof Ring) ||
 						mode == Mode.GUN && (item instanceof GunWeapon) ||
+						mode == Mode.AMMO && (item instanceof MissileWeapon) || (item instanceof MidoriAccessories) ||
 						mode == Mode.ALL
 					);
 				}

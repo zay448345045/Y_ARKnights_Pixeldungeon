@@ -24,14 +24,17 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
+import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+
+import java.util.ArrayList;
 
 public class MeleeWeapon extends Weapon {
 	
@@ -59,6 +62,38 @@ public class MeleeWeapon extends Weapon {
 		}//change from budding
 		return strreq;//change from budding
 	}
+
+	public static String AC_DISASSEMBLE = "DISASSEMBLE";
+	@Override
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
+		if (hero.heroClass == HeroClass.MIDORI && !(this instanceof FreshInspiration)){
+			actions.add(AC_DISASSEMBLE);
+		}
+		return actions;
+	}
+	@Override
+	public void execute(Hero hero, String action) {
+		super.execute(hero, action);
+		if (action.equals(AC_DISASSEMBLE)){
+			MidoriAccessories fia = new MidoriAccessories();
+			if (fia.doPickUp( Dungeon.hero )) {
+				GLog.i( Messages.get(Dungeon.hero, "you_now_have", fia.name()) );
+			} else {
+				Dungeon.level.drop( fia, hero.pos ).sprite.drop();
+			}
+			if(this instanceof GunWeapon){
+				MidoriAccessories fia2 = new MidoriAccessories();
+				if (fia2.doPickUp( Dungeon.hero )) {
+					GLog.i( Messages.get(Dungeon.hero, "you_now_have", fia2.name()) );
+				} else {
+					Dungeon.level.drop( fia2, hero.pos ).sprite.drop();
+				}
+			}
+			this.detach(Dungeon.hero.belongings.backpack);
+		}
+	}
+
 
 	public void SPCharge(int value) {
 		int chargevalue = value;

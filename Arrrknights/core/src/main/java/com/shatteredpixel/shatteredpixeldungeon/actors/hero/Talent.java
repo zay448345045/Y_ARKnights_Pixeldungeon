@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Levitation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PowerMeal;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Rose_Force;
@@ -66,6 +67,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FreshInspiration;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.GunWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -546,6 +549,19 @@ public enum Talent {
 		if(hero.hasTalent(INSTANT_MEAL)){
 			Buff.affect(hero, Swiftthistle.TimeBubble.class).bufftime(Dungeon.hero.pointsInTalent(INSTANT_MEAL)+1);
 		}
+		if(hero.hasTalent(POWER_MEAL)){
+			Buff.affect(hero, PowerMeal.class).set(1 + hero.pointsInTalent(POWER_MEAL),3);
+		}
+		if(hero.hasTalent(RELOAD_MEAL)){
+			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
+			for(GunWeapon g : guns) {
+				if(!(g instanceof FreshInspiration)){
+					g.addBullet(hero.pointsInTalent(RELOAD_MEAL));
+				}else{
+					g.addBullet(hero.pointsInTalent(RELOAD_MEAL)*3);
+				}
+			}
+		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
@@ -577,6 +593,9 @@ public enum Talent {
 		// 첸
 		if (item instanceof Weapon){
 			factor *= 1f + hero.pointsInTalent(EXPERIENCE) * 2;
+		}
+		if (item instanceof GunWeapon){
+			factor *= 1f + hero.pointsInTalent(GUN_WIKI) * 4;
 		}
 		return factor;
 	}
@@ -685,7 +704,9 @@ public enum Talent {
 				((Ring) item).setKnown();
 			}
 		}
-
+		if (hero.pointsInTalent(GUN_WIKI) == 2){
+			if (item instanceof GunWeapon) item.identify();
+		}
 	}
 
 	public static void onItemCollected( Hero hero, Item item ){
@@ -699,6 +720,7 @@ public enum Talent {
 				hero.sprite.emitter().burst(Speck.factory(Speck.QUESTION),1);
 			}
 		}
+
 	}
 
 	//note that IDing can happen in alchemy scene, so be careful with VFX here
@@ -728,6 +750,16 @@ public enum Talent {
 			{
 				Seal.charge(hero, 5 + hero.pointsInTalent(KNIGTS_OATH) * 5);
 				Seal.updateQuickslot();
+			}
+		}
+		if (hero.hasTalent(TEMP_RELOAD)){
+			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
+			for(GunWeapon g : guns) {
+				if(!(g instanceof FreshInspiration)){
+					g.addBullet(2);
+				}else{
+					g.addBullet(1);
+				}
 			}
 		}
 	}

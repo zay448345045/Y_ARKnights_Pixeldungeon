@@ -1,6 +1,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
+import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PROFICIENCY;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -18,16 +21,21 @@ public class Enfild2 extends MeleeWeapon {
 
         //also cannot surprise attack, see Hero.canSurpriseAttack
     }
+    private int Maccessories = 0;
+    public void addAccessories(){
+        Maccessories++;
+    }
 
     @Override
     public int min(int lvl) {
-       return 8+lvl;
+       return 8+lvl+ Maccessories;
     }
 
     @Override
     public int max(int lvl) {
         return  8*(tier+1) +    // 48 + 15
-                lvl*(tier+10);   //scaling unchanged
+                lvl*(tier+10) +
+                 Maccessories;   //scaling unchanged
     }
 
     @Override
@@ -48,7 +56,13 @@ public class Enfild2 extends MeleeWeapon {
 
     @Override
     public int STRReq(int lvl) {
-        return STRReq(tier+2, lvl); //20 base strength req, up from 18
+        return STRReq(tier+2, lvl)+Maccessories; //20 base strength req, up from 18
+    }
+    @Override
+    public float speedFactor( Char owner ) {
+        float delay = super.speedFactor( curUser );
+        delay *= 1/(1.00f+ Dungeon.hero.pointsInTalent(PROFICIENCY)*0.165f);
+        return delay;
     }
 
     @Override

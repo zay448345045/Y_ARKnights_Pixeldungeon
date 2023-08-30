@@ -21,10 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
+import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PROFICIENCY;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -34,6 +39,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+
+import javax.crypto.Mac;
 
 public class Enfild extends MeleeWeapon {
 
@@ -46,12 +53,28 @@ public class Enfild extends MeleeWeapon {
         DLY = 1.5f; //0.67x speed
         RCH = 50;    //extra reach
     }
+    private int Maccessories = 0;
+    public void addAccessories(){
+        Maccessories++;
+    }
 
     @Override
-    public int min(int lvl) { return  9 + buffedLvl() * 2; }
+    public int min(int lvl) { return  9 + buffedLvl() * 2 + Maccessories; }
 
     @Override
-    public int max(int lvl) {return  9 + buffedLvl() * 2; }
+    public int max(int lvl) {return  9 + buffedLvl() * 2 + 2* Maccessories; }
+    @Override
+    public int STRReq(int lvl){
+        int strreq=STRReq(tier, lvl);//change from budding
+        strreq += Maccessories;
+        return strreq;//change from budding
+    }
+    @Override
+    public float speedFactor( Char owner ) {
+        float delay = super.speedFactor( curUser );
+        delay *= 1/(1.00f+Dungeon.hero.pointsInTalent(PROFICIENCY)*0.165f);
+        return delay;
+    }
 
     @Override
     public int value() { return super.value() + 60; }
