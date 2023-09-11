@@ -722,6 +722,9 @@ public abstract class Mob extends Char {
 			}
 			else dmg *= 1.5f;
 		}
+		if (Dungeon.hero.hasTalent(Talent.DEVELOP_BONUS)) {
+			dmg *= (1f + 0.07f*Dungeon.hero.pointsInTalent(Talent.DEVELOP_BONUS));
+		}
 		if (Dungeon.isSPChallenged(SPChallenges.GLASS) && src instanceof Wand) {
 			dmg *= 5f;
 		}

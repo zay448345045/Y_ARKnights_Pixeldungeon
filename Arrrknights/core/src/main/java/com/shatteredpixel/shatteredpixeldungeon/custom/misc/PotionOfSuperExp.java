@@ -37,13 +37,8 @@ public class PotionOfSuperExp extends Potion {
 
     @Override
     public void apply( Hero hero ) {
-        for(int i = 0; i<40;i++){
+        for(int i = 0; i<39;i++){
             hero.earnExp( hero.maxExp(), getClass() );
         }
-    }
-
-    @Override
-    public int value() {
-        return isKnown() ? 50 * quantity : super.value();
     }
 }

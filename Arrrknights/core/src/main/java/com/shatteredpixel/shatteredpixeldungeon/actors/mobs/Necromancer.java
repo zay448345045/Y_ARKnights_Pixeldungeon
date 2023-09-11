@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ROR2Shield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
@@ -243,6 +244,7 @@ public class Necromancer extends Mob {
 					Buff.affect(mySkeleton, Corruption.class);
 				}
 				for (Buff b : buffs(ChampionEnemy.class)){
+					if(b instanceof ChampionEnemy.R2Perfected) Buff.affect( mySkeleton, ROR2Shield.class).setMaxShield(mySkeleton.HP);
 					Buff.affect( mySkeleton, b.getClass());
 				}
 				

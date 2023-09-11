@@ -92,7 +92,7 @@ public class WildMark extends Buff implements ActionIndicator.Action {
      public void gainCharge() {
         charge++;
 		if (charge > maxcharge) charge=maxcharge;//change from budding
-         ActionIndicator.setAction(this);
+        ActionIndicator.setAction(this);
      }
 
     @Override

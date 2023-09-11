@@ -198,6 +198,7 @@ public class WndHeroInfo extends WndTabbed {
 					break;
 				case MIDORI:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.R4C),
+							new ItemSprite(ItemSpriteSheet.NULL_DEF),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 			}

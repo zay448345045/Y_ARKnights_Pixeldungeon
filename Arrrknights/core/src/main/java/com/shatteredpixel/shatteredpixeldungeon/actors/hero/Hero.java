@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
-import com.badlogic.gdx.graphics.g3d.particles.values.UnweightedMeshSpawnShapeValue;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -41,7 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
@@ -51,8 +49,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CloserangeShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DangerDanceBonus;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DrawingArt;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Fury;
@@ -60,9 +58,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Heat;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HonedArts;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.IronSkin;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ItsHighNoon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ItsHighNoonMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.KnightSKILL;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LanceCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
@@ -89,12 +90,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.Bonk;
@@ -112,6 +110,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.Fate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.FierceGlare;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.FoodPrep;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.Hikari;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.InstantFire;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.LiveStart;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.Panorama;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.PhantomMirror;
@@ -127,6 +126,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.AncientKin;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BenasProtracto;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BreaktheDawn;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.ChargingPS;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Collecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.CoverSmoke;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.DeepHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.DeepSeaPredators;
@@ -148,6 +148,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.WolfPack;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.CaerbannogNoSekai;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.EveryoneTogether;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.ExtremeSharpness;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.HighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.NigetRaid;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.SBurst;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.ShadowAssault;
@@ -169,11 +170,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
@@ -193,9 +192,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
-import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
-import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
@@ -203,7 +200,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -213,8 +209,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Echeveria;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gluttony;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.KRISSVector;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Niansword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.PatriotSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SHISHIOH;
@@ -255,7 +249,6 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -604,8 +597,11 @@ public class Hero extends Char {
             if (Dungeon.level.adjacent(pos, target.pos)) {
                 accuracy *= (0.5f + 0.15f * pointsInTalent(Talent.DURABLE_TIPS));
             } else {
-                if (this.subClass == HeroSubClass.SNIPER)
+                if (this.subClass == HeroSubClass.SNIPER){
                     accuracy *= 1.75f + (pointsInTalent(Talent.FARSIGHT) * 0.1f);
+                }else if(this.subClass == HeroSubClass.MARKSMIDORI){
+                    accuracy *= 1.75f;
+                }
                 else accuracy *= 1.5f;
             }
         }
@@ -968,6 +964,15 @@ public class Hero extends Char {
             mark.Charged(time);
         }
         else if (subClass == HeroSubClass.WILD) Buff.affect(this, WildMark.class);
+
+        HonedArts honedArts = buff(HonedArts.class);
+        if (honedArts == null && Dungeon.hero.hasTalent(Talent.HONED_ARTS)) Buff.affect(this, HonedArts.class);
+
+        DrawingArt drawingArt = buff(DrawingArt.class);
+        if (drawingArt != null) {
+            drawingArt.Charged(time);
+        }
+        else if (subClass == HeroSubClass.MARKSMIDORI) Buff.affect(this, DrawingArt.class);
 
         if (belongings.weapon instanceof PatriotSpear) {
             if (belongings.armor instanceof PlateArmor) {
@@ -1704,11 +1709,21 @@ public class Hero extends Char {
                 mark.Charged(pointsInTalent(Talent.WIND_ROAD) * 7.5f);
             }
         }
+        if(Dungeon.hero.hasTalent(Talent.DEVELOP_BONUS)){
+            damage*=(1f + 0.07f*Dungeon.hero.pointsInTalent(Talent.DEVELOP_BONUS));
+        }
         if(Dungeon.isSPChallenged(SPChallenges.GLASS)) damage*=5;
 
         if(belongings.misc instanceof ROR2item){
             ROR2item r2i = (ROR2item)belongings.misc;
             damage = r2i.attackProc(this, enemy, damage);
+        }
+
+        if(buff(ItsHighNoon.class)!=null &&
+                !(enemy.properties().contains(Char.Property.MINIBOSS)) &&
+                !(enemy.properties().contains(Char.Property.BOSS)))
+        {
+            Buff.affect(enemy, ItsHighNoonMark.class);
         }
 
         damage += BounsDamage;
@@ -1856,6 +1871,8 @@ public class Hero extends Char {
             ROR2item r2i = (ROR2item)belongings.misc;
             damage = r2i.defenseProc(enemy, this, damage);
         }
+
+        if(buff(ItsHighNoon.class)!=null) Buff.detach(Dungeon.hero, ItsHighNoon.class);
 
         return damage;
     }
@@ -2889,6 +2906,9 @@ public class Hero extends Char {
             case 21:
                 SK1 = new BountyHunter();
                 break;
+            case 22:
+                SK1 = new InstantFire();
+                break;
         }
     }
 
@@ -2960,6 +2980,9 @@ public class Hero extends Char {
             case 21:
                 SK2 = new UnwelcomeGift();
                 break;
+            case 22:
+                SK2 = new Collecting();
+                break;
         }
     }
 
@@ -3000,6 +3023,9 @@ public class Hero extends Char {
                 break;
             case 11:
                 SK3 = new CaerbannogNoSekai();
+                break;
+            case 12:
+                SK3 = new HighNoon();
                 break;
         }
 

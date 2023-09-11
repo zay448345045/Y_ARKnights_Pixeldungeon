@@ -246,7 +246,7 @@ public enum Talent {
 	RHAPSODY(336,4),SYMPHONY(337,4),
 
 	//Midori T1
-	POWER_MEAL(352),GUN_WIKI(353),TEMP_RELOAD(354),BAYONET(355),
+	POWER_MEAL(352),GUN_WIKI(353),TEMP_RELOAD(354),BAYONET(355),PREWAR(174),
 	//Midori T2
 	RELOAD_MEAL(356),BULLET_SUPPLY(357),FREE_FIRE(358),XTRM_MEASURES(359),PROFICIENCY(360),
 	//Midori T3
@@ -279,6 +279,7 @@ public enum Talent {
 	public static class rabbitIdentify extends CounterBuff{};
 	public static class BlazeBurstBuff extends CounterBuff{};
 	public static class ScoldingCooldown extends FlavourBuff{};
+	public static class MysteryShotTracker2 extends FlavourBuff{};
 
 	public static class GALLOPbuff extends Buff{
 		{
@@ -421,6 +422,12 @@ public enum Talent {
 			MagesStaff Item = Dungeon.hero.belongings.getItem(MagesStaff.class);
 			Item.updateWand(false);
 		}
+		if (talent == INSPIRATION) {
+			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
+			for(GunWeapon g : guns) {
+				g.updateCap();
+			}
+		}
 
 		if (talent == FARSIGHT){
 			Dungeon.observe();
@@ -555,7 +562,7 @@ public enum Talent {
 		if(hero.hasTalent(RELOAD_MEAL)){
 			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
 			for(GunWeapon g : guns) {
-				if(!(g instanceof FreshInspiration)){
+				if(g instanceof FreshInspiration){
 					g.addBullet(hero.pointsInTalent(RELOAD_MEAL));
 				}else{
 					g.addBullet(hero.pointsInTalent(RELOAD_MEAL)*3);
@@ -761,6 +768,15 @@ public enum Talent {
 					g.addBullet(1);
 				}
 			}
+			if(hero.pointsInTalent(TEMP_RELOAD)==2){
+				for(GunWeapon g : guns) {
+					if(!(g instanceof FreshInspiration)){
+						g.addBullet(2);
+					}else{
+						g.addBullet(1);
+					}
+				}
+			}
 		}
 	}
 
@@ -874,8 +890,10 @@ public enum Talent {
 				break;
 			case RABBIT:
 				Collections.addAll(tierTalents,FULL_STRENGTH,DEDUCTION,INDUCTION,SIMPLE_COMBO,GENIUS);
+				break;
 			case MIDORI:
-				Collections.addAll(tierTalents,POWER_MEAL,GUN_WIKI,TEMP_RELOAD,BAYONET);
+				Collections.addAll(tierTalents,POWER_MEAL,GUN_WIKI,TEMP_RELOAD,BAYONET,PREWAR);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(0).put(talent, 0);

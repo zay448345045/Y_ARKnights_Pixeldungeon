@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -65,22 +66,20 @@ abstract public class ROR2item extends KindofMisc {
     public void uponKill( Char attacker, Char defender, int damage ) { }
 
     public int defenseProc( Char attacker, Char defender, int damage ) { return damage; }
+    @Override
+    public String info() {
+        String info = desc();
+        info = Messages.get(ROR2item.class, "summarize") + "\n" +
+                Messages.get(ROR2item.class, "tier_"+tier) + "\n\n" + info;
+        return info;
+    }
 
     protected ROR2item.ROR2itemBuff passiveBuff() {
         return null;
     }
-
-    public class ROR2itemBuff extends Buff {
-
-    }
-
+    public class ROR2itemBuff extends Buff {    }
     @Override
-    public void storeInBundle( Bundle bundle ) {
-
-    }
-
+    public void storeInBundle( Bundle bundle ) {    }
     @Override
-    public void restoreFromBundle( Bundle bundle ) {
-
-    }
+    public void restoreFromBundle( Bundle bundle ) {    }
 }

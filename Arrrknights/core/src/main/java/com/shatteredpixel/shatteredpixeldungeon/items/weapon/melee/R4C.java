@@ -64,7 +64,9 @@ public class R4C extends GunWeapon {
         trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
         WandOfBlastWave.throwChar(ch, trajectory, 2); // 넉백 효과
     }
-
+    protected int initialCap() {
+        return 30;
+    }
     @Override
     public String desc() {
        String info = Messages.get(this, "desc", bullettier);

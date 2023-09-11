@@ -58,6 +58,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookExecutionMod
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookFate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookPowerfulStrike;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookTacticalChanting;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookCollecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookDawn;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookEmergencyDefibrillator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookJackinthebox;
@@ -639,6 +640,9 @@ public class NewDM300 extends Mob {
             case RABBIT:
                 Dungeon.level.drop(new BookUnwelcomeGift(), pos).sprite.drop(pos);
                 break;
+            case MIDORI:
+                Dungeon.level.drop(new BookCollecting(), pos).sprite.drop(pos);
+                break;
         }
 
         Badges.validateBossSlain();
@@ -745,7 +749,7 @@ public class NewDM300 extends Mob {
         @Override
         public boolean act() {
             for (int i : rockPositions) {
-                CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+                CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.06f, 20);
 
                 if (Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
                     if (Random.IntRange(0,3) < 2) {

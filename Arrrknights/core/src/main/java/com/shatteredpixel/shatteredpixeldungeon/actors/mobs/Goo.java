@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookExecutionMode;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookFate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookHikari;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookInstantFire;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookPowerfulStrike;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookTacticalChanting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookThoughts;
@@ -319,6 +320,9 @@ public class Goo extends Mob {
 				break;
 			case RABBIT:
 				Dungeon.level.drop(new BookBountyHunter(), pos).sprite.drop(pos);
+				break;
+			case MIDORI:
+				Dungeon.level.drop(new BookInstantFire(), pos).sprite.drop(pos);
 				break;
 		}
 		

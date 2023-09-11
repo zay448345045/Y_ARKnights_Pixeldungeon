@@ -15,6 +15,7 @@ public class ROR2Shield extends ShieldBuff{
     private int maxShield;
     public void setMaxShield(int maxShield){
         this.maxShield=maxShield;
+        super.hardSetShield(maxShield);
     }
     public int getMaxShield(){
         return maxShield;

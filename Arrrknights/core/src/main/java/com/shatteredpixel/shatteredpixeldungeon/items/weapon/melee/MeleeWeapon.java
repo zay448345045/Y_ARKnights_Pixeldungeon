@@ -67,7 +67,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if (hero.heroClass == HeroClass.MIDORI && !(this instanceof FreshInspiration)){
+		if (hero.heroClass == HeroClass.MIDORI){
 			actions.add(AC_DISASSEMBLE);
 		}
 		return actions;
@@ -79,6 +79,7 @@ public class MeleeWeapon extends Weapon {
 			MidoriAccessories fia = new MidoriAccessories();
 			if (fia.doPickUp( Dungeon.hero )) {
 				GLog.i( Messages.get(Dungeon.hero, "you_now_have", fia.name()) );
+				Dungeon.hero.spend(-TIME_TO_PICK_UP);
 			} else {
 				Dungeon.level.drop( fia, hero.pos ).sprite.drop();
 			}
@@ -86,11 +87,16 @@ public class MeleeWeapon extends Weapon {
 				MidoriAccessories fia2 = new MidoriAccessories();
 				if (fia2.doPickUp( Dungeon.hero )) {
 					GLog.i( Messages.get(Dungeon.hero, "you_now_have", fia2.name()) );
+					Dungeon.hero.spend(-TIME_TO_PICK_UP);
 				} else {
 					Dungeon.level.drop( fia2, hero.pos ).sprite.drop();
 				}
 			}
-			this.detach(Dungeon.hero.belongings.backpack);
+			if(this.isEquipped(Dungeon.hero)){
+				this.doUnequip(hero, false);
+			}else{
+				this.detach(hero.belongings.backpack);
+			}
 		}
 	}
 

@@ -26,14 +26,22 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.custom.misc.PotionOfSuperExp;
+import com.shatteredpixel.shatteredpixeldungeon.custom.misc.PotionOfSuperStr;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.DewVial;
+import com.shatteredpixel.shatteredpixeldungeon.items.Gunaccessories.GunScope_II;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
+import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
 import com.shatteredpixel.shatteredpixeldungeon.items.SakuraProof;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookInstantFire;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookCollecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookCaerbannogNoSekai;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookHighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -49,6 +57,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MeatCutlet;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Sandvich;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHaste;
@@ -91,6 +100,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.SuperAdvanceguard;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
@@ -106,6 +117,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FreshInspiration;
@@ -123,6 +135,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.LightKnife
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 
@@ -220,21 +233,27 @@ import com.watabou.utils.DeviceCompat;
 			new EquipmentsBag().collect();
 			Dungeon.LimitedDrops.EQUIPMENTS_BAG.drop();
 			//
+			new Amulet().collect();
 			new TomeOfMastery().collect();
-			new ExplosiveSpear().quantity(99).collect();
+			new R4C().identify().collect();
+			new TimekeepersHourglass().identify().collect();
+			new EtherealChains().identify().collect();
+			new Enfild().identify().collect();
+			new GunScope_II().collect();
+			new NaginataAndFan().identify().collect();
+			new CurseSolidifying().quantity(99).collect();
+			new SakuraProof().collect();
+			new SuperAdvanceguard().quantity(99).collect();
+			new Sungrass.Seed().quantity(99).collect();
+			new StoneOfBlast().quantity(99).collect();
+			//region rings
+			new RingOfFuror().identify().upgrade(5).collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new RingOfHaste().identify().upgrade(28).collect();
 			new RingOfWealth().identify().upgrade(28).collect();
-			new TimekeepersHourglass().identify().collect();
-			new EtherealChains().identify().collect();
-			new Enfild2().identify().collect();
-			new FlametailSword().identify().collect();
-			new NaginataAndFan().identify().collect();
-			new CurseSolidifying().quantity(99).collect();
-			new BookBountyHunter().collect();
-			new BookUnwelcomeGift().collect();
-			new BookCaerbannogNoSekai().collect();
-			new SakuraProof().collect();
+			//endregion
+			//region wands and missiles
+			new ExplosiveSpear().quantity(99).collect();
 			new WandOfWarding().identify().collect();
 			new WandOfMagicMissile().upgrade(10).identify().collect();
 			new StaffOfSkyfire().upgrade(10).identify().collect();
@@ -245,22 +264,25 @@ import com.watabou.utils.DeviceCompat;
 			new StaffOfValstrax().identify().collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
 			new StaffOfConcept().identify().collect();
-			new R4C().identify().collect();
-			new RingOfFuror().identify().upgrade(5).collect();
-			//scrolls
+			//endregion
+			//region scrolls
 			new ScrollOfUpgrade().identify().quantity(99).collect();
 			new ScrollOfTransmutation().identify().quantity(99).collect();
 			new ScrollOfRecharging().identify().quantity(99).collect();
 			new ScrollOfEnchantment().identify().quantity(99).collect();
 			new WeaponTransform().quantity(99).collect();
-			//potions
+			//endregion
+			//region potions
 			new PotionOfLiquidFlame().identify().quantity(99).collect();
 			new PotionOfFrost().identify().quantity(99).collect();
 			new PotionOfExperience().identify().quantity(99).collect();
+			new PotionOfSuperExp().identify().collect();
+			new PotionOfSuperStr().identify().collect();
 			new PotionOfStrength().identify().quantity(10).collect();
 			new PotionOfHealing().identify().quantity(99).collect();
 			new PotionOfMindVision().identify().quantity(99).collect();
-			//ror2
+			//endregion
+			//region ror2
 			new Recycler().collect();
 			new LuckyLeaf().collect();
 			new Perforator().collect();
@@ -277,6 +299,7 @@ import com.watabou.utils.DeviceCompat;
 			new TriTipDagger().collect();
 			new StunGrenade().collect();
 			new ArmorPlate().collect();
+			//endregion
 		}
 	}
 
@@ -499,8 +522,11 @@ import com.watabou.utils.DeviceCompat;
 
 	 private void initRabbit(Hero hero)
 	 {
-		 (hero.belongings.weapon = new Violin()).identify();
+		 Violin violin;
+		 violin = new Violin();
+		 (hero.belongings.weapon = violin).identify();
 		 hero.belongings.weapon.activate(hero);
+		 Dungeon.quickslot.setSlot(0, violin);
 
 		 new PotionBandolier().collect();
 		 Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
@@ -515,18 +541,44 @@ import com.watabou.utils.DeviceCompat;
 		 SkillBook skillB;
 		 skillB = new SkillBook();
 		 skillB.quantity(1).collect();
-		 Dungeon.quickslot.setSlot(0,skillB);
+		 Dungeon.quickslot.setSlot(1,skillB);
 		 new DewVial().collect();
+
+		 if(Dungeon.isChallenged(Challenges.TEST)){
+			 new BookBountyHunter().collect();
+			 new BookUnwelcomeGift().collect();
+			 new BookCaerbannogNoSekai().collect();
+		 }
 	 }
 	 private void initMidori(Hero hero) {
-		 (hero.belongings.weapon = new FreshInspiration()).identify();
+		 FreshInspiration freshInspiration;
+		 freshInspiration = new FreshInspiration();
+		 (hero.belongings.weapon = freshInspiration).identify();
 		 hero.belongings.weapon.activate(hero);
+		 Dungeon.quickslot.setSlot(0, freshInspiration);
+
+		 new ScrollHolder().collect();
+		 Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
+		 new VelvetPouch().collect();
+		 Dungeon.LimitedDrops.VELVET_POUCH.drop();
+
+		 new ScrollOfIdentify().identify();
+		 new ScrollOfMagicMapping().identify();
+		 new PotionOfMindVision().identify();
 
 		 SkillBook skillB;
 		 skillB = new SkillBook();
 		 skillB.quantity(1).collect();
-		 Dungeon.quickslot.setSlot(0,skillB);
+		 Dungeon.quickslot.setSlot(1,skillB);
 		 new DewVial().collect();
+
+		 if(Dungeon.isChallenged(Challenges.TEST)){
+			 new BookInstantFire().collect();
+			 new BookCollecting().collect();
+			 new BookHighNoon().collect();
+			 new MagicPaper().collect();
+			 new Sandvich().collect();
+		 }
 	 }
 
 	public String title() {

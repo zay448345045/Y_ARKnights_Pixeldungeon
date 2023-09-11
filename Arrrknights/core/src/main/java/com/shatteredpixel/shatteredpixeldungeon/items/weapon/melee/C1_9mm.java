@@ -57,7 +57,9 @@ public class C1_9mm extends GunWeapon {
 
         tier = 3;
     }
-
+    protected int initialCap() {
+        return 30;
+    }
     @Override
     protected void SPShot(Char ch) {
         Buff.affect(ch, Silence.class, 3f);

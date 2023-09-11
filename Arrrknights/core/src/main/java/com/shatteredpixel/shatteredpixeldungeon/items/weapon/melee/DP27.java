@@ -30,7 +30,9 @@ public class DP27 extends GunWeapon {
     protected void SPShot(Char ch) {
         Buff.affect(ch, Burning.class).reignite(ch);
     }
-
+    protected int initialCap() {
+        return 30;
+    }
     @Override
     protected void fx(Ballistica bolt, Callback callback ) {
         int a = 0;

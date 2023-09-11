@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.Skill;
 
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -57,11 +58,12 @@ public class SkillBook extends Item {
                         protected void onSelect(int index) {
                             if (index == 0) {
                                 if (hero.SK1 != null) {
-                                    if (charge < 30) {
+                                    if (charge < 30 && !Dungeon.isChallenged(Challenges.TEST)) {
                                         GLog.w(Messages.get(SkillBook.class, "low_charge"));
                                     } else {
                                         float chargeDown = 30 / (RingOfSunLight.SPBonus(Dungeon.hero));
                                         if (chargeDown < 5) chargeDown = 5;
+                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
                                         charge -= chargeDown;
                                         updateQuickslot();
                                         hero.SK1.doSkill();
@@ -70,11 +72,12 @@ public class SkillBook extends Item {
                                 } else GLog.w(Messages.get(SkillBook.class, "no_skill"));
                             } else if (index == 1) {
                                 if (hero.SK2 != null) {
-                                    if (charge < 60) {
+                                    if (charge < 60 && !Dungeon.isChallenged(Challenges.TEST)) {
                                         GLog.w(Messages.get(SkillBook.class, "low_charge"));
                                     } else {
                                         float chargeDown = 60 / (RingOfSunLight.SPBonus(Dungeon.hero));
                                         if (chargeDown < 10) chargeDown = 10;
+                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
                                         charge -= chargeDown;
                                         updateQuickslot();
                                         hero.SK2.doSkill();
@@ -83,11 +86,12 @@ public class SkillBook extends Item {
                                 } else GLog.w(Messages.get(SkillBook.class, "no_skill"));
                             } else if (index == 2) {
                                 if (hero.SK3 != null) {
-                                    if (charge < 100) {
+                                    if (charge < 100 && !Dungeon.isChallenged(Challenges.TEST)) {
                                         GLog.w(Messages.get(SkillBook.class, "low_charge"));
                                     } else {
                                         float chargeDown = 100 / (RingOfSunLight.SPBonus(Dungeon.hero));
                                         if (chargeDown < 15) chargeDown = 15;
+                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
                                         charge -= chargeDown;
                                         updateQuickslot();
                                         hero.SK3.doSkill();

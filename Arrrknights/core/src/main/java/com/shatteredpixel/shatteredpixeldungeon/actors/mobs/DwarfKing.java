@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookRockfailHammer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookCaerbannogNoSekai;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookHighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookNigetRaid;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookSBurst;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookShadowAssault;
@@ -512,6 +513,9 @@ public class DwarfKing extends Mob {
 					case RABBIT:
 						Dungeon.level.drop(new BookCaerbannogNoSekai(), pos+ofs ).sprite.drop( pos );
 						break;
+					case MIDORI:
+						Dungeon.level.drop(new BookHighNoon(), pos+ofs ).sprite.drop( pos );
+						break;
 				}
 			} else {
 				switch (Dungeon.hero.heroClass) {
@@ -535,6 +539,9 @@ public class DwarfKing extends Mob {
 						break;
 					case RABBIT:
 						Dungeon.level.drop(new BookCaerbannogNoSekai(), pos + ofs).sprite.drop(pos);
+						break;
+					case MIDORI:
+						Dungeon.level.drop(new BookHighNoon(), pos + ofs).sprite.drop(pos);
 						break;
 				}
 			}

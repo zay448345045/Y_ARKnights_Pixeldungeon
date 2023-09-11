@@ -61,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel1;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel2;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel3;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel4;
+import com.shatteredpixel.shatteredpixeldungeon.levels.OldPrisonBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RhodesLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.HallsLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.LastLevel;
@@ -521,6 +522,9 @@ public class Dungeon {
 		
 		Light light = hero.buff( Light.class );
 		hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
+		if(Dungeon.hero.hasTalent(Talent.OPTICAL_SIGHT)){
+			hero.viewDistance = Math.max(hero.viewDistance, (Dungeon.hero.pointsInTalent(Talent.OPTICAL_SIGHT))+3);
+		}
 		
 		hero.curAction = hero.lastAction = null;
 		

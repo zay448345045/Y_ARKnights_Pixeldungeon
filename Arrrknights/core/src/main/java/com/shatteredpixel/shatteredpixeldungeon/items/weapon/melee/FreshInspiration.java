@@ -1,8 +1,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
+import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PREWAR;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -28,7 +31,7 @@ public class FreshInspiration extends GunWeapon{
         bulletCap = 4;
 
         usesTargeting = true;
-
+        bones = false;
         defaultAction = AC_ZAP;
 
         tier = 1;
@@ -64,7 +67,9 @@ public class FreshInspiration extends GunWeapon{
     @Override
     public void execute(Hero hero, String action) {
         super.execute(hero, action);
-
+    }
+    protected int initialCap() {
+        return 4;
     }
     public class FIBuff extends Buff {}
 
@@ -100,21 +105,23 @@ public class FreshInspiration extends GunWeapon{
             if (bullet < bulletCap) {
                 LockedFloor lock = target.buff(LockedFloor.class);
                 if ((lock == null || lock.regenOn())  && !(Dungeon.depth >= 26 && Dungeon.depth <= 30)) {
-                    float turnsToCharge = (40f - level()*1.5f - (float) Maccessories);
+                    float turnsToCharge = (40f - level()*1.5f - (float) Maccessories - (Dungeon.hero.pointsInTalent(Talent.INSPIRATION)*2-1));
                     if(turnsToCharge<5) turnsToCharge=5;
                     float chargeToGain = (1f / turnsToCharge);
                     particalBullets += chargeToGain;
                 }
 
                 if (particalBullets >= 1) {
+                    if(Dungeon.hero.hasTalent(PREWAR)) Buff.affect(Dungeon.hero, Barrier.class).incShield(2);
                     bullet++;
                     particalBullets -= 1;
                     if (bulletCap == bulletCap){
                         particalBullets = 0;
                     }
                 }
-            } else
-                particalBullets = 0;
+            } else particalBullets = 0;
+            if(getBulletNum()<=0) defaultAction=AC_RELOAD;
+            else defaultAction=AC_ZAP;
 
             updateQuickslot();
 

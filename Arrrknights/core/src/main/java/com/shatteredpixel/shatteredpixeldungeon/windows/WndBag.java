@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.EquipmentsBag;
@@ -111,7 +112,8 @@ public class WndBag extends WndTabbed {
 		NOT_EQUIPPED,
 		ALCHEMYKIT_ONLY,
 		GUN,
-		AMMO
+		AMMO,
+		DRAWABLE
 	}
 
 	protected static final int COLS_P   = 5;
@@ -480,6 +482,7 @@ public class WndBag extends WndTabbed {
 								|| item instanceof Runestone || item instanceof Wand || item instanceof Ring) ||
 						mode == Mode.GUN && (item instanceof GunWeapon) ||
 						mode == Mode.AMMO && (item instanceof MissileWeapon) || (item instanceof MidoriAccessories) ||
+						mode == Mode.DRAWABLE && (item instanceof Potion) || (item instanceof Scroll) || (item instanceof Runestone) || SandalsOfNature.canUseSeed(item) || (item instanceof Food) ||
 						mode == Mode.ALL
 					);
 				}

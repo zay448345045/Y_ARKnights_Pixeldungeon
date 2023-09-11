@@ -60,7 +60,7 @@ public abstract class InventoryStone extends Runestone {
 	}
 	
 	@Override
-	protected void activate(int cell) {
+	public void activate(int cell) {
 		GameScene.selectItem( itemSelector, mode, inventoryTitle );
 	}
 	
