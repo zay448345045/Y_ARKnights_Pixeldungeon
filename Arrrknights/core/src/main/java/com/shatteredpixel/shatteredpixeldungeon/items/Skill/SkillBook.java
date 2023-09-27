@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.Skill;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -12,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Pombbay;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Nervous;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -160,7 +163,7 @@ public class SkillBook extends Item {
 
         if (charge > 100) chargepur /= 2;
 
-        charge += chargepur * levelPercent;
+        charge += chargepur * levelPercent * LFPChargeMultiplier();
         if (charge > 150) charge = 150;
         updateQuickslot();
     }

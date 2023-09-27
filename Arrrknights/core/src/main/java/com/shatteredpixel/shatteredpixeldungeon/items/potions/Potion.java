@@ -146,7 +146,7 @@ public class Potion extends Item {
 	protected static ItemStatusHandler<Potion> handler;
 	
 	protected String color;
-	
+	public String getColor() {return color;}
 	{
 		stackable = true;
 		defaultAction = AC_DRINK;

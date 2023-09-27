@@ -26,11 +26,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -45,10 +47,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.Brew;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.Elixir;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.Recycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
@@ -481,8 +487,16 @@ public class WndBag extends WndTabbed {
 						mode == Mode.ALCHEMYKIT_ONLY && (item instanceof MeleeWeapon || item instanceof MissileWeapon || item instanceof Armor || item instanceof Plant.Seed
 								|| item instanceof Runestone || item instanceof Wand || item instanceof Ring) ||
 						mode == Mode.GUN && (item instanceof GunWeapon) ||
-						mode == Mode.AMMO && (item instanceof MissileWeapon) || (item instanceof MidoriAccessories) ||
-						mode == Mode.DRAWABLE && (item instanceof Potion) || (item instanceof Scroll) || (item instanceof Runestone) || SandalsOfNature.canUseSeed(item) || (item instanceof Food) ||
+						mode == Mode.AMMO && (item instanceof MissileWeapon || item instanceof MidoriAccessories || item instanceof MagicPaper) ||
+						mode == Mode.DRAWABLE && (
+								(item instanceof Potion && !(item instanceof Brew || item instanceof Elixir || item instanceof ExoticPotion)) ||
+								(item instanceof Scroll && !(item instanceof ExoticScroll)) ||
+								((item instanceof ExoticScroll || item instanceof ExoticPotion) && Dungeon.hero.hasTalent(Talent.SUPERB_ARTS)) ||
+								((item instanceof Brew || item instanceof Elixir) && Dungeon.hero.pointsInTalent(Talent.SUPERB_ARTS)>=2) ||
+								item instanceof Runestone ||
+								item instanceof Plant.Seed ||
+								item instanceof Food) &&
+								MagicPaper.canDrawItem(item) ||
 						mode == Mode.ALL
 					);
 				}

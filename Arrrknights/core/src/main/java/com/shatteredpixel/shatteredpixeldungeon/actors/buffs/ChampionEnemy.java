@@ -133,7 +133,7 @@ public abstract class ChampionEnemy extends Buff {
 				case 0: default:    Buff.affect(m, R2Blazing.class);      break;
 				case 1:
 					Buff.affect(m, R2Overloading.class);
-					Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT/2);
+					Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT/2, true);
 					break;
 				case 2:     Buff.affect(m, R2Glacial.class);      break;
 				case 3:     Buff.affect(m, R2Malachite.class);      break;
@@ -141,7 +141,7 @@ public abstract class ChampionEnemy extends Buff {
 				case 5:
 					if(Random.Int(2)==0){
 						Buff.affect(m, R2Perfected.class);
-						Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT);
+						Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT, true);
 					}
 					break;
 				case 6:     Buff.affect(m, R2Mending.class);      break;

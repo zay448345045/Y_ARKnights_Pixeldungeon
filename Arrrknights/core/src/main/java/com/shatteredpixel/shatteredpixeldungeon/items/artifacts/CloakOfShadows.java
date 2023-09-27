@@ -22,6 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -39,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -247,7 +250,7 @@ public class CloakOfShadows extends Artifact {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;
 					float turnsToCharge = (45 - missing);
-					turnsToCharge /= RingOfEnergy.artifactChargeMultiplier(target);
+					turnsToCharge /= RingOfEnergy.artifactChargeMultiplier(target)*LFPChargeMultiplier();
 					float chargeToGain = (1f / turnsToCharge);
 					if (Dungeon.hero.hasTalent(Talent.CLOCK_UPGRADE)) {
 						chargeToGain *= 1 + Dungeon.hero.pointsInTalent(Talent.CLOCK_UPGRADE) * 0.05f;

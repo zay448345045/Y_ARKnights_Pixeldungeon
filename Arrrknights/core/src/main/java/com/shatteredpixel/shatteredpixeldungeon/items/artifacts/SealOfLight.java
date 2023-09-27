@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -17,6 +19,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -148,7 +151,7 @@ public class SealOfLight extends Artifact {
                     if (Dungeon.hero.subClass == HeroSubClass.FLASH) chargeGain += 0.51f;
                     if (Dungeon.hero.hasTalent(Talent.LIGHT_OF_GLORY)) chargeGain += Dungeon.hero.pointsInTalent(Talent.LIGHT_OF_GLORY) * 0.05f;
 
-                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target)*LFPChargeMultiplier();
                     partialCharge += chargeGain;
 
                     if (partialCharge > 1 && charge < chargeCap) {

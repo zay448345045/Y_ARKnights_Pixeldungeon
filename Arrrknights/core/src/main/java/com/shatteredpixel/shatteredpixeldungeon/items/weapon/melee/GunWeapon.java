@@ -6,6 +6,7 @@ import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.FULL_F
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.IMPACT_BULLET;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.INSPIRATION;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.MYSTERY_SHOT;
+import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PAPER_BULLET;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PREWAR;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.SMOKE_BOMB;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.XTRM_MEASURES;
@@ -36,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ItsHighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ItsHighNoonMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PowerMeal;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
@@ -51,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Bonk;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gunaccessories.Accessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
@@ -143,7 +146,7 @@ public class GunWeapon extends MeleeWeapon {
         }
         return false;
     }
-
+    boolean pala = false;
     protected float RELOAD_TIME = 3f;
 
     public Accessories GunAccessories;
@@ -200,6 +203,7 @@ public class GunWeapon extends MeleeWeapon {
     }
 
     protected float Fire_dlyFactor(float dly) {
+        if (pala) dly/=4;
         if (GunAccessories != null) dly *= GunAccessories.GetDLYcorrectionvalue();
         return dly;
     }
@@ -270,7 +274,8 @@ public class GunWeapon extends MeleeWeapon {
 
         if (action.equals(AC_RELOAD)) {
             curUser = hero;
-            if(Dungeon.hero.heroClass == HeroClass.MIDORI && Dungeon.hero.hasTalent(XTRM_MEASURES)) {
+            if((Dungeon.hero.heroClass == HeroClass.MIDORI && Dungeon.hero.hasTalent(XTRM_MEASURES)) ||
+                    (Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR) && Dungeon.hero.hasTalent(PAPER_BULLET)) {
                 GameScene.selectItem(itemSelector, WndBag.Mode.AMMO, Messages.get(this, "prompt"));
             }
             else GameScene.selectItem(itemSelector, WndBag.Mode.MISSILEWEAPON, Messages.get(this, "prompt"));
@@ -336,7 +341,6 @@ public class GunWeapon extends MeleeWeapon {
         if(Dungeon.hero.hasTalent(PREWAR)&&Dungeon.hero.pointsInTalent(PREWAR)==2) Buff.affect(Dungeon.hero, Barrier.class).incShield(2);
 
         if (Dungeon.hero.subClass == HeroSubClass.FREERUNNER) Dungeon.hero.spendAndNext(RELOAD_TIME / 2);
-        else if (Dungeon.hero.pointsInTalent(XTRM_MEASURES) == 2) Dungeon.hero.spend(0);
         else Dungeon.hero.spendAndNext(RELOAD_TIME);
         Dungeon.hero.sprite.operate( Dungeon.hero.pos );
         defaultAction=AC_ZAP;
@@ -353,7 +357,7 @@ public class GunWeapon extends MeleeWeapon {
         return true;
     }
     public int getBulletNum(){return bullet;}
-    public float getFireTick(){return FIRETICK;}
+    public float getFireTick(){return Fire_dlyFactor(FIRETICK);}
     protected int initialCap() {
         return 25;
     }
@@ -551,7 +555,7 @@ public class GunWeapon extends MeleeWeapon {
 
         Char ch = Actor.findChar( bolt.collisionPos );
         float oldacc = ACC;
-        boolean pala = false;
+        pala = false;
 
         if (ch != null) {
             int dmg = Fire_dmgFactor(ShotDamageRoll());
@@ -586,6 +590,9 @@ public class GunWeapon extends MeleeWeapon {
                     MysteryShotHandler(ch, dmg);
                 }
                 else ch.damage(dmg, this);
+                if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady()){
+                    PotatoAimReady.PotatoKill(ch);
+                }
 
                 Sample.INSTANCE.play(Assets.Sounds.HIT_GUN, 1, Random.Float(0.87f, 1.15f));
 
@@ -693,8 +700,7 @@ public class GunWeapon extends MeleeWeapon {
 
         ACC = oldacc;
 
-        if (pala) { curUser.spendAndNext(Fire_dlyFactor(FIRETICK / 4)); }
-        else curUser.spendAndNext(Fire_dlyFactor(FIRETICK));
+        curUser.spendAndNext(Fire_dlyFactor(FIRETICK));
 
         if (ch != null && !ch.isAlive() && Dungeon.hero.hasTalent(Talent.BF_RULL) && Random.Int(5) < Dungeon.hero.pointsInTalent(Talent.BF_RULL)) {
             Buff.affect(Dungeon.hero, Swiftthistle.TimeBubble.class).bufftime(1f);
@@ -835,6 +841,12 @@ public class GunWeapon extends MeleeWeapon {
                 else if(item instanceof MidoriAccessories){
                     reload(Dungeon.hero.pointsInTalent(XTRM_MEASURES)+2, false);
                     item.detach(Dungeon.hero.belongings.backpack);
+                    if(Dungeon.hero.pointsInTalent(XTRM_MEASURES)==2)Dungeon.hero.spend(-RELOAD_TIME);
+                }else if(item instanceof MagicPaper){
+                    addBullet(Math.round(Dungeon.hero.pointsInTalent(PAPER_BULLET)*0.4f)+1);
+                    if(!(curItem instanceof FreshInspiration)){addBullet(Math.round(Dungeon.hero.pointsInTalent(PAPER_BULLET)*0.4f)+1);}
+                    item.detach(Dungeon.hero.belongings.backpack);
+                    if(!(Dungeon.hero.pointsInTalent(PAPER_BULLET)==3))Dungeon.hero.spendAndNext(RELOAD_TIME);;
                 }
             }
         }

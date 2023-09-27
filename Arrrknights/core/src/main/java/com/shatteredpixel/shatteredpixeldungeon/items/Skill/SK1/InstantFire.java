@@ -39,7 +39,6 @@ public class InstantFire extends Skill {
                     gun.decBullet(1);
                 }
             }
-            Buff.affect(Dungeon.hero, Haste.class, 10f);
         }
     }
     protected static CellSelector.Listener zapper = new CellSelector.Listener() {
@@ -74,7 +73,7 @@ public class InstantFire extends Skill {
                     Buff.affect(Dungeon.hero, Haste.class, 2f);
                 }
             }
-            Buff.affect(Dungeon.hero, Haste.class, 10f);
+            Buff.affect(Dungeon.hero, Haste.class, 5f);
         }
         @Override
         public String prompt() {

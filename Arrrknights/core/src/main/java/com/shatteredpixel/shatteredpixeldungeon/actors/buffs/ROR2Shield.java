@@ -11,14 +11,17 @@ public class ROR2Shield extends ShieldBuff{
     {
         type = buffType.POSITIVE;
     }
-    private float waitBeforeRecover;
+    private float waitBeforeRecover = 10;
     private int maxShield;
-    public void setMaxShield(int maxShield){
+    public void setMaxShield(int maxShield, boolean hard){
         this.maxShield=maxShield;
-        super.hardSetShield(maxShield);
+        if(hard) super.hardSetShield(maxShield);
     }
     public int getMaxShield(){
         return maxShield;
+    }
+    public void setShield(int shield){
+        super.hardSetShield(shield);
     }
     @Override
     public boolean act() {

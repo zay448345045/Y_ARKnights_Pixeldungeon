@@ -1,10 +1,13 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -95,7 +98,7 @@ public class IsekaiItem extends Artifact {
                 if (charge < chargeCap && !cursed) {
                     // 500 턴마다 100%충전 (기본)
                     float chargeGain = 0.18f;
-                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target)*LFPChargeMultiplier();
                     partialCharge += chargeGain;
 
                     if (partialCharge > 1 && charge < chargeCap) {

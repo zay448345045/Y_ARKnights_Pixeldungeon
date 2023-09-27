@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
@@ -7,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -101,7 +104,7 @@ public class CustomeSet extends Artifact {
                 if (charge < chargeCap && !cursed) {
                     // 667 턴마다 100%충전 (기본)
                     float chargeGain = 0.13f;
-                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target)*LFPChargeMultiplier();
                     partialCharge += chargeGain;
 
                     if (partialCharge > 1 && charge < chargeCap) {

@@ -107,4 +107,15 @@ public class Enfild extends MeleeWeapon {
         //otherwise, if there's no charge, return null.
         return null;
     }
+    private static final String MACCESSORIES = "maccessories";
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        bundle.put(MACCESSORIES, Maccessories);
+    }
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        super.restoreFromBundle(bundle);
+        Maccessories = bundle.getInt(MACCESSORIES);
+    }
 }

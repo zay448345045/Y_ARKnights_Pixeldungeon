@@ -32,9 +32,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.DewVial;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gunaccessories.GunScope_II;
+import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
+import com.shatteredpixel.shatteredpixeldungeon.items.RingKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.SakuraProof;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookInstantFire;
@@ -68,6 +70,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlam
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
@@ -78,6 +82,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ArmorPlate;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Gasoline;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.OddOpal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
@@ -87,7 +92,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Transcendence;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TriTipDagger;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -97,10 +104,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurs
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.SuperAdvanceguard;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
@@ -205,7 +214,6 @@ import com.watabou.utils.DeviceCompat;
 				initMidori(hero);
 				break;
 		}
-
 	}
 
 	private static void initCommon( Hero hero ) {
@@ -219,6 +227,8 @@ import com.watabou.utils.DeviceCompat;
 
 		new FoodBag().collect();
 		Dungeon.LimitedDrops.FOOD_BAG.drop();
+
+		MagicPaper.drawn.clear();
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			//bags
@@ -236,21 +246,19 @@ import com.watabou.utils.DeviceCompat;
 			new Amulet().collect();
 			new TomeOfMastery().collect();
 			new R4C().identify().collect();
-			new TimekeepersHourglass().identify().collect();
 			new EtherealChains().identify().collect();
 			new Enfild().identify().collect();
-			new GunScope_II().collect();
 			new NaginataAndFan().identify().collect();
 			new CurseSolidifying().quantity(99).collect();
 			new SakuraProof().collect();
-			new SuperAdvanceguard().quantity(99).collect();
+			new StoneOfEnchantment().quantity(99).collect();
 			new Sungrass.Seed().quantity(99).collect();
 			new StoneOfBlast().quantity(99).collect();
+			new Honeypot().quantity(99).collect();
 			//region rings
-			new RingOfFuror().identify().upgrade(5).collect();
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new RingOfHaste().identify().upgrade(28).collect();
-			new RingOfWealth().identify().upgrade(28).collect();
+			new RingOfAccuracy().identify().degrade(28).collect();
 			//endregion
 			//region wands and missiles
 			new ExplosiveSpear().quantity(99).collect();
@@ -258,12 +266,11 @@ import com.watabou.utils.DeviceCompat;
 			new WandOfMagicMissile().upgrade(10).identify().collect();
 			new StaffOfSkyfire().upgrade(10).identify().collect();
 			new WandOfBlowStone().identify().collect();
-			new StaffOfTime().identify().collect();
-			new StaffOfVision().identify().collect();
 			new StaffOfVision().upgrade(10).identify().collect();
 			new StaffOfValstrax().identify().collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
 			new StaffOfConcept().identify().collect();
+			new RingKit().collect();
 			//endregion
 			//region scrolls
 			new ScrollOfUpgrade().identify().quantity(99).collect();
@@ -299,6 +306,8 @@ import com.watabou.utils.DeviceCompat;
 			new TriTipDagger().collect();
 			new StunGrenade().collect();
 			new ArmorPlate().collect();
+			new LightFluxPauldron().collect();
+			new Transcendence().collect();
 			//endregion
 		}
 	}
@@ -576,8 +585,12 @@ import com.watabou.utils.DeviceCompat;
 			 new BookInstantFire().collect();
 			 new BookCollecting().collect();
 			 new BookHighNoon().collect();
-			 new MagicPaper().collect();
+			 new MagicPaper().quantity(99).collect();
 			 new Sandvich().collect();
+			 new PotionOfMindVision().quantity(11).collect();
+			 new PotionOfCleansing().quantity(12).collect();
+			 new ScrollOfMagicMapping().quantity(13).collect();
+			 new ScrollOfAntiMagic().quantity(14).collect();
 		 }
 	 }
 

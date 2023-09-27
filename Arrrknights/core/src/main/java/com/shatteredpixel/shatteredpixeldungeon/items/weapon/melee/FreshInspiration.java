@@ -112,7 +112,7 @@ public class FreshInspiration extends GunWeapon{
                 }
 
                 if (particalBullets >= 1) {
-                    if(Dungeon.hero.hasTalent(PREWAR)) Buff.affect(Dungeon.hero, Barrier.class).incShield(2);
+                    if(Dungeon.hero.hasTalent(PREWAR)&&Dungeon.hero.pointsInTalent(PREWAR)==2) Buff.affect(Dungeon.hero, Barrier.class).incShield(2);
                     bullet++;
                     particalBullets -= 1;
                     if (bulletCap == bulletCap){

@@ -31,7 +31,7 @@ public class Sandvich extends Food {
     private int eat = 0; // 3일때 사용시 아이템 제거
 
     @Override
-    protected void satisfy(Hero hero) {
+    public void satisfy(Hero hero) {
         super.satisfy(hero);
         eat++;
         effect(hero);

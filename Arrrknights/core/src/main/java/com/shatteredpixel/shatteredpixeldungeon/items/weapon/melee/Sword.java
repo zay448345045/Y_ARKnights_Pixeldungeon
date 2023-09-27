@@ -51,7 +51,7 @@ public class Sword extends MeleeWeapon {
 		if (Dungeon.hero.belongings.getItem(SandalsOfNature.class) != null) {
 		if (attacker instanceof Hero && Dungeon.hero.belongings.getItem(SandalsOfNature.class).isEquipped(Dungeon.hero)) {
 			if (Random.Int(7) < 3)
-			Buff.affect(defender, Weakness.class, 3f);
+				Buff.affect(defender, Weakness.class, 3f);
 		}}
 		return super.proc(attacker, defender, damage);
 	}

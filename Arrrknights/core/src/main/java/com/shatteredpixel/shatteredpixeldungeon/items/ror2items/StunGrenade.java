@@ -18,7 +18,7 @@ public class StunGrenade extends ROR2item{
     }
     @Override
     public int attackProc(Char attacker, Char defender, int damage ) {
-        if(Random.Int(10)==0){
+        if(Random.Int(5)==0){
             CellEmitter.get(defender.pos).start(Speck.factory(Speck.LIGHT), 0.02f, 9);
             Buff.affect( defender, Paralysis.class, 2f );
             Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );

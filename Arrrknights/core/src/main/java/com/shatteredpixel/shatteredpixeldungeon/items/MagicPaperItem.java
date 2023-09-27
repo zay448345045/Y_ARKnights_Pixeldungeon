@@ -3,18 +3,20 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import static com.shatteredpixel.shatteredpixeldungeon.items.food.Food.AC_EAT;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.InventoryStone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.DamageWand;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,8 @@ public class MagicPaperItem extends Item{
         if(itemType instanceof Scroll ||
                 itemType instanceof Potion||
                 itemType instanceof InventoryStone ||
-                itemType instanceof Food)
+                itemType instanceof Food ||
+                itemType instanceof Plant.Seed)
         {
             actions.add(AC_USE);
         }else{
@@ -48,33 +51,79 @@ public class MagicPaperItem extends Item{
     }
     @Override
     public String desc() {
-            return Messages.get(this, "desc",itemType.name()) + "\n\n"
-                    + itemType.desc();
+        if(itemType instanceof Potion){return Messages.get(this, "desc",
+                (itemType.isIdentified())?itemType.name():Messages.get(itemType, ((Potion) itemType).getColor()))
+                + "\n\n" +
+                ((itemType.isIdentified())?itemType.desc():Messages.get(itemType, "unknown_desc"));
+        }
+        if(itemType instanceof Scroll){return Messages.get(this, "desc",
+                (itemType.isIdentified())?itemType.name():Messages.get(itemType, ((Scroll) itemType).getRune()))
+                + "\n\n" +
+                ((itemType.isIdentified())?itemType.desc():Messages.get(itemType, "unknown_desc"));
+        }
+        return  Messages.get(this, "desc",itemType.name())+ "\n\n" + itemType.desc();
+    }
+    @Override
+    public boolean doPickUp(Hero hero) {
+        MagicPaperItem ampi;
+        ampi = Dungeon.hero.belongings.getItem(MagicPaperItem.class);
+        if(ampi!=null){
+            GLog.w(Messages.get(this, "cant_pickup"));
+            return false;
+        }
+        return super.doPickUp(hero);
     }
     @Override
     public void execute(Hero hero, String action) {
 
         super.execute(hero, action);
-
+        curItem = Reflection.newInstance(itemType.getClass());
         if (action.equals(AC_USE)){
-            curItem = this;
             if(itemType instanceof Scroll){
-                curItem = itemType;
                 ((Scroll)itemType).doRead();
             }
             if(itemType instanceof Potion){
-                curItem = itemType;
                 ((Potion)itemType).apply(hero);
+                hero.spend( 1f );
+                hero.busy();
+                Dungeon.hero.sprite.operate( Dungeon.hero.pos );
             }
             if(itemType instanceof InventoryStone){
-                curItem = itemType;
                 ((InventoryStone)itemType).activate(hero.pos);
             }
-            if(itemType instanceof Food){
-                curItem = itemType;
-                (itemType).execute(hero, AC_EAT);
-                curItem.collect( curUser.belongings.backpack );
+            if(itemType instanceof Plant.Seed){
+                hero.spend( 1f );
+                hero.busy();
+                curItem.detach( hero.belongings.backpack ).onThrow( hero.pos );
+                hero.sprite.operate( hero.pos );
             }
+            if(itemType instanceof Food){
+                (curItem).execute(hero, AC_EAT);
+                if(Dungeon.hero.hasTalent(Talent.PIE_IN_THE_PAPER)) Food.satisfy(hero, 100);
+            }
+            this.detach(curUser.belongings.backpack);
+        }
+        if(action.equals(AC_THROW)){
+            if(itemType instanceof Plant.Seed ||
+                    itemType instanceof Runestone ||
+                    itemType instanceof Potion){
+                curItem.doThrow(hero);
+            }
+            this.detach(curUser.belongings.backpack);
+        }
+    }
+    public static final String ITEMTYPE = "itemtype";
+    @Override
+    public void storeInBundle(Bundle bundle){
+        super.storeInBundle(bundle);
+        bundle.put( ITEMTYPE , itemType);
+    }
+
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        super.restoreFromBundle(bundle);
+        if (bundle.contains(ITEMTYPE)) {
+            setItemType((Item)bundle.get(ITEMTYPE));
         }
     }
 }

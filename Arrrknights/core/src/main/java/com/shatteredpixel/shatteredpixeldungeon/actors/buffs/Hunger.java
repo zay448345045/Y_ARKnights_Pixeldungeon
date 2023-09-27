@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Transcendence;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -86,7 +87,8 @@ public class Hunger extends Buff implements Hero.Doom {
 
 					GLog.n( Messages.get(this, "onstarving") );
 					hero.resting = false;
-					hero.damage( 1, this );
+					if(Dungeon.hero.buff(Transcendence.TranscendenceBuff.class)==null)
+						hero.damage( 1, this );
 
 					hero.interrupt();
 

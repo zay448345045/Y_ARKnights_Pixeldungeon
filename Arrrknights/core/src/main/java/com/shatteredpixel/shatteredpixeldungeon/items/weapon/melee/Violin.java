@@ -115,12 +115,16 @@ public class Violin extends MeleeWeapon {
 
     private static final String PARTICALARTS = "particalarts";
     private static final String MARKED = "marked";
+    private static final String CHARGE = "charge";
+    private static final String CHARGECAP = "chargecap";
 
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put( PARTICALARTS , particalArts );
         bundle.put( MARKED , marked );
+        bundle.put( CHARGECAP , chargeCap );
+        bundle.put( CHARGE , charge );
     }
 
     @Override
@@ -128,6 +132,8 @@ public class Violin extends MeleeWeapon {
         super.restoreFromBundle(bundle);
         particalArts = bundle.getFloat(PARTICALARTS);
         marked = bundle.getInt(MARKED);
+        chargeCap = bundle.getInt(CHARGECAP);
+        charge = bundle.getInt(CHARGE);
     }
 
     private CellSelector.Listener caster = new CellSelector.Listener(){

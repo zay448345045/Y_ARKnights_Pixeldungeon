@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RadiantKnight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
@@ -192,10 +193,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Transcendence;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
@@ -374,6 +377,7 @@ public class Hero extends Char {
             HT += pointsInTalent(Talent.KNIGHT_BODY) * 10;
         }
         if(Dungeon.isSPChallenged(SPChallenges.GLASS)) HT = Math.round(HT/10f);
+        if(buff(Transcendence.TranscendenceBuff.class)!=null) HT = 1;
         HP = Math.min(HP, HT);
     }
 
@@ -581,6 +585,9 @@ public class Hero extends Char {
 
         if (hit && subClass == HeroSubClass.GLADIATOR) {
             Buff.affect(this, Combo.class).hit(enemy);
+        }
+        if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady()){
+            if(!(enemy instanceof Hero))PotatoAimReady.PotatoKill(enemy);
         }
 
         return hit;
@@ -895,6 +902,7 @@ public class Hero extends Char {
     }
 
     public float attackDelay() {
+        float dly;
         if (buff(Talent.LethalMomentumTracker.class) != null) {
             buff(Talent.LethalMomentumTracker.class).detach();
             return 0;
@@ -922,15 +930,16 @@ public class Hero extends Char {
         }
 
         if (belongings.weapon != null) {
-
-            return belongings.weapon.speedFactor(this);
-
+            dly = belongings.weapon.speedFactor(this);
         } else {
             //Normally putting furor speed on unarmed attacks would be unnecessary
             //But there's going to be that one guy who gets a furor+force ring combo
             //This is for that one guy, you shall get your fists of fury!
-            return RingOfFuror.attackDelayMultiplier(this);
+            dly = RingOfFuror.attackDelayMultiplier(this);
         }
+        if(this.buff(LightFluxPauldron.LightFluxPauldronBuff.class) != null) dly *= 2f;
+        if(this.buff(ActiveOriginium.class) != null) dly *=0.5f;
+        return dly;
     }
 
     @Override
@@ -2573,11 +2582,7 @@ public class Hero extends Char {
         boolean hit = attack(enemy);
 
         Invisibility.dispel();
-        if (this.buff(ActiveOriginium.class) == null) {
-            spend(attackDelay());
-        } else {
-            spend(attackDelay() * 0.5f);
-        }
+        spend(attackDelay());
 
         if (Dungeon.hero.hasTalent(Talent.SPARKOFLIFE)) {
             if (1 + Dungeon.hero.pointsInTalent(Talent.SPARKOFLIFE) > Random.Int(33)) {

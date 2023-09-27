@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Oblivion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
@@ -75,6 +76,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
@@ -324,7 +326,8 @@ public abstract class Char extends Actor {
 
 			return false;
 
-		} else if (hit( this, enemy, false )) {
+		} else if (hit( this, enemy, false ))
+		{
 			
 			int dr = enemy.drRoll();
 			
@@ -481,6 +484,12 @@ public abstract class Char extends Actor {
 					SpellSprite.show(enemy, SpellSprite.FOOD);
 
 			}
+
+			if(this instanceof Hero){
+				if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady()){
+					PotatoAimReady.PotatoKill(enemy);
+				}
+			}
 			
 			return true;
 			
@@ -519,67 +528,76 @@ public abstract class Char extends Actor {
 	public static int INFINITE_EVASION = 1_000_000;
 
 	public static boolean hit( Char attacker, Char defender, boolean magic ) {
-		float acuStat = attacker.attackSkill( defender );
-		float defStat = defender.defenseSkill( attacker );
+		float acuStat = attacker.attackSkill(defender);
+		float defStat = defender.defenseSkill(attacker);
 
 		//if accuracy or evasion are large enough, treat them as infinite.
 		//note that infinite evasion beats infinite accuracy
-		if (defStat >= INFINITE_EVASION){
+		if (defStat >= INFINITE_EVASION) {
 			return false;
-		} else if (acuStat >= INFINITE_ACCURACY){
+		} else if (acuStat >= INFINITE_ACCURACY) {
 			return true;
 		}
 
-		if(attacker instanceof Hero){
-			if(Dungeon.hero.pointsInTalent(Talent.SIMPLE_COMBO)==2){
-				if(Dungeon.hero.buff(Violin.InstantViolin.class)!=null){
+		if (attacker instanceof Hero) {
+			if (Dungeon.hero.pointsInTalent(Talent.SIMPLE_COMBO) == 2) {
+				if (Dungeon.hero.buff(Violin.InstantViolin.class) != null) {
 					return true;
 				}
 			}
-			if(Dungeon.hero.hasTalent(Talent.ACCURATE_HIT)){
-				if(Dungeon.hero.buff(RabbitTime.class)!=null){
+			if (Dungeon.hero.hasTalent(Talent.ACCURATE_HIT)) {
+				if (Dungeon.hero.buff(RabbitTime.class) != null) {
 					return true;
 				}
 			}
 		}
-
 
 
 		float acuRoll;
-		if (attacker.buff(LuckyLeaf.LuckyLeafBuff.class) != null){
-			acuRoll=Math.max(Random.Float( acuStat ),Random.Float( acuStat ));
-		}else{
-			acuRoll = Random.Float( acuStat );
+		if (attacker.buff(LuckyLeaf.LuckyLeafBuff.class) != null) {
+			acuRoll = Math.max(Random.Float(acuStat), Random.Float(acuStat));
+		} else {
+			acuRoll = Random.Float(acuStat);
 		}
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
-		if (attacker.buff(  Hex.class) != null) acuRoll *= 0.8f;
-		if (Dungeon.hero.hasTalent(Talent.RESTRICTION))  {
+		if (attacker.buff(Hex.class) != null) acuRoll *= 0.8f;
+		if (Dungeon.hero.hasTalent(Talent.RESTRICTION)) {
 			float phan = 1f - (Dungeon.hero.pointsInTalent(Talent.RESTRICTION) * 0.05f);
-			acuRoll *= phan; }
+			acuRoll *= phan;
+		}
 		if (attacker.buff(Hallucination.class) != null) acuRoll *= 0.65f;
 		if (attacker.buff(HuntingMark.class) != null) acuRoll *= 0.80f;
-		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)) {
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
 
 
 		float defRoll;
-		if (defender.buff(LuckyLeaf.LuckyLeafBuff.class) != null){
-			defRoll = Math.max(Random.Float( defStat ),Random.Float( defStat ));
-		}else{
-			defRoll = Random.Float( defStat );
+		if (defender.buff(LuckyLeaf.LuckyLeafBuff.class) != null) {
+			defRoll = Math.max(Random.Float(defStat), Random.Float(defStat));
+		} else {
+			defRoll = Random.Float(defStat);
 		}
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (defender.buff(ExecutMode.class) != null) defRoll *= 1.3f;
-		if (defender instanceof Hero && Dungeon.hero.belongings.weapon instanceof AssassinsBlade && Dungeon.hero.belongings.armor instanceof LeatherArmor) defRoll *= 1.1f;
-		if (defender.buff(  Hex.class) != null) defRoll *= 0.8f;
-		if (defender.buff(  HuntingMark.class) != null) defRoll *= 0.8f;
-		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)){
+		if (defender instanceof Hero && Dungeon.hero.belongings.weapon instanceof AssassinsBlade && Dungeon.hero.belongings.armor instanceof LeatherArmor)
+			defRoll *= 1.1f;
+		if (defender.buff(Hex.class) != null) defRoll *= 0.8f;
+		if (defender.buff(HuntingMark.class) != null) defRoll *= 0.8f;
+		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)) {
 			defRoll *= buff.evasionAndAccuracyFactor();
 		}
+		boolean result = (magic ? acuRoll * 2 : acuRoll) >= defRoll;
 
+		if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady())return true;
+		if(!result) {
+			if (attacker instanceof Hero && ((Hero) attacker).subClass == HeroSubClass.KEYANIMATOR && ((Hero) attacker).hasTalent(Talent.POTATO_AIM)) {
+				Buff.affect(Dungeon.hero,PotatoAimReady.class).set();
+				Buff.affect(Dungeon.hero,PotatoAimReady.class).addCount();
+			}
+		}
 		
-		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
+		return result;
 	}
 	
 	public int attackSkill( Char target ) {

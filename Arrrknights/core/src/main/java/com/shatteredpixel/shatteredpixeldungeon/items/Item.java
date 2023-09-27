@@ -363,6 +363,19 @@ public class Item implements Bundlable {
 		
 		return this;
 	}
+
+	public final Item detachAmount( Bag container, int amount) {
+		if (quantity <= 0) {
+			return null;
+		}
+		else{
+			if(amount>=quantity) return detachAll( container );
+			Item detached = split(amount);
+			updateQuickslot();
+			if (detached != null) detached.onDetach( );
+			return detached;
+		}
+	}
 	
 	public boolean isSimilar( Item item ) {
 		return level == item.level && getClass() == item.getClass();

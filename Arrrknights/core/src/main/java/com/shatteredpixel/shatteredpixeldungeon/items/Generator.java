@@ -130,6 +130,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ArmorPlate;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Behemoth;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Crowbar;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Gasoline;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.OddOpal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
@@ -140,6 +141,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Transcendence;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TriTipDagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
@@ -713,12 +715,18 @@ public class Generator {
                     TitanicKnurl.class,
                     //orange
                     Recycler.class,
+                    //blue
+                    Transcendence.class,
+                    LightFluxPauldron.class,
+                    //blue-e
+                    //purple
                     };
             ROR2ITEM.defaultProbs = new float[]
                     {10, 10, 10, 10, 10, 10, 10, 10, 10,//white
                     1, 1, 1, 1,//red
-                    1, 1,//yellow
+                    2, 2,//yellow
                     3,//orange
+                    2, 2,//blue
                     };
             ROR2ITEM.probs = ROR2ITEM.defaultProbs.clone();
         }

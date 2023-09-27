@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ROR2Shield;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -243,6 +244,7 @@ public class StatusPane extends Component {
 		int health = Dungeon.hero.HP;
 		int shield = Dungeon.hero.shielding();
 		int max = Dungeon.hero.HT;
+		int originMax = Dungeon.hero.HT;
 
 		if (!Dungeon.hero.isAlive()) {
 			avatar.tint(0x000000, 0.5f);
@@ -256,15 +258,17 @@ public class StatusPane extends Component {
 		} else {
 			avatar.resetColor();
 		}
+		//r2shield
+		if(Dungeon.hero.buff(ROR2Shield.class)!=null) max+=Dungeon.hero.buff(ROR2Shield.class).getMaxShield();
 
 		hp.scale.x = Math.max( 0, (health-shield)/(float)max);
 		shieldedHP.scale.x = health/(float)max;
 		rawShielding.scale.x = shield/(float)max;
 
 		if (shield <= 0){
-			hpText.text(health + "/" + max);
+			hpText.text(health + "/" + originMax);
 		} else {
-			hpText.text(health + "+" + shield +  "/" + max);
+			hpText.text(health + "+" + shield +  "/" + originMax);
 		}
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();

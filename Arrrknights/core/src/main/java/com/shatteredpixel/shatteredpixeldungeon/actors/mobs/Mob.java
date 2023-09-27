@@ -61,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.LiveStart;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
@@ -797,6 +798,15 @@ public abstract class Mob extends Char {
 			if (cause == Dungeon.hero
 			&& Dungeon.hero.hasTalent(Talent.DURABLE_PROJECTILES)) {
 				Buff.affect(Dungeon.hero, Stamina.class, 1+Dungeon.hero.pointsInTalent(Talent.DURABLE_PROJECTILES));
+			}
+
+			if(Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR){
+				MagicPaper mp = new MagicPaper();
+				Dungeon.level.drop(mp, this.pos).sprite.drop();
+				if(Dungeon.hero.isStarving() && Dungeon.hero.pointsInTalent(Talent.PIE_IN_THE_PAPER)>=2){
+					MagicPaper mp2 = new MagicPaper();
+					Dungeon.level.drop(mp2, this.pos).sprite.drop();
+				}
 			}
 		}
 

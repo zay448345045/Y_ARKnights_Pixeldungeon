@@ -55,15 +55,23 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfMight;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfIronSkin;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -79,11 +87,13 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -254,13 +264,13 @@ public enum Talent {
 	//Midori T3		MarksMidori
 	SMOKE_BOMB(363,3),FULL_FIREPOWER(364,3),MYSTERY_SHOT(365,3),
 	//Midori T3		KeyAnimator
-	SUPERB_ARTS(366,3),PIE_IN_THE_PAPER(367,3),POTATO_AIM(368,3),
+	SUPERB_ARTS(366,3),PIE_IN_THE_PAPER(367,3),PAPER_BULLET(373,3),
 	//Midori T4
 	DEVELOP_BONUS(369,3),IMPACT_BULLET(370,3),
 	//Midori T4		MarksMidori
 	SKILL_ENHANCEMENT(371,4),OPTICAL_SIGHT(372,4),
 	//Midori T4		KeyAnimator
-	PAPER_BULLET(373,4),INSPIRATION_FLASHBACK(374,4),
+	POTATO_AIM(368,4),INSPIRATION_FLASHBACK(374,4),
 	;
 
 
@@ -474,6 +484,32 @@ public enum Talent {
 
 		if (talent == KNIGHT_BODY){
 			hero.updateHT(false);
+		}
+		if (talent == INSPIRATION_FLASHBACK){
+			boolean goodToGo=false;
+			for(Class cls: MagicPaper.drawn){
+				if(!(cls == ScrollOfUpgrade.class ||
+						cls == ScrollOfEnchantment.class ||
+						cls == PotionOfStrength.class ||
+						cls == PotionOfAdrenalineSurge.class ||
+						cls == ElixirsOfIronSkin.class ||
+						cls == ElixirOfMight.class
+						))
+				{
+					goodToGo = true;
+				}
+			}
+			if(goodToGo){
+				for(int i =0;i<=Dungeon.hero.pointsInTalent(INSPIRATION_FLASHBACK);i++){
+					Item item = (Item)Reflection.newInstance(MagicPaper.getRandomDrawn());
+					if(item!=null){
+						item.collect(hero.belongings.backpack);
+						GLog.i( Messages.get(Dungeon.hero, "you_now_have", item.name() ));
+					}
+				}
+			}else{
+				GLog.w(Messages.get(Dungeon.hero, "flashback_unable"));
+			}
 		}
 	}
 
@@ -1088,7 +1124,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, SMOKE_BOMB,FULL_FIREPOWER,MYSTERY_SHOT);
 				break;
 			case KEYANIMATOR:
-				Collections.addAll(tierTalents, SUPERB_ARTS,PIE_IN_THE_PAPER,POTATO_AIM);
+				Collections.addAll(tierTalents, SUPERB_ARTS,PIE_IN_THE_PAPER,PAPER_BULLET);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1165,7 +1201,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, SKILL_ENHANCEMENT,OPTICAL_SIGHT);
 				break;
 			case KEYANIMATOR:
-				Collections.addAll(tierTalents, PAPER_BULLET,INSPIRATION_FLASHBACK);
+				Collections.addAll(tierTalents, POTATO_AIM,INSPIRATION_FLASHBACK);
 				break;
 		}
 		for (Talent talent : tierTalents){

@@ -5,6 +5,7 @@ import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PROFIC
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.items.Gunaccessories.Accessories;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
@@ -79,5 +80,16 @@ public class Enfild2 extends MeleeWeapon {
 
         //otherwise, if there's no charge, return null.
         return null;
+    }
+    private static final String MACCESSORIES = "maccessories";
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        bundle.put(MACCESSORIES, Maccessories);
+    }
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        super.restoreFromBundle(bundle);
+        Maccessories = bundle.getInt(MACCESSORIES);
     }
 }

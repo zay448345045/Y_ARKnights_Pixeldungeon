@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
+
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
@@ -28,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TitanicKnurl;
 
 public class Regeneration extends Buff {
@@ -80,7 +83,7 @@ public class Regeneration extends Buff {
 					delay *= 1.5f;
 				} else {
 					delay -= regenBuff.itemLevel()*0.81f;
-					delay /= RingOfEnergy.artifactChargeMultiplier(target);
+					delay /= RingOfEnergy.artifactChargeMultiplier(target) * LFPChargeMultiplier();
 				}
 			}
 			if(Dungeon.hero.resting && Dungeon.hero.hasTalent(Talent.FAST_TRIM)){

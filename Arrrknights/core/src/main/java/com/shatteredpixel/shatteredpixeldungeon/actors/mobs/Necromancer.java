@@ -244,7 +244,7 @@ public class Necromancer extends Mob {
 					Buff.affect(mySkeleton, Corruption.class);
 				}
 				for (Buff b : buffs(ChampionEnemy.class)){
-					if(b instanceof ChampionEnemy.R2Perfected) Buff.affect( mySkeleton, ROR2Shield.class).setMaxShield(mySkeleton.HP);
+					if(b instanceof ChampionEnemy.R2Perfected) Buff.affect( mySkeleton, ROR2Shield.class).setMaxShield(mySkeleton.HP, true);
 					Buff.affect( mySkeleton, b.getClass());
 				}
 				

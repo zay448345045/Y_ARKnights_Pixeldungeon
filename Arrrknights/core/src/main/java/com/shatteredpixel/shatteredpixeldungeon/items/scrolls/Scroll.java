@@ -95,7 +95,7 @@ public abstract class Scroll extends Item {
 	protected static ItemStatusHandler<Scroll> handler;
 	
 	protected String rune;
-	
+	public String getRune() {return rune;}
 	{
 		stackable = true;
 		defaultAction = AC_READ;

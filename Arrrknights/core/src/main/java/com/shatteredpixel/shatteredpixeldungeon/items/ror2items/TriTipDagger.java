@@ -20,7 +20,7 @@ public class TriTipDagger extends ROR2item{
     }
     @Override
     public int attackProc(Char attacker, Char defender, int damage ) {
-        if(Random.IntRange(0,10)==0){
+        if(Random.IntRange(0,5)==0){
             defender.sprite.burst(0x00FF00FF, 20);
             Buff.affect( defender, Bleeding.class ).set( Math.round(damage*0.5f) );
             Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
