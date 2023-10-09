@@ -1007,6 +1007,15 @@ public class ItemSpriteSheet {
 		assignItemRect(STUN_GRENADE,        16, 16);
 	}
 
+	private static final int ROR2ITEMS_BLUE       =                                   xy(1, 34);  //16 slots
+	public static final int TRANSCENDENCE        = ROR2ITEMS_BLUE +0;
+	public static final int LIGHTFLUX        = ROR2ITEMS_BLUE +1;
+
+	static{
+		assignItemRect(PERFORATOR,        16, 16);
+		assignItemRect(TITANICKNURL,        16, 16);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

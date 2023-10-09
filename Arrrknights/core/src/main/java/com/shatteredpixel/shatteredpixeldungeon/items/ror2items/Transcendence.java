@@ -10,7 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class Transcendence extends ROR2item{
     {
         tier = 6;
-        image = ItemSpriteSheet.LISKARM_DOLL;
+        image = ItemSpriteSheet.TRANSCENDENCE;
     }
     @Override
     protected ROR2item.ROR2itemBuff passiveBuff() {return new TranscendenceBuff();}

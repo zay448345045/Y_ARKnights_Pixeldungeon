@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Blandfruit;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
@@ -30,9 +31,15 @@ public class MagicPaperItem extends Item{
         defaultAction = AC_USE;
     }
     private Item itemType;
+    private Potion fruitPotion = null;
 
     public void setItemType(Item i){
         itemType = i;
+    }
+    public void setPotionType(Potion p){
+        if(itemType instanceof Blandfruit){
+            fruitPotion = p;
+        }
     }
     @Override
     public ArrayList<String> actions(Hero hero) {
@@ -98,7 +105,11 @@ public class MagicPaperItem extends Item{
                 hero.sprite.operate( hero.pos );
             }
             if(itemType instanceof Food){
+                if(curItem instanceof Blandfruit){
+                    if(fruitPotion!=null) ((Blandfruit)curItem).potionAttrib = fruitPotion;
+                }
                 (curItem).execute(hero, AC_EAT);
+                fruitPotion = null;
                 if(Dungeon.hero.hasTalent(Talent.PIE_IN_THE_PAPER)) Food.satisfy(hero, 100);
             }
             this.detach(curUser.belongings.backpack);
@@ -108,8 +119,10 @@ public class MagicPaperItem extends Item{
                     itemType instanceof Runestone ||
                     itemType instanceof Potion){
                 curItem.doThrow(hero);
+            }else{
+                curItem = this;
+                this.doThrow(hero);
             }
-            this.detach(curUser.belongings.backpack);
         }
     }
     public static final String ITEMTYPE = "itemtype";

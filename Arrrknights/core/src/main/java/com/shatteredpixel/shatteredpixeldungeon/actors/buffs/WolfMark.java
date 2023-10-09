@@ -156,6 +156,7 @@ public class WolfMark extends FlavourBuff implements ActionIndicator.Action  {
                 hero.HP = Math.min(hero.HP + heal, hero.HT);
                 hero.sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 1);
                 hero.sprite.showStatus(CharSprite.POSITIVE, Integer.toString(heal));
+                Buff.affect(hero, ThrowingKnife.huntcooldown.class).decCooldownPer(hero.pointsInTalent(Talent.TRACKER)/5f);
             }
         }
         else {

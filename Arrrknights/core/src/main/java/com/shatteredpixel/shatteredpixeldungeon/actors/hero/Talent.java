@@ -486,22 +486,9 @@ public enum Talent {
 			hero.updateHT(false);
 		}
 		if (talent == INSPIRATION_FLASHBACK){
-			boolean goodToGo=false;
-			for(Class cls: MagicPaper.drawn){
-				if(!(cls == ScrollOfUpgrade.class ||
-						cls == ScrollOfEnchantment.class ||
-						cls == PotionOfStrength.class ||
-						cls == PotionOfAdrenalineSurge.class ||
-						cls == ElixirsOfIronSkin.class ||
-						cls == ElixirOfMight.class
-						))
-				{
-					goodToGo = true;
-				}
-			}
-			if(goodToGo){
+			if(MagicPaper.isLegal()){
 				for(int i =0;i<=Dungeon.hero.pointsInTalent(INSPIRATION_FLASHBACK);i++){
-					Item item = (Item)Reflection.newInstance(MagicPaper.getRandomDrawn());
+					Item item = (Item)Reflection.newInstance(MagicPaper.getLegalRandomDrawn());
 					if(item!=null){
 						item.collect(hero.belongings.backpack);
 						GLog.i( Messages.get(Dungeon.hero, "you_now_have", item.name() ));
@@ -818,10 +805,8 @@ public enum Talent {
 
 	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
 		if (hero.hasTalent(Talent.ASSASSINSCREED)
-				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
-				&& enemy.buff(SuckerPunchTracker.class) == null){
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)){
 			dmg *= 1f + hero.pointsInTalent(Talent.ASSASSINSCREED) * 0.05;
-			Buff.affect(enemy, SuckerPunchTracker.class);
 		}
 
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)

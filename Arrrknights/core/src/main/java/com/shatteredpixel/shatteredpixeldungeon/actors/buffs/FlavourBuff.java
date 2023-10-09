@@ -34,4 +34,10 @@ public class FlavourBuff extends Buff {
 	protected String dispTurns() {
 		return dispTurns(visualcooldown());
 	}
+	public void decCooldown(float time) {
+		spend(-time);
+	}
+	public void decCooldownPer(float per) {
+		spend(-(cooldown() * per));
+	}
 }

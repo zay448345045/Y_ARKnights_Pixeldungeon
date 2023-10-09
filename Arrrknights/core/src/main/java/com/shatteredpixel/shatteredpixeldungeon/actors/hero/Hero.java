@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HonedArts;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HuntingMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.IronSkin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ItsHighNoon;
@@ -679,6 +680,7 @@ public class Hero extends Char {
             for(Char ch : Dungeon.level.mobs) {
                 if (Dungeon.level.adjacent(ch.pos, pos) && canAttack(ch)) {
                     enemies++;
+                    if(ch.buff(HuntingMark.class)!=null) enemies++;
                 }
             }
             evasion *= 1f + enemies*pointsInTalent(Talent.SYMPHONY)*0.05f;
@@ -2420,6 +2422,7 @@ public class Hero extends Char {
                 AnkhHP *= 1 + pointsInTalent(Talent.RESURGENCE) * 3;
                 barrior *= 1f + (pointsInTalent(Talent.RESURGENCE) * 0.5f);
                 Buff.affect(this, RadiantKnight.class, RadiantKnight.DURATION);
+                Buff.affect(this,Light.class,20f);
                 GameScene.flash( 0x80FFFFFF );
             }
 

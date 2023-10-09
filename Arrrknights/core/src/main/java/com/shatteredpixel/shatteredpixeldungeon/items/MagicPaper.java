@@ -6,7 +6,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SandalsOfNature;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Blandfruit;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfMight;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfIronSkin;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -63,6 +70,37 @@ public class MagicPaper extends Item{
         if(drawn.size()>0)return drawn.get(Random.Int(drawn.size()));
         else return null;
     }
+    public static boolean isLegal(){
+        boolean goodToGo = false;
+        for(Class cls: drawn){
+            if(!(cls == ScrollOfUpgrade.class ||
+                    cls == ScrollOfEnchantment.class ||
+                    cls == PotionOfStrength.class ||
+                    cls == PotionOfAdrenalineSurge.class ||
+                    cls == ElixirsOfIronSkin.class ||
+                    cls == ElixirOfMight.class
+            ))
+            {
+                goodToGo = true;
+            }
+        }
+        return goodToGo;
+    }
+    public static Class getLegalRandomDrawn(){
+        Class c;
+        if(drawn.size()>0 && isLegal()){
+            do {c = drawn.get(Random.Int(drawn.size()));}
+            while(c == ScrollOfUpgrade.class ||
+                    c == ScrollOfEnchantment.class ||
+                    c == PotionOfStrength.class ||
+                    c == PotionOfAdrenalineSurge.class ||
+                    c == ElixirsOfIronSkin.class ||
+                    c == ElixirOfMight.class);
+            return c;
+        }
+        else return null;
+    }
+
     protected WndBag.Listener drawSelector = new WndBag.Listener() {
         @Override
         public void onSelect( Item item ) {
@@ -72,6 +110,9 @@ public class MagicPaper extends Item{
                 if(ampi == null) {
                     MagicPaperItem mpi = new MagicPaperItem();
                     mpi.setItemType(item);
+                    if(item instanceof Blandfruit && ((Blandfruit)item).potionAttrib != null){
+                        mpi.setPotionType(((Blandfruit)item).potionAttrib);
+                    }
                     if (!mpi.collect()) {
                         Dungeon.level.drop(mpi, Dungeon.hero.pos).sprite.drop();
                     }

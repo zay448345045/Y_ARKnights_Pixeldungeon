@@ -6,7 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class LightFluxPauldron extends ROR2item{
     {
         tier = 6;
-        image = ItemSpriteSheet.GAMZA_SHIELD;
+        image = ItemSpriteSheet.LIGHTFLUX;
     }
     public static float LFPChargeMultiplier(){
         return ((Dungeon.hero.buff(LightFluxPauldron.LightFluxPauldronBuff.class)!= null)?1.5f:1);
