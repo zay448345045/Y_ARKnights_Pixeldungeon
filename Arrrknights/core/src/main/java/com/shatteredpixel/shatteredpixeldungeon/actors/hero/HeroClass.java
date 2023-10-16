@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGif
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookCaerbannogNoSekai;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookHighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
+import com.shatteredpixel.shatteredpixeldungeon.items.StaffKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -117,6 +118,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfTwinTurbo;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfValstrax;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlowStone;
@@ -232,7 +234,7 @@ import com.watabou.utils.DeviceCompat;
 		new FoodBag().collect();
 		Dungeon.LimitedDrops.FOOD_BAG.drop();
 
-		MagicPaper.drawn.clear();
+		//MagicPaper.drawn.clear();
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			//bags
@@ -263,6 +265,7 @@ import com.watabou.utils.DeviceCompat;
 			new Honeypot().quantity(99).collect();
 			new Alchemize().quantity(10).collect();
 			new Blandfruit().quantity(99).collect();
+			new StaffKit().quantity(10).collect();
 			//region rings
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new RingOfHaste().identify().upgrade(28).collect();
@@ -271,6 +274,7 @@ import com.watabou.utils.DeviceCompat;
 			//region wands and missiles
 			new ExplosiveSpear().quantity(99).collect();
 			new WandOfWarding().identify().collect();
+			new WandOfFireblast().identify().collect();
 			new WandOfMagicMissile().upgrade(10).identify().collect();
 			new StaffOfSkyfire().upgrade(10).identify().collect();
 			new WandOfBlowStone().identify().collect();
@@ -278,6 +282,7 @@ import com.watabou.utils.DeviceCompat;
 			new StaffOfValstrax().identify().collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
 			new StaffOfConcept().identify().collect();
+			new StaffOfTwinTurbo().identify().collect();
 			new RingKit().collect();
 			//endregion
 			//region scrolls

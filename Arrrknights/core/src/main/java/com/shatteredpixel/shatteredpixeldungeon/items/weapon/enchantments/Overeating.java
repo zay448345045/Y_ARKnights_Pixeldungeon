@@ -29,7 +29,7 @@ public class Overeating extends Weapon.Enchantment {
                     hunger.affectHunger(  -4 );
                 }
                 else {
-                    Dungeon.hero.damage((int)(20*Dungeon.hero.HT/1000f),this);
+                    Dungeon.hero.damage(Math.max(1,(int)(20*Dungeon.hero.HT/1000f)),this);
                 }
             damage *= 1.25f;
         }

@@ -63,17 +63,15 @@ public class InstantFire extends Skill {
                     //attempts to target the cell aimed at if something is there, otherwise targets the collision pos.
                     if (Actor.findChar(target) != null) {
                         QuickSlotButton.target(Actor.findChar(target));
-                    }
-                    else {
+                    } else {
                         QuickSlotButton.target(Actor.findChar(cell));
                     }
-                    if(gun.tryToShoot(target, shot, true, 1)) {
+                    if (gun.tryToShoot(target, shot, true, 1)) {
                         Dungeon.hero.spend(-gun.getFireTick());
                     }
                     Buff.affect(Dungeon.hero, Haste.class, 2f);
                 }
             }
-            Buff.affect(Dungeon.hero, Haste.class, 5f);
         }
         @Override
         public String prompt() {

@@ -119,6 +119,7 @@ public class MagicPaperItem extends Item{
                     itemType instanceof Runestone ||
                     itemType instanceof Potion){
                 curItem.doThrow(hero);
+                this.detach(curUser.belongings.backpack);
             }else{
                 curItem = this;
                 this.doThrow(hero);

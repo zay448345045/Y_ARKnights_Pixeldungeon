@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
@@ -29,6 +30,8 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import jdk.dynalink.beans.StaticClass;
+
 public class MagicPaper extends Item{
 
     public static final String AC_DRAW = "DRAW";
@@ -42,7 +45,6 @@ public class MagicPaper extends Item{
         stackable = true;
     }
     private int needAmount = 10;
-    public static ArrayList<Class> drawn = new ArrayList<>();
     @Override
     public ArrayList<String> actions(Hero hero) {
         ArrayList<String> actions =  super.actions(hero);
@@ -64,15 +66,15 @@ public class MagicPaper extends Item{
         }
     }
     public static boolean canDrawItem(Item item){
-        return !((MagicPaper) curItem).drawn.contains(item.getClass());
+        return !Statistics.drawn.contains(item.getClass());
     }
     public static Class getRandomDrawn(){
-        if(drawn.size()>0)return drawn.get(Random.Int(drawn.size()));
+        if(Statistics.drawn.size()>0)return Statistics.drawn.get(Random.Int(Statistics.drawn.size()));
         else return null;
     }
     public static boolean isLegal(){
         boolean goodToGo = false;
-        for(Class cls: drawn){
+        for(Class cls: Statistics.drawn){
             if(!(cls == ScrollOfUpgrade.class ||
                     cls == ScrollOfEnchantment.class ||
                     cls == PotionOfStrength.class ||
@@ -88,8 +90,8 @@ public class MagicPaper extends Item{
     }
     public static Class getLegalRandomDrawn(){
         Class c;
-        if(drawn.size()>0 && isLegal()){
-            do {c = drawn.get(Random.Int(drawn.size()));}
+        if(Statistics.drawn.size()>0 && isLegal()){
+            do {c = Statistics.drawn.get(Random.Int(Statistics.drawn.size()));}
             while(c == ScrollOfUpgrade.class ||
                     c == ScrollOfEnchantment.class ||
                     c == PotionOfStrength.class ||
@@ -116,9 +118,9 @@ public class MagicPaper extends Item{
                     if (!mpi.collect()) {
                         Dungeon.level.drop(mpi, Dungeon.hero.pos).sprite.drop();
                     }
-                    drawn.add(item.getClass());
+                    Statistics.drawn.add(item.getClass());
                     if(Dungeon.hero.pointsInTalent(Talent.PIE_IN_THE_PAPER)==3){
-                        drawn.remove(Food.class);
+                        Statistics.drawn.remove(Food.class);
                     }
                     if(Dungeon.hero.pointsInTalent(Talent.SUPERB_ARTS)==3) needAmount = 8;
                     curItem.detachAmount(Dungeon.hero.belongings.backpack, needAmount);
@@ -135,13 +137,13 @@ public class MagicPaper extends Item{
     @Override
     public void storeInBundle( Bundle bundle ) {
         super.storeInBundle(bundle);
-        bundle.put(DRAWN, drawn.toArray(new Class[drawn.size()]));
+        bundle.put(DRAWN, Statistics.drawn.toArray(new Class[Statistics.drawn.size()]));
     }
 
     @Override
     public void restoreFromBundle( Bundle bundle ) {
         super.restoreFromBundle(bundle);
-        if (bundle.contains(DRAWN) && drawn.isEmpty())
-            Collections.addAll(drawn , bundle.getClassArray(DRAWN));
+        if (bundle.contains(DRAWN) && Statistics.drawn.isEmpty())
+            Collections.addAll(Statistics.drawn , bundle.getClassArray(DRAWN));
     }
 }

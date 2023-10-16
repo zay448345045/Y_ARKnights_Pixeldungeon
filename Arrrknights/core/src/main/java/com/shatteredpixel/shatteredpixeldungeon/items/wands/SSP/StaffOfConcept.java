@@ -59,4 +59,9 @@ public class StaffOfConcept extends Wand {
     protected int initialCharges() {
         return 4;
     }
+    @Override
+    public void updateLevel() {
+        maxCharges = initialCharges() + level();
+        curCharges = Math.min( curCharges, maxCharges );
+    }
 }

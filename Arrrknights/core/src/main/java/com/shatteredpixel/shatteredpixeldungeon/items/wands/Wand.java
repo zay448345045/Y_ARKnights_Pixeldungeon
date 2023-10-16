@@ -42,12 +42,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Bonk;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.StaffKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -61,6 +63,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -413,6 +416,31 @@ public abstract class Wand extends Item {
 		}
 
 		return this;
+	}
+
+	public Class upToStaff() {
+		return null;
+	}
+	public void upToStaff(Class c) {
+		if(c != null){
+			Wand wand = this;
+			Wand n = (Wand)Reflection.newInstance( c ); // 이 부분이랑 조건만 바꾸면 됨.
+			n.level(0);
+			int level = wand.level();
+			if (wand.curseInfusionBonus) level--;
+			n.upgrade(level);
+			n.levelKnown = wand.levelKnown;
+			n.cursedKnown = wand.cursedKnown;
+			n.cursed = wand.cursed;
+			n.curseInfusionBonus = wand.curseInfusionBonus;
+
+			n.collect();
+			wand.detach( curUser.belongings.backpack );
+		}else{
+			GLog.w( Messages.get(StaffKit.class, "fail") );
+			StaffKit S = new StaffKit();
+			S.quantity(1).collect();
+		}
 	}
 	
 	@Override

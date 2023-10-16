@@ -299,7 +299,7 @@ public class GunWeapon extends MeleeWeapon {
                 return;
             }
             curUser = hero;
-            if(Maccessories<=0 && Dungeon.hero.buff(SPAmmoTracker.class)!=null){
+            if(Maccessories<=0 && (Dungeon.hero.buff(SPAmmoTracker.class)!=null || !(Dungeon.hero.pointsInTalent(SMOKE_BOMB)==3))){
                 GLog.i(Messages.get(this, "no_maccessories"));
             }
             else{
@@ -802,6 +802,7 @@ public class GunWeapon extends MeleeWeapon {
                 ch.buff(MysteryShotTracker.class).addCount();
                 ch.sprite.showStatus(CharSprite.DEFAULT, Integer.toString(damage));
                 ch.HP -= damage;
+                ((Mob)ch).beckon(Dungeon.hero.pos);
                 if (!ch.isAlive()) {
                     ch.die(this);
                 }
@@ -916,7 +917,7 @@ public class GunWeapon extends MeleeWeapon {
         }
         @Override
         public String desc() {
-            return Messages.get(this, "desc", String.valueOf(DURATION-visualcooldown()));
+            return Messages.get(this, "desc", String.valueOf(visualcooldown()));
         }
     };
 }

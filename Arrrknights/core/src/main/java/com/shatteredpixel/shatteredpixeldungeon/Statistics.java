@@ -23,6 +23,9 @@ package com.shatteredpixel.shatteredpixeldungeon;
 
 import com.watabou.utils.Bundle;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Statistics {
 	
 	public static int goldCollected;
@@ -48,6 +51,8 @@ public class Statistics {
 	public static boolean ver0_3_2firstrun = false;
 	
 	public static boolean amuletObtained = false;
+
+	public static ArrayList<Class> drawn = new ArrayList<>();
 	
 	public static void reset() {
 		
@@ -71,7 +76,8 @@ public class Statistics {
 		qualifiedForNoKilling = false;
 		
 		amuletObtained = false;
-		
+
+		drawn.clear();
 	}
 	
 	private static final String GOLD		= "score";
@@ -96,6 +102,7 @@ public class Statistics {
 	private static final String AMULET		= "amuletObtained";
 
 	private static final String FIRSTRUN		= "ver0_3_2firstrun";
+	private static final String DRAWN = "drawn";
 	
 	public static void storeInBundle( Bundle bundle ) {
 		bundle.put( GOLD,		goldCollected );
@@ -120,6 +127,7 @@ public class Statistics {
 		bundle.put( AMULET,		amuletObtained );
 
 		bundle.put( FIRSTRUN,		ver0_3_2firstrun );
+		bundle.put(DRAWN, Statistics.drawn.toArray(new Class[Statistics.drawn.size()]));
 	}
 	
 	public static void restoreFromBundle( Bundle bundle ) {
@@ -144,6 +152,8 @@ public class Statistics {
 		
 		amuletObtained	= bundle.getBoolean( AMULET );
 		ver0_3_2firstrun	= bundle.getBoolean( FIRSTRUN );
+		if (bundle.contains(DRAWN) && Statistics.drawn.isEmpty())
+			Collections.addAll(Statistics.drawn , bundle.getClassArray(DRAWN));
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ){

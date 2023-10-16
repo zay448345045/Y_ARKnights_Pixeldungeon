@@ -72,6 +72,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ROR2Shield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RadiantKnight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
@@ -378,7 +379,10 @@ public class Hero extends Char {
             HT += pointsInTalent(Talent.KNIGHT_BODY) * 10;
         }
         if(Dungeon.isSPChallenged(SPChallenges.GLASS)) HT = Math.round(HT/10f);
-        if(buff(Transcendence.TranscendenceBuff.class)!=null) HT = 1;
+        if(buff(Transcendence.TranscendenceBuff.class)!=null) {
+            Buff.affect(Dungeon.hero, ROR2Shield.class).setMaxShield((int)(Dungeon.hero.HT*1.5),false);
+            HT = 1;
+        }
         HP = Math.min(HP, HT);
     }
 

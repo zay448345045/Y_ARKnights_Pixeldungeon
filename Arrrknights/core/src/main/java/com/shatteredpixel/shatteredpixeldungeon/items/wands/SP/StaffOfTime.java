@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.DamageWand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -121,5 +122,8 @@ public class StaffOfTime extends DamageWand {
         Sample.INSTANCE.play( Assets.Sounds.HIT_SPLASH );
         Sample.INSTANCE.play( Assets.Sounds.HIT_SPLASH );
     }
-
+    @Override
+    public Class upToStaff() {
+        return StaffOfMageHand.class;
+    }
 }

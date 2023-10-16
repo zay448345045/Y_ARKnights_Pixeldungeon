@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSussurro;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dirk;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -124,5 +125,9 @@ public class WandOfHealing extends DamageWand {
         super.restoreFromBundle(bundle);
         totChrgUsed = bundle.getInt(TOTAL);
         HealCount = bundle.getInt(OVER);
+    }
+    @Override
+    public Class upToStaff() {
+        return StaffOfSussurro.class;
     }
 }

@@ -33,9 +33,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
+import com.shatteredpixel.shatteredpixeldungeon.items.StaffKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfAbsinthe;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfVigna;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorrosion;
@@ -56,6 +58,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -516,5 +519,23 @@ public class MagesStaff extends MeleeWeapon {
 		wand.identify();
 
 		updateQuickslot();
+	}
+
+	public void upToStaff(Class c) {
+		if(c != null){
+			Wand n = (Wand) Reflection.newInstance( c ); // 이 부분이랑 조건만 바꾸면 됨.
+			n.level(0);
+			n.levelKnown = wand.levelKnown;
+			n.cursedKnown = wand.cursedKnown;
+			n.cursed = wand.cursed;
+			n.curseInfusionBonus = wand.curseInfusionBonus;
+
+			wand = n;
+			staffkitwand(wand);
+		}else{
+			GLog.w( Messages.get(StaffKit.class, "fail") );
+			StaffKit S = new StaffKit();
+			S.quantity(1).collect();
+		}
 	}
 }
