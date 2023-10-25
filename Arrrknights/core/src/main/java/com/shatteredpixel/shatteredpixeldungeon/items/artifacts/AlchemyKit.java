@@ -47,6 +47,8 @@ public class AlchemyKit extends Artifact {
 
         charge = 0;
         chargeCap = 100;
+
+        defaultAction = AC_ADD;
     }
 
     public static final String AC_CRATE = "CRATE";

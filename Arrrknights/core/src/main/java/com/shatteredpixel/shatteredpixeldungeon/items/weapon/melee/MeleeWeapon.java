@@ -93,6 +93,7 @@ public class MeleeWeapon extends Weapon {
 				}
 			}
 			if(this.isEquipped(Dungeon.hero)){
+				this.cursed = false;
 				this.doUnequip(hero, false);
 			}else{
 				this.detach(hero.belongings.backpack);

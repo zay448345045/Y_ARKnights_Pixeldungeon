@@ -900,6 +900,17 @@ public class GunWeapon extends MeleeWeapon {
         int count = 0;
         public int getCount(){return count;}
         public void addCount(){count++;}
+        private static final String COUNT = "count";
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(COUNT, count);
+        }
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            count = bundle.getInt(COUNT);
+        }
     };
     public static class SPAmmoTracker extends FlavourBuff {
         public static final float DURATION	= 200f;

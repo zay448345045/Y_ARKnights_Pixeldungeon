@@ -56,7 +56,8 @@ public class ROR2Shield extends ShieldBuff{
 
     @Override
     public String desc() {
-        return Messages.get(this, "desc", getMaxShield(), shielding());
+        return Messages.get(this, "desc", getMaxShield(), shielding())
+                +((waitBeforeRecover>0)?"\n"+Messages.get(this, "desc_time", (int)waitBeforeRecover):"");
     }
     private static final String MAX_SHIELD = "max_shield";
     @Override

@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.GunWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -47,7 +48,15 @@ public class DrawingArt extends Buff implements ActionIndicator.Action{
     @Override
     public Image getIcon() {
         Image icon;
-        icon = new ItemSprite(((Hero)target).belongings.weapon.image, null);
+        if (((Hero) target).belongings.weapon != null) {
+            icon = new ItemSprite(((Hero) target).belongings.weapon.image, null);
+        } else {
+            icon = new ItemSprite(new Item() {
+                {
+                    image = ItemSpriteSheet.WEAPON_HOLDER;
+                }
+            });
+        }
         return icon;
     }
 

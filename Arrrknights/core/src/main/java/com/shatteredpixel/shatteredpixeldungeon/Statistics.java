@@ -127,7 +127,7 @@ public class Statistics {
 		bundle.put( AMULET,		amuletObtained );
 
 		bundle.put( FIRSTRUN,		ver0_3_2firstrun );
-		bundle.put(DRAWN, Statistics.drawn.toArray(new Class[Statistics.drawn.size()]));
+		bundle.put(DRAWN, 		drawn.toArray(new Class[Statistics.drawn.size()]));
 	}
 	
 	public static void restoreFromBundle( Bundle bundle ) {
@@ -152,8 +152,9 @@ public class Statistics {
 		
 		amuletObtained	= bundle.getBoolean( AMULET );
 		ver0_3_2firstrun	= bundle.getBoolean( FIRSTRUN );
-		if (bundle.contains(DRAWN) && Statistics.drawn.isEmpty())
-			Collections.addAll(Statistics.drawn , bundle.getClassArray(DRAWN));
+
+		drawn.clear();
+		Collections.addAll(Statistics.drawn , bundle.getClassArray(DRAWN));
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ){

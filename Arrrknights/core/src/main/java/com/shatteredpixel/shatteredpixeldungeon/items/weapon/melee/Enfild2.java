@@ -61,7 +61,7 @@ public class Enfild2 extends MeleeWeapon {
     }
     @Override
     public float speedFactor( Char owner ) {
-        float delay = super.speedFactor( Dungeon.hero );
+        float delay = super.speedFactor( owner );
         delay *= 1/(1.00f+ Dungeon.hero.pointsInTalent(PROFICIENCY)*0.165f);
         return delay;
     }

@@ -744,7 +744,7 @@ public class WndJournal extends WndTabbed {
 			}
 			
 			public boolean onClick( float x, float y ) {
-				if (inside( x, y ) && seen) {
+				if (inside( x, y ) /*&& seen*/) {
 					if (item instanceof ClassArmor){
 						GameScene.show(new WndTitledMessage(new Image(icon),
 								Messages.titleCase(item.trueName()), item.desc()));

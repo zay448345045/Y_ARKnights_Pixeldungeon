@@ -40,8 +40,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.RingKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.SakuraProof;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookBountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookInstantFire;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.AncientKin;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookCollecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGift;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Bookancientkin;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookCaerbannogNoSekai;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookHighNoon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
@@ -109,6 +111,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.Alchemize;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseSolidifying;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
@@ -234,7 +237,6 @@ import com.watabou.utils.DeviceCompat;
 		new FoodBag().collect();
 		Dungeon.LimitedDrops.FOOD_BAG.drop();
 
-		//MagicPaper.drawn.clear();
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			//bags
@@ -256,6 +258,7 @@ import com.watabou.utils.DeviceCompat;
 			new Enfild().identify().collect();
 			new NaginataAndFan().identify().collect();
 			new CurseSolidifying().quantity(99).collect();
+			new CurseInfusion().quantity(99).collect();
 			new SakuraProof().collect();
 			new StoneOfEnchantment().quantity(99).collect();
 			new Sungrass.Seed().quantity(99).collect();
@@ -266,6 +269,7 @@ import com.watabou.utils.DeviceCompat;
 			new Alchemize().quantity(10).collect();
 			new Blandfruit().quantity(99).collect();
 			new StaffKit().quantity(10).collect();
+			new Bookancientkin().collect();
 			//region rings
 			new RingOfAccuracy().identify().upgrade(28).collect();
 			new RingOfHaste().identify().upgrade(28).collect();

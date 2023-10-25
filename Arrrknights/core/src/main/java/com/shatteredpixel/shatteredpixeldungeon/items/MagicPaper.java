@@ -43,6 +43,8 @@ public class MagicPaper extends Item{
         defaultAction = AC_DRAW;
 
         stackable = true;
+
+        bones = false;
     }
     private int needAmount = 10;
     @Override
@@ -133,17 +135,13 @@ public class MagicPaper extends Item{
             }
         }
     };
-    private static final String DRAWN = "drawn";
     @Override
     public void storeInBundle( Bundle bundle ) {
         super.storeInBundle(bundle);
-        bundle.put(DRAWN, Statistics.drawn.toArray(new Class[Statistics.drawn.size()]));
     }
 
     @Override
     public void restoreFromBundle( Bundle bundle ) {
         super.restoreFromBundle(bundle);
-        if (bundle.contains(DRAWN) && Statistics.drawn.isEmpty())
-            Collections.addAll(Statistics.drawn , bundle.getClassArray(DRAWN));
     }
 }

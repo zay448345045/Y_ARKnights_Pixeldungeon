@@ -199,6 +199,18 @@ public class Recycler extends ROR2equipment{
             return n;
         }
     }
+    private ROR2item changeROR2item( ROR2item a ) {
+        ROR2item n = Generator.randomR2i();
+
+        if (n != null && !Challenges.isItemBlocked(n)){
+            n.cursedKnown = a.cursedKnown;
+            n.cursed = a.cursed;
+            n.levelKnown = a.levelKnown;
+            return n;
+        }
+
+        return null;
+    }
 
     @Override
     public void execute(Hero hero, String action) {
@@ -245,6 +257,8 @@ public class Recycler extends ROR2equipment{
                     result = Recycler.this.changeStone( (Runestone) item );
                 }else if (item instanceof Artifact) {
                     result = Recycler.this.changeArtifact( (Artifact)item );
+                }else if (item instanceof ROR2item) {
+                    result = Recycler.this.changeROR2item( (ROR2item)item );
                 } else {
                     result = null;
                 }

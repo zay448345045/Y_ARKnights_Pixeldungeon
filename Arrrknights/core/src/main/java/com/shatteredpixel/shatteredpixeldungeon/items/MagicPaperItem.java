@@ -29,6 +29,8 @@ public class MagicPaperItem extends Item{
         cursedKnown = levelKnown = true;
 
         defaultAction = AC_USE;
+
+        bones = false;
     }
     private Item itemType;
     private Potion fruitPotion = null;
