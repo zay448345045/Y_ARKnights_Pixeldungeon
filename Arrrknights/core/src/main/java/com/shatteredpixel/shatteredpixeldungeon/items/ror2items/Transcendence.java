@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.DamageWand;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.DangerIndicator;
+import com.watabou.utils.Bundle;
 
 public class Transcendence extends ROR2item{
     {
@@ -55,5 +56,16 @@ public class Transcendence extends ROR2item{
             return true;
         }
         return false;
+    }
+    private static final String ONEQUIPHP = "onequiphp";
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        bundle.put(ONEQUIPHP, onEquipHP);
+    }
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        super.restoreFromBundle(bundle);
+        onEquipHP = bundle.getInt(ONEQUIPHP);
     }
 }

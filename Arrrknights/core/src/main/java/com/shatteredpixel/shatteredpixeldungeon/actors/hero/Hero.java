@@ -367,7 +367,7 @@ public class Hero extends Char {
         }
 
         if (buff(TitanicKnurl.TitanicKnurlBuff.class) != null) {
-            HT += 20;
+            HT += (int)(10 + HT*0.1f*(Dungeon.depth/5));
         }
 
         if (boostHP) {

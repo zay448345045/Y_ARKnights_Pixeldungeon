@@ -7,7 +7,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -56,13 +58,18 @@ public class FreshInspiration extends GunWeapon{
     }
     @Override
     protected void SPShot(Char ch) {
-        //TODO
+        Buff.affect(ch, Vertigo.class, 2f);
     }
     @Override
     public String status() { return bullet+"/"+bulletCap; }
+
+    public String statsInfo(){
+        if (spshot) return Messages.get(this, "stats_desc_sp", shotmin(),shotmax());
+        return Messages.get(this, "stats_desc", shotmin(),shotmax());
+    }
     @Override
     public String desc() {
-        return Messages.get(this, "desc", shotmin(),shotmax());
+        return Messages.get(this, "desc");
     }
     @Override
     public void execute(Hero hero, String action) {

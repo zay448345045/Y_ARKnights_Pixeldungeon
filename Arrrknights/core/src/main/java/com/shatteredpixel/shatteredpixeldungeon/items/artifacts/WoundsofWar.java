@@ -56,7 +56,7 @@ public class WoundsofWar extends Artifact {
             if (activeBuff == null) {
                 if (!isEquipped(hero))
                     GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-                else if (cursed) GLog.i(Messages.get(this, "cursed"));
+                else if (cursed) GLog.i(Messages.get(this, "desc_cursed"));
                 else if (charge < 1) GLog.i(Messages.get(this, "no_charge"));
                 else {
                     PathFinder.buildDistanceMap( hero.pos, BArray.not( Dungeon.level.solid, null ), 5 );

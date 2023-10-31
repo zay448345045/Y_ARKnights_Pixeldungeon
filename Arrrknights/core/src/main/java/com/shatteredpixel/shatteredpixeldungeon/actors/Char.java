@@ -81,6 +81,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Dummy;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -93,6 +94,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -399,6 +401,13 @@ public abstract class Char extends Actor {
 
 			enemy.damage( effectiveDamage, this );
 
+			if(buff(StunGrenade.StunGrenadeBuff.class)!=null) {
+				if(Random.Int(5)==0){
+					CellEmitter.get(enemy.pos).start(Speck.factory(Speck.LIGHT), 0.02f, 9);
+					Buff.affect( enemy, Paralysis.class, 2f );
+					Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
+				}
+			}
 			if (buff(FireImbue.class) != null)  buff(FireImbue.class).proc(enemy);
 			if (buff(Hallucination.class) != null)  buff(Hallucination.class).proc();
 			if (buff(ElixirOfDragonsBlood.Dragonsblood.class) != null)  buff(ElixirOfDragonsBlood.Dragonsblood.class).proc(this, enemy);

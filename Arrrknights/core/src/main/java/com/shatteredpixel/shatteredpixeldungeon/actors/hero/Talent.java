@@ -748,7 +748,7 @@ public enum Talent {
 		if( (item instanceof Scroll || item instanceof Potion) && !item.isIdentified() && hero.hasTalent(DEDUCTION) ) {
 			if(!item.collected && Random.Int(4) <= hero.pointsInTalent(DEDUCTION)) {//这么写应该是50%和75%吧(心虚
 				item.identify();
-				hero.sprite.emitter().burst(Speck.factory(Speck.QUESTION),1);
+				hero.sprite.emitter().burst(Speck.factory(Speck.QUESTION),3);
 			}
 		}
 

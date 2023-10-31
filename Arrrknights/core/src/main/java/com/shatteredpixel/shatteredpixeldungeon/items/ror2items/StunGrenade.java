@@ -16,15 +16,7 @@ public class StunGrenade extends ROR2item{
         tier = 1;
         image = ItemSpriteSheet.STUN_GRENADE;
     }
-    @Override
-    public int attackProc(Char attacker, Char defender, int damage ) {
-        if(Random.Int(5)==0){
-            CellEmitter.get(defender.pos).start(Speck.factory(Speck.LIGHT), 0.02f, 9);
-            Buff.affect( defender, Paralysis.class, 2f );
-            Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
-        }
-        return damage;
-    }
+    //no effect here, see Char.attack
 
     @Override
     protected ROR2item.ROR2itemBuff passiveBuff() {

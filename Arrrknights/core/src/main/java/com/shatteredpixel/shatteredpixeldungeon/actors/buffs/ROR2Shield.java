@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
@@ -25,7 +27,10 @@ public class ROR2Shield extends ShieldBuff{
     }
     @Override
     public boolean act() {
-        if(waitBeforeRecover<=0) super.incShield(maxShield/4);
+        if(waitBeforeRecover<=0 && !(shielding()>maxShield)) {
+            if (target instanceof Hero) {super.incShield(maxShield / 8);}
+            else {super.incShield(maxShield / 4);}
+        }
         if(shielding()>maxShield) super.hardSetShield(maxShield);
         if(waitBeforeRecover>0)waitBeforeRecover--;
         spend(TICK);
@@ -34,6 +39,7 @@ public class ROR2Shield extends ShieldBuff{
     @Override
     public int absorbDamage( int dmg ){
         this.waitBeforeRecover = 10f;
+        if(target instanceof Hero) this.waitBeforeRecover = 20f;
         if (shielding() >= dmg){
             super.decShield(dmg);
             dmg = 0;

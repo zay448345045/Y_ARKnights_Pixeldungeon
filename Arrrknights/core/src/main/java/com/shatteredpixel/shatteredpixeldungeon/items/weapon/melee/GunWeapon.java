@@ -101,6 +101,7 @@ public class GunWeapon extends MeleeWeapon {
     protected float FIRETICK = 1f;
     protected int Maccessories = 0;
     protected float tryShootDamageFactor = 1;
+    protected float tryShootAccFactor = 1;
 
     protected boolean precisely = false;
     @Override
@@ -169,7 +170,7 @@ public class GunWeapon extends MeleeWeapon {
                     int cell = shot.collisionPos;
                     final GunWeapon ss;
                     ss = this;
-                    if(ss.tryToShoot(defender.pos, shot, precisely, 1)){
+                    if(ss.tryToShoot(defender.pos, shot, precisely, 1,Dungeon.hero.pointsInTalent(FREE_FIRE)/2f)){
                         Dungeon.hero.spend(-ss.getFireTick());
                     }
                 }
@@ -197,7 +198,8 @@ public class GunWeapon extends MeleeWeapon {
         if (closerrange != null && Dungeon.hero.hasTalent(Talent.PINPOINT)) {
             acc += Dungeon.hero.pointsInTalent(Talent.PINPOINT) * 0.2f;
         }
-        if(Dungeon.hero.subClass == HeroSubClass.MARKSMIDORI) acc += 0.25f;
+        if(Dungeon.hero.subClass == HeroSubClass.MARKSMIDORI) acc *= 1.25f;
+        acc *= tryShootAccFactor;
 
         return acc;
     }
@@ -274,9 +276,13 @@ public class GunWeapon extends MeleeWeapon {
 
         if (action.equals(AC_RELOAD)) {
             curUser = hero;
-            if((Dungeon.hero.heroClass == HeroClass.MIDORI && Dungeon.hero.hasTalent(XTRM_MEASURES)) ||
-                    (Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR) && Dungeon.hero.hasTalent(PAPER_BULLET)) {
-                GameScene.selectItem(itemSelector, WndBag.Mode.AMMO, Messages.get(this, "prompt"));
+            if(Dungeon.hero.heroClass == HeroClass.MIDORI) {
+                if ((Dungeon.hero.hasTalent(XTRM_MEASURES)) ||
+                (Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR) && Dungeon.hero.hasTalent(PAPER_BULLET)){
+                    GameScene.selectItem(itemSelector, WndBag.Mode.MIDORI_AMMO, Messages.get(this, "prompt"));
+                }else{
+                    GameScene.selectItem(itemSelector, WndBag.Mode.AMMO, Messages.get(this, "prompt"));
+                }
             }
             else GameScene.selectItem(itemSelector, WndBag.Mode.MISSILEWEAPON, Messages.get(this, "prompt"));
         }
@@ -766,10 +772,11 @@ public class GunWeapon extends MeleeWeapon {
         curUser.spendAndNext(1f);
     }
 
-    public boolean tryToShoot(int target, Ballistica shot, boolean isPrecisely, float damageFactor){
+    public boolean tryToShoot(int target, Ballistica shot, boolean isPrecisely, float damageFactor, float accFactor){
         curUser = Dungeon.hero;
         precisely = isPrecisely;
         tryShootDamageFactor = damageFactor;
+        tryShootAccFactor = accFactor;
         GunWeapon gun = this;
         if (target == curUser.pos || shot.collisionPos == curUser.pos) {
             GLog.i(Messages.get(DP27.class, "self_target"));

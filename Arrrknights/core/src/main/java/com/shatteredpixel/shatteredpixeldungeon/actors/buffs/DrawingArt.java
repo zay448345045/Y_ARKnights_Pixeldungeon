@@ -92,7 +92,7 @@ public class DrawingArt extends Buff implements ActionIndicator.Action{
                     Ballistica shot = new Ballistica(target.pos, mob.pos, Ballistica.PROJECTILE);
                     int cell = shot.collisionPos;
                     target.sprite.Sattack(cell);
-                    if(ss.tryToShoot(mob.pos, shot, false, 1.2f+0.1f*(Dungeon.hero.pointsInTalent(SKILL_ENHANCEMENT)))){
+                    if(ss.tryToShoot(mob.pos, shot, false, 1.2f+0.1f*(Dungeon.hero.pointsInTalent(SKILL_ENHANCEMENT)),1)){
                         ((Hero)target).spend(-ss.getFireTick());
                     }
                     fireCount++;

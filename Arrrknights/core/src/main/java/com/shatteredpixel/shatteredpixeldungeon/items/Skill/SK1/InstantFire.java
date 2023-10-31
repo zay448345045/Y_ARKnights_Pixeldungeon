@@ -66,7 +66,7 @@ public class InstantFire extends Skill {
                     } else {
                         QuickSlotButton.target(Actor.findChar(cell));
                     }
-                    if (gun.tryToShoot(target, shot, true, 1)) {
+                    if (gun.tryToShoot(target, shot, true, 1,1)) {
                         Dungeon.hero.spend(-gun.getFireTick());
                     }
                     Buff.affect(Dungeon.hero, Haste.class, 2f);

@@ -67,6 +67,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.GunWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.R4C;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.NormalMagazine;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.UpMagazine;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -119,6 +121,7 @@ public class WndBag extends WndTabbed {
 		ALCHEMYKIT_ONLY,
 		GUN,
 		AMMO,
+		MIDORI_AMMO,
 		DRAWABLE
 	}
 
@@ -487,8 +490,9 @@ public class WndBag extends WndTabbed {
 						mode == Mode.ALCHEMYKIT_ONLY && (item instanceof MeleeWeapon || item instanceof MissileWeapon || item instanceof Armor || item instanceof Plant.Seed
 								|| item instanceof Runestone || item instanceof Wand || item instanceof Ring) ||
 						mode == Mode.GUN && (item instanceof GunWeapon) ||
-						mode == Mode.AMMO && (item instanceof MissileWeapon || item instanceof MidoriAccessories || item instanceof MagicPaper) ||
-						mode == Mode.DRAWABLE && (
+						mode == Mode.AMMO && (item instanceof NormalMagazine || item instanceof UpMagazine) ||
+						mode == Mode.MIDORI_AMMO && (item instanceof NormalMagazine || item instanceof UpMagazine || item instanceof MidoriAccessories || item instanceof MagicPaper) ||
+								mode == Mode.DRAWABLE && (
 								(item instanceof Potion && !(item instanceof Brew || item instanceof Elixir || item instanceof ExoticPotion)) ||
 								(item instanceof Scroll && !(item instanceof ExoticScroll)) ||
 								((item instanceof ExoticScroll || item instanceof ExoticPotion) && Dungeon.hero.hasTalent(Talent.SUPERB_ARTS)) ||

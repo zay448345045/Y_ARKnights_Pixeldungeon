@@ -39,7 +39,7 @@ public class Behemoth extends ROR2item{
                     continue;
                 }
 
-                int dmg = (int) Math.round(damage*0.6);
+                int dmg = (int) Math.round(damage*0.4);
 
                 dmg -= ch.drRoll();
 

@@ -148,8 +148,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ExplosiveSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.LightKnife;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.NormalMagazine;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.UpMagazine;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Rotberry;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
@@ -283,11 +285,13 @@ import com.watabou.utils.DeviceCompat;
 			new StaffOfSkyfire().upgrade(10).identify().collect();
 			new WandOfBlowStone().identify().collect();
 			new StaffOfVision().upgrade(10).identify().collect();
-			new StaffOfValstrax().identify().collect();
+			new StaffOfValstrax().identify().upgrade(10).collect();
 			new StaffOfMageHand().identify().upgrade(10).collect();
 			new StaffOfConcept().identify().collect();
 			new StaffOfTwinTurbo().identify().collect();
 			new RingKit().collect();
+			new NormalMagazine().quantity(10).collect();
+			new UpMagazine().quantity(10).collect();
 			//endregion
 			//region scrolls
 			new ScrollOfUpgrade().identify().quantity(99).collect();
