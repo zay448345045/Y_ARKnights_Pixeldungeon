@@ -28,8 +28,8 @@ public class ROR2Shield extends ShieldBuff{
     @Override
     public boolean act() {
         if(waitBeforeRecover<=0 && !(shielding()>maxShield)) {
-            if (target instanceof Hero) {super.incShield(maxShield / 8);}
-            else {super.incShield(maxShield / 4);}
+            if (target instanceof Hero) {super.incShield((int)Math.ceil(maxShield / 8f));}
+            else {super.incShield((int)Math.ceil(maxShield / 4f));}
         }
         if(shielding()>maxShield) super.hardSetShield(maxShield);
         if(waitBeforeRecover>0)waitBeforeRecover--;
