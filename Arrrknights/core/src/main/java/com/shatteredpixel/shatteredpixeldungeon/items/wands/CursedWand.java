@@ -377,6 +377,7 @@ public class CursedWand {
 					Dungeon.saveAll();
 					if(Messages.lang() != Languages.ENGLISH){
 						//Don't bother doing this joke to none-english speakers, I doubt it would translate.
+						if(solidType != -1) return true;
 						return cursedEffect(origin, user, targetPos);
 					} else {
 						GameScene.show(

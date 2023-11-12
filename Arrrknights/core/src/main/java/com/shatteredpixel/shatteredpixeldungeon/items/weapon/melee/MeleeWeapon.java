@@ -166,6 +166,12 @@ public class MeleeWeapon extends Weapon {
 			info += "\n\n" + Messages.get(Weapon.class, "enchanted", enchantment.name());
 			info += " " + Messages.get(enchantment, "desc");
 		}
+		if(chimeras != null){
+			for(Chimera chis:chimeras){
+				info += "\n" + Messages.get(Weapon.class, "chimeraed", chis.name());
+				info += " " + Messages.get(chis, "desc");
+			}
+		}
 
 		if (cursed && isEquipped( Dungeon.hero )) {
 			info += "\n\n" + Messages.get(Weapon.class, "cursed_worn");

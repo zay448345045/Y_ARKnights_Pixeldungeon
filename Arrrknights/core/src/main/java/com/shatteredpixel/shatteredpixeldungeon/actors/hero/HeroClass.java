@@ -130,6 +130,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
@@ -158,6 +162,8 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 //import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
@@ -257,7 +263,7 @@ import com.watabou.utils.DeviceCompat;
 			new TomeOfMastery().collect();
 			new R4C().identify().collect();
 			new EtherealChains().identify().collect();
-			new Enfild().identify().collect();
+			new Enfild().chimera(Reflection.newInstance(Winter.class)).chimera(Reflection.newInstance(EX.class)).identify().collect();
 			new NaginataAndFan().identify().collect();
 			new CurseSolidifying().quantity(99).collect();
 			new CurseInfusion().quantity(99).collect();

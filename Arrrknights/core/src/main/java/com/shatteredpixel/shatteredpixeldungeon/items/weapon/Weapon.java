@@ -44,6 +44,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Annoying;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Displacing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.contamination;
@@ -69,6 +71,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocki
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Unstable;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ThermiteBlade;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -121,12 +124,14 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 
 	public Augment augment = Augment.NONE;
+	public ArrayList<Chimera>  chimeras = new ArrayList<>();
 
 	private static final int USES_TO_ID = 20;
 	private float usesLeftToID = USES_TO_ID;
 	private float availableUsesToID = USES_TO_ID/2f;
 
 	public Enchantment enchantment;
+	public Chimera chimera;
 	public boolean curseInfusionBonus = false;
 
 	@Override
@@ -198,7 +203,7 @@ abstract public class Weapon extends KindOfWeapon {
 						mob.damage(dmg, this);
 						mob.sprite.burst(0xFFFFFFFF, 15);
 
-						if (mob.isAlive() == true) Buff.affect(mob, Paralysis.class, 1f);
+						if (mob.isAlive()) Buff.affect(mob, Paralysis.class, 1f);
 					}
 				}
 				Sample.INSTANCE.play( Assets.Sounds.HIT_CHAINSAW2, 1.33f, 1.65f );
@@ -221,6 +226,7 @@ abstract public class Weapon extends KindOfWeapon {
 	private static final String USES_LEFT_TO_ID = "uses_left_to_id";
 	private static final String AVAILABLE_USES  = "available_uses";
 	private static final String ENCHANTMENT	    = "enchantment";
+	private static final String CHIMERAS	    = "chimeras";
 	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
 	private static final String AUGMENT	        = "augment";
 
@@ -230,6 +236,7 @@ abstract public class Weapon extends KindOfWeapon {
 		bundle.put( USES_LEFT_TO_ID, usesLeftToID );
 		bundle.put( AVAILABLE_USES, availableUsesToID );
 		bundle.put( ENCHANTMENT, enchantment );
+		bundle.put( CHIMERAS, chimeras );
 		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
 		bundle.put( AUGMENT, augment );
 	}
@@ -243,6 +250,11 @@ abstract public class Weapon extends KindOfWeapon {
 		curseInfusionBonus = bundle.getBoolean( CURSE_INFUSION_BONUS );
 
 		augment = bundle.getEnum(AUGMENT, Augment.class);
+
+		chimeras = new ArrayList<>();
+		for (Bundlable chi : bundle.getCollection( CHIMERAS )) {
+			if (chi != null) chimeras.add((Chimera) chi);
+		}
 	}
 
 	@Override
@@ -287,6 +299,9 @@ abstract public class Weapon extends KindOfWeapon {
 		int RCHmath = RCH;
 		if (Dungeon.hero.hasTalent(Talent.CHAINSAW_EXTEND) && owner instanceof Hero) {
 			RCHmath +=1;
+		}
+		for(Chimera e : chimeras){
+			RCHmath += e.rchFactor();
 		}
 		if (Dungeon.hero.buff(Twilight.class) != null) RCHmath +=1;
 		if (owner.buff(SeethingBurst.class) != null) {
@@ -404,7 +419,19 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public String name() {
-		return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name( super.name() ) : super.name();
+		String name;
+		if(enchantment != null && (cursedKnown || !enchantment.curse())){
+			name = enchantment.name( super.name() );
+		}else{
+		 	name = super.name();
+		}
+		if(chimeras != null){
+			for(Chimera chis : chimeras){
+				if(chis.beforeName()!=null) name = chis.beforeName() + " " + name;
+				if(chis.afterName()!=null) name = name + " " + chis.afterName();
+			}
+		}
+		return name;
 	}
 	
 	@Override
@@ -440,6 +467,11 @@ abstract public class Weapon extends KindOfWeapon {
 		updateQuickslot();
 		return this;
 	}
+	public Weapon chimera( Chimera chi ) {
+		chimeras.add(chi);
+		updateQuickslot();
+		return this;
+	}
 
 	public Weapon enchant() {
 
@@ -451,6 +483,12 @@ abstract public class Weapon extends KindOfWeapon {
 
 	public boolean hasEnchant(Class<?extends Enchantment> type, Char owner) {
 		return enchantment != null && enchantment.getClass() == type && owner.buff(MagicImmune.class) == null;
+	}
+	public boolean hasChimera(Class<?extends Chimera> type) {
+		for(Chimera c : chimeras){
+			if(c.getClass()==type) return true;
+		}
+		return false;
 	}
 	
 	//these are not used to process specific enchant effects, so magic immune doesn't affect them
@@ -598,5 +636,30 @@ abstract public class Weapon extends KindOfWeapon {
 			}
 		}
 		
+	}
+	public static abstract class Chimera implements Bundlable {
+		public String name() {
+			return Messages.get(this, "name");
+		}
+		public String beforeName() {
+			return null;
+		}
+		public String afterName() {
+			return null;
+		}
+
+		public int rchFactor(){
+			return 0;
+		}
+		public float correct(){
+			return 0;
+		}
+		@Override
+		public void restoreFromBundle( Bundle bundle ) {
+		}
+
+		@Override
+		public void storeInBundle( Bundle bundle ) {
+		}
 	}
 }

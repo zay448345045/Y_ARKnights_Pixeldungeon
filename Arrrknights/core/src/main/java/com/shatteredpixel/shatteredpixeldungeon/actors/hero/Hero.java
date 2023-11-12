@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CloserangeShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
@@ -208,6 +209,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Decapitator;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Echeveria;
@@ -791,12 +795,24 @@ public class Hero extends Char {
     public int damageRoll() {
         KindOfWeapon wep = belongings.weapon;
         int dmg;
+        float correct = 0;
+        if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(this)) {
 
+            if(wep instanceof Weapon){
+                for(Weapon.Chimera e : ((Weapon)wep).chimeras){
+                    correct += e.correct();
+                }
+                if(correct>1) correct = 1;
+            }
+            if(wep instanceof Weapon && ((Weapon) wep).hasChimera(Winter.class)){
+                Buff.affect(enemy, Chill.class, 4f);
+            }
+        }
         if (wep != null) {
             if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
-                dmg=Math.max(wep.damageRoll(this),wep.damageRoll(this));
+                dmg=Math.max(wep.damageRoll(this,correct),wep.damageRoll(this,correct));
             }else{
-                dmg = wep.damageRoll(this);
+                dmg = wep.damageRoll(this,correct);
             }
             if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
         } else {
@@ -814,6 +830,11 @@ public class Hero extends Char {
         if (this.buff(LanceCharge.class) != null) {
             dmg *= 3f;
             Buff.detach(this, LanceCharge.class);
+        }
+
+        if(wep instanceof Weapon && ((Weapon) wep).hasChimera(EX.class)){dmg*=0.3f;}
+        if(wep instanceof Weapon && ((Weapon) wep).hasChimera(Winter.class)){
+            if(enemy.buff(Chill.class)!=null) dmg = Math.round(dmg * 1.25f);
         }
 
         return buff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
