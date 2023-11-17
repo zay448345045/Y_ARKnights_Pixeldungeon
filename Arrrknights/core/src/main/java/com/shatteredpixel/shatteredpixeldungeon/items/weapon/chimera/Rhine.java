@@ -3,18 +3,13 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
-public class EX extends Weapon.Chimera{
+public class Rhine extends Weapon.Chimera{
     @Override
     public String beforeName() {
         return Messages.get(this, "name");
     }
-
     @Override
-    public int rchFactor(){
-        return 50;
-    }
+    public int defenseFactor(int lvl){return 4+2*lvl;}
     @Override
-    public float dmgFactor(){
-        return 0.3f;
-    }
+    public float dmgFactor(){return 0.5f;}
 }

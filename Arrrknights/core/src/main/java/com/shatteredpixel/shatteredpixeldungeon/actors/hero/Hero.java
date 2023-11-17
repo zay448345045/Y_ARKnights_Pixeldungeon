@@ -211,6 +211,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Decapitator;
@@ -748,6 +750,12 @@ public class Hero extends Char {
                 wepDr -= 2 * (((Weapon) belongings.weapon).STRReq() - STR());
             }
             if (wepDr > 0) dr += wepDr;
+
+            int chiDr = 0;
+            for(Weapon.Chimera chi : ((Weapon) belongings.weapon).chimeras){
+                chiDr += chi.defenseFactor(belongings.weapon.level());
+            }
+            dr += Random.NormalIntRange(0, chiDr);
         }
         Barkskin bark = buff(Barkskin.class);
         SeethingBurst Burst = buff(SeethingBurst.class);
@@ -804,9 +812,6 @@ public class Hero extends Char {
                 }
                 if(correct>1) correct = 1;
             }
-            if(wep instanceof Weapon && ((Weapon) wep).hasChimera(Winter.class)){
-                Buff.affect(enemy, Chill.class, 4f);
-            }
         }
         if (wep != null) {
             if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
@@ -832,9 +837,10 @@ public class Hero extends Char {
             Buff.detach(this, LanceCharge.class);
         }
 
-        if(wep instanceof Weapon && ((Weapon) wep).hasChimera(EX.class)){dmg*=0.3f;}
-        if(wep instanceof Weapon && ((Weapon) wep).hasChimera(Winter.class)){
-            if(enemy.buff(Chill.class)!=null) dmg = Math.round(dmg * 1.25f);
+        if(wep instanceof Weapon && ((Weapon) wep).chimeras != null){
+            for(Weapon.Chimera chis : ((Weapon) wep).chimeras){
+                dmg *= chis.dmgFactor();
+            }
         }
 
         return buff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
@@ -902,9 +908,11 @@ public class Hero extends Char {
         if (belongings.weapon instanceof Decapitator) return false;
         if (belongings.weapon instanceof SHISHIOH) return false;
         if (belongings.weapon instanceof Enfild2) return false;
-        if (RingOfAssassin.Assassin_Curse(this) == true) return false;
+        if (RingOfAssassin.Assassin_Curse(this)) return false;
         if (belongings.weapon instanceof KRISSVector) return false;
         if (belongings.weapon instanceof Suffering) return false;
+        if (((Weapon) belongings.weapon).hasChimera(Surrender.class) ||
+                ((Weapon) belongings.weapon).hasChimera(Teller.class)) return false;
 
         return true;
     }

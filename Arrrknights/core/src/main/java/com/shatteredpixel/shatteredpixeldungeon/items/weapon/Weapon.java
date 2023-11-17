@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -44,7 +45,23 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Archery;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Artorius;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Bloody;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Boiling;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Gloves;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Highest;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.LightOf;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Rhine;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Shadow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Table;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Termit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Annoying;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Displacing;
@@ -131,7 +148,7 @@ abstract public class Weapon extends KindOfWeapon {
 	private float availableUsesToID = USES_TO_ID/2f;
 
 	public Enchantment enchantment;
-	public Chimera chimera;
+	//public Chimera chimera;
 	public boolean curseInfusionBonus = false;
 
 	@Override
@@ -179,7 +196,14 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 		if (enchantment != null && attacker.buff(MagicImmune.class) == null) {
 			damage = enchantment.proc( this, attacker, defender, damage );
+		}
+
+		if (chimeras != null) {
+			for (Weapon.Chimera chis : chimeras) {
+				damage = chis.proc(this, attacker, defender, damage);
 			}
+		}
+
 
 		if (!levelKnown && attacker == Dungeon.hero) {
 			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
@@ -277,6 +301,9 @@ abstract public class Weapon extends KindOfWeapon {
 			encumbrance = Math.max(2, encumbrance+2);
 
 		float ACC = augment.accFactor(this.ACC);
+		for(Chimera e : chimeras){
+			DLY *= e.accFactor();
+		}
 		return encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
 	}
 
@@ -291,6 +318,9 @@ abstract public class Weapon extends KindOfWeapon {
 		float DLY = augment.delayFactor(this.DLY);
 
 		DLY *= RingOfFuror.attackDelayMultiplier(owner);
+		for(Chimera e : chimeras){
+			DLY *= e.dlyFactor();
+		}
 		return (encumbrance > 0 ? (float)(DLY * Math.pow( 1.2, encumbrance )) : DLY);
 	}
 
@@ -458,6 +488,18 @@ abstract public class Weapon extends KindOfWeapon {
 			enchant();
 		}
 
+		if(Dungeon.isSPChallenged(SPChallenges.CHIMERA)){
+			float chiRoll = Random.Float();
+			if (chiRoll < 0.3f) {
+				chimera();
+				if(chiRoll < 0.1f){
+					chimera();
+					if(chiRoll < 0.03f){
+						chimera();
+					}
+				}
+			}
+		}
 		return this;
 	}
 	
@@ -472,6 +514,23 @@ abstract public class Weapon extends KindOfWeapon {
 		updateQuickslot();
 		return this;
 	}
+	public Weapon removeChimera( Class chi ) {
+		for(Chimera c: chimeras){
+			if(c.getClass() == chi){
+				chimeras.remove(c);
+			}
+		}
+		updateQuickslot();
+		return this;
+	}
+	public Chimera theChi(Class chi){
+		for(Chimera c: chimeras){
+			if(c.getClass() == chi){
+				return c;
+			}
+		}
+		return null;
+	}
 
 	public Weapon enchant() {
 
@@ -479,6 +538,19 @@ abstract public class Weapon extends KindOfWeapon {
 		Enchantment ench = Enchantment.random( oldEnchantment );
 
 		return enchant( ench );
+	}
+	public Weapon chimera() {
+		ArrayList<Class<? extends Chimera>> cs = new ArrayList<>();
+		if( chimeras != null){
+			for(Chimera chi: chimeras){
+				Class<? extends Chimera> c = chi.getClass();
+				cs.add(c);
+			}
+		}
+		//ArrayList<? extends Chimera> oldChimera = chimeras != null ? chimeras : null;
+		Chimera chi = Chimera.random( cs );
+
+		return chimera( chi );
 	}
 
 	public boolean hasEnchant(Class<?extends Enchantment> type, Char owner) {
@@ -651,8 +723,23 @@ abstract public class Weapon extends KindOfWeapon {
 		public int rchFactor(){
 			return 0;
 		}
+		public float dmgFactor(){
+			return 1f;
+		}
+		public float dlyFactor(){
+			return 1f;
+		}
+		public float accFactor(){
+			return 1f;
+		}
+		public int defenseFactor(int lvl){
+			return 0;
+		}
 		public float correct(){
 			return 0;
+		}
+		public int proc(Weapon weapon, Char attacker, Char defender, int damage){
+			return damage;
 		}
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
@@ -660,6 +747,79 @@ abstract public class Weapon extends KindOfWeapon {
 
 		@Override
 		public void storeInBundle( Bundle bundle ) {
+		}
+
+		private static final Class<?>[] common = new Class<?>[]{
+				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Termit.class
+		};
+
+		private static final Class<?>[] uncommon = new Class<?>[]{
+				EX.class, Winter.class, Flame.class, Rhine.class, Highest.class, Table.class, LightOf.class
+		};
+
+		private static final Class<?>[] rare = new Class<?>[]{
+				Assault.class, Boiling.class, Shadow.class, Surrender.class, Artorius.class, Teller.class
+		};
+		private static final float[] typeChances = new float[]{
+				50, //12.5% each
+				40, //6.67% each
+				10  //3.33% each
+		};
+		@SuppressWarnings("unchecked")
+		public static Chimera random( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
+			switch(Random.chances(typeChances)){
+				case 0: default:
+					return randomCommon( toIgnore );
+				case 1:
+					return randomUncommon( toIgnore );
+				case 2:
+					return randomRare( toIgnore );
+			}
+		}
+		@SuppressWarnings("unchecked")
+		public static Chimera randomCommon( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
+			ArrayList<Class<?>> chis = new ArrayList<>(Arrays.asList(common));
+			if(toIgnore != null){
+				for(ArrayList<Class<? extends Chimera>> c : toIgnore){
+					chis.removeAll(c);
+				}
+			}
+			//chis.removeAll(Arrays.asList(toIgnore));
+			if (chis.isEmpty()) {
+				return random();
+			} else {
+				return (Chimera) Reflection.newInstance(Random.element(chis));
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		public static Chimera randomUncommon( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
+			ArrayList<Class<?>> chis = new ArrayList<>(Arrays.asList(uncommon));
+			if(toIgnore != null){
+				for(ArrayList<Class<? extends Chimera>> c : toIgnore){
+					chis.removeAll(c);
+				}
+			}
+			if (chis.isEmpty()) {
+				return random();
+			} else {
+				return (Chimera) Reflection.newInstance(Random.element(chis));
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		public static Chimera randomRare( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
+			ArrayList<Class<?>> chis = new ArrayList<>(Arrays.asList(rare));
+			if(toIgnore != null){
+				for(ArrayList<Class<? extends Chimera>> c : toIgnore){
+					chis.removeAll(c);
+				}
+			}
+			if (chis.isEmpty()) {
+				return random();
+			} else {
+				return (Chimera) Reflection.newInstance(Random.element(chis));
+			}
 		}
 	}
 }

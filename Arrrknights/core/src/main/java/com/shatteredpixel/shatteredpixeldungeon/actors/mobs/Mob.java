@@ -81,6 +81,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Demon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BladeDemon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Echeveria;
@@ -879,9 +882,13 @@ public abstract class Mob extends Char {
 		if (cause == Dungeon.hero && Dungeon.hero.belongings.weapon instanceof FlameKatana) {
 			((FlameKatana) Dungeon.hero.belongings.weapon).GetKillPoint();
 		}
+		if (cause == Dungeon.hero && ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Flame.class)) {
+			Flame f = (Flame)(((Weapon) Dungeon.hero.belongings.weapon).theChi(Flame.class));
+			f.GetKillPoint();
+		}
 
-		if (cause == Dungeon.hero && Dungeon.hero.belongings.weapon instanceof BladeDemon) {
-			if (((BladeDemon) Dungeon.hero.belongings.weapon).isSwiching()) {
+		if (cause == Dungeon.hero && (Dungeon.hero.belongings.weapon instanceof BladeDemon || ((Weapon) Dungeon.hero.belongings.weapon).hasChimera(Demon.class))) {
+			if (((Weapon) Dungeon.hero.belongings.weapon).hasChimera(Demon.class) || ((BladeDemon) Dungeon.hero.belongings.weapon).isSwiching()) {
 				int Heal = Random.IntRange(1,3+Dungeon.hero.belongings.weapon.buffedLvl());
 				if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
 					Aegis.addShield(Heal);

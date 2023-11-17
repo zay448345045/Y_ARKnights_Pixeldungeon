@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
@@ -107,6 +108,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Termit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
@@ -348,6 +351,7 @@ public abstract class Char extends Actor {
 				if (h.belongings.weapon instanceof ThermiteBlade) dr = 0;
 				if (h.belongings.weapon instanceof RhodesSword) dr = 0;
 				if (h.belongings.weapon instanceof KollamSword) dr = 0;
+				if (((Weapon)h.belongings.weapon).hasChimera(Termit.class)) dr = 0;
 
 				if (h.belongings.getItem(RingOfTenacity.class) != null) {
 					if (h.belongings.getItem(RingOfTenacity.class).isEquipped(Dungeon.hero) && h.belongings.weapon instanceof FolkSong) {
@@ -769,6 +773,12 @@ public abstract class Char extends Actor {
 		}
 
 		shielded -= dmg;
+		if(this instanceof Hero && this.HT==this.HP && dmg>=this.HT && Dungeon.isSPChallenged(SPChallenges.GLASS)) {
+			dmg = this.HT-1;
+			if (sprite != null) {sprite.showStatus(CharSprite.NEGATIVE,
+						"—!—");
+			}
+		}
 		if (!Dummy.kkdy && !ImmortalShield.isImmortal(this))HP -= dmg;//change from budding
 		
 		if (sprite != null) {
