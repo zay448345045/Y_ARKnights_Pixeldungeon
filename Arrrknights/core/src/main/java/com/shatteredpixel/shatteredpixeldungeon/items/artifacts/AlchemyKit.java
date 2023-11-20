@@ -73,6 +73,7 @@ public class AlchemyKit extends Artifact {
             if (charge < chargeCap) GLog.h(Messages.get(AlchemyKit.class, "chargeless"));
             else {
                 CrateItem();
+                defaultAction=AC_ADD;
             }
         }
 
@@ -223,6 +224,7 @@ public class AlchemyKit extends Artifact {
                     return result;
                 }
             }
+
         }
         return 0;
     }
@@ -230,6 +232,7 @@ public class AlchemyKit extends Artifact {
     public void getCharge(int gaincharge) {
         charge += gaincharge;
         charge = Math.min(charge, chargeCap);
+        if(charge==chargeCap) defaultAction=AC_CRATE;
     }
 
     @Override

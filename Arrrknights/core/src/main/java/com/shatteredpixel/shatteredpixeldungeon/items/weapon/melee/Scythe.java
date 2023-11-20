@@ -4,10 +4,12 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -74,6 +76,9 @@ public class Scythe extends MeleeWeapon {
                 if (exStr > 0) {
                     damage += Random.IntRange(0, exStr);
                 }
+                if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
+                    damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
+                }
                 return damage;
             }
         }
@@ -100,6 +105,9 @@ public class Scythe extends MeleeWeapon {
             }}
 
             attacker.HP = Math.min(attacker.HP + heal, attacker.HT);
+            if (attacker instanceof Hero && Dungeon.hero.buff( Aegis.AegisBuff.class) != null){
+                Aegis.addShield(heal);
+            }
             attacker.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2);
             attacker.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", heal);
             HealCount = 0;

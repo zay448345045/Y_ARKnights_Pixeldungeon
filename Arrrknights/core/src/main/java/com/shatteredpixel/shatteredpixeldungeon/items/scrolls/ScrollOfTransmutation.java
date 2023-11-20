@@ -128,6 +128,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 				item.cursed = false; //to allow it to be unequipped
 				((EquipableItem)item).doUnequip(Dungeon.hero, false);
 				((EquipableItem)result).doEquip(Dungeon.hero);
+				Dungeon.hero.spend(-Dungeon.hero.cooldown());
 			} else {
 				item.detach(Dungeon.hero.belongings.backpack);
 				if (!result.collect()){
@@ -239,6 +240,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 						w.cursed = false; //to allow it to be unequipped
 						((EquipableItem) w).doUnequip(Dungeon.hero, false);
 						((EquipableItem) n).doEquip(Dungeon.hero);
+						Dungeon.hero.spend(-Dungeon.hero.cooldown());
 					} else {
 						w.detach(Dungeon.hero.belongings.backpack);
 						if (!n.collect()) {
@@ -297,6 +299,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 					r.cursed = false; //to allow it to be unequipped
 					((EquipableItem) r).doUnequip(Dungeon.hero, false);
 					((EquipableItem) n).doEquip(Dungeon.hero);
+					Dungeon.hero.spend(-Dungeon.hero.cooldown());
 				} else {
 					r.detach(Dungeon.hero.belongings.backpack);
 					if (!n.collect()) {
@@ -364,6 +367,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 					a.cursed = false; //to allow it to be unequipped
 					((EquipableItem) a).doUnequip(Dungeon.hero, false);
 					((EquipableItem) n).doEquip(Dungeon.hero);
+					Dungeon.hero.spend(-Dungeon.hero.cooldown());
 				} else {
 					a.detach(Dungeon.hero.belongings.backpack);
 					if (!n.collect()) {
@@ -486,6 +490,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 					a.cursed = false; //to allow it to be unequipped
 					((EquipableItem) a).doUnequip(Dungeon.hero, false);
 					((EquipableItem) n).doEquip(Dungeon.hero);
+					Dungeon.hero.spend(-Dungeon.hero.cooldown());
 				} else {
 					a.detach(Dungeon.hero.belongings.backpack);
 					if (!n.collect()) {

@@ -41,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
@@ -61,7 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Shadow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Table;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Termit;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Annoying;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Displacing;
@@ -88,7 +87,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocki
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Unstable;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ThermiteBlade;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -302,7 +300,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		float ACC = augment.accFactor(this.ACC);
 		for(Chimera e : chimeras){
-			DLY *= e.accFactor();
+			ACC *= e.accFactor();
 		}
 		return encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
 	}
@@ -515,11 +513,13 @@ abstract public class Weapon extends KindOfWeapon {
 		return this;
 	}
 	public Weapon removeChimera( Class chi ) {
+		Chimera toremove=null;
 		for(Chimera c: chimeras){
 			if(c.getClass() == chi){
-				chimeras.remove(c);
+				toremove = c;
 			}
 		}
+		chimeras.remove(toremove);
 		updateQuickslot();
 		return this;
 	}
@@ -750,7 +750,7 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 
 		private static final Class<?>[] common = new Class<?>[]{
-				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Termit.class
+				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class
 		};
 
 		private static final Class<?>[] uncommon = new Class<?>[]{

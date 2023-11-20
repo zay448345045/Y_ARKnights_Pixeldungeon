@@ -100,9 +100,9 @@ abstract public class KindOfWeapon extends EquipableItem {
 	abstract public int max(int lvl);
 
 	public int damageRoll( Char owner ) {
-		return damageRoll( owner, 0f );
+		return Random.NormalIntRange( min(), max() );
 	}
-	public int damageRoll( Char owner ,Float correct) {
+	public int damageRoll( Char owner, Float correct) {
 		return Random.NormalIntRange( Math.round(min()+(max()-min())*correct), max() );
 	}
 	

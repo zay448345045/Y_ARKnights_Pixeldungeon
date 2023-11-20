@@ -810,6 +810,7 @@ public class GunWeapon extends MeleeWeapon {
                 ch.sprite.showStatus(CharSprite.DEFAULT, Integer.toString(damage));
                 ch.HP -= damage;
                 ((Mob)ch).beckon(Dungeon.hero.pos);
+                if(ch.HP<0)ch.HP=0;
                 if (!ch.isAlive()) {
                     ch.die(this);
                 }

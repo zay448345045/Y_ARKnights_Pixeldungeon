@@ -18,7 +18,7 @@ public class Flame extends Weapon.Chimera{
     public void GetKillPoint() {
         killpoint++;
 
-        if (killpoint == 2) {
+        if (killpoint == 125) {
 
             KindOfWeapon n = Dungeon.hero.belongings.weapon;
             if(Random.Int(2)==1){

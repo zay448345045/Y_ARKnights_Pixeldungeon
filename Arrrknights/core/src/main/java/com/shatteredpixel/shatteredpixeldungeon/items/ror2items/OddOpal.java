@@ -18,10 +18,10 @@ public class OddOpal extends ROR2item{
 
     @Override
     public int defenseProc(Char attacker, Char defender, int damage ) {
-        Buff.prolong(Dungeon.hero, OddOpalTracker.class,7);
-        if(Dungeon.hero.buffs(OddOpalTracker.class)==null){
+        if(Dungeon.hero.buff(OddOpalTracker.class)==null){
             damage/=2;
         }
+        Buff.prolong(Dungeon.hero, OddOpalTracker.class,7);
         return damage;
     }
 

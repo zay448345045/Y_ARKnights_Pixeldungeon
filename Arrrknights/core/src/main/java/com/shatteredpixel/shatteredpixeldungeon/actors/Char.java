@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
@@ -63,6 +62,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ROR2Shield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SeethingBurst;
@@ -77,7 +77,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
@@ -109,7 +108,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Termit;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
@@ -351,7 +350,7 @@ public abstract class Char extends Actor {
 				if (h.belongings.weapon instanceof ThermiteBlade) dr = 0;
 				if (h.belongings.weapon instanceof RhodesSword) dr = 0;
 				if (h.belongings.weapon instanceof KollamSword) dr = 0;
-				if (((Weapon)h.belongings.weapon).hasChimera(Termit.class)) dr = 0;
+				if (h.belongings.weapon!=null && ((Weapon)h.belongings.weapon).hasChimera(Thermit.class)) dr = 0;
 
 				if (h.belongings.getItem(RingOfTenacity.class) != null) {
 					if (h.belongings.getItem(RingOfTenacity.class).isEquipped(Dungeon.hero) && h.belongings.weapon instanceof FolkSong) {
@@ -773,7 +772,7 @@ public abstract class Char extends Actor {
 		}
 
 		shielded -= dmg;
-		if(this instanceof Hero && this.HT==this.HP && dmg>=this.HT && Dungeon.isSPChallenged(SPChallenges.GLASS)) {
+		if(this instanceof Hero && this.HT==this.HP && dmg>=this.HT && Dungeon.isSPChallenged(SPChallenges.GLASS) && buff(ROR2Shield.class)==null) {
 			dmg = this.HT-1;
 			if (sprite != null) {sprite.showStatus(CharSprite.NEGATIVE,
 						"—!—");

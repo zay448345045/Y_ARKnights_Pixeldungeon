@@ -264,6 +264,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
+import sun.security.provider.ConfigFile;
+
 public class Hero extends Char {
 
     // 스킨 관련
@@ -814,7 +816,10 @@ public class Hero extends Char {
             }
         }
         if (wep != null) {
-            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
+            if(wep instanceof SpiritBow.SpiritArrow){
+                dmg = wep.damageRoll(this);
+            }
+            else if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
                 dmg=Math.max(wep.damageRoll(this,correct),wep.damageRoll(this,correct));
             }else{
                 dmg = wep.damageRoll(this,correct);

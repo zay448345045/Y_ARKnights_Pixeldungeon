@@ -364,6 +364,9 @@ abstract public class MissileWeapon extends Weapon {
 			if (exStr > 0) {
 				damage += Random.IntRange( 0, exStr );
 			}
+			if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
+				damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
+			}
 			if (owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()) {
 				damage = Math.round(damage * (1f + 0.15f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM)));
 			}
@@ -434,7 +437,8 @@ abstract public class MissileWeapon extends Weapon {
 		if (STRReq() > Dungeon.hero.STR()) {
 			info += " " + Messages.get(Weapon.class, "too_heavy");
 		} else if (Dungeon.hero.STR() > STRReq()){
-			info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
+			if (Dungeon.hero.hasTalent(Talent.STRONGMAN)) info += " " + Messages.get(Weapon.class, "excess_str", (Dungeon.hero.STR() - STRReq())* (Dungeon.hero.pointsInTalent(Talent.STRONGMAN)+1));
+			else info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
 		}
 
 		if (enchantment != null && (cursedKnown || !enchantment.curse())){
