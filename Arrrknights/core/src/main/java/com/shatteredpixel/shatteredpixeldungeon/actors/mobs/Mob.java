@@ -882,12 +882,16 @@ public abstract class Mob extends Char {
 		if (cause == Dungeon.hero && Dungeon.hero.belongings.weapon instanceof FlameKatana) {
 			((FlameKatana) Dungeon.hero.belongings.weapon).GetKillPoint();
 		}
-		if (cause == Dungeon.hero && ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Flame.class)) {
+		if (cause == Dungeon.hero && Dungeon.hero.belongings.weapon!=null && ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Flame.class)) {
 			Flame f = (Flame)(((Weapon) Dungeon.hero.belongings.weapon).theChi(Flame.class));
 			f.GetKillPoint();
 		}
 
-		if (cause == Dungeon.hero && (Dungeon.hero.belongings.weapon instanceof BladeDemon || ((Weapon) Dungeon.hero.belongings.weapon).hasChimera(Demon.class))) {
+		if (
+				cause == Dungeon.hero && Dungeon.hero.belongings.weapon!=null &&
+						((Dungeon.hero.belongings.weapon instanceof BladeDemon ||
+								((Weapon) Dungeon.hero.belongings.weapon).hasChimera(Demon.class)))
+		) {
 			if (((Weapon) Dungeon.hero.belongings.weapon).hasChimera(Demon.class) || ((BladeDemon) Dungeon.hero.belongings.weapon).isSwiching()) {
 				int Heal = Random.IntRange(1,3+Dungeon.hero.belongings.weapon.buffedLvl());
 				if (Dungeon.hero.buff( Aegis.AegisBuff.class) != null){

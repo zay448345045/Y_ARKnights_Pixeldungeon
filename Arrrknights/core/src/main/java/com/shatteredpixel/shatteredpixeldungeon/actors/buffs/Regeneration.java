@@ -69,6 +69,7 @@ public class Regeneration extends Buff {
 						Aegis.addShield(finalregamt);
 					}
 					target.HP += finalregamt;
+					if(target.HP> target.HT)target.HP= target.HT;
 					if (target.HP == regencap()) {
 						((Hero) target).resting = false;
 					}

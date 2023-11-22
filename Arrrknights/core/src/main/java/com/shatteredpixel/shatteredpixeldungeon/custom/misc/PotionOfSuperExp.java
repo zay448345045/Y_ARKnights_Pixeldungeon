@@ -31,7 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class PotionOfSuperExp extends Potion {
 
     {
-        icon = ItemSpriteSheet.Icons.POTION_EXP;
+        image = ItemSpriteSheet.EXOTIC_GOLDEN;
+        icon = ItemSpriteSheet.Icons.RING_ELEMENTS;
         bones = false;
     }
 
@@ -40,5 +41,9 @@ public class PotionOfSuperExp extends Potion {
         for(int i = 0; i<39;i++){
             hero.earnExp( hero.maxExp(), getClass() );
         }
+    }
+    @Override
+    public boolean isIdentified() {
+        return true;
     }
 }

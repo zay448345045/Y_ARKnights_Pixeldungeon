@@ -772,7 +772,7 @@ public abstract class Char extends Actor {
 		}
 
 		shielded -= dmg;
-		if(this instanceof Hero && this.HT==this.HP && dmg>=this.HT && Dungeon.isSPChallenged(SPChallenges.GLASS) && buff(ROR2Shield.class)==null) {
+		if(this instanceof Hero && this.HT<=this.HP && dmg>=this.HT && Dungeon.isSPChallenged(SPChallenges.GLASS) && buff(ROR2Shield.class)==null) {
 			dmg = this.HT-1;
 			if (sprite != null) {sprite.showStatus(CharSprite.NEGATIVE,
 						"—!—");

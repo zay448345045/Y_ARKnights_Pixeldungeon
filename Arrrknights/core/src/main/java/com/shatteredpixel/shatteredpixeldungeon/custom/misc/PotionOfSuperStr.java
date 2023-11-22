@@ -6,8 +6,10 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class PotionOfSuperStr extends Potion {
     {
-        icon = ItemSpriteSheet.Icons.POTION_EXP;
+        image = ItemSpriteSheet.EXOTIC_AMBER;
+        icon = ItemSpriteSheet.Icons.SCROLL_ENCHANT;
         bones = false;
+
     }
 
     @Override
@@ -15,5 +17,9 @@ public class PotionOfSuperStr extends Potion {
         for(int i = 0; i<10;i++){
             hero.STR++;
         }
+    }
+    @Override
+    public boolean isIdentified() {
+        return true;
     }
 }

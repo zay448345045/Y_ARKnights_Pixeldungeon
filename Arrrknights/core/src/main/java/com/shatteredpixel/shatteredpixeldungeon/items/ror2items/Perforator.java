@@ -21,11 +21,12 @@ public class Perforator extends ROR2item{
     public int attackProc(Char attacker, Char defender, int damage ) {
         if(Random.IntRange(0,10)==0){
             WandOfLightning wol = new WandOfLightning();
-            defender.damage(damage*5, wol);
             Camera.main.shake( 2, 0.3f );
             Dungeon.hero.sprite.centerEmitter().burst( SparkParticle.FACTORY, 15 );
             defender.sprite.parent.addToFront( new Lightning( Dungeon.hero.sprite.center(), defender.sprite.center(), null ) );
             Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
+
+            defender.damage(damage*5, wol);
         }
         return damage;
     }
