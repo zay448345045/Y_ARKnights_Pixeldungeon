@@ -102,12 +102,13 @@ public class SecretMazeRoom extends SecretRoom {
 				prize = Generator.randomArmor((Dungeon.depth / 5) + 1);
 			}
 		} while (prize.cursed || Challenges.isItemBlocked(prize));
-		prize.cursedKnown = true;
 		
-		//33% chance for an extra update.
-		if (Random.Int(3) == 0){
+		//66% chance for an extra update.
+		if (Random.Int(3) != 0){
 			prize.upgrade();
 		}
+
+		prize.identify();
 		
 		level.drop(prize, level.pointToCell(bestDistP)).type = Heap.Type.CHEST;
 		

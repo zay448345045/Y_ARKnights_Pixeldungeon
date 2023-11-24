@@ -211,6 +211,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
@@ -917,7 +919,9 @@ public class Hero extends Char {
         if (belongings.weapon instanceof KRISSVector) return false;
         if (belongings.weapon instanceof Suffering) return false;
         if (((Weapon) belongings.weapon).hasChimera(Surrender.class) ||
-                ((Weapon) belongings.weapon).hasChimera(Teller.class)) return false;
+                ((Weapon) belongings.weapon).hasChimera(Teller.class) ||
+                ((Weapon) belongings.weapon).hasChimera(Hyphen200.class)
+        ) return false;
 
         return true;
     }
@@ -1579,6 +1583,9 @@ public class Hero extends Char {
             }
             if (sprite != null) {
                 sprite.showStatus(CharSprite.DEFAULT, Messages.get(this, "wait"));
+            }
+            if(belongings.weapon!=null && ((Weapon)belongings.weapon).hasChimera(Horoscope.class)){
+                Buff.affect(this, Horoscope.HoroscopeCharge.class).addCount();
             }
         }
         resting = fullRest;

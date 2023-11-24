@@ -3,13 +3,13 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
-public class Demon extends Weapon.Chimera{
+public class Patriot extends Weapon.Chimera {
     @Override
-    public String afterName() {
+    public String beforeName() {
         return Messages.get(this, "name");
     }
     @Override
-    public float dmgFactor(){
-        return 1.2f;
-    }
+    public int defenseFactor(int lvl){return 6+3*lvl;}
+    @Override
+    public float dmgFactor(){return 0.5f;}
 }

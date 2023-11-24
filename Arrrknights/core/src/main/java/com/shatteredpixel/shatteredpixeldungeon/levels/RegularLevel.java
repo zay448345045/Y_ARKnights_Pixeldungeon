@@ -167,7 +167,7 @@ public abstract class RegularLevel extends Level {
 		for (int i = 0; i < specials; i++) {
 			SpecialRoom s = SpecialRoom.createRoom();
 			if (s instanceof PitRoom) specials++;
-			initRooms.add(s);
+			if(!(s instanceof VaultRoom && Dungeon.depth==1)) initRooms.add(s);//取消一层双水晶
 		}
 		
 		int secrets = SecretRoom.secretsForFloor(Dungeon.depth);

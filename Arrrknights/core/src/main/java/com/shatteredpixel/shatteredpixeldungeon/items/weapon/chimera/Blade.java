@@ -9,5 +9,9 @@ public class Blade extends Weapon.Chimera{
         return Messages.get(this, "name");
     }
     @Override
+    public float dmgFactor(){
+        return 1.2f;
+    }
+    @Override
     public float dlyFactor(){return 0.8f;}
 }

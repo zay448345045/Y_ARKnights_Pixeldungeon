@@ -108,6 +108,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Sylvestris;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
@@ -516,7 +517,8 @@ public abstract class Char extends Actor {
 			}
 
 			if (enemy instanceof Hero) {
-				if (Dungeon.hero.belongings.weapon instanceof FlametailSword) {
+				if (Dungeon.hero.belongings.weapon instanceof FlametailSword ||
+						(Dungeon.hero.belongings.weapon!=null && ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Sylvestris.class))) {
 					enemy.sprite.centerEmitter().start( Speck.factory( Speck.LIGHT ), 0.1f, 3 );
 					Buff.affect(enemy, FlametailSword.FlametaillBuff.class);
 				}

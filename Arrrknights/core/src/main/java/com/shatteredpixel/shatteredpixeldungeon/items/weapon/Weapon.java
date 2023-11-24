@@ -49,15 +49,23 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Artorius;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Bloody;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Boiling;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Breeder;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Dial;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Form;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Highest;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.LightOf;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Mountain;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Patriot;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Rhine;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Shadow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Sylvestris;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Table;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
@@ -488,11 +496,14 @@ abstract public class Weapon extends KindOfWeapon {
 
 		if(Dungeon.isSPChallenged(SPChallenges.CHIMERA)){
 			float chiRoll = Random.Float();
-			if (chiRoll < 0.3f) {
+			if (chiRoll < 0.5f) {
 				chimera();
-				if(chiRoll < 0.1f){
+				if(chiRoll < 0.25f){
 					chimera();
-					if(chiRoll < 0.03f){
+					if(chiRoll<0.01f){
+						chimera(Chimera.randomHidden());
+					}
+					else if(chiRoll < 0.125f){
 						chimera();
 					}
 				}
@@ -750,20 +761,25 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 
 		private static final Class<?>[] common = new Class<?>[]{
-				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class
+				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class, Dial.class
 		};
 
 		private static final Class<?>[] uncommon = new Class<?>[]{
-				EX.class, Winter.class, Flame.class, Rhine.class, Highest.class, Table.class, LightOf.class
+				EX.class, Winter.class, Flame.class, Rhine.class, Highest.class, Table.class, LightOf.class, Sylvestris.class,
+				Hyphen200.class, Form.class
 		};
 
 		private static final Class<?>[] rare = new Class<?>[]{
-				Assault.class, Boiling.class, Shadow.class, Surrender.class, Artorius.class, Teller.class
+				Assault.class, Boiling.class, Shadow.class, Surrender.class, Artorius.class, Teller.class, Horoscope.class,
+				Breeder.class, Patriot.class
+		};
+		private static final Class<?>[] hidden = new Class<?>[]{
+				Mountain.class
 		};
 		private static final float[] typeChances = new float[]{
-				50, //12.5% each
-				40, //6.67% each
-				10  //3.33% each
+				50,
+				35,
+				15
 		};
 		@SuppressWarnings("unchecked")
 		public static Chimera random( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
@@ -810,6 +826,20 @@ abstract public class Weapon extends KindOfWeapon {
 		@SuppressWarnings("unchecked")
 		public static Chimera randomRare( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
 			ArrayList<Class<?>> chis = new ArrayList<>(Arrays.asList(rare));
+			if(toIgnore != null){
+				for(ArrayList<Class<? extends Chimera>> c : toIgnore){
+					chis.removeAll(c);
+				}
+			}
+			if (chis.isEmpty()) {
+				return random();
+			} else {
+				return (Chimera) Reflection.newInstance(Random.element(chis));
+			}
+		}
+		@SuppressWarnings("unchecked")
+		public static Chimera randomHidden( ArrayList<Class<? extends Chimera>> ... toIgnore ) {
+			ArrayList<Class<?>> chis = new ArrayList<>(Arrays.asList(hidden));
 			if(toIgnore != null){
 				for(ArrayList<Class<? extends Chimera>> c : toIgnore){
 					chis.removeAll(c);

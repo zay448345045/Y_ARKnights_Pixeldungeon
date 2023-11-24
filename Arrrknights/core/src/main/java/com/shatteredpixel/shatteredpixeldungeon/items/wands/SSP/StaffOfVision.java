@@ -138,6 +138,7 @@ public class StaffOfVision extends Wand {
 
         private void observe(){
             GameScene.updateFog(this.pos, 6+wandLevel);
+            GameScene.afterObserve();
         }
 
         @Override
