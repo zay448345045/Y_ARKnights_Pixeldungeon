@@ -32,14 +32,15 @@ public class SPChallenges {
     public static final int HONOR				= 2;
     public static final int SPITE				= 4;
     public static final int CHIMERA				= 8;
-    public static final int MAX_VALUE           = 15;
+    public static final int SWARMS				= 16;
+    public static final int MAX_VALUE           = 31;
 
     public static final String[] NAME_IDS = {
-            "chimera","glass","honor","spite"
+            "chimera","glass","honor","spite","swarms"
     };
 
     public static final int[] MASKS = {
-            CHIMERA,GLASS,HONOR,SPITE
+            CHIMERA,GLASS,HONOR,SPITE,SWARMS
     };
 
 //    public static int activeSPChallenges(){

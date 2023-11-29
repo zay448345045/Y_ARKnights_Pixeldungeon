@@ -35,6 +35,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CustomeSet;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Rhine;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -116,7 +118,8 @@ public class MirrorImage extends NPC {
 		}
 
 		if (Dungeon.hero.belongings.getItem(CustomeSet.class) != null) {
-			if (Dungeon.hero.belongings.weapon instanceof RoundShield && Dungeon.hero.belongings.getItem(CustomeSet.class).isEquipped(Dungeon.hero)) {
+			if ((Dungeon.hero.belongings.weapon instanceof RoundShield || (Dungeon.hero.belongings.weapon!=null && ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Rhine.class)))
+					&& Dungeon.hero.belongings.getItem(CustomeSet.class).isEquipped(Dungeon.hero)) {
 				damage *= 1.25f;
 		}
 	}

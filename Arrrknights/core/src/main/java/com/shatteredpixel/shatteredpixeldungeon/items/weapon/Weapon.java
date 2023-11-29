@@ -48,8 +48,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Archery;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Artorius;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Bloody;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Blossoming;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Boiling;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Breeder;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Clush;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Dial;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
@@ -617,7 +619,8 @@ abstract public class Weapon extends KindOfWeapon {
 
 		protected float procChanceMultiplier( Char attacker ){
 			float multi = 1f;
-			if (Dungeon.hero.belongings.weapon instanceof ThermiteBlade && Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
+			if ((Dungeon.hero.belongings.weapon instanceof ThermiteBlade || (((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Thermit.class)))
+					&& Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
 				if (Dungeon.hero.belongings.getItem(IsekaiItem.class).isEquipped(Dungeon.hero))
 					multi += 2;
 			}
@@ -761,12 +764,12 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 
 		private static final Class<?>[] common = new Class<?>[]{
-				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class, Dial.class
+				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class, Dial.class, Blossoming.class
 		};
 
 		private static final Class<?>[] uncommon = new Class<?>[]{
 				EX.class, Winter.class, Flame.class, Rhine.class, Highest.class, Table.class, LightOf.class, Sylvestris.class,
-				Hyphen200.class, Form.class
+				Hyphen200.class, Form.class, Clush.class
 		};
 
 		private static final Class<?>[] rare = new Class<?>[]{
@@ -777,9 +780,9 @@ abstract public class Weapon extends KindOfWeapon {
 				Mountain.class
 		};
 		private static final float[] typeChances = new float[]{
-				50,
+				45,
 				35,
-				15
+				20
 		};
 		@SuppressWarnings("unchecked")
 		public static Chimera random( ArrayList<Class<? extends Chimera>> ... toIgnore ) {

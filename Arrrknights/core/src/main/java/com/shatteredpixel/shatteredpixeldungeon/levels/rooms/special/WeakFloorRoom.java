@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Dreamfoil;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.watabou.noosa.Tilemap;
 import com.watabou.utils.Point;
@@ -70,6 +71,7 @@ public class WeakFloorRoom extends SpecialRoom {
 		CustomTilemap vis = new HiddenWell();
 		vis.pos(well.x, well.y);
 		level.customTiles.add(vis);
+		level.addItemToSpawn(new Dreamfoil.Seed());
 	}
 
 	public static class HiddenWell extends CustomTilemap {

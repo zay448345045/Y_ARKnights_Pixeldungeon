@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -23,6 +24,7 @@ public class Horoscope extends Weapon.Chimera {
     @Override
     public float accFactor(){return 1.15f;}
     public int starpower = 0 ;
+    public int count = 0;
     private int starpowercap = 3;
     @Override
     public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
@@ -47,17 +49,24 @@ public class Horoscope extends Weapon.Chimera {
         return damage;
     }
 
-    public class HoroscopeCharge extends Buff {
+    public void addCount(){
+        if(starpower<starpowercap){
+            count++;
+            if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class) != null) {
+                if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class).isEquipped(Dungeon.hero)) {
+                    count++;
+                }
+            }
+            if(count>=2) starpower++;
+        }
+    }
+    public void clearCount(){
+        count = 0;
+    }
+
+    public static class HoroscopeCharge extends Buff {
         private int count = 0;
         public int pos = -1;
-        public int getCount(){return count;}
-        public void addCount(){
-            count++;
-            if(count==2 && starpower<starpowercap){
-                count = 0;
-                starpower++;
-            }
-        }
         @Override
         public boolean act() {
             if (pos == -1) pos = target.pos;

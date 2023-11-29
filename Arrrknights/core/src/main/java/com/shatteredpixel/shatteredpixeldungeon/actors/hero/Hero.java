@@ -989,6 +989,7 @@ public class Hero extends Char {
     @Override
     public void spend(float time) {
         justMoved = false;
+        justAttacked = false;
         TimekeepersHourglass.timeFreeze freeze = buff(TimekeepersHourglass.timeFreeze.class);
         if (freeze != null) {
             freeze.processTime(time);
@@ -1585,7 +1586,13 @@ public class Hero extends Char {
                 sprite.showStatus(CharSprite.DEFAULT, Messages.get(this, "wait"));
             }
             if(belongings.weapon!=null && ((Weapon)belongings.weapon).hasChimera(Horoscope.class)){
-                Buff.affect(this, Horoscope.HoroscopeCharge.class).addCount();
+                if(buff(Horoscope.HoroscopeCharge.class)!=null){
+                    ((Horoscope)(((Weapon) belongings.weapon).theChi(Horoscope.class))).addCount();
+                }else {
+                    ((Horoscope)(((Weapon) belongings.weapon).theChi(Horoscope.class))).clearCount();
+                    Buff.affect(this, Horoscope.HoroscopeCharge.class);
+                    ((Horoscope)(((Weapon) belongings.weapon).theChi(Horoscope.class))).addCount();
+                }
             }
         }
         resting = fullRest;
@@ -2113,6 +2120,7 @@ public class Hero extends Char {
     //FIXME this is a fairly crude way to track this, really it would be nice to have a short
     //history of hero actions
     public boolean justMoved = false;
+    public boolean justAttacked = false;
 
     private boolean getCloser(final int target) {
 
@@ -2631,6 +2639,7 @@ public class Hero extends Char {
 
         Invisibility.dispel();
         spend(attackDelay());
+        justAttacked = true;
 
         if (Dungeon.hero.hasTalent(Talent.SPARKOFLIFE)) {
             if (1 + Dungeon.hero.pointsInTalent(Talent.SPARKOFLIFE) > Random.Int(33)) {

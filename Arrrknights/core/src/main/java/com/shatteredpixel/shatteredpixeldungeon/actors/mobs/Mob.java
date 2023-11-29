@@ -52,6 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
@@ -145,6 +146,7 @@ public abstract class Mob extends Char {
 	protected Char enemy;
 	protected boolean enemySeen;
 	protected boolean alerted = false;
+	protected boolean generated = false;
 
 	protected static final float TIME_TO_WAKE_UP = 1f;
 	
@@ -152,6 +154,7 @@ public abstract class Mob extends Char {
 	private static final String SEEN	= "seen";
 	private static final String TARGET	= "target";
 	private static final String MAX_LVL	= "max_lvl";
+	private static final String GENERATED	= "generated";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -172,6 +175,7 @@ public abstract class Mob extends Char {
 		bundle.put( SEEN, enemySeen );
 		bundle.put( TARGET, target );
 		bundle.put( MAX_LVL, maxLvl );
+		bundle.put( GENERATED, generated );
 	}
 	
 	@Override
@@ -197,6 +201,8 @@ public abstract class Mob extends Char {
 		target = bundle.getInt( TARGET );
 
 		if (bundle.contains(MAX_LVL)) maxLvl = bundle.getInt(MAX_LVL);
+
+		generated = bundle.getBoolean( GENERATED );
 	}
 	
 	public CharSprite sprite() {
@@ -205,7 +211,7 @@ public abstract class Mob extends Char {
 	
 	@Override
 	protected boolean act() {
-		
+		if(Dungeon.isSPChallenged(SPChallenges.SWARMS)){swarmsSpawn();}
 		super.act();
 		
 		boolean justAlerted = alerted;
@@ -1360,6 +1366,42 @@ public abstract class Mob extends Char {
 	
 	public static void clearHeldAllies(){
 		heldAllies.clear();
+	}
+	private void swarmsSpawn(){
+		if (!generated){
+			ArrayList<Integer> candidates = new ArrayList<>();
+
+			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
+			for (int n : neighbours) {
+				if (Dungeon.level.passable[n] && Actor.findChar( n ) == null) {
+					candidates.add( n );
+				}
+			}
+
+			if (!candidates.isEmpty()){
+				Mob child = Reflection.newInstance( this.getClass() );
+				child.generated = true;
+				this.generated = true;
+				child.HT=(int)Math.ceil(child.HT/2f);
+				this.HT=(int)Math.ceil(this.HT/2f);
+				if (state != SLEEPING) {
+					child.state = child.WANDERING;
+				}
+
+				child.pos = Random.element( candidates );
+
+				Dungeon.level.occupyCell(child);
+
+				GameScene.add( child );
+				if (sprite.visible) {
+					Actor.addDelayed( new Pushing( child, pos, child.pos ), -1 );
+				}
+
+				for (Buff b : buffs(ChampionEnemy.class)){
+					Buff.affect( child, b.getClass());
+				}
+			}
+		}
 	}
 }
 

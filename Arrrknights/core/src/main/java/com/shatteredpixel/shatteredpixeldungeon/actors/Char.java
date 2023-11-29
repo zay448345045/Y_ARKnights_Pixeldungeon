@@ -108,6 +108,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Song;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Sylvestris;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
@@ -354,7 +355,9 @@ public abstract class Char extends Actor {
 				if (h.belongings.weapon!=null && ((Weapon)h.belongings.weapon).hasChimera(Thermit.class)) dr = 0;
 
 				if (h.belongings.getItem(RingOfTenacity.class) != null) {
-					if (h.belongings.getItem(RingOfTenacity.class).isEquipped(Dungeon.hero) && h.belongings.weapon instanceof FolkSong) {
+					if (h.belongings.getItem(RingOfTenacity.class).isEquipped(Dungeon.hero) &&
+							(h.belongings.weapon instanceof FolkSong || (h.belongings.weapon!=null && ((Weapon)h.belongings.weapon).hasChimera(Song.class)))
+					) {
 						dr /= 2;
 					}
 				}

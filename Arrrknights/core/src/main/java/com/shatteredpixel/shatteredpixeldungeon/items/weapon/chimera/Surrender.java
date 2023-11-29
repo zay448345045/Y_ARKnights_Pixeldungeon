@@ -24,6 +24,10 @@ public class Surrender extends Weapon.Chimera {
         float healPer = 0.12f;
         int thisHP = attacker.HP;
         int thisHT = attacker.HT;
+        if (Dungeon.hero.belongings.getItem(RingOfEvasion.class) != null) {
+            if (Dungeon.hero.belongings.getItem(RingOfEvasion.class).isEquipped(Dungeon.hero)) {
+                healPer = 0.18f;
+            }}
 
         if (thisHP <= thisHT/4) {
             damage *= 1.5f;

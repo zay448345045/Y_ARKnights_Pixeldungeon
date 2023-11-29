@@ -5,9 +5,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Web;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -71,11 +73,19 @@ public class Artorius extends Weapon.Chimera {
         }
 
         int dmg = Math.round(damage*1.2f);
+        if(isSetbouns(attacker)) dmg *= 1.3f;
         for (Char ch : chars) {
             ch.damage(dmg, this );
             ch.sprite.centerEmitter().burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
             ch.sprite.flash();
         }
         return damage;
+    }
+    private boolean isSetbouns(Char attacker) {
+        if (attacker instanceof Hero && Dungeon.hero.belongings.getItem(RingOfMistress.class) != null) {
+            if (Dungeon.hero.belongings.getItem(RingOfMistress.class).isEquipped(Dungeon.hero))
+                return true;
+        }
+        return false;
     }
 }

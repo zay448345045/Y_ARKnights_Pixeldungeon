@@ -25,6 +25,12 @@ public class LightOf extends Weapon.Chimera {
             Buff.affect(defender, Vulnerable.class, 3f); }
 
         if (defender.buff(Vulnerable.class) != null) {
+            if (Dungeon.hero.belongings.getItem(RingOfSunLight.class) != null && Dungeon.hero.belongings.getItem(RingOfHaste.class) != null) {
+                if (Dungeon.hero.belongings.getItem(RingOfSunLight.class).isEquipped(Dungeon.hero) && Dungeon.hero.belongings.getItem(RingOfHaste.class).isEquipped(Dungeon.hero)) {
+                    damage += attacker.damageRoll() / 2;
+                    return damage;
+                }
+            }
             damage += attacker.damageRoll() / 4;
         }
 

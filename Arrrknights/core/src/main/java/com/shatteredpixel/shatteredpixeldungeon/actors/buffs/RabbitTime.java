@@ -100,6 +100,7 @@ public class RabbitTime extends Buff{
 
     private static final String PRESSES = "presses";
     private static final String LEFT = "left";
+    private static final String TOTALTIME = "totaltime";
 
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -111,6 +112,7 @@ public class RabbitTime extends Buff{
         bundle.put( PRESSES , values );
 
         bundle.put( LEFT, left);
+        bundle.put( TOTALTIME, totaltime);
     }
 
     @Override
@@ -122,5 +124,6 @@ public class RabbitTime extends Buff{
             presses.add(value);
 
         left = bundle.getFloat(LEFT);
+        totaltime = bundle.getFloat(TOTALTIME);
     }
 }

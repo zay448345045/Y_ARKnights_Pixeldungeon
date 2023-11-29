@@ -236,6 +236,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 					n.cursedKnown = w.cursedKnown;
 					n.cursed = w.cursed;
 					n.augment = w.augment;
+					n.chimeras = w.chimeras;
 					if (w.isEquipped(Dungeon.hero)) {
 						w.cursed = false; //to allow it to be unequipped
 						((EquipableItem) w).doUnequip(Dungeon.hero, false);

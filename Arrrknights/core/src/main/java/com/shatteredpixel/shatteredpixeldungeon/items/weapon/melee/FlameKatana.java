@@ -39,6 +39,7 @@ public class FlameKatana extends MeleeWeapon {
             n.cursedKnown = cursedKnown;
             n.cursed = cursed;
             n.augment = augment;
+            n.chimeras = chimeras;
             n.level(lvl);
 
             Dungeon.hero.belongings.weapon = n;
