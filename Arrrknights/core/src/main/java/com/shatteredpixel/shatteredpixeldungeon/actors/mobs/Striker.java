@@ -25,6 +25,7 @@ public class Striker extends Mob{
 
     @Override
     protected boolean canAttack(Char enemy) {
+        if (super.canAttack(enemy)) return true;//change from budding
         return this.fieldOfView[enemy.pos] && Dungeon.level.distance(this.pos, enemy.pos) <= 2;
     }
 

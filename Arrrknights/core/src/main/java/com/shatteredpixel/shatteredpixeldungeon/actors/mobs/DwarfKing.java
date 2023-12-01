@@ -697,7 +697,7 @@ public class DwarfKing extends Mob {
 
 		@Override
 		public void fx(boolean on) {
-			if (on && particles == null) {
+			if (on && (particles == null || particles.parent == null)) {//change from budding,shattered
 				particles = CellEmitter.get(pos);
 
 				if (summon == DKWarlock.class){

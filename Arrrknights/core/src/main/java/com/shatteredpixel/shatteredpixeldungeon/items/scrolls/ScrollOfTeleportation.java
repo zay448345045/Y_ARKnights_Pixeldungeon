@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogDzewa;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -119,6 +120,7 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 
 	public static void teleportChar_unobstructed( Char ch ) {
+		if (ch instanceof YogDzewa) return;//change from budding
 		int count = 20;
 		int pos;
 		do {
@@ -227,7 +229,7 @@ public class ScrollOfTeleportation extends Scroll {
 			Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 		}
 
-		ch.move( pos );
+		ch.move( pos, false);
 		if (ch.pos == pos) ch.sprite.place( pos );
 
 		if (ch.invisible == 0) {

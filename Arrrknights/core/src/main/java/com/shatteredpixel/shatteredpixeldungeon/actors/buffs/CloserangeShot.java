@@ -41,10 +41,15 @@ public class CloserangeShot extends Buff {
     public String desc()
     {
         if (actived)
-        return Messages.get(this, "active");
+            return Messages.get(this, "active");
         else { return Messages.get(this, "passive"); }
     }
-
+    @Override
+    public boolean act(){//change from budding
+        spend(TICK);
+        isActived();
+        return true;
+    }
     public void isActived() {
         int range = 2;
         if (Dungeon.hero.hasTalent(Talent.ZERO_RANGE_SHOT)) range -= 1;
@@ -58,8 +63,8 @@ public class CloserangeShot extends Buff {
                     isactive = true;
                 }}}
 
-        if (isactive) actived = true;
-        else actived = false;
+        if (isactive) {actived = true;}
+        else {actived = false;}
     }
 
     public boolean state() {

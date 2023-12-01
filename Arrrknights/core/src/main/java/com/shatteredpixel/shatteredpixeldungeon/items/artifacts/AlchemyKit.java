@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -158,8 +159,9 @@ public class AlchemyKit extends Artifact {
 
         charge = 0;
         if (level() < levelCap) upgrade();
-
+        updateQuickslot();//change from budding
         GLog.h(Messages.get(AlchemyKit.class, "getItem"));
+        Talent.onArtifactUsed(Dungeon.hero);
     }
 
     private int AddItem(Item item) {

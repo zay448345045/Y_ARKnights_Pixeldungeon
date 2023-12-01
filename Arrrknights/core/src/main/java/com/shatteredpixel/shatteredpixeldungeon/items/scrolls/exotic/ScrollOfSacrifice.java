@@ -35,18 +35,18 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
 public class ScrollOfSacrifice extends ExoticScroll {
-	
+
 	{
 		icon = ItemSpriteSheet.Icons.SCROLL_CONFUSION;
 	}
-	
+
 	@Override
 	public void doRead() {
 		int Sacrifice = 0;
 
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (!mob.properties().contains(Char.Property.BOSS) && !mob.properties().contains(Char.Property.MINIBOSS)
-			&& Dungeon.level.heroFOV[mob.pos] && Sacrifice < 3) {
+					&& Dungeon.level.heroFOV[mob.pos] && Sacrifice < 3) {
 				mob.damage(9999, this);
 				mob.sprite.bloodBurstA(mob.sprite.center(), 6);
 				Sacrifice++;
@@ -60,11 +60,11 @@ public class ScrollOfSacrifice extends ExoticScroll {
 		}
 
 		identify();
-		
+
 		curUser.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
 		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
+
 		readAnimation();
 	}
-	
+
 }

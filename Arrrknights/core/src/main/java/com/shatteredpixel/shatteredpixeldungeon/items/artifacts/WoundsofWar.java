@@ -77,6 +77,7 @@ public class WoundsofWar extends Artifact {
                     if (exp >= 50 + (level()/3) * 50 && level() < levelCap) upgrade();
 
                     curUser.spendAndNext(1f);
+                    Talent.onArtifactUsed(Dungeon.hero);
                 }
             }
         }

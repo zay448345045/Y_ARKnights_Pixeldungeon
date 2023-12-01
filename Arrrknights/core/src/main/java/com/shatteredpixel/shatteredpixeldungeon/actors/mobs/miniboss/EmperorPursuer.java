@@ -157,13 +157,16 @@ public class EmperorPursuer extends Mob {
     private boolean UseAbility() {
         // 폭발 > 국가 순
 
-        if (enemy == null) return true;
-
+        if (enemy == null) {
+            Burstpos = -1;
+            BurstTime = 0;//change from budding
+            return true;
+        }
         //폭발
         if (BurstCoolDown <= 0) {
             if (Burstpos == -1) {
                 // 위치 미지정시, 이번 턴에는 폭발을 일으킬 지점을 정합니다.
-                Burstpos = Dungeon.hero.pos;
+                Burstpos = enemy.pos;//change from budding
                 sprite.parent.addToBack(new TargetedCell(Burstpos, 0xFF0000));
 
                 for (int i : PathFinder.NEIGHBOURS9) {

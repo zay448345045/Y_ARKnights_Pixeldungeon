@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Faust;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -74,9 +75,9 @@ public class Sniper extends Mob {
     }
 
     @Override
-    public void move(int step) {
+    public void move(int step, boolean travelling) {
         charge = 0;
-        super.move(step);
+        super.move(step, travelling);
     }
 
     @Override
@@ -92,6 +93,11 @@ public class Sniper extends Mob {
     public void rollToDropLoot() {
         lootChance *= (5f - Dungeon.LimitedDrops.SNIPER_HP.count) / 5f;
         super.rollToDropLoot();
+    }
+    @Override
+    protected Item createLoot(){//change from budding
+        Dungeon.LimitedDrops.SNIPER_HP.count++;
+        return super.createLoot();
     }
 
     private static final String SKILLCD   = "charge";

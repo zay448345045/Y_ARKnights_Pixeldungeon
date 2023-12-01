@@ -73,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfPrismaticLight
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfTransfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Echeveria;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.KazemaruWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.DisintegrationTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GrimTrap;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -116,6 +117,7 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add(StaffOfGreyy.class);
 		RESISTS.add(StaffOfLeaf.class);
 		RESISTS.add(StaffOfMayer.class);
+		RESISTS.add(StaffOfMayer.Ward.class);
 		RESISTS.add(StaffOfMudrock.class);
 		RESISTS.add(StaffOfShining.class);
 		RESISTS.add(StaffOfSkyfire.class);
@@ -136,6 +138,7 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add( YogFist.BrightFist.LightBeam.class );
 		RESISTS.add( YogFist.DarkFist.DarkBolt.class );
 		RESISTS.add( Agent.class );
+		RESISTS.add( KazemaruWeapon.KazemaruSummon.class);
 		RESISTS.add( WaveCaster.WaterBolt.class );
 		RESISTS.add( AcidSlug_A.AcidBolt.class );
 		RESISTS.add( Pompeii.Blast.class );

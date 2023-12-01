@@ -195,7 +195,7 @@ public abstract class Level implements Bundlable {
 
 		Random.pushGenerator( Dungeon.seedCurDepth() );
 
-		if (Dungeon.depth != 27 || Dungeon.depth != 28 || Dungeon.depth != 29 ) {
+		if (Dungeon.depth != 27 && Dungeon.depth != 28 && Dungeon.depth != 29 ) {
 			if (!(Dungeon.bossLevel())) {
 
 				addItemToSpawn(Generator.random(Generator.Category.FOOD));
@@ -479,10 +479,10 @@ public abstract class Level implements Bundlable {
 		}
 
 		Mob m = Reflection.newInstance(mobsToSpawn.remove(0));
-		if (Dungeon.isChallenged(Challenges.CHAMPION_ENEMIES) && !(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
+		if (!(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
 			ChampionEnemy.rollForChampion(m);
 		}
-		if (Dungeon.isSPChallenged(SPChallenges.HONOR) && !(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
+		if (!(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
 			ChampionEnemy.rollForHonor(m);
 		}
 		return m;
@@ -509,6 +509,10 @@ public abstract class Level implements Bundlable {
 				Buff.affect(Dungeon.hero, RadiantKnight.class, RadiantKnight.DURATION);
 				GameScene.flash( 0x80FFFFFF );
 				Sample.INSTANCE.play(Assets.Sounds.SKILL_BABYNIGHT);
+			}
+		}else {//change from budding
+			if (Dungeon.hero.buff(LockedFloor.class)==null){
+				Buff.affect(Dungeon.hero, LockedFloor.class);
 			}
 		}
 	}
@@ -1200,10 +1204,8 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (TalismanOfForesight.CharAwareness a : c.buffs(TalismanOfForesight.CharAwareness.class)){
-				if (Dungeon.depth != a.depth) continue;
 				Char ch = (Char) Actor.findById(a.charID);
 				if (ch == null) {
-					a.detach();
 					continue;
 				}
 				int p = ch.pos;

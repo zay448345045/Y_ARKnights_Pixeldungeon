@@ -168,9 +168,10 @@ abstract public class Weapon extends KindOfWeapon {
 			float enemyResist = 1;
 			enemyResist *= 1 + 2*Math.pow(defender.HP/(float)defender.HT, 2);
 
-			float Resists = 100 * enemyResist;
+			float Resists = 100 * enemyResist, dd=RingOfDominate.Dominate(Dungeon.hero);
+			int rr=Random.Int((int)Resists);
 
-			if (Random.Int((int)Resists) < RingOfDominate.Dominate(Dungeon.hero)) {
+			if (rr<dd) {
 				if (defender.isAlive() && !defender.isImmune(Corruption.class) && defender.buff(Corruption.class) == null && defender.alignment != Char.Alignment.ALLY) {
 					Buff.affect(defender, Corruption.class);
 					defender.HP = defender.HT;

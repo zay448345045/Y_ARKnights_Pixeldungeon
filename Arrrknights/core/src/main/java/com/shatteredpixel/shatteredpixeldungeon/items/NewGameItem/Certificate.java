@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -18,7 +20,9 @@ public class Certificate extends Item {
     {
         image = ItemSpriteSheet.INFO_CERTI;
     }
-
+    public Certificate(){//change from budding
+        this.quantity=1;
+    }
     public Certificate( int value ) {
         this.quantity = value;
         if (Challenges.activeChallenges() > 7) this.quantity += 8;
@@ -26,7 +30,7 @@ public class Certificate extends Item {
         else if (Challenges.activeChallenges() > 2) this.quantity += 2;
         else if (Challenges.activeChallenges() > 0) this.quantity += 1;
 
-        if (Dungeon.eazymode == 1) this.quantity = 0;
+        if (Dungeon.eazymode == 1 || Dungeon.isChallenged(TEST) || !Dungeon.customSeedText.isEmpty()) this.quantity = 0;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class Certificate extends Item {
     }
 
     public static void specialEndingBouns() {
-        if (Dungeon.eazymode != 1) {
+        if (Dungeon.eazymode != 1 && !Dungeon.isChallenged(TEST) && Dungeon.customSeedText.isEmpty()) {
 
             int bouns = 0;
             if (Challenges.activeChallenges() > 7) bouns += 50;

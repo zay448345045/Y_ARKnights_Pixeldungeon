@@ -60,8 +60,8 @@ public class CustomeSet extends Artifact {
                     updateQuickslot();
 
                     if (level() < levelCap) upgrade();
-
                     curUser.spendAndNext(1f);
+                    Talent.onArtifactUsed(Dungeon.hero);
                 }
             }
         }

@@ -129,6 +129,7 @@ public class HornOfPlenty extends Artifact {
 				Talent.onFoodEaten(hero, satietyPerCharge * chargesToUse, this);
 
 				Badges.validateFoodEaten();
+				Badges.validateRoseUnlock();//change from budding
 
 				if (charge >= 15)       image = ItemSpriteSheet.ARTIFACT_HORN4;
 				else if (charge >= 10)  image = ItemSpriteSheet.ARTIFACT_HORN3;

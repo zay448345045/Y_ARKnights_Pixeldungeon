@@ -81,7 +81,7 @@ public class StaffOfWeedy extends DamageWand {
 
                 if (ch.isAlive() && ch.pos == bolt.collisionPos + i && ch != curUser)  {
                     Ballistica trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
-                    int strength = 1 + Math.round(buffedLvl() / 2f) + Math.round(curCharges / 4);
+                    int strength = 1 + Math.round(buffedLvl() / 2f) + Math.round(curCharges / 4f);
                     throwChar(ch, trajectory, strength, false);
                 }
             }
@@ -163,9 +163,10 @@ public class StaffOfWeedy extends DamageWand {
                 }
                 int oldPos = ch.pos;
                 ch.pos = newPos;
-                if (finalCollided && ch.isAlive()) {
+                if (finalCollided && ch.isActive()) {
                     ch.damage(Random.NormalIntRange(2*finalDist, 6*finalDist), this);
-                    Paralysis.prolong(ch, Paralysis.class, 1 + finalDist/2f);
+                    if (ch.isActive())
+                        Paralysis.prolong(ch, Paralysis.class, 1 + finalDist/2f);
                 }
                 if (closeDoors && Dungeon.level.map[oldPos] == Terrain.OPEN_DOOR){
                     Door.leave(oldPos);

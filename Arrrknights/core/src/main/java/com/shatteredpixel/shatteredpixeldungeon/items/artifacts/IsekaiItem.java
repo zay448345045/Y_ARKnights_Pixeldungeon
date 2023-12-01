@@ -5,6 +5,7 @@ import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFlux
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
@@ -47,6 +48,7 @@ public class IsekaiItem extends Artifact {
                 Dungeon.level.drop(new Bomb(), Dungeon.hero.pos).sprite.drop(Dungeon.hero.pos);
                 charge = 0;
                 if (level() < levelCap) upgrade();
+                Talent.onArtifactUsed(Dungeon.hero);
                 updateQuickslot();
             }
         }

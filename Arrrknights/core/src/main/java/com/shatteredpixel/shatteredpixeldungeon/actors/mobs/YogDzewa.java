@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -457,7 +459,7 @@ public class YogDzewa extends Mob {
 		if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS)) Badges.validateroaringflare();
 		if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.mboss4 == 1 && Dungeon.mboss9 == 1 && Dungeon.mboss14 == 1 && Dungeon.mboss19 == 1)
 			Badges.validateeviltimeend();
-		if (Badges.is_not_test)//change from budding
+		if (!Dungeon.isChallenged(TEST))//change from budding
 			Badges.validateChenUnlock();
 		Dungeon.level.drop(new Certificate(12), pos).sprite.drop(pos);
 	}

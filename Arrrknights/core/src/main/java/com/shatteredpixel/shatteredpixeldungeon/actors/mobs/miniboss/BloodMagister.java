@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
@@ -86,9 +87,11 @@ public class BloodMagister extends Mob {
         if (Dungeon.depth >= 14 && !Dungeon.bossLevel()) {
 
             BloodMagister Magister = new BloodMagister();
+            int mpos=-1;
             do {
-                Magister.pos = level.randomRespawnCell(Magister);
-            } while (Magister.pos == -1);
+                mpos=level.randomRespawnCell(Magister);
+            } while (mpos == -1 || Actor.findChar(mpos)!=null);//change from budding
+            Magister.pos = mpos;
             level.mobs.add(Magister);
         }
     }

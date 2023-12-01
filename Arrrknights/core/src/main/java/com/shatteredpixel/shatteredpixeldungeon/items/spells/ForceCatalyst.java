@@ -32,7 +32,9 @@ public class ForceCatalyst extends Spell {
     }
     @Override//change from budding
     public ArrayList<String> actions(Hero hero ) {
-        return super.actions( hero );
+        ArrayList<String> actions = super.actions( hero );
+        actions.remove( AC_CAST );
+        return actions( hero );
     }
     @Override
     protected void onCast(Hero hero) {

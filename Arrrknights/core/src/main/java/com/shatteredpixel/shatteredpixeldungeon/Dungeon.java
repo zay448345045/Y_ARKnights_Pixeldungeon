@@ -50,6 +50,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.QuestCat;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMayer;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfVision;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CavesLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CityLevel;
@@ -769,6 +773,7 @@ public class Dungeon {
 
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
+		Actor.clear();//change from budding;shattered
 		Actor.restoreNextID( bundle );
 
 		quickslot.reset();
@@ -1000,7 +1005,6 @@ public class Dungeon {
 		}
 
 		for (TalismanOfForesight.CharAwareness c : hero.buffs(TalismanOfForesight.CharAwareness.class)){
-			if (Dungeon.depth != c.depth) continue;
 			Char ch = (Char) Actor.findById(c.charID);
 			if (ch == null) continue;
 			BArray.or( level.visited, level.heroFOV, ch.pos - 1 - level.width(), 3, level.visited );
@@ -1024,7 +1028,33 @@ public class Dungeon {
 			BArray.or( level.visited, level.heroFOV, a.pos - 1 + level.width(), 3, level.visited );
 			GameScene.updateFog(a.pos, 2);
 		}
+		for (Char ch : Actor.chars()){//change from budding,shattered
+			if (ch instanceof WandOfWarding.Ward
+					|| ch instanceof WandOfRegrowth.Lotus
+					|| ch instanceof StaffOfMayer.Ward
+					|| ch instanceof StaffOfVision.VisionWard){
+				x = ch.pos % level.width();
+				y = ch.pos / level.width();
 
+				//left, right, top, bottom
+				dist = ch.viewDistance+1;
+				l = Math.max( 0, x - dist );
+				r = Math.min( x + dist, level.width() - 1 );
+				t = Math.max( 0, y - dist );
+				b = Math.min( y + dist, level.height() - 1 );
+
+				width = r - l + 1;
+				height = b - t + 1;
+
+				pos = l + t * level.width();
+
+				for (int i = t; i <= b; i++) {
+					BArray.or( level.visited, level.heroFOV, pos, width, level.visited );
+					pos+=level.width();
+				}
+				GameScene.updateFog(ch.pos, dist);
+			}
+		}
 		GameScene.afterObserve();
 	}
 

@@ -78,6 +78,10 @@ public class SiestaBoss extends Mob {
 
     @Override
     protected boolean act() {
+        if(Dungeon.hero!=null){//change from budding
+            TalismanOfForesight.CharAwareness b = Dungeon.hero.buff(TalismanOfForesight.CharAwareness.class);
+            if(b!=null && b.charID==this.id()) Buff.detach(Dungeon.hero,b.getClass());
+        }
         if (phase == 0) {
             if (Dungeon.hero.viewDistance >= Dungeon.level.distance(pos, Dungeon.hero.pos)) {
                 Dungeon.observe();
@@ -104,7 +108,7 @@ public class SiestaBoss extends Mob {
     }
 
     @Override
-    public void move(int step) {
+    public void move(int step, boolean travelling) {
         return;
     }
 

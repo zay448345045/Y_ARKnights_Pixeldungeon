@@ -120,12 +120,12 @@ public class WandOfFireblast extends DamageWand {
 			if (ch.isAlive()) {
 				Buff.affect(ch, Burning.class).reignite(ch);
 				switch (chargesPerCast()) {
-					case 1:
+					case 1: default:
 						break; //no effects
 					case 2:
 						Buff.affect(ch, Cripple.class, 4f);
 						break;
-					case 3:
+					case 3: case 4:
 						Buff.affect(ch, Paralysis.class, 4f);
 						break;
 				}

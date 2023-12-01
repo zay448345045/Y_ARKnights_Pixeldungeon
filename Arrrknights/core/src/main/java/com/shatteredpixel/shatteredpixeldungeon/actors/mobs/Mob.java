@@ -1360,7 +1360,12 @@ public abstract class Mob extends Char {
 				} else {
 					ally.pos = pos;
 				}
-				
+				if (ally.sprite != null) ally.sprite.place(ally.pos);//change from budding,shattered
+
+				if (ally.fieldOfView == null || ally.fieldOfView.length != level.length()){
+					ally.fieldOfView = new boolean[level.length()];
+				}
+				Dungeon.level.updateFieldOfView( ally, ally.fieldOfView );
 			}
 		}
 		heldAllies.clear();

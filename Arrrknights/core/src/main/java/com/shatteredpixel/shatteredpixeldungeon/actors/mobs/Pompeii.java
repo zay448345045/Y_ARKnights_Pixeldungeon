@@ -245,7 +245,7 @@ public class Pompeii extends Mob {
 
             int spawnPos = -1;
             for (int i : PathFinder.NEIGHBOURS8) {
-                if (Actor.findChar(pos + i) == null) {
+                if (Actor.findChar(pos + i) == null && !Dungeon.level.solid[pos+i]) {//change from budding
                     if (spawnPos == -1 || Dungeon.level.trueDistance(Dungeon.hero.pos, spawnPos) > Dungeon.level.trueDistance(Dungeon.hero.pos, pos + i)) {
                         spawnPos = pos + i;
                     }
@@ -310,14 +310,16 @@ public class Pompeii extends Mob {
             if (volcanotime < 3) {
                 sprite.parent.addToBack(new TargetedCell(pos, 0xFF0000));
 
-                if (volcanotime == 0 || volcanotime == 2)
-                for (int i = 0; i < PathFinder.distance.length; i++) {
-                    if (PathFinder.distance[i] < Integer.MAX_VALUE) {
-                    int vol = Fire.volumeAt(i, Fire.class);
-                    if (vol < 4){
-                        sprite.parent.addToBack(new TargetedCell( i, 0xFF0000));
+                if (volcanotime == 0 || volcanotime == 2){
+                    for (int i = 0; i < PathFinder.distance.length; i++) {
+                        if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+                            int vol = Fire.volumeAt(i, Fire.class);
+                            if (vol < 4){
+                                sprite.parent.addToBack(new TargetedCell( i, 0xFF0000));
+                            }
+                        }
                     }
-                }}
+                }
                 volcanotime+=1;
                 spend(GameMath.gate(TICK, Dungeon.hero.cooldown(), 2*TICK));
                 return true;

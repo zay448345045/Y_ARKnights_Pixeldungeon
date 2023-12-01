@@ -38,7 +38,7 @@ public class Fanatic extends Mob {
     public Fanatic() {
         super();
 
-        HP = HT = Dungeon.depth * 5 - 8;
+        HP = HT = Math.max(1,Dungeon.depth * 5 - 8);//change from budding
         defenseSkill = Dungeon.depth;
     }
 

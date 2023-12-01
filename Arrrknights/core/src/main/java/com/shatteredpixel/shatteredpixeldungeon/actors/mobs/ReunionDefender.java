@@ -75,7 +75,7 @@ public class ReunionDefender extends Hound {
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
 		if ((enemySeen && state != SLEEPING && paralysed == 0)
 				&& ((src instanceof Wand && enemy == Dungeon.hero)
-				|| (src instanceof Char && enemy == src)
+				|| ((src instanceof Char && enemy == src)&& enemy.invisible == 0)
 				|| (src instanceof Weapon)
 		)){
 			GLog.n( Messages.get(this, "noticed") );

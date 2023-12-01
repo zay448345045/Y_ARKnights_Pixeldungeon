@@ -60,7 +60,9 @@ public enum Rankings {
 	public int wonNumber;
 
 	public void submit( boolean win, Class cause ) {
-
+		if(Dungeon.isChallenged(Challenges.TEST)){
+			return;
+		}
 		load();
 		
 		Record rec = new Record();

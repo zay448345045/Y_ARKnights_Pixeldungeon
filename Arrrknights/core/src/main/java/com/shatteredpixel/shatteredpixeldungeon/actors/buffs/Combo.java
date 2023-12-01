@@ -501,7 +501,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 			case CRUSH:
 				if (Dungeon.hero.belongings.weapon instanceof GunWeapon) {
 					flareUsed = true;
-					ActionIndicator.clearAction(Combo.this);
+					//ActionIndicator.clearAction(Combo.this);//change from budding
 					hero.spendAndNext(hero.attackDelay());
 				} else {
 					detach();

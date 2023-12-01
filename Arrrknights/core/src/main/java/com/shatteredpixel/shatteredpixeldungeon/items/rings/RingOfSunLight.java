@@ -16,7 +16,7 @@ public class RingOfSunLight extends Ring {
         if (isIdentified()) {
             return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (Math.pow(1.14f, soloBuffedBonus()) - 1f)));
         } else {
-            return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(8));
+            return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(14));
         }
     }
 

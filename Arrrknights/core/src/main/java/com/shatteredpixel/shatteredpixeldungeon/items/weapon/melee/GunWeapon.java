@@ -131,7 +131,7 @@ public class GunWeapon extends MeleeWeapon {
     }
 
     public int ShotDamageRoll() {
-        return Random.Int(shotmin(), shotmax());
+        return Random.IntRange(shotmin(), shotmax());
     }
     public void addAccessories(){
         Maccessories++;

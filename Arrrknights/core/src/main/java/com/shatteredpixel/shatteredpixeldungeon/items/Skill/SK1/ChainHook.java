@@ -69,6 +69,7 @@ public class ChainHook extends Skill {
         if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
             int dmg = Random.NormalIntRange(4, curUser.STR * 2);
             enemy.damage(dmg,enemy);
+            return;//change from budding
         }
 
         int bestPos = -1;

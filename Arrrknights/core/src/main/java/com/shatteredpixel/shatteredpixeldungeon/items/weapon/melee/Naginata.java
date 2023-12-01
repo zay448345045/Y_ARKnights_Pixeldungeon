@@ -36,7 +36,7 @@ public class Naginata extends MeleeWeapon {
     public int proc(Char attacker, Char defender, int damage) {
         return super.proc(attacker, defender, damage);
     }
-
+    public static class naginataSkill{}
     @Override
     public String desc() {
         String info = Messages.get(this, "desc");

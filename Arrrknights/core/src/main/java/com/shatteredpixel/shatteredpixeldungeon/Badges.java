@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
+
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
@@ -46,7 +48,6 @@ import java.util.List;
 public class Badges {
 
 	public static boolean Destoryd = false;
-	public static boolean is_not_test = !(Dungeon.isChallenged(Challenges.TEST));
 	public enum Badge {
 		MASTERY_WARRIOR,
 		MASTERY_MAGE,
@@ -767,8 +768,11 @@ public class Badges {
 					badge = Badge.BOSS_SLAIN_1_ROSECAT;
 					break;
 				case NEARL:
-						badge = Badge.BOSS_SLAIN_1_NEARL;
-						break;
+					badge = Badge.BOSS_SLAIN_1_NEARL;
+					break;
+				case CHEN://change from budding
+					badge=Badge.BOSS_SLAIN_1_CHEN;
+					break;
 				}
 				local.add( badge );
 				unlock(badge);
@@ -1292,14 +1296,14 @@ public class Badges {
 
 	//necessary in order to display the happy end badge in the surface scene
 	public static void silentValidateHappyEnd() {
-		if (!local.contains( Badge.HAPPY_END ) && is_not_test){//change from budding
+		if (!local.contains( Badge.HAPPY_END ) && !Dungeon.isChallenged(TEST)){//change from budding
 			local.add( Badge.HAPPY_END );
 		}
 	}
 
 	//하극상 배지용
 	public static void silentValidateFragging() {
-		if (!local.contains( Badge.FRAGGING ) && is_not_test){//change from budding
+		if (!local.contains( Badge.FRAGGING ) && !Dungeon.isChallenged(TEST)){//change from budding
 			local.add( Badge.FRAGGING );
 		}
 	}
@@ -1545,7 +1549,7 @@ public class Badges {
 
 	private static void displayBadge( Badge badge ) {
 		
-		if (badge == null/* || !Dungeon.customSeedText.isEmpty()*/ || !is_not_test) {
+		if (badge == null/* || !Dungeon.customSeedText.isEmpty()*/ || Dungeon.isChallenged(TEST)) {
 			return;
 		}
 		
@@ -1583,7 +1587,7 @@ public class Badges {
 	}
 	
 	public static void unlock( Badge badge ){
-		if (!isUnlocked(badge)/* && !Dungeon.customSeedText.isEmpty()*/ && is_not_test){
+		if (!isUnlocked(badge)/* && !Dungeon.customSeedText.isEmpty()*/ && !Dungeon.isChallenged(TEST)){
 			global.add( badge );
 			saveNeeded = true;
 		}

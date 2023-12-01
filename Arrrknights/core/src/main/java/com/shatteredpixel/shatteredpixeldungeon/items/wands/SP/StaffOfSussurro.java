@@ -107,7 +107,7 @@ public class StaffOfSussurro extends DamageWand {
         if (levelKnown)
             return Messages.get(this, "stats_desc", min(), max(), 2 + buffedLvl(), Math.max(chargeLeft, 0));
         else
-            return Messages.get(this, "stats_desc", 2, 3, 2, chargeLimit(Dungeon.hero.lvl));
+            return Messages.get(this, "stats_desc", 1, 3, 2, chargeLimit(Dungeon.hero.lvl));
     }
 
     private static final String TOTAL = "totChrgUsed";

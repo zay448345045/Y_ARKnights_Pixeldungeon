@@ -104,8 +104,6 @@ public class WalkieTalkie extends Item {
                 hero.spend(1f);
                 hero.busy();
                 hero.sprite.operate(hero.pos);
-
-                Talent.onArtifactUsed(hero);
             }
 
         } else if (ACE != null) GameScene.selectCell(ACEDirector);

@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -75,9 +76,11 @@ public class Sentinel extends Mob {
         if ( Dungeon.depth >= 4 && !Dungeon.bossLevel()) {
 
             Sentinel sentinel = new Sentinel();
+            int mpos=-1;//change from budding
             do {
-                sentinel.pos = level.randomRespawnCell(sentinel);
-            } while (sentinel.pos == -1);
+                mpos=level.randomRespawnCell(sentinel);
+            } while (mpos == -1 || Actor.findChar(mpos)!=null);
+            sentinel.pos = mpos;
             level.mobs.add(sentinel);
         }
     }

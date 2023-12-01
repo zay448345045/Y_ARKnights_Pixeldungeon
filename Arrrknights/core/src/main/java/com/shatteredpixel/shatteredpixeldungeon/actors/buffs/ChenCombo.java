@@ -206,20 +206,22 @@ public class ChenCombo extends Buff implements ActionIndicator.Action {
         } else {
 
             int dmg = target.damageRoll();
-            if (hits < 3 && hero.hasTalent(Talent.UP_EX3)) dmg *= 1 + hero.pointsInTalent(Talent.UP_EX3) * 0.1f;
+
 
             //variance in damage dealt
             switch (moveBeingUsed) {
                 case SKILL1:
+                    hits=-1;//change from budding
                     break;
                 case SKILL2:
+                    hits=-1;
                     break;
                 case SKILL3:
                     break;
             }
-
+            if (hits >=0 && hits < 3 && hero.hasTalent(Talent.UP_EX3)) dmg *= 1 + hero.pointsInTalent(Talent.UP_EX3) * 0.1f;
             dmg = enemy.defenseProc(target, dmg);
-            if (hits > 3 && !hero.hasTalent(Talent.UP_SP3) && Random.Int(2) > hero.pointsInTalent(Talent.UP_SP3)) dmg -= enemy.drRoll();
+            if (hits == 3 ||  Random.IntRange(1,3) > hero.pointsInTalent(Talent.UP_SP3)) dmg -= enemy.drRoll();//change from budding
 
             if (enemy.buff(Vulnerable.class) != null) {
                 dmg *= 1.33f;

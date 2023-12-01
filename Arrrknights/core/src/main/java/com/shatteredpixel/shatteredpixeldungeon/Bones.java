@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
+
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
@@ -53,7 +55,7 @@ public class Bones {
 		depth = Dungeon.depth;
 
 		//heroes drop no bones if they have the amulet, die far above their farthest depth, are challenged, or are playing with a custom seed.
-		if (Statistics.amuletObtained || (Statistics.deepestFloor - 5) >= depth || Dungeon.challenges > 0 || !Badges.is_not_test/* || !Dungeon.customSeedText.isEmpty()*/) {//change from budding
+		if (Statistics.amuletObtained || (Statistics.deepestFloor - 5) >= depth || Dungeon.challenges > 0 || Dungeon.isChallenged(TEST)/* || !Dungeon.customSeedText.isEmpty()*/) {//change from budding
 			depth = -1;
 			return;
 		}
@@ -142,7 +144,7 @@ public class Bones {
 
 		} else {
 			//heroes who are challenged cannot find bones
-			if (depth == Dungeon.depth && Dungeon.challenges == 0 /*&& Dungeon.customSeedText.isEmpty()*/ && Badges.is_not_test) {
+			if (depth == Dungeon.depth && Dungeon.challenges == 0 /*&& Dungeon.customSeedText.isEmpty()*/ && !Dungeon.isChallenged(TEST)) {
 				FileUtils.deleteFile( BONES_FILE );
 				depth = 0;
 				

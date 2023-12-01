@@ -54,7 +54,7 @@ public class Agent extends Mob {
     }
 
     @Override
-    public boolean attack(Char enemy) {
+    public boolean attack(Char enemy) {//change from budding
         if (enemy == null) return false;
 
         boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
@@ -71,21 +71,44 @@ public class Agent extends Mob {
         }
         else if (hit( this, enemy, true )) {
 
-            int dmg = damageRoll();
-            enemy.damage( dmg, this );
-            enemy.sprite.bloodBurstA( sprite.center(), dmg );
+            int effectiveDamage=damageRoll();//change from budding
+            if ( enemy.buff( Vulnerable.class ) != null){
+                effectiveDamage *= 1.33f;
+            }
+            effectiveDamage = attackProc( enemy, effectiveDamage );
+            if (visibleFight) {
+                if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
+                    Sample.INSTANCE.play(Assets.Sounds.HIT_SLASH, 1f, Random.Float(0.96f, 1.05f));
+                }
+            }
+            if (!enemy.isAlive()){
+                return true;
+            }
+            enemy.damage( effectiveDamage, this );
+            enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
             enemy.sprite.flash();
 
-            if (Dungeon.level.heroFOV[pos]) Sample.INSTANCE.play(Assets.Sounds.HIT_SLASH, 1f, Random.Float(0.96f, 1.05f));
-
-            if (enemy == Dungeon.hero && !enemy.isAlive()) {
-                Dungeon.fail( getClass() );
+            if (!enemy.isAlive() && visibleFight) {
+                if (enemy == Dungeon.hero) {
+                    Dungeon.fail( getClass() );
+                    GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
+                }
             }
+
+
+            return true;
         } else {
-            enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
+            if (visibleFight) {
+                String defense = enemy.defenseVerb();
+                enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
+
+                //TODO enemy.defenseSound? currently miss plays for monks/crab even when they parry
+                Sample.INSTANCE.play(Assets.Sounds.MISS);
+            }
+            return false;
         }
 
-        if (!enemy.isAlive() && visibleFight) {
+        /*if (!enemy.isAlive() && visibleFight) {
             if (enemy == Dungeon.hero) {
 
                 Dungeon.fail( getClass() );
@@ -93,7 +116,7 @@ public class Agent extends Mob {
             }
         }
 
-        return true;
+        return true;*/
 
     }
 

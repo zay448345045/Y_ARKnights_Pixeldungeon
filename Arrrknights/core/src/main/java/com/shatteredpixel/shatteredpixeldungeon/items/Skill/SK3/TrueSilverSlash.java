@@ -59,6 +59,7 @@ public class TrueSilverSlash extends Skill {
         dmg -= enemy.drRoll();
 
         if (!enemy.properties().contains(Char.Property.BOSS) && !enemy.properties().contains(Char.Property.MINIBOSS)) dmg = 9999;
-        enemy.damage(dmg, enemy);
+        enemy.damage(dmg, new tss());
     }
+    public class tss{ }
 }

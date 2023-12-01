@@ -96,6 +96,7 @@ public class SealOfLight extends Artifact {
 
                     if (hero.hasTalent(Talent.QUICK_TACTICS)) hero.spendAndNext(0f);
                     else hero.spendAndNext(1f);
+                    Talent.onArtifactUsed(Dungeon.hero);
                     GameScene.flash( 0x80FFFFFF );
                     Sample.INSTANCE.play(Assets.Sounds.SKILL_BABYNIGHT);
                     if(charge < 100){

@@ -53,8 +53,8 @@ public class Raider extends Succubus {
     }
 
     @Override
-    public void move(int step) {
-        super.move(step);
+    public void move(int step, boolean travelling) {
+        super.move(step, travelling);
         if (state == HUNTING && buff(Acceleration.class) == null) {
             Buff.affect(this, Acceleration.class, 15f);
         }

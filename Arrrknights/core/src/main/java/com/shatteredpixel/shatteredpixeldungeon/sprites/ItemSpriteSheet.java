@@ -1053,6 +1053,8 @@ public class ItemSpriteSheet {
 		public static final int RING_DOMINATE     = RINGS+13;
 		public static final int RING_SURPRISE     = RINGS+14;
 		public static final int RING_MISTRESS     = RINGS+15;
+		public static final int RING_COMMAND	  = xy(1,2);//change from budding;Illustrator : poster dude
+
 
 		static {
 			assignIconRect( RING_ACCURACY,      7, 7 );

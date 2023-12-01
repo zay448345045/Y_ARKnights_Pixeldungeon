@@ -51,7 +51,11 @@ public class WildMark extends Buff implements ActionIndicator.Action {
     private float fcharge = 0;
     private final static int chargeTurn = 100;
     private final static int maxcharge = 5;
-
+    @Override
+    public void detach(){
+        ActionIndicator.clearAction(this);
+        super.detach();
+    }
     @Override
     public int icon() {
         return BuffIndicator.HEX;

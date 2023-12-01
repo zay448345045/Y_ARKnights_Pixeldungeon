@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 
 public class RingOfCommand extends Ring {
     {
-        icon = ItemSpriteSheet.Icons.RING_ACCURACY;
+        icon = ItemSpriteSheet.Icons.RING_COMMAND;
     }
 
     public String statsInfo() {

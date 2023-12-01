@@ -121,7 +121,14 @@ public class Dewdrop extends Item {
 			}
 		return true;
 		}
-
+	@Override
+	public Item merge( Item other ){//change from budding,shattered
+		if (isSimilar( other )){
+			quantity = 1;
+			other.quantity = 0;
+		}
+		return this;
+	}
 	@Override
 	//max of one dew in a stack
 	public Item quantity(int value) {

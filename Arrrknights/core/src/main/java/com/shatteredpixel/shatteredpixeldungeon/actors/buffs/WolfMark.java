@@ -226,9 +226,10 @@ public class WolfMark extends FlavourBuff implements ActionIndicator.Action  {
                 }
                 int oldPos = ch.pos;
                 ch.pos = newPos;
-                if (finalCollided && ch.isAlive()) {
+                if (finalCollided && ch.isActive()) {
                     ch.damage(Random.NormalIntRange(finalDist, 2*finalDist), this);
-                    Paralysis.prolong(ch, Paralysis.class, 1 + finalDist/2f);
+                    if (ch.isActive())
+                        Paralysis.prolong(ch, Paralysis.class, 1 + finalDist/2f);
                 }
                 if (closeDoors && Dungeon.level.map[oldPos] == Terrain.OPEN_DOOR){
                     Door.leave(oldPos);

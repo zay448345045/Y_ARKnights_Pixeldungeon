@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
@@ -188,7 +189,7 @@ public abstract class Wand extends Item {
 
 	protected void processSoulMark(Char target, int chargesUsed){
 		processSoulMark(target, buffedLvl(), chargesUsed);
-		if (Dungeon.hero.hasTalent(Talent.MIND_CRASH)) { Buff.affect(target, Talent.MindCrashMark.class, 2f); }
+		if (Dungeon.hero.hasTalent(Talent.MIND_CRASH)&&target != Dungeon.hero) { Buff.affect(target, Talent.MindCrashMark.class, 2f); }
 	}
 
 	//TODO some naming issues here. Consider renaming this method and externalizing char awareness buff
@@ -196,6 +197,7 @@ public abstract class Wand extends Item {
 		if (Dungeon.hero.hasTalent(Talent.ARCANE_SNIPE)) {
 			int dur = 5*Dungeon.hero.pointsInTalent(Talent.ARCANE_SNIPE);
 			Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = target.id();
+			Camouflage.dispelCamouflage(target);
 		}
 
 		if (target != Dungeon.hero &&

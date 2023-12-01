@@ -623,7 +623,7 @@ public enum Talent {
 
 		// 첸
 		if (item instanceof Weapon){
-			factor *= 1f + hero.pointsInTalent(EXPERIENCE) * 2;
+			factor *= 1f + hero.pointsInTalent(POLICE_SENSE) * 2;
 		}
 		if (item instanceof GunWeapon){
 			factor *= 1f + hero.pointsInTalent(GUN_WIKI) * 4;

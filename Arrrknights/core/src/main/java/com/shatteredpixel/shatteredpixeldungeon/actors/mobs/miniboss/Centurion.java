@@ -135,9 +135,11 @@ public class Centurion extends Mob {
         if (Dungeon.depth >= 9 && !Dungeon.bossLevel()) {
 
             Centurion centinel = new Centurion();
+            int mpos=-1;
             do {
-                centinel.pos = level.randomRespawnCell(centinel);
-            } while (centinel.pos == -1);
+                mpos=level.randomRespawnCell(centinel);
+            } while (mpos == -1 || Actor.findChar(mpos)!=null);//change from budding
+            centinel.pos=mpos;
             level.mobs.add(centinel);
         }
     }

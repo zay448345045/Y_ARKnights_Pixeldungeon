@@ -58,6 +58,9 @@ public class Originiutant extends Mob {
         else if (hit( this, enemy, true )) {
 
             int dmg = damageRoll();
+            if ( enemy.buff( Vulnerable.class ) != null){//change from budding
+                dmg *= 1.33f;
+            }
             enemy.damage( dmg, this );
             enemy.sprite.bloodBurstA( sprite.center(), dmg );
             enemy.sprite.flash();

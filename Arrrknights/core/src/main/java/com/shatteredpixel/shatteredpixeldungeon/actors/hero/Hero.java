@@ -630,7 +630,7 @@ public class Hero extends Char {
 
         if (hasTalent(Talent.PEGASUS_AURA) && buff(RadiantKnight.class) != null) {
             float bouns = 1f;
-            bouns += pointsInTalent(Talent.PEGASUS_AURA) / 10;
+            bouns += pointsInTalent(Talent.PEGASUS_AURA) / 10.0f;
 
             accuracy *= bouns;
         }
@@ -990,6 +990,14 @@ public class Hero extends Char {
     public void spend(float time) {
         justMoved = false;
         justAttacked = false;
+        for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
+            int cell = pos+PathFinder.NEIGHBOURS8[i];
+            Char mob= Actor.findChar(cell);
+            if (mob!=null){
+                if (mob.alignment != Alignment.ALLY)
+                    com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage.dispelCamouflage(mob);
+            }
+        }
         TimekeepersHourglass.timeFreeze freeze = buff(TimekeepersHourglass.timeFreeze.class);
         if (freeze != null) {
             freeze.processTime(time);
@@ -1008,10 +1016,10 @@ public class Hero extends Char {
             return;
         }
 
-        CloserangeShot crshot = buff(CloserangeShot.class);
-        if (crshot != null) {
-            crshot.isActived();
-        }
+//        CloserangeShot crshot = buff(CloserangeShot.class);
+//        if (crshot != null) {
+//            crshot.isActived();
+//        }
 
         WildMark mark = buff(WildMark.class);
         if (mark != null) {
@@ -1033,7 +1041,7 @@ public class Hero extends Char {
                 if (belongings.getItem(RingOfMight.class) != null && belongings.getItem(RingOfTenacity.class) != null) {
                     if (belongings.getItem(RingOfTenacity.class).isEquipped(this) && belongings.getItem(RingOfMight.class).isEquipped(this)){
                         for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-                            if (Dungeon.level.adjacent(mob.pos, pos) && mob.alignment != Char.Alignment.ALLY && !mob.properties().contains(Property.NPC)
+                            if (Dungeon.level.adjacent(mob.pos, pos) && mob.alignment != Alignment.ALLY && !mob.properties().contains(Property.NPC)
                                     && !(mob instanceof Shopkeeper) && !(mob instanceof ImpShopkeeper)) {
                                 mob.sprite.emitter().burst( ShadowParticle.CURSE, 15);
                                 Buff.affect(mob, Hex.class, 3f);
@@ -1067,12 +1075,12 @@ public class Hero extends Char {
                 Buff.affect(this, Heat.class);
             } else heat.Timeproc(time);
         }
-        PathFinder.buildDistanceMap(Dungeon.hero.pos, BArray.not(Dungeon.level.solid, null), 2);
+        PathFinder.buildDistanceMap(pos, BArray.not(Dungeon.level.solid, null), 2);
         for (int cell = 0; cell < PathFinder.distance.length; cell++) {
             if (PathFinder.distance[cell] < Integer.MAX_VALUE) {
                 Char ch = Actor.findChar(cell);
-                if (ch != null&& !(ch instanceof Hero) && ch.alignment == Char.Alignment.ENEMY) {
-                    Buff.detach(Dungeon.hero, com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage.class); }}}
+                if (ch != null&& !(ch instanceof Hero) && ch.alignment == Alignment.ENEMY) {
+                    Buff.detach(this, com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage.class); }}}
 
 
 
@@ -1702,7 +1710,7 @@ public class Hero extends Char {
         }
 
         if (hasTalent(Talent.SAVIOR_BELIEF) && (enemy.buff(Roots.class) != null || enemy.buff(Paralysis.class) != null)) {
-            BounsDamage = damage * (pointsInTalent(Talent.SAVIOR_BELIEF) * 0.15f);
+            BounsDamage += damage * (pointsInTalent(Talent.SAVIOR_BELIEF) * 0.15f);
         }
 
         if (hasTalent(Talent.EXORCISM)) {
@@ -2281,12 +2289,12 @@ public class Hero extends Char {
 
             curAction = new HeroAction.Unlock(cell);
 
-        } else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-                && Dungeon.depth < 41) {
+        } else if (!Dungeon.level.locked && ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
+                && Dungeon.depth < 41)) {//change from budding
 
             curAction = new HeroAction.Descend(cell);
 
-        } else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE) {
+        } else if (!Dungeon.level.locked && (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE)) {
 
             curAction = new HeroAction.Ascend(cell);
 
@@ -2606,10 +2614,10 @@ public class Hero extends Char {
     }
 
     @Override
-    public void move(int step) {
+    public void move(int step, boolean travelling) {
         boolean wasHighGrass = Dungeon.level.map[step] == Terrain.HIGH_GRASS;
 
-        super.move(step);
+        super.move(step,travelling);
 
         if (!flying) {
             if (Dungeon.level.water[pos]) {

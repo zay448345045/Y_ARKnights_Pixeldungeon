@@ -22,6 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -36,7 +38,17 @@ public class MindVision extends FlavourBuff {
 		type = buffType.POSITIVE;
 		announced = true;
 	}
-	
+	@Override
+	public boolean attachTo(Char target){
+		if (super.attachTo( target )) {
+			if (target instanceof Hero){
+				Camouflage.dispelCamouflage();
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 	@Override
 	public int icon() {
 		return BuffIndicator.MIND_VISION;

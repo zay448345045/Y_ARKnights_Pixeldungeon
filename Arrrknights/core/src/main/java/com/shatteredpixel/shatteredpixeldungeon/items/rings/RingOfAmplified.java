@@ -12,7 +12,12 @@ public class RingOfAmplified extends Ring {
     }
 
     public String statsInfo() {
+
+        if (isIdentified()){
             return Messages.get(this, "stats");
+        } else {
+            return Messages.get(this, "typical_stats");
+        }
     }
 
     @Override

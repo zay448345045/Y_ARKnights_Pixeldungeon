@@ -1159,7 +1159,10 @@ public class NewTengu extends Mob {
                             @Override
                             public void call() {
                                 item.onThrow(finalTargetCell);
-                                if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.mboss9 == 1) item.onThrow(finalTargetCell+1);
+                                if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.mboss9 == 1){
+                                    if (!Dungeon.level.solid[finalTargetCell+1])//change from budding
+                                        item.onThrow(finalTargetCell+1);
+                                }
                                 thrower.next();
                             }
                         });
@@ -1289,6 +1292,7 @@ public class NewTengu extends Mob {
                     Buff.append(throwingChar, WMine.class).bombPos = cell;
                     throwingChar = null;
                 } else {
+                    if (curUser == null) curUser= Dungeon.hero;//change from budding
                     Buff.append(curUser, WMine.class).bombPos = cell;
                 }
             }

@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -88,9 +89,9 @@ public class Faust extends Mob {
     }
 
     @Override
-    public void move(int step) {
+    public void move(int step, boolean travelling) {
         charge = 0;
-        super.move(step);
+        super.move(step,travelling);
     }
 
     @Override
@@ -111,9 +112,11 @@ public class Faust extends Mob {
         if (Dungeon.depth >= 19 && !Dungeon.bossLevel()) {
 
             Faust fau = new Faust();
+            int mpos=-1;//change from budding
             do {
-                fau.pos = level.randomRespawnCell(fau);
-            } while (fau.pos == -1);
+                mpos=level.randomRespawnCell(fau);
+            } while (mpos == -1 || Actor.findChar(mpos)!=null);
+            fau.pos = mpos;
             level.mobs.add(fau);
         }
     }

@@ -373,8 +373,8 @@ public class NewDM300 extends Mob {
     }
 
     @Override
-    public void move(int step) {
-        super.move(step);
+    public void move(int step, boolean travelling) {
+        super.move(step, travelling);
 
         Camera.main.shake(supercharged ? 3 : 1, 0.25f);
 
@@ -584,6 +584,7 @@ public class NewDM300 extends Mob {
 
             yell(Messages.get(this, "pylons_destroyed"));
             BossHealthBar.bleed(true);
+            ((NewCavesBossLevel) Dungeon.level).SetEffect();//change from budding
         }
     }
 
@@ -749,13 +750,19 @@ public class NewDM300 extends Mob {
         @Override
         public boolean act() {
             for (int i : rockPositions) {
-                CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.06f, 20);
-
-                if (Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
+                CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+                boolean avoid_pylon = true;
+                for (int i2 : NewCavesBossLevel.pylonPositions){//change from budding
+                    if (i==i2){
+                        avoid_pylon = false;
+                        break;
+                    }
+                }
+                if (avoid_pylon && Dungeon.isChallenged(Challenges.DECISIVE_BATTLE) && Dungeon.depth==15) {//change from budding
                     if (Random.IntRange(0,3) < 2) {
                         if (Dungeon.level.map[i] == Terrain.EMPTY || Dungeon.level.map[i] == Terrain.EMPTY_DECO || Dungeon.level.map[i] == Terrain.EMPTY_SP) {
-                        Level.set(i, Terrain.WATER);
-                        GameScene.updateMap(i);
+                            Level.set(i, Terrain.WATER);
+                            GameScene.updateMap(i);
                         }
                     }
                 }

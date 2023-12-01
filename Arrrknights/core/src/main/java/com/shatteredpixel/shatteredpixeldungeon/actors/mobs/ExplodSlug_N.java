@@ -133,7 +133,7 @@ public class ExplodSlug_N extends Mob {
 	private boolean shotWebVisually = false;
 
 	@Override
-	public void move(int step) {
+	public void move(int step ,boolean travelling) {
 		if (enemySeen && webCoolDown <= 0 && lastEnemyPos != -1){
 			if (webPos() != -1){
 				if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
@@ -144,7 +144,7 @@ public class ExplodSlug_N extends Mob {
 				}
 			}
 		}
-		super.move(step);
+		super.move(step ,travelling);
 	}
 
 	@Override

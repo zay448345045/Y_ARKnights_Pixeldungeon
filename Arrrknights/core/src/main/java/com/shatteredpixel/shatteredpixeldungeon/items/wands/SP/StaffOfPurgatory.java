@@ -86,7 +86,7 @@ public class StaffOfPurgatory extends Wand {
                 Dungeon.hero.sprite.place(newpos);
                 Dungeon.hero.pos = newpos;
 
-                if (!Dungeon.bossLevel() || !(Dungeon.depth>27&&Dungeon.depth<30))  wandattack(ch, beamdis);
+                if (!Dungeon.bossLevel() && !(Dungeon.depth>27&&Dungeon.depth<30))  wandattack(ch, beamdis);
 
                 Buff.affect(ch, Cripple.class, 2 + buffedLvl());
 

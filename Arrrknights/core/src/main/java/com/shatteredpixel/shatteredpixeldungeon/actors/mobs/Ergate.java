@@ -98,7 +98,8 @@ public class Ergate extends Mob {
             if (alignment == Alignment.ENEMY && item == null
                     && enemy instanceof Hero) {
                 if (Random.Int(4) < 1) {
-                    if (((Hero) enemy).belongings.weapon != null) {
+                    if (((Hero) enemy).belongings.weapon != null)
+                        if (!((Hero) enemy).belongings.weapon.cursed){
                     ((Hero) enemy).belongings.weapon.doDrop((Hero) enemy);}
                     Buff.affect(this, Terror.class, 20f);
                 }

@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Twilight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -61,7 +62,8 @@ public class WarJournalist extends MeleeWeapon {
                         Buff.affect(mob, Blindness.class, 3f);
                         Buff.affect(mob, PanoramaBuff.class, PanoramaBuff.DURATION);
                         Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, PanoramaBuff.DURATION).charID = mob.id();
-                      active = true;}
+                        Camouflage.dispelCamouflage(mob);
+                        active = true;}
                     if (active) break;;
                 }
 

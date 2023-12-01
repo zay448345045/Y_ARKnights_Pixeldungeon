@@ -86,6 +86,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.ExtremeSharpness;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.TrueSilverSlash;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.LeatherArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
@@ -98,6 +99,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSacrifice;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfGreyy;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfLeaf;
@@ -123,6 +125,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ThermiteBlade
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RhodesSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Violin;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarJournalist;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ImmortalShield;//change from budding
@@ -496,7 +499,7 @@ public abstract class Char extends Actor {
 			enemy != Dungeon.hero && Dungeon.hero.belongings.weapon instanceof Naginata && this instanceof Hero &&
 				!enemy.properties().contains(Char.Property.BOSS) && !enemy.properties().contains(Char.Property.MINIBOSS)) {
 					sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Naginata.class, "skill"));
-					enemy.damage(108108, this);
+					enemy.damage(108108, new Naginata.naginataSkill());
 					SpellSprite.show(enemy, SpellSprite.FOOD);
 
 			}
@@ -704,7 +707,8 @@ public abstract class Char extends Actor {
 			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
 		}
 
-		if (!(src instanceof LifeLink) && buff(LifeLink.class) != null){
+		if (!(src instanceof LifeLink || src instanceof Naginata.naginataSkill || src instanceof ScrollOfSacrifice || src instanceof WarJournalist.PanoramaBuff
+				|| src instanceof TrueSilverSlash.tss) && buff(LifeLink.class) != null){
 			HashSet<LifeLink> links = buffs(LifeLink.class);
 			for (LifeLink link : links.toArray(new LifeLink[0])){
 				if (Actor.findById(link.object) == null){
@@ -827,6 +831,10 @@ public abstract class Char extends Actor {
 	public boolean isAlive() {
 		return HP > 0;
 	}
+	// change from budding, shattered
+	public boolean isActive() {
+		return isAlive();
+	}
 	
 	@Override
 	protected void spend( float time ) {
@@ -934,10 +942,12 @@ public abstract class Char extends Actor {
 	public float stealth() {
 		return 0;
 	}
-	
-	public void move( int step ) {
+	public final void move (int step ){//change from budding,shattered
+		move(step,true);
+	}
+	public void move( int step ,boolean travelling) {
 
-		if (Dungeon.level.adjacent( step, pos ) && buff( Vertigo.class ) != null) {
+		if (travelling && Dungeon.level.adjacent( step, pos ) && buff( Vertigo.class ) != null) {
 			sprite.interruptMotion();
 			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
 			if (!(Dungeon.level.passable[newPos] || Dungeon.level.avoid[newPos])

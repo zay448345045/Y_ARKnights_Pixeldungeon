@@ -59,6 +59,7 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.util.Calendar;
 
@@ -304,8 +305,8 @@ public class SurfaceScene extends PixelScene {
 			
 			vertices[12]	= 0;
 			vertices[13]	= 1;
-			
-			verticesBuffer.position( 0 );
+
+			((Buffer)verticesBuffer).position( 0 );
 			verticesBuffer.put( vertices );
 		}
 		

@@ -55,16 +55,13 @@ public class ScrollOfDominate extends ExoticScroll {
                     }
                 }
             }
+        }//change from budding ,which originally in the loop ,so awful
+        identify();
 
+        curUser.sprite.centerEmitter().start(Speck.factory(Speck.BONE), 0.3f, 3);
+        Sample.INSTANCE.play(Assets.Sounds.RAY);
 
-            identify();
-
-            curUser.sprite.centerEmitter().start(Speck.factory(Speck.BONE), 0.3f, 3);
-            Sample.INSTANCE.play(Assets.Sounds.RAY);
-
-            readAnimation();
-        }
-
+        readAnimation();
         if (oldtime != 0) Buff.affect(Dungeon.hero, MindVision.class, oldtime);
     }
 }

@@ -67,7 +67,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Bomb extends Item {
-	
+
 	{
 		image = ItemSpriteSheet.BOMB;
 
@@ -88,7 +88,7 @@ public class Bomb extends Item {
 	public boolean isSimilar(Item item) {
 		return super.isSimilar(item) && this.fuse == ((Bomb) item).fuse;
 	}
-	
+
 	public boolean explodesDestructively(){
 		return true;
 	}
@@ -114,17 +114,17 @@ public class Bomb extends Item {
 
 	@Override
 	protected void onThrow( int cell ) {
+		int delay_time=2;//change from budding
 		if (!Dungeon.level.pit[ cell ] && lightingFuse) {
 			if (Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
 				if (Dungeon.hero.belongings.getItem(IsekaiItem.class).isEquipped(Dungeon.hero)) {
-					if (Dungeon.hero.belongings.getItem(IsekaiItem.class).cursed) Actor.addDelayed(fuse = new Fuse().ignite(this), 8);
-					else Actor.addDelayed(fuse = new Fuse().ignite(this), 0);
+					if (Dungeon.hero.belongings.getItem(IsekaiItem.class).cursed) delay_time=8;
+					else delay_time=0;
 				}
-				else Actor.addDelayed(fuse = new Fuse().ignite(this), 2);
 			}
-			else Actor.addDelayed(fuse = new Fuse().ignite(this), 2);
+			Actor.addDelayed(fuse = new Fuse().ignite(this), delay_time);
 		}
-		if (Actor.findChar( cell ) != null && !(Actor.findChar( cell ) instanceof Hero) ){
+		if (delay_time>0 && Actor.findChar( cell ) != null && !(Actor.findChar( cell ) instanceof Hero) ){
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8)
 				if (Dungeon.level.passable[cell + i])
@@ -143,21 +143,24 @@ public class Bomb extends Item {
 		}
 		return super.doPickUp(hero);
 	}
-
+	//change from budding
 	public void explode(int cell){
+		explode(cell,true);
+	}
+	public void explode(int cell,boolean powered){
 		//We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
 
 		Sample.INSTANCE.play( Assets.Sounds.BLAST );
 
 		if (explodesDestructively()) {
-			
+
 			ArrayList<Char> affected = new ArrayList<>();
-			
+
 			if (Dungeon.level.heroFOV[cell]) {
 				CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 			}
-			
+
 			boolean terrainAffected = false;
 			for (int n : PathFinder.NEIGHBOURS9) {
 				int c = cell + n;
@@ -165,25 +168,25 @@ public class Bomb extends Item {
 					if (Dungeon.level.heroFOV[c]) {
 						CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
 					}
-					
+
 					if (Dungeon.level.flamable[c]) {
 						Dungeon.level.destroy(c);
 						GameScene.updateMap(c);
 						terrainAffected = true;
 					}
-					
+
 					//destroys items / triggers bombs caught in the blast.
 					Heap heap = Dungeon.level.heaps.get(c);
 					if (heap != null)
 						heap.explode();
-					
+
 					Char ch = Actor.findChar(c);
 					if (ch != null) {
 						affected.add(ch);
 					}
 				}
 			}
-			
+
 			for (Char ch : affected){
 
 				//if they have already been killed by another bomb
@@ -194,7 +197,7 @@ public class Bomb extends Item {
 				int dmg = Random.NormalIntRange(8 + Dungeon.depth, 16 + Dungeon.depth*2);
 
 				IsekaiItem.IsekaiBuff BombBuff = Dungeon.hero.buff( IsekaiItem.IsekaiBuff.class);
-				if (BombBuff != null) {
+				if (powered && BombBuff != null) {
 					dmg += BombBuff.itemLevel() * 4;
 				}
 
@@ -208,32 +211,32 @@ public class Bomb extends Item {
 				if (dmg > 0) {
 					ch.damage(dmg, this);
 				}
-				
+
 				if (ch == Dungeon.hero && !ch.isAlive()) {
 					Dungeon.fail(Bomb.class);
 				}
 
-				if (BombBuff != null && ch.isAlive() && ch != Dungeon.hero) {
+				if (powered && BombBuff != null && ch.isAlive() && ch != Dungeon.hero) {
 					Buff.affect(ch, Paralysis.class, 3f);
 				}
 			}
-			
+
 			if (terrainAffected) {
 				Dungeon.observe();
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public Item random() {
 		switch(Random.Int( 4 )){
@@ -253,7 +256,7 @@ public class Bomb extends Item {
 	public int value() {
 		return 20 * quantity;
 	}
-	
+
 	@Override
 	public String desc() {
 		if (fuse == null)
@@ -351,42 +354,42 @@ public class Bomb extends Item {
 			return false;
 		}
 	}
-	
+
 	public static class EnhanceBomb extends Recipe {
-		
+
 		public static final LinkedHashMap<Class<?extends Item>, Class<?extends Bomb>> validIngredients = new LinkedHashMap<>();
 		static {
 			validIngredients.put(PotionOfFrost.class,           FrostBomb.class);
 			validIngredients.put(ScrollOfTransmutation.class,     WoollyBomb.class);
-			
+
 			validIngredients.put(PotionOfLiquidFlame.class,     Firebomb.class);
 			validIngredients.put(ScrollOfRage.class,            Noisemaker.class);
-			
+
 			validIngredients.put(PotionOfInvisibility.class,    Flashbang.class);
 			validIngredients.put(ScrollOfRecharging.class,      ShockBomb.class);
-			
+
 			validIngredients.put(PotionOfHealing.class,         RegrowthBomb.class);
 			validIngredients.put(ScrollOfRemoveCurse.class,     HolyBomb.class);
-			
+
 			validIngredients.put(GooBlob.class,                 ArcaneBomb.class);
 			validIngredients.put(MetalShard.class,              ShrapnelBomb.class);
 
 			validIngredients.put(ForceCatalyst.class,              LensBomb.class);
 		}
-		
+
 		private static final HashMap<Class<?extends Bomb>, Integer> bombCosts = new HashMap<>();
 		static {
 			bombCosts.put(FrostBomb.class,      2);
-			
+
 			bombCosts.put(Firebomb.class,       4);
 			bombCosts.put(Noisemaker.class,     4);
-			
+
 			bombCosts.put(Flashbang.class,      6);
 			bombCosts.put(ShockBomb.class,      6);
 
 			bombCosts.put(RegrowthBomb.class,   8);
 			bombCosts.put(HolyBomb.class,       8);
-			
+
 			bombCosts.put(ArcaneBomb.class,     10);
 			bombCosts.put(ShrapnelBomb.class,   10);
 
@@ -394,12 +397,12 @@ public class Bomb extends Item {
 
 			bombCosts.put(WoollyBomb.class,     20);
 		}
-		
+
 		@Override
 		public boolean testIngredients(ArrayList<Item> ingredients) {
 			boolean bomb = false;
 			boolean ingredient = false;
-			
+
 			for (Item i : ingredients){
 				if (!i.isIdentified()) return false;
 				if (i.getClass().equals(Bomb.class)){
@@ -408,10 +411,10 @@ public class Bomb extends Item {
 					ingredient = true;
 				}
 			}
-			
+
 			return bomb && ingredient;
 		}
-		
+
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
@@ -421,21 +424,21 @@ public class Bomb extends Item {
 			}
 			return 0;
 		}
-		
+
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
 			Item result = null;
-			
+
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 				if (validIngredients.containsKey(i.getClass())){
 					result = Reflection.newInstance(validIngredients.get(i.getClass()));
 				}
 			}
-			
+
 			return result;
 		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){

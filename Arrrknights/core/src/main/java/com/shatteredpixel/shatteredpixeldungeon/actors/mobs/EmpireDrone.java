@@ -66,9 +66,9 @@ public class EmpireDrone extends Mob {
     protected boolean act() {
         if (CoolDown == 0) {
             if (LastPos == -1) {
-                if (state != HUNTING) return super.act();
+                if (state != HUNTING || enemy==null) return super.act();//change from budding
 
-                LastPos = Dungeon.hero.pos;
+                LastPos = enemy.pos;
                 sprite.parent.addToBack(new TargetedCell(LastPos, 0xFF0000));
                 sprite.zap( LastPos );//change from budding
 
@@ -77,7 +77,7 @@ public class EmpireDrone extends Mob {
                     if (mob.paralysed <= 0
                             && Dungeon.level.distance(pos, mob.pos) <= 7
                             && mob.state != mob.HUNTING) {
-                        mob.beckon( Dungeon.hero.pos );
+                        mob.beckon( enemy.pos );
                     }
                 }
 
@@ -87,10 +87,10 @@ public class EmpireDrone extends Mob {
                 return true;
             }
             else  {
-                if (LastPos == Dungeon.hero.pos) {
+                if (enemy != null && LastPos == enemy.pos) {
                     int dmg = damageRoll() - Dungeon.hero.drRoll();
-                    Dungeon.hero.damage(dmg, this);
-                    Dungeon.hero.sprite.burst(CharSprite.NEGATIVE, 10);
+                    enemy.damage(dmg, this);
+                    enemy.sprite.burst(CharSprite.NEGATIVE, 10);
                     CellEmitter.center(LastPos).burst(BlastParticle.FACTORY, 10);
                     Camera.main.shake(5, 0.5f);
                     CoolDown = 1;
