@@ -119,6 +119,7 @@ public class Ghoul extends Mob {
 				Ghoul child = new Ghoul();
 				child.partnerID = this.id();
 				this.partnerID = child.id();
+				child.generated = true;
 				if (state != SLEEPING) {
 					child.state = child.WANDERING;
 				}

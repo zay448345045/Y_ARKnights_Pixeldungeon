@@ -19,10 +19,9 @@ public class Blossoming extends Weapon.Chimera {
     public String afterName() {
         return Messages.get(this, "name");
     }
-    public static boolean kazemaruweaponisally =false;
     @Override
     public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
-        if (true) {//Random.Int(10) == 0
+        if (Random.Int(10) == 0) {
             ArrayList<Integer> respawnPoints = new ArrayList<>();
 
             for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
@@ -34,14 +33,13 @@ public class Blossoming extends Weapon.Chimera {
             int spawnd = 0;
             while (respawnPoints.size() > 0 && spawnd == 0) {
                 int index = Random.index(respawnPoints);
-                if (attacker instanceof Hero || attacker.alignment == Char.Alignment.ALLY) kazemaruweaponisally = true;//change from budding
+
                 KazemaruWeapon.KazemaruSummon summon = new KazemaruWeapon.KazemaruSummon();
                 summon.GetWeaponLvl(weapon.buffedLvl());
                 summon.GetTarget(defender);
-                if (kazemaruweaponisally) summon.alignment = Char.Alignment.ALLY;
+                summon.alignment=attacker.alignment;
                 GameScene.add(summon);
                 ScrollOfTeleportation.appear(summon, respawnPoints.get(index));
-                kazemaruweaponisally = false;//change from budding
 
                 respawnPoints.remove(index);
                 spawnd++;

@@ -69,7 +69,7 @@ public class AlchemyKit extends Artifact {
 
         super.execute(hero, action);
 
-        if (action.equals(AC_CRATE)) {
+        if (action.equals(AC_CRATE) && this.isEquipped(Dungeon.hero)) {
             if (charge < chargeCap) GLog.h(Messages.get(AlchemyKit.class, "chargeless"));
             else {
                 CrateItem();
@@ -77,7 +77,7 @@ public class AlchemyKit extends Artifact {
             }
         }
 
-        if (action.equals(AC_ADD)) {
+        if (action.equals(AC_ADD) && this.isEquipped(Dungeon.hero)) {
             GameScene.selectItem(itemSelector, WndBag.Mode.ALCHEMYKIT_ONLY, Messages.get(this, "prompt"));
         }
     }

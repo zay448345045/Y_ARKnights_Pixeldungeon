@@ -49,6 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Shadow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
@@ -212,6 +213,7 @@ public abstract class Mob extends Char {
 	@Override
 	protected boolean act() {
 		if(Dungeon.isSPChallenged(SPChallenges.SWARMS)){swarmsSpawn();}
+		generated = true;
 		super.act();
 		
 		boolean justAlerted = alerted;
@@ -1368,7 +1370,7 @@ public abstract class Mob extends Char {
 		heldAllies.clear();
 	}
 	private void swarmsSpawn(){
-		if (!generated){
+		if (alignment == Alignment.ENEMY && !generated && state!=PASSIVE && !( this instanceof Shadow)){
 			ArrayList<Integer> candidates = new ArrayList<>();
 
 			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
@@ -1383,7 +1385,9 @@ public abstract class Mob extends Char {
 				child.generated = true;
 				this.generated = true;
 				child.HT=(int)Math.ceil(child.HT/2f);
+				child.HP=(int)Math.ceil(child.HP/2f);
 				this.HT=(int)Math.ceil(this.HT/2f);
+				this.HP=(int)Math.ceil(this.HP/2f);
 				if (state != SLEEPING) {
 					child.state = child.WANDERING;
 				}

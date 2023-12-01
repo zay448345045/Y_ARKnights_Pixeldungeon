@@ -79,7 +79,9 @@ public class WndGameInProgress extends Window {
 					TomorrowRogueNight.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
 							"Version: " + Game.version + " (" + Game.versionCode + ")\n" +
 							"Seed: " + bundle.getLong("seed") + "\n" +
-							"Challenge Mask: " + info.challenges));
+							"Challenge Mask: " + info.challenges + "\n" +
+							"SPChallenge Mask: " + info.spchallenges
+							));
 				} catch (IOException ignored) { }
 				return true;
 			}
@@ -87,11 +89,35 @@ public class WndGameInProgress extends Window {
 		debug.setRect(0, 0, title.imIcon.width(), title.imIcon.height);
 		add(debug);
 		
-		if (info.challenges > 0) GAP -= 2;
+		if (info.challenges > 0 || info.spchallenges > 0) GAP -= 2;
 		
 		pos = title.bottom() + GAP;
 		
-		if (info.challenges > 0) {
+		if (info.challenges > 0 && info.spchallenges > 0) {
+			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
+				@Override
+				protected void onClick() {
+					Game.scene().add( new WndChallenges( info.challenges, false ) );
+				}
+			};
+			btnChallenges.icon(Icons.get(Icons.CHALLENGE_ON));
+			float btnW = btnChallenges.reqWidth() + 2;
+			btnChallenges.setRect( WIDTH/2f - btnW, pos, btnW , 18 );
+			add( btnChallenges );
+			RedButton btnChallenges2 = new RedButton( Messages.get(this, "spchallenges") ) {
+				@Override
+				protected void onClick() {
+					Game.scene().add( new WndSPChallenges( info.spchallenges, false ) );
+				}
+			};
+			btnChallenges2.icon(Icons.get(Icons.TALENT));
+			btnW = btnChallenges2.reqWidth() + 2;
+			btnChallenges2.setRect( WIDTH/2, pos, btnW , 18 );
+			add( btnChallenges2 );
+
+			pos = btnChallenges2.bottom() + GAP;
+		}
+		else if(info.challenges > 0){
 			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
 				@Override
 				protected void onClick() {
@@ -102,10 +128,23 @@ public class WndGameInProgress extends Window {
 			float btnW = btnChallenges.reqWidth() + 2;
 			btnChallenges.setRect( (WIDTH - btnW)/2, pos, btnW , 18 );
 			add( btnChallenges );
-			
+
+			pos = btnChallenges.bottom() + GAP;
+		}else if (info.spchallenges > 0) {
+			RedButton btnChallenges = new RedButton( Messages.get(this, "spchallenges") ) {
+				@Override
+				protected void onClick() {
+					Game.scene().add( new WndSPChallenges( info.spchallenges, false ) );
+				}
+			};
+			btnChallenges.icon(Icons.get(Icons.TALENT));
+			float btnW = btnChallenges.reqWidth() + 2;
+			btnChallenges.setRect( (WIDTH - btnW)/2, pos, btnW , 18 );
+			add( btnChallenges );
+
 			pos = btnChallenges.bottom() + GAP;
 		}
-		
+
 		pos += GAP;
 		
 		statSlot( Messages.get(this, "str"), info.str );

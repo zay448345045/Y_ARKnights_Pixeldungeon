@@ -135,7 +135,6 @@ public abstract class RegularLevel extends Level {
 		}
 
 		if (Dungeon.depth == 1) initRooms.add(new VaultRoom());
-		if (Dungeon.depth == 1) initRooms.add(new WeakFloorRoom());
 		if (Dungeon.depth == 13) initRooms.add(new RoseRoom());
 		if (Dungeon.depth == 14) initRooms.add(new MagicGloemRoom());
 		if (Dungeon.depth == 24) initRooms.add(new PursuerRoom());

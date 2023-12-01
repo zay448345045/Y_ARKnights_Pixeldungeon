@@ -99,7 +99,22 @@ public class WndGame extends Window {
 		}
 
 		// Challenges window
-		if (Dungeon.challenges > 0) {
+		if (Dungeon.challenges > 0 && Dungeon.spchallenges>0) {
+			addButtons(new RedButton( Messages.get(this, "challenges") ) {
+						   @Override
+						   protected void onClick() {
+							   hide();
+							   GameScene.show( new WndChallenges( Dungeon.challenges, false ) );
+						   }
+					   },
+					// Quit
+					new RedButton( Messages.get(this, "spchallenges") ) {
+						@Override
+						protected void onClick() {hide();
+							GameScene.show( new WndSPChallenges( Dungeon.spchallenges, false ) );
+						}
+					});
+		}else if(Dungeon.challenges > 0){
 			addButton( curBtn = new RedButton( Messages.get(this, "challenges") ) {
 				@Override
 				protected void onClick() {
@@ -108,6 +123,16 @@ public class WndGame extends Window {
 				}
 			} );
 			curBtn.icon(Icons.get(Icons.CHALLENGE_ON));
+		}else if(Dungeon.spchallenges > 0){
+
+			addButton( curBtn = new RedButton( Messages.get(this, "spchallenges") ) {
+				@Override
+				protected void onClick() {
+					hide();
+					GameScene.show( new WndSPChallenges( Dungeon.spchallenges, false ) );
+				}
+			} );
+			curBtn.icon(Icons.get(Icons.TALENT));
 		}
 
 		// Restart
