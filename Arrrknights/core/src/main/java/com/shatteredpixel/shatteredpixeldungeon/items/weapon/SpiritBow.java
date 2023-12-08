@@ -293,7 +293,7 @@ public class SpiritBow extends Weapon {
 
 		@Override
 		public int damageRoll(Char owner) {
-			return SpiritBow.this.damageRoll(owner,0f);
+			return SpiritBow.this.damageRoll(owner);
 		}
 
 		@Override

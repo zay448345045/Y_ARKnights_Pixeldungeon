@@ -40,7 +40,8 @@ public class ImpShopkeeper extends Shopkeeper {
 	}
 	
 	private boolean seenBefore = false;
-	
+	private boolean only_one_cannot = false;
+
 	@Override
 	protected boolean act() {
 
@@ -73,15 +74,16 @@ public class ImpShopkeeper extends Shopkeeper {
 				heap.destroy();
 			}
 		}
-
-		Cannot not = new Cannot();
-		not.pos = this.pos;
 		
 		destroy();
 		
 		sprite.emitter().burst( Speck.factory( Speck.WOOL ), 15 );
 		sprite.killAndErase();
-
-		GameScene.add(not);
+		if (!only_one_cannot) {
+			Cannot not = new Cannot();
+			not.pos = this.pos;
+			GameScene.add(not);
+			only_one_cannot=true;
+		}
 	}
 }

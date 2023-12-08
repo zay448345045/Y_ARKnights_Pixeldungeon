@@ -108,7 +108,10 @@ public class MeleeWeapon extends Weapon {
 		charge = Math.min(charge+chargevalue, chargeCap);
 		updateQuickslot();
 	}
-	
+	@Override
+	public float wepCorrect(){
+		return 0;
+	}
 	@Override
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll( owner ));

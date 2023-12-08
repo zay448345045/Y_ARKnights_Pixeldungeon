@@ -82,6 +82,9 @@ public abstract class Actor implements Bundlable {
 	public float cooldown() {
 		return time - now;
 	}
+	public void timeToNow() {
+		time = now;
+	}//change from budding
 	
 	protected void diactivate() {
 		time = Float.MAX_VALUE;

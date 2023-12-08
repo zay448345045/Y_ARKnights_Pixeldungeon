@@ -809,22 +809,27 @@ public class Hero extends Char {
         int dmg;
         float correct = 0;
         if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(this)) {
-
             if(wep instanceof Weapon){
+                correct += ((Weapon) wep).wepCorrect();
                 for(Weapon.Chimera e : ((Weapon)wep).chimeras){
                     correct += e.correct();
                 }
                 if(correct>1) correct = 1;
             }
         }
+
         if (wep != null) {
-            if(wep instanceof SpiritBow.SpiritArrow){
+            if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
+                dmg=Math.max(wep.damageRoll(this),wep.damageRoll(this));
+            }else {
                 dmg = wep.damageRoll(this);
             }
-            else if(buff(LuckyLeaf.LuckyLeafBuff.class)!=null){
-                dmg=Math.max(wep.damageRoll(this,correct),wep.damageRoll(this,correct));
-            }else{
-                dmg = wep.damageRoll(this,correct);
+            if(correct>0){
+                int diff = wep.max()-wep.min();
+                float originPercent = dmg/(diff*1.0f);
+                dmg = Math.round(wep.min()+diff*correct + (
+                        wep.max() - (wep.min()+Math.round(diff*correct))
+                        )*originPercent);
             }
             if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
         } else {

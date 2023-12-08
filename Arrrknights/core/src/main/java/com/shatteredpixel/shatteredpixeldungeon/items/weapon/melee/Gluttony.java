@@ -49,9 +49,8 @@ public class Gluttony extends MeleeWeapon {
         super.execute(hero, action);
         if (action.equals(AC_ZAP)) {
             if (!isEquipped(hero)) return;
-
-            if (!cursed) {
-                if (charge >= 50) {
+            if (charge >= 50) {
+                if (!cursed) {
                     for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
                         if (Dungeon.level.adjacent(mob.pos, hero.pos) && mob.alignment != Char.Alignment.ALLY) {
                             int dmg = hero.damageRoll();
@@ -64,15 +63,12 @@ public class Gluttony extends MeleeWeapon {
                     charge -= 50;
                     Sample.INSTANCE.play(Assets.Sounds.BLAST);
                     hero.sprite.zap(hero.pos);
-                    Invisibility.dispel();
-                    updateQuickslot();
-                    hero.spendAndNext(1f);
                 }
-            }
-            else {
-                Buff.affect(hero, Roots.class, 5f);
-                cursedKnown = true;
-                charge -= 50;
+                else {
+                    Buff.affect(hero, Roots.class, 5f);
+                    cursedKnown = true;
+                    charge -= 50;
+                }
                 Invisibility.dispel();
                 updateQuickslot();
                 hero.spendAndNext(1f);

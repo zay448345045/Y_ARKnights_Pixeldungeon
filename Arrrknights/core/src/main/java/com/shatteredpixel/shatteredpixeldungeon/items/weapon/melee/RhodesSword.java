@@ -14,33 +14,12 @@ public class RhodesSword extends MeleeWeapon {
         image = ItemSpriteSheet.YATO;
         hitSound = Assets.Sounds.HIT_SLASH;
         hitSoundPitch = 1.06f;
-
         tier = 1;
 
         bones = false;
     }
-
     @Override
-    public int damageRoll(Char owner) {
-        if (owner instanceof Hero) {
-            Hero hero = (Hero)owner;
-            Char enemy = hero.enemy();
-            if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-                //deals 75% toward max to max on surprise, instead of min to max.
-                int diff = max() - min();
-                int damage = augment.damageFactor(Random.NormalIntRange(
-                        min() + Math.round(diff*0.55f),
-                        max()));
-                int exStr = hero.STR() - STRReq();
-                if (exStr > 0) {
-                    damage += Random.IntRange(0, exStr);
-                }
-                if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
-                    damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
-                }
-                return damage;
-            }
-        }
-        return super.damageRoll(owner);
+    public float wepCorrect(){
+        return 0.55f;
     }
 }

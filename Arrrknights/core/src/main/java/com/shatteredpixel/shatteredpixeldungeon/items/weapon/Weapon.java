@@ -61,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Highest;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Journey;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.LightOf;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Mountain;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Patriot;
@@ -128,7 +129,6 @@ abstract public class Weapon extends KindOfWeapon {
 		private float delayFactor;
 		private float accFactor;
 
-
 		Augment(float dmg, float dly, float acc){
 			damageFactor = dmg;
 			delayFactor = dly;
@@ -154,11 +154,13 @@ abstract public class Weapon extends KindOfWeapon {
 	private static final int USES_TO_ID = 20;
 	private float usesLeftToID = USES_TO_ID;
 	private float availableUsesToID = USES_TO_ID/2f;
-
 	public Enchantment enchantment;
 	//public Chimera chimera;
 	public boolean curseInfusionBonus = false;
 
+	public float wepCorrect(){
+		return 0;
+	}
 	@Override
 	public int proc( Char attacker, Char defender, int damage ) {
 
@@ -503,7 +505,7 @@ abstract public class Weapon extends KindOfWeapon {
 				chimera();
 				if(chiRoll < 0.25f){
 					chimera();
-					if(chiRoll<0.01f){
+					if(chiRoll<0.005f){
 						chimera(Chimera.randomHidden());
 					}
 					else if(chiRoll < 0.125f){
@@ -765,7 +767,7 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 
 		private static final Class<?>[] common = new Class<?>[]{
-				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class, Dial.class, Blossoming.class
+				Archery.class, Gloves.class, Hyphen3.class, Bloody.class, Thermit.class, Dial.class, Blossoming.class, Journey.class
 		};
 
 		private static final Class<?>[] uncommon = new Class<?>[]{

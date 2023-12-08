@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.custom.dict.DictBook;
 import com.shatteredpixel.shatteredpixeldungeon.custom.misc.PotionOfSuperExp;
 import com.shatteredpixel.shatteredpixeldungeon.custom.misc.PotionOfSuperStr;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
@@ -117,6 +118,22 @@ import com.shatteredpixel.shatteredpixeldungeon.items.spells.WeaponTransform;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.SuperAdvanceguard;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.BackpackCleaner;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Artifact;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Melee;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Misc;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Missile;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_ROR2item;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Skill;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ImmortalShield;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.LazyTest;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.LevelTeleporter;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.MobPlacer;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.MyOrder;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.TimeReverser;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.TrapPlacer;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
@@ -256,95 +273,44 @@ import com.watabou.utils.Reflection;
 
 		if(Dungeon.isChallenged(Challenges.TEST)){
 			//bags
-			new PotionBandolier().collect();
-			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
-			new VelvetPouch().collect();
-			Dungeon.LimitedDrops.VELVET_POUCH.drop();
-			new MagicalHolster().collect();
-			Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
-			new ScrollHolder().collect();
-			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
+			if (!Dungeon.LimitedDrops.VELVET_POUCH.dropped()) {
+				new VelvetPouch().collect();
+				Dungeon.LimitedDrops.VELVET_POUCH.drop();
+			}
+			if (!Dungeon.LimitedDrops.SCROLL_HOLDER.dropped()) {
+				new ScrollHolder().collect();
+				Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
+			}
+			if (!Dungeon.LimitedDrops.POTION_BANDOLIER.dropped()) {
+				new PotionBandolier().collect();
+				Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
+			}
+			if (!Dungeon.LimitedDrops.MAGICAL_HOLSTER.dropped()) {
+				new MagicalHolster().collect();
+				Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
+			}
 			new EquipmentsBag().collect();
 			Dungeon.LimitedDrops.EQUIPMENTS_BAG.drop();
-			//
-			new Amulet().collect();
-			new TomeOfMastery().collect();
-			new R4C().identify().collect();
-			new EtherealChains().identify().collect();
-			new Enfild().identify().collect();
-			new NaginataAndFan().chimera(Reflection.newInstance(Horoscope.class)).collect();
-			new FlameKatana().chimera(Reflection.newInstance(Horoscope.class)).collect();
-			new CurseSolidifying().quantity(99).collect();
-			new CurseInfusion().quantity(99).collect();
-			new SakuraProof().collect();
-			new StoneOfEnchantment().quantity(99).collect();
-			new Sungrass.Seed().quantity(99).collect();
-			new Rotberry.Seed().quantity(10).collect();
-			new Starflower.Seed().quantity(99).collect();
-			new StoneOfBlast().quantity(99).collect();
-			new Honeypot().quantity(99).collect();
-			new Alchemize().quantity(10).collect();
-			new Blandfruit().quantity(99).collect();
-			new StaffKit().quantity(10).collect();
-			new Bookancientkin().collect();
-			//region rings
-			new RingOfAccuracy().identify().upgrade(28).collect();
-			new RingOfHaste().identify().upgrade(28).collect();
-			new RingOfAccuracy().identify().degrade(28).collect();
-			//endregion
-			//region wands and missiles
-			new ExplosiveSpear().quantity(99).collect();
-			new WandOfWarding().identify().collect();
-			new WandOfFireblast().identify().collect();
-			new WandOfMagicMissile().upgrade(10).identify().collect();
-			new StaffOfSkyfire().upgrade(10).identify().collect();
-			new WandOfBlowStone().identify().collect();
-			new StaffOfVision().upgrade(10).identify().collect();
-			new StaffOfValstrax().identify().upgrade(10).collect();
-			new StaffOfMageHand().identify().upgrade(10).collect();
-			new StaffOfConcept().identify().collect();
-			new StaffOfTwinTurbo().identify().collect();
-			new RingKit().collect();
-			new NormalMagazine().quantity(10).collect();
-			new UpMagazine().quantity(10).collect();
-			//endregion
-			//region scrolls
-			new ScrollOfUpgrade().identify().quantity(99).collect();
-			new ScrollOfTransmutation().identify().quantity(99).collect();
-			new ScrollOfRecharging().identify().quantity(99).collect();
-			new ScrollOfEnchantment().identify().quantity(99).collect();
-			new WeaponTransform().quantity(99).collect();
-			//endregion
-			//region potions
-			new PotionOfLiquidFlame().identify().quantity(99).collect();
-			new PotionOfFrost().identify().quantity(99).collect();
-			new PotionOfExperience().identify().quantity(99).collect();
-			new PotionOfSuperExp().identify().collect();
-			new PotionOfSuperStr().identify().collect();
-			new PotionOfStrength().identify().quantity(10).collect();
-			new PotionOfHealing().identify().quantity(99).collect();
-			new PotionOfMindVision().identify().quantity(99).collect();
-			//endregion
-			//region ror2
-			new Recycler().collect();
-			new LuckyLeaf().collect();
-			new Perforator().collect();
-			new TitanicKnurl().collect();
-			new Aegis().collect();
-			new Behemoth().collect();
-			new APRounds().collect();
-			new Crowbar().collect();
-			new Raincoat().collect();
-			new Gasoline().collect();
-			new TopazBrooch().collect();
-			new TougherTimes().collect();
-			new OddOpal().collect();
-			new TriTipDagger().collect();
-			new StunGrenade().collect();
-			new ArmorPlate().collect();
-			new LightFluxPauldron().collect();
-			new Transcendence().collect();
-			//endregion
+
+			new DictBook().collect();
+
+			new MobPlacer().collect();
+			new TrapPlacer().collect();
+			new TimeReverser().collect();
+			new ImmortalShield().collect();
+			new BackpackCleaner().collect();
+			new LevelTeleporter().collect();
+			new LazyTest().collect();
+			new MyOrder().collect();
+			//generators
+			new Generators_Misc().collect();
+			new Generators_Melee().collect();
+			new Generators_Missile().collect();
+			new Generators_Ring().collect();
+			new Generators_ROR2item().collect();
+			new Generators_Armor().collect();
+			new Generators_Artifact().collect();
+			new Generators_Skill().collect();
 		}
 	}
 
@@ -792,9 +758,9 @@ import com.watabou.utils.Reflection;
 			case CHEN:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_CHEN);
 			case RABBIT:
-				return true;
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_RABBIT);
 			case MIDORI:
-				return true;
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_MIDORI);
 		}
 	}
 	
@@ -816,6 +782,8 @@ import com.watabou.utils.Reflection;
 				return Messages.get(HeroClass.class, "chen_unlock");
 			case RABBIT:
 				return Messages.get(HeroClass.class, "rabbit_unlock");
+			case MIDORI:
+				return Messages.get(HeroClass.class, "midori_unlock");
 		}
 	}
 

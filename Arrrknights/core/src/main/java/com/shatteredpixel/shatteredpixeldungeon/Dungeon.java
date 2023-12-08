@@ -107,7 +107,7 @@ import java.util.HashSet;
 
 public class Dungeon {
 
-    public static Heap customSeedText;
+    //public static Heap customSeedText;
 
     //enum of items which have limited spawns, records how many have spawned
 	//could all be their own separate numbers, but this allows iterating, much nicer for bundling/initializing.

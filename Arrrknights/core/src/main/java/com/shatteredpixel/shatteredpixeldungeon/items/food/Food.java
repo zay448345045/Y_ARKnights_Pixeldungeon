@@ -51,6 +51,7 @@ public class Food extends Item {
 	
 	{
 		stackable = true;
+		defaultAction = AC_EAT;//change from budding
 		image = ItemSpriteSheet.RATION;
 
 		bones = true;

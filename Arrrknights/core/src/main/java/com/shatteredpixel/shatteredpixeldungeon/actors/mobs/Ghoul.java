@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -119,7 +120,7 @@ public class Ghoul extends Mob {
 				Ghoul child = new Ghoul();
 				child.partnerID = this.id();
 				this.partnerID = child.id();
-				child.generated = true;
+				if(Dungeon.isSPChallenged(SPChallenges.SWARMS))child.generated = true;
 				if (state != SLEEPING) {
 					child.state = child.WANDERING;
 				}
@@ -280,7 +281,7 @@ public class Ghoul extends Mob {
 					}
 				}
 				Actor.add(ghoul);
-				ghoul.spend(-ghoul.cooldown());
+				ghoul.timeToNow();
 				Dungeon.level.mobs.add(ghoul);
 				Dungeon.level.occupyCell( ghoul );
 				ghoul.sprite.idle();
@@ -311,7 +312,7 @@ public class Ghoul extends Mob {
 			Ghoul newHost = searchForHost(ghoul);
 			if (newHost != null){
 				attachTo(newHost);
-				spend(-cooldown());
+				timeToNow();
 			} else {
 				ghoul.die(this);
 			}

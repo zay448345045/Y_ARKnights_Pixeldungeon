@@ -1,58 +1,81 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.testtool;
 
-        import com.shatteredpixel.shatteredpixeldungeon.Assets;
-        import com.shatteredpixel.shatteredpixeldungeon.Challenges;
-        import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-        import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfCommand;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfForce;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
-        import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorrosion;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorruption;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfDisintegration;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfPrismaticLight;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfTransfusion;
-        import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
-        import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-        import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-        import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-        import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.OptionSlider;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
-        import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-        import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-        import com.watabou.noosa.Image;
-        import com.watabou.utils.Bundle;
-        import com.watabou.utils.Reflection;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfCommand;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfForce;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfAbsinthe;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfAngelina;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfBreeze;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfCorrupting;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfGreyy;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfLeaf;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfLena;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMayer;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfPodenco;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfPurgatory;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfShining;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSnowsant;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSussurro;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSuzuran;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfVigna;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfWeedy;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlowStone;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorrosion;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorruption;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfDisintegration;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfHallucination;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfHealing;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfPrismaticLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfSilence;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfTransfusion;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
+import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.OptionSlider;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.Reflection;
 
-        import java.util.ArrayList;
-        import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Objects;
 
 //Also contains wand
 public class Generators_Ring extends Generators {
@@ -66,7 +89,7 @@ public class Generators_Ring extends Generators {
     private int selected;
     private static final int RING_CAT = 0;
     private static final int WAND_CAT = 1;
-    private static final int SPWD_CAT = 2;
+    private static final int WAND_SP  = 2;
     private static final String AC_SETTING = "setting";
 
     @Override
@@ -108,9 +131,9 @@ public class Generators_Ring extends Generators {
                     w.doDrop(curUser);
                 }
             }
-        }else if (category == SPWD_CAT) {
-            Wand w = Reflection.newInstance(idToWand(selected));//备改
-            if( w != null) {
+        }else {
+            Wand w= Reflection.newInstance(idToSPWand(selected));
+            if (w!=null){
                 if(Challenges.isItemBlocked(w)) return;
                 modifyWand(w);
                 collect = w.identify().collect();
@@ -148,12 +171,9 @@ public class Generators_Ring extends Generators {
 
     private void modifyWand(Wand w) {
         w.level(levelToGen);
-        w.cursed = false;
+        w.cursed = cursed;
     }
-    private void modifySpwd(Wand w) {
-        w.level(levelToGen);
-        w.cursed = false;
-    }
+
     private Class<? extends Ring> idToRing(int id) {
         switch (id) {
             case 0:
@@ -177,19 +197,20 @@ public class Generators_Ring extends Generators {
             case 9:
                 return RingOfTenacity.class;
             case 10:
-                return RingOfAmplified.class;
-            case 11:
-                return RingOfAssassin.class;
-            case 12:
-                return RingOfCommand.class;
-            case 13:
-                return RingOfDominate.class;
-            case 14:
-                return RingOfMistress.class;
-            case 15:
-                return RingOfSunLight.class;
-            default:
                 return RingOfWealth.class;
+            case 11:
+                return RingOfAmplified.class;
+            case 12:
+                return RingOfAssassin.class;
+            case 13:
+                return RingOfCommand.class;
+            case 14:
+                return RingOfDominate.class;
+            case 15:
+                return RingOfMistress.class;
+            case 16:
+            default:
+                return RingOfSunLight.class;
         }
     }
 
@@ -220,45 +241,67 @@ public class Generators_Ring extends Generators {
             case 11:
                 return WandOfTransfusion.class;
             case 12:
-            default:
                 return WandOfWarding.class;
+            case 13:
+                return WandOfHallucination.class;
+            case 14:
+                return WandOfHealing.class;
+            case 15:
+            default:
+                return WandOfSilence.class;
+            case 16:
+                return WandOfBlowStone.class;
         }
 
     }
-    private Class<? extends Wand> idToSpwd(int id) {
-        switch (id) {
-            case 0:
-                return WandOfBlastWave.class;
-            case 1:
-                return WandOfCorrosion.class;
-            case 2:
-                return WandOfCorruption.class;
-            case 3:
-                return WandOfDisintegration.class;
-            case 4:
-                return WandOfFireblast.class;
-            case 5:
-                return WandOfFrost.class;
-            case 6:
-                return WandOfLightning.class;
-            case 7:
-                return WandOfLivingEarth.class;
-            case 8:
-                return WandOfMagicMissile.class;
-            case 9:
-                return WandOfPrismaticLight.class;
-            case 10:
-                return WandOfRegrowth.class;
-            case 11:
-                return WandOfTransfusion.class;
-            case 12:
-            default:
-                return WandOfWarding.class;
-        }
 
+    private Class<? extends Wand> idToSPWand(int id) {
+        switch (id){
+            case 1:
+                return StaffOfAbsinthe.class;
+            case 2:
+                return StaffOfAngelina.class;
+            case 3:
+                return StaffOfBreeze.class;
+            case 4:
+                return StaffOfCorrupting.class;
+            case 5:
+                return StaffOfGreyy.class;
+            case 6:
+                return StaffOfLeaf.class;
+            case 7:
+                return StaffOfLena.class;
+            case 8:
+                return StaffOfMayer.class;
+            case 9:
+                return StaffOfMudrock.class;
+            case 10:
+                return StaffOfPodenco.class;
+            case 11:
+                return StaffOfPurgatory.class;
+            case 12:
+                return StaffOfShining.class;
+            case 13:
+                return StaffOfSkyfire.class;
+            case 14:
+                return StaffOfSnowsant.class;
+            case 15:
+                return StaffOfSussurro.class;
+            case 16:
+                return StaffOfSuzuran.class;
+            case 17:
+                return StaffOfTime.class;
+            case 18:
+                return StaffOfVigna.class;
+            default:
+            case 19:
+                return StaffOfWeedy.class;
+        }
     }
     private static ArrayList<Class<? extends Ring>> ringList = new ArrayList<>();
     private static ArrayList<Class<? extends Wand>> wandList = new ArrayList<>();
+    private static ArrayList<Class<? extends Wand>> spwandList = new ArrayList<>();
+
     private void buildRingList() {
         if (!ringList.isEmpty()) return;
         for (int i = 0; i < 17; ++i) {
@@ -268,20 +311,26 @@ public class Generators_Ring extends Generators {
 
     private void buildWandList() {
         if (!wandList.isEmpty()) return;
-        for (int i = 0; i < 13; ++i) {
+        for (int i = 0; i < 16; ++i) {
             wandList.add(idToWand(i));
         }
     }
-
+    private void buildSPWandList(){
+        if (!spwandList.isEmpty()) return;
+        for (int i = 0; i < 20; ++i) {
+            spwandList.add(idToSPWand(i));
+        }
+    }
     private int total(int category){
         if (category == RING_CAT) return 17;
-        if (category == WAND_CAT) return 13;
+        if (category == WAND_CAT) return 16;
+        if (category == WAND_SP) return 20;
         return 0;
     }
 
     private class SettingsWindow extends Window {
-        private static final int WIDTH = 125;
-        private static final int BTN_SIZE = 17;
+        private static final int WIDTH = 140;
+        private static final int BTN_SIZE = 14;
         private static final int GAP = 2;
         private OptionSlider o_level;
         private OptionSlider o_category;
@@ -293,8 +342,8 @@ public class Generators_Ring extends Generators {
         public SettingsWindow() {
             buildRingList();
             buildWandList();
-
-            o_category = new OptionSlider(Messages.get(this, "category"), Messages.get(this, "ring"), Messages.get(this, "wand"), 0, 1) {
+            buildSPWandList();
+            o_category = new OptionSlider(Messages.get(this, "category"), Messages.get(this, "ring"), Messages.get(this, "wand"), 0, 2) {
                 @Override
                 protected void onChange() {
                     category = getSelectedValue();
@@ -362,6 +411,8 @@ public class Generators_Ring extends Generators {
             }
             else if (category == WAND_CAT) {
                 item = wandList.get(selected);
+            }else {
+                item = spwandList.get(selected);
             }
             t_selected.text(Messages.get(Generators_Ring.class, "selected", Messages.get(item, "name")));
             layout();
@@ -371,7 +422,20 @@ public class Generators_Ring extends Generators {
             float left;
             float top = GAP + o_category.bottom();
             int placed = 0;
-            int length = (category == RING_CAT ? ringList.size() : (category == WAND_CAT ? wandList.size() : 0));
+            int length;
+            switch (category){
+                case RING_CAT:
+                    length=ringList.size();
+                    break;
+                case WAND_CAT:
+                    length=wandList.size();
+                    break;
+                case WAND_SP:
+                    length=spwandList.size();
+                    break;
+                default:
+                    length=0;
+            }
             int firstRow = (length % 2 == 0 ? length / 2 : (length / 2 + 1));
             for (int i = 0; i < length; ++i) {
                 final int j = i;
@@ -386,12 +450,17 @@ public class Generators_Ring extends Generators {
                 if (category == RING_CAT) {
                     Image im = new Image(Assets.Sprites.ITEM_ICONS);
                     im.frame(ItemSpriteSheet.Icons.film.get(Objects.requireNonNull(Reflection.newInstance(ringList.get(i))).icon));
-                    im.scale.set(1.6f);
+                    im.scale.set(1f);
                     btn.icon(im);
                 } else if (category == WAND_CAT) {
                     Image im = new Image(Assets.Sprites.ITEMS);
                     im.frame(ItemSpriteSheet.film.get(Objects.requireNonNull(Reflection.newInstance(wandList.get(i))).image));
-                    im.scale.set(0.9f);
+                    im.scale.set(0.45f);
+                    btn.icon(im);
+                }else {
+                    Image im = new Image(Assets.Sprites.ITEMS);
+                    im.frame(ItemSpriteSheet.film.get(Objects.requireNonNull(Reflection.newInstance(spwandList.get(i))).image));
+                    im.scale.set(0.45f);
                     btn.icon(im);
                 }
 

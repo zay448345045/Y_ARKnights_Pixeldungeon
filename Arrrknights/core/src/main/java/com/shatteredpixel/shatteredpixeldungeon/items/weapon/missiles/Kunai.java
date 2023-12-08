@@ -49,28 +49,9 @@ public class Kunai extends MissileWeapon {
 		enemy = Actor.findChar(cell);
 		super.onThrow(cell);
 	}
-	
 	@Override
-	public int damageRoll(Char owner) {
-		if (owner instanceof Hero) {
-			Hero hero = (Hero)owner;
-			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-				//deals 60% toward max to max on surprise, instead of min to max.
-				int diff = max() - min();
-				int damage = augment.damageFactor(Random.NormalIntRange(
-						min() + Math.round(diff*0.6f),
-						max()));
-				int exStr = hero.STR() - STRReq();
-				if (exStr > 0) {
-					damage += Random.IntRange(0, exStr);
-				}
-				if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
-					damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
-				}
-				return damage;
-			}
-		}
-		return super.damageRoll(owner);
+	public float wepCorrect(){
+		return 0.6f;
 	}
 	
 }

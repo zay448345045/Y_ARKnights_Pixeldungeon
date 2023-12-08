@@ -18,12 +18,14 @@ public class Clush extends Weapon.Chimera {
     @Override
     public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
         if(attacker instanceof Hero){
-            if(((Hero) attacker).justAttacked) comboCount++;
+            if(((Hero) attacker).justAttacked) {
+                comboCount++;
+            }else {
+                comboCount = 0;
+            }
             if(comboCount+2< Random.Int(comboCount+10)) {
                 Buff.affect(attacker, Violin.InstantViolin.class);
             }
-        }else {
-            comboCount = 0;
         }
         return damage;
     }

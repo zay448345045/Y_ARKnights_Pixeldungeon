@@ -148,7 +148,6 @@ public abstract class Mob extends Char {
 	protected boolean enemySeen;
 	protected boolean alerted = false;
 	protected boolean generated = false;
-
 	protected static final float TIME_TO_WAKE_UP = 1f;
 	
 	private static final String STATE	= "state";
@@ -212,8 +211,9 @@ public abstract class Mob extends Char {
 	
 	@Override
 	protected boolean act() {
-		if(Dungeon.isSPChallenged(SPChallenges.SWARMS)){swarmsSpawn();}
-		generated = true;
+		if(Dungeon.isSPChallenged(SPChallenges.SWARMS)){
+			swarmsSpawn();
+		}
 		super.act();
 		
 		boolean justAlerted = alerted;
@@ -613,7 +613,9 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
-		
+
+		Badges.validateLazyUnlock();
+
 		if (enemy instanceof Hero
 				&& ((Hero) enemy).belongings.weapon instanceof MissileWeapon
 				&& !hitWithRanged){
@@ -795,7 +797,7 @@ public abstract class Mob extends Char {
 			if (EXP % 2 == 1) EXP += Random.Int(2);
 			EXP /= 2;
 		}
-
+		if(this.generated) EXP = (int)Math.ceil(EXP/2f);
 		if (alignment == Alignment.ENEMY){
 			rollToDropLoot();
 
@@ -922,6 +924,7 @@ public abstract class Mob extends Char {
 		if(buff(StaffOfMageHand.MageHandStolenTracker.class)!=null) return;
 		
 		float lootChance = this.lootChance;
+		if(this.generated) lootChance/=2f;
 		lootChance *= RingOfWealth.dropChanceMultiplier( Dungeon.hero );
 		
 		if (Random.Float() < lootChance) {
@@ -934,6 +937,7 @@ public abstract class Mob extends Char {
 		//ring of wealth logic
 		if (Ring.getBuffedBonus(Dungeon.hero, RingOfWealth.Wealth.class) > 0) {
 			int rolls = 1;
+			if(this.generated && Random.Int(2)==0) rolls = 0;
 			if (properties.contains(Property.BOSS)) rolls = 15;
 			else if (properties.contains(Property.MINIBOSS)) rolls = 5;
 			ArrayList<Item> bonus = RingOfWealth.tryForBonusDrop(Dungeon.hero, rolls);
@@ -1006,7 +1010,7 @@ public abstract class Mob extends Char {
 		Item item;
 		if (loot instanceof Generator.Category) {
 
-			item = Generator.random( (Generator.Category)loot );
+			item = Generator.randomUsingDefaults( (Generator.Category)loot );
 
 		} else if (loot instanceof Class<?>) {
 
@@ -1375,7 +1379,11 @@ public abstract class Mob extends Char {
 		heldAllies.clear();
 	}
 	private void swarmsSpawn(){
-		if (alignment == Alignment.ENEMY && !generated && state!=PASSIVE && !( this instanceof Shadow)){
+		if (alignment == Alignment.ENEMY && !generated && state!=PASSIVE
+				&& !( this instanceof Shadow)
+				&& !( this instanceof Bee)
+				&& !( this instanceof Mimic)
+		){
 			ArrayList<Integer> candidates = new ArrayList<>();
 
 			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
@@ -1391,6 +1399,7 @@ public abstract class Mob extends Char {
 				this.generated = true;
 				child.HT=(int)Math.ceil(child.HT/2f);
 				child.HP=(int)Math.ceil(child.HP/2f);
+				child.alignment = this.alignment;
 				this.HT=(int)Math.ceil(this.HT/2f);
 				this.HP=(int)Math.ceil(this.HP/2f);
 				if (state != SLEEPING) {

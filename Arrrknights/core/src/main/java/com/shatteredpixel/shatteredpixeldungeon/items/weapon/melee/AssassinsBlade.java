@@ -48,34 +48,10 @@ public class AssassinsBlade extends MeleeWeapon {
 		return  4*(tier+1) +    //20 base, down from 25
 				lvl*(tier+1);   //scaling unchanged
 	}
-
 	@Override
-	public int damageRoll(Char owner) {
-		if (owner instanceof Hero) {
-			Hero hero = (Hero) owner;
-			Char enemy = hero.enemy();
-				if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-					//deals 50% toward max to max on surprise, instead of min to max.
-					int diff = max() - min();
-					int damage;
-					if (Dungeon.hero.belongings.armor instanceof LeatherArmor) {
-						damage = augment.damageFactor(Random.NormalIntRange(min() + Math.round(diff * 0.60f), max()));
-					}
-					else {
-						damage = augment.damageFactor(Random.NormalIntRange(min() + Math.round(diff * 0.50f), max()));
-					}
-					int exStr = hero.STR() - STRReq();
-					if (exStr > 0) {
-						damage += Random.IntRange(0, exStr);
-					}
-					if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
-						damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
-					}
-					return damage;
-
-			}
-		}
-		return super.damageRoll(owner);
+	public float wepCorrect(){
+		if (Dungeon.hero.belongings.armor instanceof LeatherArmor) return 0.60f;
+		return 0.50f;
 	}
 
 	@Override

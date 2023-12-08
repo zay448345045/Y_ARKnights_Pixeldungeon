@@ -163,6 +163,8 @@ public class Badges {
 		BOSS_SLAIN_3_SWORDMASTER,
 		BOSS_SLAIN_3_SPSHOOTER,
 		BOSS_SLAIN_3_KILLER,
+		BOSS_SLAIN_3_MARKSMIDORI,
+		BOSS_SLAIN_3_KEYANIMATOR,
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 112, true ),
 		GAMES_PLAYED_2              ( 113, true ),
 
@@ -773,6 +775,12 @@ public class Badges {
 				case CHEN://change from budding
 					badge=Badge.BOSS_SLAIN_1_CHEN;
 					break;
+				case RABBIT://change from budding
+					badge=Badge.BOSS_SLAIN_1_RABBIT;
+					break;
+				case MIDORI://change from budding
+					badge=Badge.BOSS_SLAIN_1_MIDORI;
+					break;
 				}
 				local.add( badge );
 				unlock(badge);
@@ -855,6 +863,15 @@ public class Badges {
 				case SPSHOOTER:
 					badge = Badge.BOSS_SLAIN_3_SPSHOOTER;
 					break;
+				case KILLER:
+					badge = Badge.BOSS_SLAIN_3_KILLER;
+					break;
+				case MARKSMIDORI:
+					badge = Badge.BOSS_SLAIN_3_MARKSMIDORI;
+					break;
+				case KEYANIMATOR:
+					badge = Badge.BOSS_SLAIN_3_KEYANIMATOR;
+					break;
 				default:
 					return;
 				}
@@ -889,6 +906,9 @@ public class Badges {
 						isUnlocked( Badge.BOSS_SLAIN_3_SPSHOOTER ))
 						&&
 						isUnlocked(Badge.BOSS_SLAIN_3_KILLER)
+						&&
+						(isUnlocked( Badge.BOSS_SLAIN_3_MARKSMIDORI ) ||
+						isUnlocked( Badge.BOSS_SLAIN_3_KEYANIMATOR ))
 				) {
 
 					badge = Badge.BOSS_SLAIN_3_ALL_SUBCLASSES;
@@ -966,6 +986,10 @@ public class Badges {
 		if (!isUnlocked(Badge.UNLOCK_CHEN)){
 			displayBadge( Badge.UNLOCK_CHEN );}
 	}
+	public static void validateLazyUnlock(){
+		validateRabbitUnlock();
+		validateMidoriUnlock();
+	}
 
 	public static void validateRabbitUnlock(){
 		if(!isUnlocked(Badge.UNLOCK_RABBIT)){
@@ -973,8 +997,8 @@ public class Badges {
 		}
 	}
 	public static void validateMidoriUnlock(){
-		if(!isUnlocked(Badge.UNLOCK_RABBIT)){
-			displayBadge(Badge.UNLOCK_RABBIT);
+		if(!isUnlocked(Badge.UNLOCK_MIDORI)){
+			displayBadge(Badge.UNLOCK_MIDORI);
 		}
 	}
 

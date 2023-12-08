@@ -91,7 +91,7 @@ public class DictBook extends ChallengeItem {
         private static final int RINGS_IDX = 3;
         private static final int ARTIFACTS_IDX = 4;
         private static final int ALCHEMY_IDX = 5;
-        private static final int MOB_IDX = 6;
+        private static final int SKILL_IDX = 6;
         private static final int PLANTS_IDX = 7;
         private static final int UNCLASSIFIED_IDX = 8;
         private static final int DOCUMENTS_IDX = 9;
@@ -182,9 +182,9 @@ public class DictBook extends ChallengeItem {
             } else if (currentItemIdx == ALCHEMY_IDX) {
                 keys = new ArrayList<>(DictionaryJournal.ALCHEMY.keyList());
                 imageSheets = new ArrayList<>(DictionaryJournal.ALCHEMY.imageList());
-            } else if (currentItemIdx == MOB_IDX) {
-                keys = new ArrayList<>(DictionaryJournal.MOBS.keyList());
-                imageSheets = new ArrayList<>(DictionaryJournal.MOBS.imageList());
+            } else if (currentItemIdx == SKILL_IDX) {
+                keys = new ArrayList<>(DictionaryJournal.SKILLS.keyList());
+                imageSheets = new ArrayList<>(DictionaryJournal.SKILLS.imageList());
             } else if (currentItemIdx == PLANTS_IDX) {
                 keys = new ArrayList<>(DictionaryJournal.PLANTS.keyList());
                 imageSheets = new ArrayList<>(DictionaryJournal.PLANTS.imageList());
@@ -203,10 +203,9 @@ public class DictBook extends ChallengeItem {
             }
 
             float pos = 0;
-            boolean is_mobidx=(currentItemIdx == MOB_IDX);//change from budding
             for (int i = 0; i < keys.size(); i++) {
                 DictButton item = new DictButton(keys.get(i), imageSheets.get(i));
-                item.setRect(((is_mobidx)?6:0), pos, width, ((is_mobidx)?(MOB_HEIGHT):(ITEM_HEIGHT)));
+                item.setRect(0, pos, width, ITEM_HEIGHT);
                 content.add(item);
                 items.add(item);
 
@@ -228,7 +227,7 @@ public class DictBook extends ChallengeItem {
 
             public boolean onClick(float x, float y) {
                 if (inside(x, y)) {
-                    GameScene.show(new WndTitledMessage(new Image(icon), M.TL(Dict.class, k ), M.L(Dict.class, k + "_d")));
+                    GameScene.show(new WndScrollTitledMessage(new Image(icon), M.TL(Dict.class, k ), M.L(Dict.class, k + "_d"),152));
                     return true;
                 }
                 return false;

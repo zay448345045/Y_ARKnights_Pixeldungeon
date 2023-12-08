@@ -48,37 +48,11 @@ public class Dirk extends MeleeWeapon {
 		return  4*(tier+1) +    //12 base, down from 15
 				lvl*(tier+1);   //scaling unchanged
 	}
-	
 	@Override
-	public int damageRoll(Char owner) {
-		if (owner instanceof Hero) {
-			Hero hero = (Hero)owner;
-			Char enemy = hero.enemy();
-			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-				//deals 67% toward max to max on surprise, instead of min to max.
-				int diff = max() - min();
-				int damage;
-				if (Dungeon.hero.belongings.getItem(RingOfAssassin.class) != null && Dungeon.hero.belongings.getItem(RingOfAssassin.class).isEquipped(Dungeon.hero)) {
-						damage= augment.damageFactor(Random.NormalIntRange(
-								min() + Math.round(diff*1f),
-								max()));
-					}
-					else {
-					damage= augment.damageFactor(Random.NormalIntRange(
-							min() + Math.round(diff*0.67f),
-							max()));
-					}
-				int exStr = hero.STR() - STRReq();
-				if (exStr > 0) {
-					damage += Random.IntRange(0, exStr);
-				}
-				if(Dungeon.hero.hasTalent(Talent.STRONGMAN)){
-					damage += Random.IntRange( 0, exStr )* ((Hero) owner).pointsInTalent(Talent.STRONGMAN);
-				}
-				return damage;
-			}
-		}
-		return super.damageRoll(owner);
+	public float wepCorrect(){
+		if (Dungeon.hero.belongings.getItem(RingOfAssassin.class) != null && Dungeon.hero.belongings.getItem(RingOfAssassin.class).isEquipped(Dungeon.hero))
+			return 1f;
+		else return 0.67f;
 	}
 
 	@Override
