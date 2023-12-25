@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Dial;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Form;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Highest;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
@@ -165,7 +166,7 @@ abstract public class Weapon extends KindOfWeapon {
 	public int proc( Char attacker, Char defender, int damage ) {
 
 		if (attacker instanceof Hero) {
-		if (Dungeon.hero.belongings.ring instanceof RingOfDominate)
+		if (Dungeon.hero.belongings.ring instanceof RingOfDominate || Dungeon.hero.belongings.misc instanceof RingOfDominate)
 		{
 			float enemyResist = 1;
 			enemyResist *= 1 + 2*Math.pow(defender.HP/(float)defender.HT, 2);
@@ -772,7 +773,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		private static final Class<?>[] uncommon = new Class<?>[]{
 				EX.class, Winter.class, Flame.class, Rhine.class, Highest.class, Table.class, LightOf.class, Sylvestris.class,
-				Hyphen200.class, Form.class, Clush.class
+				Hyphen200.class, Form.class, Clush.class, Frostcraft.class
 		};
 
 		private static final Class<?>[] rare = new Class<?>[]{

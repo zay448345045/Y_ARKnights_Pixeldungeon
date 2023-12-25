@@ -120,7 +120,11 @@ public class Ghoul extends Mob {
 				Ghoul child = new Ghoul();
 				child.partnerID = this.id();
 				this.partnerID = child.id();
-				if(Dungeon.isSPChallenged(SPChallenges.SWARMS))child.generated = true;
+				if(Dungeon.isSPChallenged(SPChallenges.SWARMS)){
+					child.generated = true;
+					child.HT=(int)Math.ceil(child.HT/2f);
+					child.HP=(int)Math.ceil(child.HP/2f);
+				}
 				if (state != SLEEPING) {
 					child.state = child.WANDERING;
 				}

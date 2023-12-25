@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.GunWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -88,7 +89,7 @@ public class DrawingArt extends Buff implements ActionIndicator.Action{
                     GLog.w(Messages.get(GunWeapon.class, "fizzles"));
                     break;
                 }
-                if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos] && !mob.properties().contains(Char.Property.NPC)) {
+                if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos] && !(mob instanceof NPC)) {
                     Ballistica shot = new Ballistica(target.pos, mob.pos, Ballistica.PROJECTILE);
                     int cell = shot.collisionPos;
                     target.sprite.Sattack(cell);

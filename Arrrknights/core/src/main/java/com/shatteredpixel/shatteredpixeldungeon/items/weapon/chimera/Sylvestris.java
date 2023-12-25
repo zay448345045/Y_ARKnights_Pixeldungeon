@@ -11,15 +11,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.FlametailSword;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.watabou.utils.Bundle;
 
 public class Sylvestris extends Weapon.Chimera {
     @Override
     public String beforeName() {
         return Messages.get(this, "name");
     }
+    boolean da = false;
     @Override
     public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
-        boolean da = false;
         if (attacker.buff(FlametailSword.FlametaillBuff.class) != null) {
             Buff.detach(attacker, FlametailSword.FlametaillBuff.class);
             da = true;
@@ -37,5 +38,17 @@ public class Sylvestris extends Weapon.Chimera {
             damage *= 1.5f;
         }
         return damage;
+    }
+    private static final String DA	= "da";
+
+    @Override
+    public void storeInBundle( Bundle bundle ) {
+        super.storeInBundle( bundle );
+        bundle.put( DA, da );
+    }
+    @Override
+    public void restoreFromBundle( Bundle bundle ) {
+        super.restoreFromBundle(bundle);
+        da = bundle.getBoolean( DA );
     }
 }

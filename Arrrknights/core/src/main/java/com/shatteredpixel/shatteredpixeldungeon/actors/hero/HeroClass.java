@@ -119,6 +119,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.SuperAdvanceguard;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.BackpackCleaner;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ChimeraGiver;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Melee;
@@ -154,11 +155,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Blossoming;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Clush;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BladeDemon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Enfild;
@@ -189,6 +192,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
+
+import java.sql.Ref;
 
 //import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
@@ -293,6 +298,7 @@ import com.watabou.utils.Reflection;
 			Dungeon.LimitedDrops.EQUIPMENTS_BAG.drop();
 
 			new DictBook().collect();
+			new PotionOfSuperExp().identify().collect();
 
 			new MobPlacer().collect();
 			new TrapPlacer().collect();
@@ -311,6 +317,9 @@ import com.watabou.utils.Reflection;
 			new Generators_Armor().collect();
 			new Generators_Artifact().collect();
 			new Generators_Skill().collect();
+			new ChimeraGiver().collect();
+
+			new FlameKatana().chimera(Reflection.newInstance(Frostcraft.class)).identify().collect();
 		}
 	}
 

@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BladeDemon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
@@ -30,5 +31,16 @@ public class Flame extends Weapon.Chimera{
 
             Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.RED_LIGHT),12);
         }
+    }
+    private static final String KILLPOINT	= "killpoint";
+    @Override
+    public void storeInBundle( Bundle bundle ) {
+        super.storeInBundle( bundle );
+        bundle.put( KILLPOINT, killpoint );
+    }
+    @Override
+    public void restoreFromBundle( Bundle bundle ) {
+        super.restoreFromBundle(bundle);
+        killpoint = bundle.getInt( KILLPOINT );
     }
 }

@@ -211,6 +211,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
@@ -1606,6 +1607,9 @@ public class Hero extends Char {
                     Buff.affect(this, Horoscope.HoroscopeCharge.class);
                     ((Horoscope)(((Weapon) belongings.weapon).theChi(Horoscope.class))).addCount();
                 }
+            }
+            if(belongings.weapon!=null && ((Weapon)belongings.weapon).hasChimera(Frostcraft.class)){
+                Buff.affect(this, Frostcraft.FrostcraftBuff.class).startRecharge();
             }
         }
         resting = fullRest;

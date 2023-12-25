@@ -160,7 +160,7 @@ public class Generators_Missile extends Generators {
 
     private void buildList() {
         if (missileList.isEmpty()) {
-            for (int i = 0; i < 22; ++i) {
+            for (int i = 0; i < 23; ++i) {
                 missileList.add(idToMissile(i));
             }
         }

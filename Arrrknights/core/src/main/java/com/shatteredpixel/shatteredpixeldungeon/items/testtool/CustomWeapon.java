@@ -1013,7 +1013,7 @@ public class CustomWeapon extends MeleeWeapon {
         }
     }
 
-    private static class canScrollCheckBox extends CheckBox {
+    public static class canScrollCheckBox extends CheckBox {
 
         public canScrollCheckBox(String label) {
             super(label);

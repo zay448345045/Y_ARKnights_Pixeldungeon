@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.testtool;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Reflow;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.Torch;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
@@ -48,6 +49,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlink;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfFlock;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Blade;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Mountain;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Greatsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Blindweed;
@@ -63,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.utils.Reflection;
 
 public class LazyTest extends Generators {
     {
@@ -105,7 +111,11 @@ public class LazyTest extends Generators {
             plateArmor.identify().collect();
 
             Greatsword greatsword = new Greatsword();
-            greatsword.level(15);
+            greatsword.level(25);
+            greatsword.chimera(Reflection.newInstance(Mountain.class));
+            greatsword.chimera(Reflection.newInstance(Hyphen3.class));
+            greatsword.chimera(Reflection.newInstance(Blade.class));
+            greatsword.enchant(Reflection.newInstance(Projecting.class));
             greatsword.identify().collect();
 
             new Gold().quantity(16000000).doPickUp(hero);

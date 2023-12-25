@@ -1382,7 +1382,6 @@ public abstract class Mob extends Char {
 		if (alignment == Alignment.ENEMY && !generated && state!=PASSIVE
 				&& !( this instanceof Shadow)
 				&& !( this instanceof Bee)
-				&& !( this instanceof Mimic)
 		){
 			ArrayList<Integer> candidates = new ArrayList<>();
 
@@ -1397,6 +1396,7 @@ public abstract class Mob extends Char {
 				Mob child = Reflection.newInstance( this.getClass() );
 				child.generated = true;
 				this.generated = true;
+				if(child instanceof Mimic) ((Mimic) child).adjustStats(Dungeon.depth);
 				child.HT=(int)Math.ceil(child.HT/2f);
 				child.HP=(int)Math.ceil(child.HP/2f);
 				child.alignment = this.alignment;

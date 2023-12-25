@@ -63,6 +63,20 @@ public class Horoscope extends Weapon.Chimera {
     public void clearCount(){
         count = 0;
     }
+    private static final String COUNT	= "count";
+    private static final String STARPOWER	= "starpower";
+    @Override
+    public void storeInBundle( Bundle bundle ) {
+        super.storeInBundle( bundle );
+        bundle.put( COUNT, count );
+        bundle.put( STARPOWER, starpower );
+    }
+    @Override
+    public void restoreFromBundle( Bundle bundle ) {
+        super.restoreFromBundle(bundle);
+        count = bundle.getInt( COUNT );
+        starpower = bundle.getInt( STARPOWER );
+    }
 
     public static class HoroscopeCharge extends Buff {
         private int count = 0;
