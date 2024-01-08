@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -55,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
+import com.shatteredpixel.shatteredpixeldungeon.items.ArmorKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.DewVial;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
@@ -90,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -258,11 +261,11 @@ public enum Talent {
 	RHAPSODY(336,4),SYMPHONY(337,4),
 
 	//Midori T1
-	POWER_MEAL(352),GUN_WIKI(353),TEMP_RELOAD(354),BAYONET(355),PREWAR(174),
+	POWER_MEAL(352),GUN_WIKI(353),MECHANICAL_SIGHT(354),BAYONET(355),PREWAR(174),
 	//Midori T2
-	RELOAD_MEAL(356),BULLET_SUPPLY(357),FREE_FIRE(358),XTRM_MEASURES(359),PROFICIENCY(360),
+	INSPIRATION_MEAL(356),BULLET_SUPPLY(357),FREE_FIRE(358),TRUE_TO_LIFE(359),HONED_ARTS(361),
 	//Midori T3
-	HONED_ARTS(361,3),INSPIRATION(362,3),
+	PROFICIENCY(360,3),INSPIRATION(362,3),
 	//Midori T3		MarksMidori
 	SMOKE_BOMB(363,3),FULL_FIREPOWER(364,3),MYSTERY_SHOT(365,3),
 	//Midori T3		KeyAnimator
@@ -500,6 +503,10 @@ public enum Talent {
 				GLog.w(Messages.get(Dungeon.hero, "flashback_unable"));
 			}
 		}
+
+		if(talent == TRUE_TO_LIFE){
+			GameScene.selectItem(ttlSelector, WndBag.Mode.TRUE_TO_LIFE, Messages.get(Dungeon.hero, "true_to_life"));
+		}
 	}
 	public static class CachedRationsDropped extends CounterBuff{};
 	public static class NatureBerriesAvailable extends CounterBuff{};
@@ -583,14 +590,18 @@ public enum Talent {
 		if(hero.hasTalent(POWER_MEAL)){
 			Buff.affect(hero, PowerMeal.class).set(1 + hero.pointsInTalent(POWER_MEAL),3);
 		}
-		if(hero.hasTalent(RELOAD_MEAL)){
-			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
-			for(GunWeapon g : guns) {
-				if(g instanceof FreshInspiration){
-					g.addBullet(hero.pointsInTalent(RELOAD_MEAL));
-				}else{
-					g.addBullet(hero.pointsInTalent(RELOAD_MEAL)*3);
+		if(hero.hasTalent(INSPIRATION_MEAL)) {
+			ArrayList<Item> toID = new ArrayList<>();
+			for (Item item : Dungeon.hero.belongings) {
+				if (!item.isIdentified()) {
+					toID.add(item);
 				}
+			}
+			Collections.shuffle(toID);
+			if (Random.Int(4) < Dungeon.hero.pointsInTalent(INSPIRATION_MEAL) + 1) {
+				toID.get(0).identify();
+				GLog.i( Messages.get(Dungeon.hero, "inspiration_meal_identify", toID.get(0)) );
+				Badges.validateItemLevelAquired( toID.get(0) );
 			}
 		}
 	}
@@ -783,25 +794,6 @@ public enum Talent {
 				Seal.updateQuickslot();
 			}
 		}
-		if (hero.hasTalent(TEMP_RELOAD)){
-			ArrayList<GunWeapon> guns = Dungeon.hero.belongings.getAllItems(GunWeapon.class);
-			for(GunWeapon g : guns) {
-				if(!(g instanceof FreshInspiration)){
-					g.addBullet(2);
-				}else{
-					g.addBullet(1);
-				}
-			}
-			if(hero.pointsInTalent(TEMP_RELOAD)==2){
-				for(GunWeapon g : guns) {
-					if(!(g instanceof FreshInspiration)){
-						g.addBullet(2);
-					}else{
-						g.addBullet(1);
-					}
-				}
-			}
-		}
 	}
 
 	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
@@ -815,6 +807,13 @@ public enum Talent {
 				&& enemy.buff(SuckerPunchTracker.class) == null){
 			dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH) , 3);
 			Buff.affect(enemy, SuckerPunchTracker.class);
+		}
+
+		PowerMeal powerMeal = Dungeon.hero.buff(PowerMeal.class);
+		if(powerMeal!=null) {
+			dmg+=(powerMeal.dmgBoost);
+			powerMeal.left--;
+			if(powerMeal.left<=0) powerMeal.detach();
 		}
 
 		if (hero.hasTalent(Talent.SHADOW_HUNTER)
@@ -914,7 +913,7 @@ public enum Talent {
 				Collections.addAll(tierTalents,FULL_STRENGTH,DEDUCTION,INDUCTION,SIMPLE_COMBO,GENIUS);
 				break;
 			case MIDORI:
-				Collections.addAll(tierTalents,POWER_MEAL,GUN_WIKI,TEMP_RELOAD,BAYONET,PREWAR);
+				Collections.addAll(tierTalents,POWER_MEAL,GUN_WIKI,MECHANICAL_SIGHT,BAYONET,PREWAR);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -949,7 +948,7 @@ public enum Talent {
 				Collections.addAll(tierTalents,INSTANT_MEAL,LICK_BLOOD,SINISTER_ARROW,OCCULTISM,VIOLINIST);
 				break;
 			case MIDORI:
-				Collections.addAll(tierTalents,RELOAD_MEAL,BULLET_SUPPLY,FREE_FIRE,XTRM_MEASURES,PROFICIENCY);
+				Collections.addAll(tierTalents,INSPIRATION_MEAL,BULLET_SUPPLY,FREE_FIRE,TRUE_TO_LIFE,HONED_ARTS);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -984,7 +983,7 @@ public enum Talent {
 				Collections.addAll(tierTalents,FAST_TRIM,SLEEVE_TRICK);
 				break;
 			case MIDORI:
-				Collections.addAll(tierTalents,HONED_ARTS,INSPIRATION);
+				Collections.addAll(tierTalents,PROFICIENCY,INSPIRATION);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1236,5 +1235,14 @@ public enum Talent {
 			}
 		}
 	}
+
+	private static final WndBag.Listener ttlSelector = new WndBag.Listener() {
+		@Override
+		public void onSelect( Item item ) {
+			if (item != null) {
+
+			}
+		}
+	};
 
 }

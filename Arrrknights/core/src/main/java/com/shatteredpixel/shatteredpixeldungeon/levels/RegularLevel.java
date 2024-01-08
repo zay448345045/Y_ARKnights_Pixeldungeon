@@ -55,6 +55,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.PursuerRoom
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.RoseRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.StatueRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.VaultRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.WeakFloorRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.BeachRoom;

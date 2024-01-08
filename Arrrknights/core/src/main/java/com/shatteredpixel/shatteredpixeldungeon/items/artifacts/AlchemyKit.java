@@ -8,7 +8,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.CausticBrew;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfHolyFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
@@ -122,7 +121,7 @@ public class AlchemyKit extends Artifact {
 
     // veryrare등급 보상은 1개가 지급됩니다.
     private static final Class<?>[] veryrare = new Class<?>[]{
-            ScrollOfWarp.class, ReclaimTrap.class, PotionOfHolyFuror.class, ScrollOfTransmutation.class, CausticBrew.class};
+            ScrollOfWarp.class, ReclaimTrap.class, ScrollOfTransmutation.class, CausticBrew.class};
 
     private static final float[] typeChances = new float[]{
             20, //6.67% each

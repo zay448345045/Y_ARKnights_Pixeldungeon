@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Naginata;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GuerrillaSprite;
@@ -56,7 +57,6 @@ public class Statue extends Mob {
 		do {
 			weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
 		} while (weapon.cursed);
-		
 		weapon.enchant( Enchantment.random() );
 		
 		HP = HT = 15 + Dungeon.depth * 5;

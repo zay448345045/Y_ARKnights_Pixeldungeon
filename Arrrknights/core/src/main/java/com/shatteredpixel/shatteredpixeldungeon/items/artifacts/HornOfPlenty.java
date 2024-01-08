@@ -120,7 +120,7 @@ public class HornOfPlenty extends Artifact {
 						|| Dungeon.hero.hasTalent(Talent.SHINING_MEAL)
 						|| Dungeon.hero.hasTalent(Talent.LATENT_MEAL)
 						|| Dungeon.hero.hasTalent(Talent.INSTANT_MEAL)
-						|| Dungeon.hero.hasTalent(Talent.RELOAD_MEAL)){//change from budding
+						|| Dungeon.hero.hasTalent(Talent.INSPIRATION_MEAL)){//change from budding
 					hero.spend(Food.TIME_TO_EAT - 2);
 				} else {
 					hero.spend(Food.TIME_TO_EAT);

@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LanceCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MechanicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Oblivion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
@@ -569,6 +570,11 @@ public abstract class Char extends Actor {
 				if (Dungeon.hero.buff(RabbitTime.class) != null) {
 					return true;
 				}
+			}
+			MechanicalSight ms = Dungeon.hero.buff(MechanicalSight.class);
+			if(ms!=null){
+				ms.decrement();
+				return true;
 			}
 		}
 

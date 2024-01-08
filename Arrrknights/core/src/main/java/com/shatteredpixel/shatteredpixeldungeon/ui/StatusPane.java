@@ -465,4 +465,10 @@ public class StatusPane extends Component {
 			GameScene.show( new WndGame() );
 		}
 	}
+	public void showStarParticles(){
+		Emitter emitter = (Emitter)recycle( Emitter.class );
+		emitter.revive();
+		emitter.pos( avatar.center() );
+		emitter.burst( Speck.factory( Speck.STAR ), 12 );
+	}
 }

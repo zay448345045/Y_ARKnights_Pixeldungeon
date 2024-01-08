@@ -122,6 +122,7 @@ public class WndBag extends WndTabbed {
 		GUN,
 		AMMO,
 		MIDORI_AMMO,
+		TRUE_TO_LIFE,
 		DRAWABLE
 	}
 
@@ -491,8 +492,9 @@ public class WndBag extends WndTabbed {
 								|| item instanceof Runestone || item instanceof Wand || item instanceof Ring) ||
 						mode == Mode.GUN && (item instanceof GunWeapon) ||
 						mode == Mode.AMMO && (item instanceof NormalMagazine || item instanceof UpMagazine) ||
-						mode == Mode.MIDORI_AMMO && (item instanceof NormalMagazine || item instanceof UpMagazine || item instanceof MidoriAccessories || item instanceof MagicPaper) ||
-								mode == Mode.DRAWABLE && (
+						mode == Mode.MIDORI_AMMO && (item instanceof NormalMagazine || item instanceof UpMagazine || item instanceof MagicPaper) ||
+						mode == Mode.TRUE_TO_LIFE && ((item instanceof Potion || item instanceof Scroll) && !item.isIdentified()) ||
+						mode == Mode.DRAWABLE && (
 								(item instanceof Potion && !(item instanceof Brew || item instanceof Elixir || item instanceof ExoticPotion)) ||
 								(item instanceof Scroll && !(item instanceof ExoticScroll)) ||
 								((item instanceof ExoticScroll || item instanceof ExoticPotion) && Dungeon.hero.hasTalent(Talent.SUPERB_ARTS)) ||

@@ -22,10 +22,7 @@ public class Enfild2 extends MeleeWeapon {
 
         //also cannot surprise attack, see Hero.canSurpriseAttack
     }
-    private int Maccessories = 0;
-    public void addAccessories(){
-        Maccessories++;
-    }
+
 
     @Override
     public int min(int lvl) {
@@ -62,7 +59,9 @@ public class Enfild2 extends MeleeWeapon {
     @Override
     public float speedFactor( Char owner ) {
         float delay = super.speedFactor( owner );
-        delay *= 1/(1.00f+ Dungeon.hero.pointsInTalent(PROFICIENCY)*0.165f);
+        if(Dungeon.hero.hasTalent(PROFICIENCY)){
+            delay *= 1/(1.1f+Math.pow(Dungeon.hero.pointsInTalent(PROFICIENCY),2)*0.1f);
+        }
         return delay;
     }
 
@@ -80,16 +79,5 @@ public class Enfild2 extends MeleeWeapon {
 
         //otherwise, if there's no charge, return null.
         return null;
-    }
-    private static final String MACCESSORIES = "maccessories";
-    @Override
-    public void storeInBundle(Bundle bundle) {
-        super.storeInBundle(bundle);
-        bundle.put(MACCESSORIES, Maccessories);
-    }
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
-        Maccessories = bundle.getInt(MACCESSORIES);
     }
 }

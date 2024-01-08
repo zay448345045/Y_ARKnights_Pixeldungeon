@@ -9,7 +9,6 @@ import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.MYSTER
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PAPER_BULLET;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.PREWAR;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.SMOKE_BOMB;
-import static com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent.XTRM_MEASURES;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -99,7 +98,6 @@ public class GunWeapon extends MeleeWeapon {
     protected boolean gamza = false; // 썬더볼트 장착 여부
     protected float FIREACC = 1f;
     protected float FIRETICK = 1f;
-    protected int Maccessories = 0;
     protected float tryShootDamageFactor = 1;
     protected float tryShootAccFactor = 1;
 
@@ -277,7 +275,7 @@ public class GunWeapon extends MeleeWeapon {
         if (action.equals(AC_RELOAD)) {
             curUser = hero;
             if(Dungeon.hero.heroClass == HeroClass.MIDORI) {
-                if ((Dungeon.hero.hasTalent(XTRM_MEASURES)) ||
+                if (
                 (Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR) && Dungeon.hero.hasTalent(PAPER_BULLET)){
                     GameScene.selectItem(itemSelector, WndBag.Mode.MIDORI_AMMO, Messages.get(this, "prompt"));
                 }else{
@@ -577,7 +575,7 @@ public class GunWeapon extends MeleeWeapon {
 
             PowerMeal powerMeal = Dungeon.hero.buff(PowerMeal.class);
             if(powerMeal!=null) {
-            dmg+=powerMeal.dmgBoost;
+            dmg+=(powerMeal.dmgBoost)*2;
             powerMeal.left--;
             if(powerMeal.left<=0) powerMeal.detach();
             }
@@ -846,11 +844,6 @@ public class GunWeapon extends MeleeWeapon {
                         gamza = true;}
                     reload(((MissileWeapon)item).tier, item instanceof UpMagazine);
                     item.detach(Dungeon.hero.belongings.backpack);
-                }
-                else if(item instanceof MidoriAccessories){
-                    reload(Dungeon.hero.pointsInTalent(XTRM_MEASURES)+2, false);
-                    item.detach(Dungeon.hero.belongings.backpack);
-                    if(Dungeon.hero.pointsInTalent(XTRM_MEASURES)==2)Dungeon.hero.spend(-RELOAD_TIME);
                 }else if(item instanceof MagicPaper){
                     addBullet(Math.round(Dungeon.hero.pointsInTalent(PAPER_BULLET)*0.4f)+1);
                     if(!(curItem instanceof FreshInspiration)){addBullet(Math.round(Dungeon.hero.pointsInTalent(PAPER_BULLET)*0.4f)+1);}

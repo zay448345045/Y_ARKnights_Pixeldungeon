@@ -46,13 +46,17 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public int min(int lvl) {
 		return  tier +  //base
-				lvl;    //level scaling
+				lvl	+	//level scaling
+						((Dungeon.hero.hasTalent(Talent.PROFICIENCY)&& Maccessories>0)?
+								(Maccessories*(int)Math.round(Dungeon.hero.pointsInTalent(Talent.PROFICIENCY)*0.6f)) : 0);
 	}
 
 	@Override
 	public int max(int lvl) {
 		return  5*(tier+1) +    //base
-				lvl*(tier+1);   //level scaling
+				lvl*(tier+1)+	//level scaling
+				((Dungeon.hero.hasTalent(Talent.PROFICIENCY)&& Maccessories>0)?
+						(Maccessories*(int)Math.round(Dungeon.hero.pointsInTalent(Talent.PROFICIENCY)*0.8f)) : 0);
 	}
 
 	public int STRReq(int lvl){
@@ -60,6 +64,7 @@ public class MeleeWeapon extends Weapon {
 		if (Dungeon.hero.hasTalent(Talent.CHAINSAW_EXTEND) && isEquipped( Dungeon.hero )) {
 			strreq += 5 - Dungeon.hero.pointsInTalent(Talent.CHAINSAW_EXTEND);
 		}//change from budding
+		if(Dungeon.hero.hasTalent(Talent.PROTECTIONOFLIGHT)) strreq += Maccessories;
 		return strreq;//change from budding
 	}
 
@@ -101,7 +106,10 @@ public class MeleeWeapon extends Weapon {
 		}
 	}
 
-
+	protected int Maccessories = 0;
+	public void addAccessories(){
+		Maccessories++;
+	}
 	public void SPCharge(int value) {
 		int chargevalue = value;
 		chargevalue *= RingOfMistress.SPMultiplier(Dungeon.hero);
@@ -210,10 +218,12 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	private static final String CHARGE = "charge";
+	private static final String MACCESSORIES = "maccessories";
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(CHARGE, charge);
+		bundle.put(MACCESSORIES, Maccessories);
 	}
 
 	@Override
@@ -221,6 +231,7 @@ public class MeleeWeapon extends Weapon {
 		super.restoreFromBundle(bundle);
 		if (chargeCap > 0) charge = Math.min(chargeCap, bundle.getInt(CHARGE));
 		else charge = bundle.getInt(CHARGE);
+		Maccessories = bundle.getInt(MACCESSORIES);
 	}
 
 

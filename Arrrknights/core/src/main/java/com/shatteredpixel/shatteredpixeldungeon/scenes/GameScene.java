@@ -998,6 +998,9 @@ public class GameScene extends PixelScene {
 	public static void updateKeyDisplay(){
 		if (scene != null) scene.pane.updateKeys();
 	}
+	public static void showlevelUpStars(){
+		if (scene != null) scene.pane.showStarParticles();
+	}
 
 	public static void updateplayeravater(){ if (scene != null) scene.pane.Avaterupdate(); }
 
