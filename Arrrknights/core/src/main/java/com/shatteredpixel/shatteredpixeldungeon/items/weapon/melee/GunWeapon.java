@@ -734,8 +734,10 @@ public class GunWeapon extends MeleeWeapon {
                 }
             }
         }
-        if(Dungeon.hero.buff(SPAmmoTracker.class)!=null) { decAccessories();}
-        else{ Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);}
+        if(Dungeon.hero.pointsInTalent(SMOKE_BOMB)==3 && Dungeon.hero.buff(SPAmmoTracker.class)==null){
+            Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);
+        }
+        else{ decAccessories();}
         curUser.spendAndNext(1f);
     }
     protected void onSmokeBomb(Ballistica bolt){
@@ -749,8 +751,10 @@ public class GunWeapon extends MeleeWeapon {
             }
             GameScene.add( Blob.seed( bolt.collisionPos, 250*Dungeon.hero.pointsInTalent(SMOKE_BOMB), SmokeScreen.class ) );
         }
-        if(Dungeon.hero.buff(SPAmmoTracker.class)!=null) { decAccessories();}
-        else{ Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);}
+        if(Dungeon.hero.pointsInTalent(SMOKE_BOMB)==3 && Dungeon.hero.buff(SPAmmoTracker.class)==null){
+            Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);
+        }
+        else{ decAccessories();}
         curUser.spendAndNext(1f);
     }
     protected void onPoisonGas(Ballistica bolt){
@@ -765,8 +769,10 @@ public class GunWeapon extends MeleeWeapon {
             Sample.INSTANCE.play(Assets.Sounds.GAS);
             Sample.INSTANCE.play(Assets.Sounds.BLAST);
         }
-        if(Dungeon.hero.buff(SPAmmoTracker.class)!=null) { decAccessories();}
-        else{ Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);}
+        if(Dungeon.hero.pointsInTalent(SMOKE_BOMB)==3 && Dungeon.hero.buff(SPAmmoTracker.class)==null){
+            Buff.affect(Dungeon.hero, SPAmmoTracker.class, SPAmmoTracker.DURATION);
+        }
+        else{ decAccessories();}
         curUser.spendAndNext(1f);
     }
 

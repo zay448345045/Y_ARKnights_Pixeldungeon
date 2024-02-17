@@ -198,7 +198,7 @@ public class ShopRoom extends SpecialRoom {
 			break;
 
 		case 31:
-			if (Dungeon.extrastage_Gavial) {
+			if (Dungeon.DLC == Dungeon.SARGON) {
 				w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 				itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
 				itemsToSpawn.add(new PlateArmor().inscribe().upgrade(2).identify());
@@ -215,7 +215,7 @@ public class ShopRoom extends SpecialRoom {
 			}
 
 			case 36:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
 					itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
 					itemsToSpawn.add(new PlateArmor().inscribe().upgrade(2).identify());

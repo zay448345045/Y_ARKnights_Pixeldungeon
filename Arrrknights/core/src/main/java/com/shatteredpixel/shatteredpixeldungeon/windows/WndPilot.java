@@ -23,7 +23,7 @@ public class WndPilot extends Window {
         super();
 
         IconTitle titlebar = new IconTitle();
-        if (Dungeon.extrastage_Gavial) {
+        if (Dungeon.DLC == Dungeon.SARGON) {
             titlebar.icon( new ItemSprite(ItemSpriteSheet.AMULET, null ));
             titlebar.label( Messages.get(this, "gavial_name"));}
         else {titlebar.icon( new ItemSprite(ItemSpriteSheet.OBSIDIAN, null ));
@@ -32,7 +32,7 @@ public class WndPilot extends Window {
         add( titlebar );
 
         RenderedTextBlock message;
-        if (Dungeon.extrastage_Gavial)  message = PixelScene.renderTextBlock( Messages.get(this, "gavial"), 6 );
+        if (Dungeon.DLC == Dungeon.SARGON)  message = PixelScene.renderTextBlock( Messages.get(this, "gavial"), 6 );
         else message = PixelScene.renderTextBlock( Messages.get(this, "siesta"), 6 );
         message.maxWidth(WIDTH);
         message.setPos(0, titlebar.bottom() + GAP);

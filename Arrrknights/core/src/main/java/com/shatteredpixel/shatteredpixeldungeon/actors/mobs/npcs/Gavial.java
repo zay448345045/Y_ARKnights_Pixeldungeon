@@ -35,11 +35,11 @@ public class Gavial extends NPC {
         }
         else {
 
-            if (Dungeon.extrastage_Gavial) {
-                Dungeon.extrastage_Gavial = false;
+            if (Dungeon.DLC == Dungeon.SARGON) {
+                Dungeon.DLC = Dungeon.SIESTA;
                 sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "no"));
             } else {
-                Dungeon.extrastage_Gavial = true;
+                Dungeon.DLC = Dungeon.SARGON;
                 sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "ok"));
             }
         }

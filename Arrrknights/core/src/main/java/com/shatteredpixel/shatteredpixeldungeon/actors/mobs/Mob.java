@@ -215,7 +215,6 @@ public abstract class Mob extends Char {
 			swarmsSpawn();
 		}
 		super.act();
-		
 		boolean justAlerted = alerted;
 		alerted = false;
 		

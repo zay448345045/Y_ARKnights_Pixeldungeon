@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WolfMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -59,6 +60,7 @@ public class StaffOfMageHand extends Wand {
                 if(ch.buff(MageHandStolenTracker.class) == null) {
                     ((Mob) ch).rollToDropLoot();
                     Buff.affect(ch, MageHandStolenTracker.class);
+                    if((Mob)ch instanceof Mimic && ((Mimic) ch).items == null) ch.die(this);
                 }
                 //拿取投掷物
                 while (ch.buff(PinCushion.class) != null) {

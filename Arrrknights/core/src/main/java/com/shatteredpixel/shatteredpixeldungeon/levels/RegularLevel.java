@@ -142,7 +142,7 @@ public abstract class RegularLevel extends Level {
 		if (Dungeon.depth == 14) initRooms.add(new MagicGloemRoom());
 		if (Dungeon.depth == 24) initRooms.add(new PursuerRoom());
 
-		if (Dungeon.extrastage_Gavial) {
+		if (Dungeon.DLC == Dungeon.SARGON) {
 			if (Dungeon.depth == 33) initRooms.add(new LACNET2Room());
 			initRooms.add(new GavialStanardRoom());
 			initRooms.add(new GavialStanardRoom());

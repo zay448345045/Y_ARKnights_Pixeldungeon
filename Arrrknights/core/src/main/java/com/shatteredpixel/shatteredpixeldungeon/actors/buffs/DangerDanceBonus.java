@@ -16,6 +16,7 @@ public class DangerDanceBonus extends Buff{
         if(count<30){
             count += amount;
         }
+        if(count > 30) count = 30;
     }
     public void decrease(int point){
         switch (point){

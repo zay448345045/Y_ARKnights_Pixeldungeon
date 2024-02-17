@@ -68,7 +68,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		if (stage == 6) stage = 3;
 		else stage = Math.min(stage,4);
 		if (Dungeon.depth == 21 && Dungeon.level instanceof LastShopLevel) stage--;
-		if (Dungeon.extrastage_Gavial) stage = 3; // 가비알 추가처리
+		if (Dungeon.DLC == Dungeon.SARGON) stage = 3; // 가비알 추가처리
 		if (Dungeon.depth >= 27 && Dungeon.depth <= 30) stage = 3; // 로도스 추가 처리
 
 		if (tile == Terrain.HIGH_GRASS){

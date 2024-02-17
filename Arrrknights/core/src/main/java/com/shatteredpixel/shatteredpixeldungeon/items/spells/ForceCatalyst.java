@@ -34,7 +34,7 @@ public class ForceCatalyst extends Spell {
     public ArrayList<String> actions(Hero hero ) {
         ArrayList<String> actions = super.actions( hero );
         actions.remove( AC_CAST );
-        return actions( hero );
+        return actions;
     }
     @Override
     protected void onCast(Hero hero) {

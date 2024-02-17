@@ -187,12 +187,12 @@ public class Bestiary {
 						Scorpio.class, Scorpio.class, Scorpio.class));
 
 			case 31:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhWarrior.class, TiacauhWarrior.class, TiacauhWarrior.class,
 							TiacauhFanatic.class, TiacauhFanatic.class));
 				}
-				else if (Dungeon.extrastage_See) {
+				else if (Dungeon.DLC == Dungeon.IBERIA) {
 					return new ArrayList<>(Arrays.asList(
 							SeaRunner.class, SeaRunner.class,
 							FloatingSeaDrifter.class, FloatingSeaDrifter.class));
@@ -202,7 +202,7 @@ public class Bestiary {
 						Infantry.class, Infantry.class, Infantry.class,
 						Ergate.class));
 			case 32:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhWarrior.class, TiacauhWarrior.class,
 							TiacauhFanatic.class, TiacauhFanatic.class,
@@ -214,7 +214,7 @@ public class Bestiary {
 						Piersailor.class, Piersailor.class,
 						Sniper.class));
 			case 33:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhWarrior.class, TiacauhWarrior.class,
 							TiacauhFanatic.class, TiacauhFanatic.class,
@@ -228,7 +228,7 @@ public class Bestiary {
 						Piersailor.class, Piersailor.class,
 						Agent.class));
 			case 34:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhWarrior.class,
 							TiacauhFanatic.class, TiacauhFanatic.class,
@@ -241,7 +241,7 @@ public class Bestiary {
 						Piersailor.class, Piersailor.class, Piersailor.class,
 						Agent.class, Agent.class, Agent.class));
 			case 36:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhAddict.class,
 							TiacauhRipper.class, TiacauhRipper.class, TiacauhRipper.class,
@@ -254,7 +254,7 @@ public class Bestiary {
 						ExplodeSlug_A.class
 				));
 			case 37:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhAddict.class,
 							TiacauhRipper.class, TiacauhRipper.class,
@@ -268,7 +268,7 @@ public class Bestiary {
 						ExplodeSlug_A.class
 				));
 			case 38:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhAddict.class, TiacauhAddict.class,
 							TiacauhRipper.class,
@@ -284,7 +284,7 @@ public class Bestiary {
 						AcidSlug_A.class
 				));
 			case 39:
-				if (Dungeon.extrastage_Gavial) {
+				if (Dungeon.DLC == Dungeon.SARGON) {
 					return new ArrayList<>(Arrays.asList(
 							TiacauhAddict.class,
 							TiacauhShredder.class,

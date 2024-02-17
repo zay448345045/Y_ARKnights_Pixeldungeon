@@ -92,7 +92,7 @@ public class EntranceRoom extends StandardRoom {
 			level.drop( p, pos );
 		}
 
-		if (Dungeon.depth == 31 && Dungeon.extrastage_Gavial) {
+		if (Dungeon.depth == 31 && Dungeon.DLC == Dungeon.SARGON) {
 			int pos;
 			boolean validPos;
 			//Do not spawn wandmaker on the entrance, a trap, or in front of a door.

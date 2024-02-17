@@ -457,7 +457,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if(Dungeon.hero.subClass == HeroSubClass.KILLER){
+			if(Dungeon.hero.subClass == HeroSubClass.KILLER && Dungeon.hero.hasTalent(Talent.DANGER_DANCE)){
 				if(this instanceof Hero){
 					Buff.affect(this, DangerDanceBonus.class).add(4-Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
 				}else if(enemy instanceof Hero){
@@ -532,11 +532,15 @@ public abstract class Char extends Actor {
 			}
 
 			if(Dungeon.hero.subClass == HeroSubClass.KILLER){
-				if(enemy instanceof Hero){
-					Buff.affect(enemy, RabbitTime.class).add(0.2f+Dungeon.hero.pointsInTalent(Talent.LINGER_ON)*0.1f);
-					Buff.affect(enemy, DangerDanceBonus.class).add(4-Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
-				}else if(this instanceof Hero){
-					Buff.affect(this,DangerDanceBonus.class).decrease(Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+				if(enemy instanceof Hero) {
+					Buff.affect(enemy, RabbitTime.class).add(0.2f + Dungeon.hero.pointsInTalent(Talent.LINGER_ON) * 0.1f);
+				}
+				if(Dungeon.hero.hasTalent(Talent.DANGER_DANCE)) {
+					if (enemy instanceof Hero) {
+						Buff.affect(enemy, DangerDanceBonus.class).add(4 - Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+					} else if (this instanceof Hero) {
+						Buff.affect(this, DangerDanceBonus.class).decrease(Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
+					}
 				}
 			}
 			

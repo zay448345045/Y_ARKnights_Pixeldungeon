@@ -68,6 +68,11 @@ public class DrawingArt extends Buff implements ActionIndicator.Action{
 
         if(!(Dungeon.hero.belongings.weapon instanceof GunWeapon)) return;
 
+        if(Dungeon.hero.belongings.weapon.cursed) {
+            Buff.affect(Dungeon.hero, Burning.class).reignite(Dungeon.hero,4f);
+            Dungeon.hero.belongings.weapon.cursedKnown = true;
+            return;
+        }
         pcharge = 0;
         ready = false;
         ActionIndicator.clearAction(this);

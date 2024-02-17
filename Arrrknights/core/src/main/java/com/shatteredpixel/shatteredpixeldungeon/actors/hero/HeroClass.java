@@ -157,10 +157,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Flame;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Thermit;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Overeating;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BladeDemon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ChenSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
@@ -320,6 +322,9 @@ import java.sql.Ref;
 			new ChimeraGiver().collect();
 
 			new FlameKatana().chimera(Reflection.newInstance(Frostcraft.class)).identify().collect();
+			new EX42().enchant(Reflection.newInstance(Projecting.class)).identify().collect();
+			new Enfild().enchant(Reflection.newInstance(Projecting.class)).identify().collect();
+			new FlameKatana().chimera(Reflection.newInstance(EX.class)).enchant(Reflection.newInstance(Projecting.class)).identify().collect();
 		}
 	}
 

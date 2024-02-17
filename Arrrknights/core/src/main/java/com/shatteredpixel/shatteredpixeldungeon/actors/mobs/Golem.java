@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GolemSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -77,7 +78,9 @@ public class Golem extends Mob {
 
 	@Override
 	public void rollToDropLoot() {
-		Imp.Quest.process( this );
+		if(buff(StaffOfMageHand.MageHandStolenTracker.class)==null) {
+			Imp.Quest.process( this );
+		}
 
 		//each drop makes future drops 1/2 as likely
 		// so loot chance looks like: 1/8, 1/16, 1/32, 1/64, etc.

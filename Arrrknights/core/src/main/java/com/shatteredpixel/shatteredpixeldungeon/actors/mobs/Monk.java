@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.EnragedSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -99,7 +100,9 @@ public class Monk extends Mob {
 	
 	@Override
 	public void rollToDropLoot() {
-		Imp.Quest.process( this );
+		if(buff(StaffOfMageHand.MageHandStolenTracker.class)==null) {
+			Imp.Quest.process( this );
+		}
 		
 		super.rollToDropLoot();
 	}

@@ -26,7 +26,7 @@ public class EX42 extends MeleeWeapon {
         bones = false;
     }
 
-    private boolean swiching = false;
+    public boolean swiching = false;
 
     @Override
     public int max(int lvl) {

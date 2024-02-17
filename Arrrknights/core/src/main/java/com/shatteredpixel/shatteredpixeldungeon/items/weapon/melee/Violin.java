@@ -231,7 +231,8 @@ public class Violin extends MeleeWeapon {
         if (Dungeon.hero.hasTalent(Talent.SIMPLE_COMBO)) {
             Buff.affect(curUser,InstantViolin.class);
         }
-        Dungeon.hero.spendAndNext(TICK);
+        //Dungeon.hero.spendAndNext(TICK);
+        Dungeon.hero.next();
     }
 
     //pulls an enemy to a position along the chain's path, as close to the hero as possible
