@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Twilight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -299,7 +300,16 @@ public class Potion extends Item {
 		
 		hero.spend( TIME_TO_DRINK );
 		hero.busy();
-		apply( hero );
+		boolean jump = false;
+		for(Buff b : Dungeon.hero.buffs()){
+			if(b instanceof Talent.TTLbuff){
+				if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+					((Potion)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass()))).apply(hero);
+					jump = true;
+				}
+			}
+		}
+		if(!jump)apply( hero );
 		
 		Sample.INSTANCE.play( Assets.Sounds.DRINK );
 		
@@ -315,7 +325,17 @@ public class Potion extends Item {
 		} else  {
 
 			Dungeon.level.pressCell( cell );
-			shatter( cell );
+
+			boolean jump = false;
+			for(Buff b : Dungeon.hero.buffs()){
+				if(b instanceof Talent.TTLbuff){
+					if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+						((Potion)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass()))).shatter( cell );
+						jump = true;
+					}
+				}
+			}
+			if(!jump)shatter( cell );
 			
 		}
 	}

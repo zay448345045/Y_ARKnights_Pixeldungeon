@@ -268,7 +268,7 @@ public class GunWeapon extends MeleeWeapon {
             else {
                 Buff.affect(Dungeon.hero, Burning.class).reignite(Dungeon.hero,4f);
                 cursedKnown = true;
-                bullet -= 1;
+                if(bullet > 0) bullet -= 1;
             }
         }
 
@@ -709,7 +709,7 @@ public class GunWeapon extends MeleeWeapon {
         if (ch != null && !ch.isAlive() && Dungeon.hero.hasTalent(Talent.BF_RULL) && Random.Int(5) < Dungeon.hero.pointsInTalent(Talent.BF_RULL)) {
             Buff.affect(Dungeon.hero, Swiftthistle.TimeBubble.class).bufftime(1f);
         }
-
+        if(this.bullet<0) bullet = 0;
         if(this.bullet<=0) defaultAction=AC_RELOAD;
     }
     protected void onRifleGrenade(Ballistica bolt){
@@ -814,6 +814,7 @@ public class GunWeapon extends MeleeWeapon {
                 ch.sprite.showStatus(CharSprite.DEFAULT, Integer.toString(damage));
                 ch.HP -= damage;
                 ((Mob)ch).beckon(Dungeon.hero.pos);
+                ((Mob)ch).damage(-1, this);
                 if(ch.HP<0)ch.HP=0;
                 if (!ch.isAlive()) {
                     ch.die(this);

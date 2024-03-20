@@ -148,6 +148,7 @@ public abstract class Mob extends Char {
 	protected boolean enemySeen;
 	protected boolean alerted = false;
 	protected boolean generated = false;
+	protected boolean isSwarmChild = false;
 	protected static final float TIME_TO_WAKE_UP = 1f;
 	
 	private static final String STATE	= "state";
@@ -155,6 +156,7 @@ public abstract class Mob extends Char {
 	private static final String TARGET	= "target";
 	private static final String MAX_LVL	= "max_lvl";
 	private static final String GENERATED	= "generated";
+	private static final String ISSWARMCHILD	= "isswarmchild";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -176,6 +178,7 @@ public abstract class Mob extends Char {
 		bundle.put( TARGET, target );
 		bundle.put( MAX_LVL, maxLvl );
 		bundle.put( GENERATED, generated );
+		bundle.put( ISSWARMCHILD, isSwarmChild );
 	}
 	
 	@Override
@@ -203,6 +206,7 @@ public abstract class Mob extends Char {
 		if (bundle.contains(MAX_LVL)) maxLvl = bundle.getInt(MAX_LVL);
 
 		generated = bundle.getBoolean( GENERATED );
+		isSwarmChild = bundle.getBoolean( ISSWARMCHILD );
 	}
 	
 	public CharSprite sprite() {
@@ -1394,6 +1398,7 @@ public abstract class Mob extends Char {
 			if (!candidates.isEmpty()){
 				Mob child = Reflection.newInstance( this.getClass() );
 				child.generated = true;
+				child.isSwarmChild = true;
 				this.generated = true;
 				if(child instanceof Mimic) ((Mimic) child).adjustStats(Dungeon.depth);
 				child.HT=(int)Math.ceil(child.HT/2f);

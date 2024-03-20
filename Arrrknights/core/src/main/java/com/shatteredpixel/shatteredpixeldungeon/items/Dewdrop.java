@@ -116,7 +116,7 @@ public class Dewdrop extends Item {
 				}
 
 			} else {
-				GLog.i(Messages.get(Dewdrop.class, "	already_full"));
+				GLog.i(Messages.get(Dewdrop.class, "already_full"));
 				return false;
 			}
 		return true;

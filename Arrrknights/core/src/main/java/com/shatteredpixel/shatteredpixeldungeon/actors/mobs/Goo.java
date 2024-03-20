@@ -272,7 +272,7 @@ public class Goo extends Mob {
 		Dungeon.level.unseal();
 		
 		GameScene.bossSlain();
-		Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
+		if(!this.isSwarmChild)Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
 		Dungeon.level.drop(new Certificate(2), pos).sprite.drop(pos);
 		
 		//60% chance of 2 blobs, 30% chance of 3, 10% chance for 4. Average of 2.5

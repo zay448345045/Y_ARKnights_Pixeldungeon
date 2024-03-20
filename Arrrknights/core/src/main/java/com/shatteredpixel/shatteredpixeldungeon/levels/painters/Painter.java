@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.painters;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.watabou.utils.Point;
+import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
 import java.util.ArrayList;
@@ -60,9 +61,40 @@ public abstract class Painter {
 			Arrays.fill( level.map, pos, pos + w, value );
 		}
 	}
+
+	public static void replace( Level level, int x, int y, int w, int h, int before, int after) {
+
+		int width = level.width();
+
+		int pos = y * width + x;
+		for (int i=y; i < y + h; i++, pos += width) {
+			int pos1 = pos;
+			for(int j=x; j<x+w; j++, pos1++) if(level.map[pos1] == before) Arrays.fill( level.map, pos1, pos1+1, after );
+		}
+	}
+	public static void replaceWithChances( Level level, int x, int y, int w, int h, int before, int after, float chance) {
+
+		int width = level.width();
+
+		int pos = y * width + x;
+		for (int i=y; i < y + h; i++, pos += width) {
+			int pos1 = pos;
+			for(int j=x; j<x+w; j++, pos1++) {
+				if(level.map[pos1] == before && Random.Float()<chance) Arrays.fill( level.map, pos1, pos1+1, after );
+			}
+		}
+	}
 	
 	public static void fill( Level level, Rect rect, int value ) {
 		fill( level, rect.left, rect.top, rect.width(), rect.height(), value );
+	}
+
+	public static void replace( Level level, Rect rect, int before, int after ) {
+		replace( level, rect.left, rect.top, rect.width(), rect.height(), before, after );
+	}
+
+	public static void replaceWithChances( Level level, Rect rect, int before, int after, float chance ) {
+		replaceWithChances( level, rect.left, rect.top, rect.width(), rect.height(), before, after, chance );
 	}
 	
 	public static void fill( Level level, Rect rect, int m, int value ) {

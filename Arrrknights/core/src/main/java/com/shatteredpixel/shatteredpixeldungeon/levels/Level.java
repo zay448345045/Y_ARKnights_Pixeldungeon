@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.ROR;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -66,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Stylus;
 import com.shatteredpixel.shatteredpixeldungeon.items.Torch;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
@@ -81,6 +84,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.HighGrass;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -119,7 +123,10 @@ public abstract class Level implements Bundlable {
 		DARK,
 		LARGE,
 		TRAPS,
-		SECRETS
+		SECRETS,
+		MAZE,
+		LOST,
+		UNKNOWN
 	}
 
 	protected int width;
@@ -229,8 +236,7 @@ public abstract class Level implements Bundlable {
 
 				if (Dungeon.depth > 1) {
 					//50% chance of getting a level feeling
-					//~7.15% chance for each feeling
-					switch (Random.Int(14)) {
+					switch (Random.Int(18)) {
 						case 0:
 							feeling = Feeling.CHASM;
 							break;
@@ -247,13 +253,22 @@ public abstract class Level implements Bundlable {
 							break;
 						case 4:
 							feeling = Feeling.LARGE;
-							addItemToSpawn(Generator.random(Generator.Category.FOOD));
+							addItemToSpawn(new Pasty());
 							break;
 						case 5:
 							feeling = Feeling.TRAPS;
 							break;
 						case 6:
 							feeling = Feeling.SECRETS;
+							break;
+						case 7:
+							feeling = Feeling.MAZE;
+							break;
+						case 8:
+							if(Random.Int(2)==0)feeling = Feeling.LOST;
+							break;
+						case 9:
+							if(Random.Int(2)==0)feeling = Feeling.UNKNOWN;
 							break;
 					}
 				}
@@ -273,12 +288,13 @@ public abstract class Level implements Bundlable {
 
 		} while (!build());
 
-		
+		removeRORWalls();
 		buildFlagMaps();
 		cleanWalls();
 		
 		createMobs();
 		createItems();
+		collectMazeDoors();
 
 		Random.popGenerator();
 	}
@@ -291,6 +307,7 @@ public abstract class Level implements Bundlable {
 		
 		map = new int[length];
 		Arrays.fill( map, feeling == Level.Feeling.CHASM ? Terrain.CHASM : Terrain.WALL );
+		if(Dungeon.DLC == ROR) Arrays.fill( map,Terrain.CHASM);
 		
 		visited     = new boolean[length];
 		mapped      = new boolean[length];
@@ -491,6 +508,7 @@ public abstract class Level implements Bundlable {
 	abstract protected void createMobs();
 
 	abstract protected void createItems();
+	protected void collectMazeDoors(){};
 
 	public void seal(){
 		if (!locked) {
@@ -669,6 +687,7 @@ public abstract class Level implements Bundlable {
 
 		return null;
 	}
+	public void removeRORWalls(){	}
 
 	public void buildFlagMaps() {
 		

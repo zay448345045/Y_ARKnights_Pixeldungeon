@@ -439,4 +439,8 @@ public class CursedWand {
 		solidRarity = rarity;
 		solidType = type;
 	}
+	public static void logoutSolid(){
+		solidRarity = -1;
+		solidType = -1;
+	}
 }

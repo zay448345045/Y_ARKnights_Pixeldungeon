@@ -135,6 +135,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.testtool.MobPlacer;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.MyOrder;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.TimeReverser;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.TrapPlacer;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.UnknownLazyTest;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfSkyfire;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfTime;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfConcept;
@@ -309,6 +310,7 @@ import java.sql.Ref;
 			new BackpackCleaner().collect();
 			new LevelTeleporter().collect();
 			new LazyTest().collect();
+			new UnknownLazyTest().collect();
 			new MyOrder().collect();
 			//generators
 			new Generators_Misc().collect();

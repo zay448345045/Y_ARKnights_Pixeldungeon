@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ROR2Shield;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -265,10 +266,17 @@ public class StatusPane extends Component {
 		shieldedHP.scale.x = health/(float)max;
 		rawShielding.scale.x = shield/(float)max;
 
+
 		if (shield <= 0){
 			hpText.text(health + "/" + originMax);
 		} else {
 			hpText.text(health + "+" + shield +  "/" + originMax);
+		}
+		if(Dungeon.level.feeling == Level.Feeling.UNKNOWN){
+			hpText.text("?/?");
+			hp.scale.x = 0;
+			shieldedHP.scale.x = 0;
+			rawShielding.scale.x = 0;
 		}
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();

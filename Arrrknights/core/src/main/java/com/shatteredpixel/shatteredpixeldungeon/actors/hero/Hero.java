@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Alchemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ActiveOriginium;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
@@ -2514,6 +2515,7 @@ public class Hero extends Char {
 
             //ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dying again.
             PotionOfHealing.cure(this);
+            Buff.prolong(this, AnkhInvulnerability.class, AnkhInvulnerability.DURATION);
             Buff.detach(this, Paralysis.class);
             Buff.affect(this, Barrier.class).incShield(barrior);
             Buff.prolong(this, BlobImmunity.class, BlobImmunity.DURATION / 4);
@@ -2766,6 +2768,11 @@ public class Hero extends Char {
             return true;
         }
         return super.isImmune(effect);
+    }
+
+    @Override
+    public boolean isInvulnerable(Class effect) {
+        return super.isInvulnerable(effect) || buff(AnkhInvulnerability.class) != null;
     }
 
     public boolean search(boolean intentional) {

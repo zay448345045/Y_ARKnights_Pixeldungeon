@@ -136,6 +136,10 @@ public class MagicPaper extends Item{
         }
     };
     @Override
+    public boolean isUpgradable() {
+        return false;
+    }
+    @Override
     public void storeInBundle( Bundle bundle ) {
         super.storeInBundle(bundle);
     }

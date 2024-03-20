@@ -167,7 +167,7 @@ public class Yog extends Mob {
 		}
 		
 		GameScene.bossSlain();
-		Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
+		if(!this.isSwarmChild)Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
 		Dungeon.level.drop(new Certificate(12), pos).sprite.drop(pos);
 		super.die( cause );
 		

@@ -29,12 +29,12 @@ public class Frostcraft extends Weapon.Chimera {
     @Override
     public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
         if(attacker instanceof Hero){
-            if (frostPhase == 3) {
+            if (frostPhase == 4) {
+                damage*= 1.33f;
+            }else if(frostPhase == 3 || frostPhase == 2){
                 damage*= 1.25f;
-            }else if(frostPhase == 2){
-                damage*= 1.2f;
             }else if(frostPhase == 1) {
-                damage*= 1.05f;
+                damage*= 1.1f;
             }
             frostPhase--;
             if(frostPhase<=0) Buff.detach(Dungeon.hero, FrostcraftBuff.class);
@@ -73,7 +73,7 @@ public class Frostcraft extends Weapon.Chimera {
             if(recharging &&
                     Dungeon.hero.belongings.weapon!=null &&
                     ((Weapon)Dungeon.hero.belongings.weapon).hasChimera(Frostcraft.class) &&
-                    ((Frostcraft)((Weapon)Dungeon.hero.belongings.weapon).theChi(Frostcraft.class)).getFrostPhase() < 3
+                    ((Frostcraft)((Weapon)Dungeon.hero.belongings.weapon).theChi(Frostcraft.class)).getFrostPhase() < 4
             ){
                 CellEmitter.get( Dungeon.hero.pos ).burst( ElmoParticle.FACTORY, 6);
                 ((Frostcraft)((Weapon)Dungeon.hero.belongings.weapon).theChi(Frostcraft.class)).addFrostPhase();

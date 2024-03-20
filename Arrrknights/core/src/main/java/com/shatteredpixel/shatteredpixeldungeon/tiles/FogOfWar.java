@@ -21,9 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.tiles;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
+
 import com.badlogic.gdx.graphics.Pixmap;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Texture;
@@ -190,15 +193,15 @@ public class FogOfWar extends Image {
 		Pixmap fog = texture.bitmap;
 
 		int cell;
-		
+
 		for (Rect update : updating) {
 			for (int i = update.top; i < update.bottom; i++) {
 				cell = mapWidth * i + update.left;
 				for (int j = update.left; j < update.right; j++) {
 					
-					if (cell >= Dungeon.level.length()) continue; //do nothing
+					if (cell >= level.length()) continue; //do nothing
 					
-					if (!Dungeon.level.discoverable[cell]
+					if (!level.discoverable[cell]
 							|| (!visible[cell] && !visited[cell] && !mapped[cell])) {
 						//we skip filling cells here if it isn't a full update
 						// because they must already be dark
@@ -283,14 +286,16 @@ public class FogOfWar extends Image {
 	}
 	
 	private boolean wall(int cell) {
-		return DungeonTileSheet.wallStitcheable(Dungeon.level.map[cell]);
+		return DungeonTileSheet.wallStitcheable(level.map[cell]);
 	}
 
 	private int getCellFog( int cell ){
 
 		if (visible[cell]) {
 			return VISIBLE;
-		} else if (visited[cell]) {
+		}
+		else if(level.feeling == Level.Feeling.LOST) return INVISIBLE;
+		else if (visited[cell]) {
 			return VISITED;
 		} else if (mapped[cell] ) {
 			return MAPPED;
@@ -323,7 +328,7 @@ public class FogOfWar extends Image {
 	public void draw() {
 
 		if (!toUpdate.isEmpty()){
-			updateTexture(Dungeon.level.heroFOV, Dungeon.level.visited, Dungeon.level.mapped);
+			updateTexture(level.heroFOV, level.visited, level.mapped);
 		}
 
 		super.draw();

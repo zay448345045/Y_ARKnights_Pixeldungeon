@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.TerminationT;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ExplosiveSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Javelin;
@@ -116,6 +117,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		ANGULAR_SPEEDS.put(Thoughts.SpiritArrow.class,0);
 		ANGULAR_SPEEDS.put(TerminationT.SpiritArrow.class,0);
 		ANGULAR_SPEEDS.put(AnnihilationGear.Spriteex.class,0);
+		ANGULAR_SPEEDS.put(ExplosiveSpear.class,       0);
 	}
 
 	//TODO it might be nice to have a source and destination angle, to improve thrown weapon visuals
@@ -167,7 +169,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				|| item instanceof WSprite.TenguShuriken){
 			speed *= 1.5f;
 		}
-		
+		if(item instanceof ROR_LesserWispSprite.WispShot){speed *= 3f;}
 		PosTweener tweener = new PosTweener( this, to, d.length() / speed );
 		tweener.listener = this;
 		parent.add( tweener );

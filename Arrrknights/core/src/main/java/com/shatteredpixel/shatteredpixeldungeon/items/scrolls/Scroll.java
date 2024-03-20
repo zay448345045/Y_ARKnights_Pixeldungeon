@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.UnstableSpellbook;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
@@ -184,7 +185,17 @@ public abstract class Scroll extends Item {
 			else {
 				curUser = hero;
 				curItem = detach( hero.belongings.backpack );
-				doRead();
+				boolean jump = false;
+				for(Buff b : Dungeon.hero.buffs()){
+					if(b instanceof Talent.TTLbuff){
+						if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+							curItem = ((Scroll)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass())));
+							((Scroll)curItem).doRead();
+							jump = true;
+						}
+					}
+				}
+				if(!jump)doRead();
 			}
 			
 		}

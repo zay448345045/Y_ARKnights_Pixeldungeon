@@ -21,16 +21,21 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.ROR;
+
 import com.badlogic.gdx.utils.Pool;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GoldenMimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -39,12 +44,20 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.SmallRation;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.GuidePage;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
+import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlink;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.levels.builders.Builder;
 import com.shatteredpixel.shatteredpixeldungeon.levels.builders.FigureEightBuilder;
 import com.shatteredpixel.shatteredpixeldungeon.levels.builders.LoopBuilder;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.connection.ConnectionRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.MiniShopRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.LACNET2Room;
@@ -76,7 +89,15 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.ExplosiveTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.FrostTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.WornDartTrap;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Camera;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -86,7 +107,7 @@ import java.util.Iterator;
 public abstract class RegularLevel extends Level {
 	
 	protected ArrayList<Room> rooms;
-	
+	protected ArrayList<Room.Door> doors = new ArrayList<>();
 	protected Builder builder;
 	
 	protected Room roomEntrance;
@@ -419,6 +440,9 @@ public abstract class RegularLevel extends Level {
 		}
 
 		for (Item item : itemsToSpawn) {
+			if(Dungeon.DLC == ROR &&
+					(item instanceof IronKey || item instanceof PotionOfLiquidFlame || item instanceof StoneOfBlast)
+			){ item = Random.Int(2)==0? new PotionOfLevitation(): new StoneOfBlink();}
 			int cell = randomDropCell();
 			drop( item, cell ).type = Heap.Type.HEAP;
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
@@ -509,6 +533,35 @@ public abstract class RegularLevel extends Level {
 		Random.popGenerator();
 
 	}
+
+	@Override
+	protected void collectMazeDoors() {
+		doors.clear();
+		for(Room r : rooms){
+			for(Room ar : r.connected.keySet()){
+				if(r.connected.get(ar)!=null){
+					doors.add(r.connected.get(ar));
+				}
+			}
+		}
+	}
+	@Override
+	public void removeRORWalls(){
+		if(!(Dungeon.DLC == ROR)) return;
+		for(Room r : rooms) {
+			Painter.replaceWithChances(this, r, Terrain.EMPTY, Terrain.STATUE, 0.1f);
+			Painter.replaceWithChances(this, r, Terrain.WALL, Terrain.STATUE, 0.05f);
+			Painter.replaceWithChances(this, r, Terrain.WALL, Terrain.EMPTY, 0.4f);
+			Painter.replace( this, r, Terrain.WALL , Terrain.CHASM );
+			Painter.replace( this, r, Terrain.WALL_DECO , Terrain.STATUE );
+			Painter.replace( this, r, Terrain.LOCKED_DOOR , Terrain.STATUE );
+			Painter.replace( this, r, Terrain.BOOKSHELF , Terrain.STATUE );
+			Painter.replace( this, r, Terrain.SECRET_DOOR , Terrain.STATUE );
+			Painter.replaceWithChances( this, r, Terrain.STATUE , Terrain.WALL, 0.75f );
+			Painter.replace( this, r, Terrain.DOOR , Terrain.EMPTY );
+			if(r instanceof ConnectionRoom) Painter.replaceWithChances(this, r, Terrain.CHASM, Terrain.EMPTY, 0.75f);
+		}
+	}
 	
 	public ArrayList<Room> rooms() {
 		return new ArrayList<>(rooms);
@@ -596,11 +649,57 @@ public abstract class RegularLevel extends Level {
 		
 		return super.fallCell( false );
 	}
+
+	private boolean notAgain = false;
+	@Override
+	public void occupyCell( Char ch ){
+		if ((map[ch.pos] == Terrain.DOOR || map[ch.pos] == Terrain.OPEN_DOOR) && ch instanceof Hero && !notAgain){
+			if(feeling == Feeling.MAZE){
+				if(Random.Int(10)==0){
+					teleportMazeFeeling((Hero) ch);
+				}
+			}
+		}
+		super.occupyCell(ch);
+	}
+	public void teleportMazeFeeling( Hero hero ) {
+		boolean failed = false;
+		if (Dungeon.bossLevel() || (Dungeon.depth >= 27 && Dungeon.depth <= 30)){
+			return;
+		}
+		int count = 20;
+		int pos;
+		do {
+			int rnd = Random.Int(doors.size());
+			pos = pointToCell(doors.get(rnd));
+			if (count-- <= 0) {
+				failed = true;
+				break;
+			}
+		} while (!(map[pos] == Terrain.DOOR || map[pos] == Terrain.OPEN_DOOR) || pos == Dungeon.hero.pos);
+		if (pos != -1 && !failed){
+			notAgain = true;
+			hero.sprite.interruptMotion();
+			hero.interrupt();
+			Dungeon.hero.pos = pos;
+			Dungeon.level.occupyCell(Dungeon.hero);
+			Dungeon.observe();
+			Dungeon.hero.checkVisibleMobs();
+			Dungeon.hero.sprite.place( Dungeon.hero.pos );
+			Dungeon.hero.sprite.turnTo( Dungeon.hero.pos, pos);
+			Camera.main.panTo(hero.sprite.center(), 100f);
+			notAgain = false;
+			Dungeon.observe();
+			GameScene.updateFog();
+			Camera.main.shake(2, 0.35f);
+		}
+	}
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( "rooms", rooms );
+		bundle.put( "doors", doors );
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -617,6 +716,7 @@ public abstract class RegularLevel extends Level {
 				roomExit = r;
 			}
 		}
+		doors = new ArrayList<>( (Collection<Room.Door>) ((Collection<?>) bundle.getCollection( "doors" )) );
 	}
 	
 }

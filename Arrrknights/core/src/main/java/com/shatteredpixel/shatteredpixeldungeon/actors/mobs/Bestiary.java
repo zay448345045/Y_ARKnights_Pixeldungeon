@@ -196,6 +196,9 @@ public class Bestiary {
 					return new ArrayList<>(Arrays.asList(
 							SeaRunner.class, SeaRunner.class,
 							FloatingSeaDrifter.class, FloatingSeaDrifter.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				//Siesta part1
 				return new ArrayList<>(Arrays.asList(
@@ -207,6 +210,9 @@ public class Bestiary {
 							TiacauhWarrior.class, TiacauhWarrior.class,
 							TiacauhFanatic.class, TiacauhFanatic.class,
 							TiacauhLancer.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						Infantry.class, Infantry.class,
@@ -220,6 +226,9 @@ public class Bestiary {
 							TiacauhFanatic.class, TiacauhFanatic.class,
 							TiacauhLancer.class, TiacauhLancer.class,
 							TiacauhAddict.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						Infantry.class, Infantry.class,
@@ -234,6 +243,9 @@ public class Bestiary {
 							TiacauhFanatic.class, TiacauhFanatic.class,
 							TiacauhLancer.class, TiacauhLancer.class,
 							TiacauhAddict.class, TiacauhAddict.class, TiacauhAddict.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						Ergate.class,
@@ -246,6 +258,9 @@ public class Bestiary {
 							TiacauhAddict.class,
 							TiacauhRipper.class, TiacauhRipper.class, TiacauhRipper.class,
 							TiacauhShredder.class, TiacauhShredder.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						LavaSlug.class, LavaSlug.class,
@@ -260,6 +275,9 @@ public class Bestiary {
 							TiacauhRipper.class, TiacauhRipper.class,
 							TiacauhShredder.class, TiacauhShredder.class,
 							TiacauhRitualist.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_AlphaConstruct.class, ROR_AlphaConstruct.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						LavaSlug.class, LavaSlug.class,
@@ -275,6 +293,9 @@ public class Bestiary {
 							TiacauhShredder.class, TiacauhShredder.class,
 							TiacauhRitualist.class, TiacauhRitualist.class,
 							TiacauhBrave.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						LavaSlug.class, LavaSlug.class,
@@ -290,6 +311,9 @@ public class Bestiary {
 							TiacauhShredder.class,
 							TiacauhRitualist.class, TiacauhRitualist.class, TiacauhRitualist.class,
 							TiacauhBrave.class, TiacauhBrave.class));
+				}else if (Dungeon.DLC == Dungeon.ROR) {
+					return new ArrayList<>(Arrays.asList(
+							ROR_LesserWisp.class, ROR_LesserWisp.class));
 				}
 				return new ArrayList<>(Arrays.asList(
 						LavaSlug.class,

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
@@ -44,10 +43,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Closure_FoodBox;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.QuestCat;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMayer;
@@ -61,12 +58,11 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.DeadEndLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.GavialBossLevel1;
 import com.shatteredpixel.shatteredpixeldungeon.levels.GavialBossLevel2;
 import com.shatteredpixel.shatteredpixeldungeon.levels.GavialLevel;
+import com.shatteredpixel.shatteredpixeldungeon.levels.SkyMeadowLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel1;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel2;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel3;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewRhodesLevel4;
-import com.shatteredpixel.shatteredpixeldungeon.levels.OldPrisonBossLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RhodesLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.HallsLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.LastLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.LastShopLevel;
@@ -76,9 +72,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.NewCityBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewHallsBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewPrisonBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.PrisonLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RhodesLevel2;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RhodesLevel3;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RhodesLevel4;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SeeLevel_part1;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
@@ -216,6 +209,7 @@ public class Dungeon {
 	public static final int SIESTA = 0;
 	public static final int SARGON = 1;
 	public static final int IBERIA = 2;
+	public static final int ROR = 3;
 	public static boolean isPray; // 프리스티스를 위한 기도를 하였는가?
 	public static boolean killcat; // 엔딩 씬에서 켈시 하극상 출현용.
 
@@ -289,6 +283,7 @@ public class Dungeon {
 		killcat = false;
 		//extrastage_Gavial = false;
 		//extrastage_See = false;
+		Dungeon.DLC = 0;
 
 		Jessica.QuestClear = false;
 		NPC_Phantom.QuestClear = false;
@@ -432,6 +427,7 @@ public class Dungeon {
 			case 34:
 				if (DLC == SARGON) level = new GavialLevel();
 				else if (DLC == IBERIA) level = new SeeLevel_part1();
+				else if (DLC == ROR) level = new SkyMeadowLevel();
 				else level = new SiestaLevel_part1();
 				break;
 			case 35:
@@ -443,7 +439,8 @@ public class Dungeon {
 			case 38:
 			case 39:
 				if (DLC == SARGON) {level = new GavialLevel(); break;}
-				level = new SiestaLevel_part2();
+				else if (DLC == ROR) level = new SkyMeadowLevel();
+				else level = new SiestaLevel_part2();
 				break;
 			case 40:
 				if (DLC == SARGON) {level = new GavialBossLevel2(); break;}

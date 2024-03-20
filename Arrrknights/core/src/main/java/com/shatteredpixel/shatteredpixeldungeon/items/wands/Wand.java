@@ -568,6 +568,7 @@ public abstract class Wand extends Item {
 							GLog.n(Messages.get(Wand.class, "curse_discover", curWand.name()));
 						}
 						if(curWand.solidified) CursedWand.confirmSolid(((Wand) curItem).solidrarity, ((Wand) curItem).solidtype);
+						else CursedWand.logoutSolid();
 						CursedWand.cursedZap(curWand,
 								curUser,
 								new Ballistica(curUser.pos, target, Ballistica.MAGIC_BOLT),

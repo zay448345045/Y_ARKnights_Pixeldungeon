@@ -52,6 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WildMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Identification;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
@@ -59,23 +60,29 @@ import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.ArmorKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.DewVial;
+import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfIronSkin;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
+import com.shatteredpixel.shatteredpixeldungeon.items.testtool.Generators_Misc;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -90,9 +97,20 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
+import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.OptionSlider;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -301,6 +319,22 @@ public enum Talent {
 			immunities.add(Cripple.class);
 		}
 	}
+	public static class TTLbuff extends Buff{
+		public Class fromItem;
+		public Class toItem;
+		public void set(Class from, Class to){
+			fromItem = from;
+			toItem = to;
+		}
+		public boolean willChange(Class c){
+			return (fromItem == c || toItem == c);
+		}
+		public Class change(Class c){
+			if(fromItem == c) return toItem;
+			else if (toItem == c) return fromItem;
+			else return null;
+		}
+	}
 
 	public static class MindCrashMark extends FlavourBuff {
 		{
@@ -503,7 +537,9 @@ public enum Talent {
 				GLog.w(Messages.get(Dungeon.hero, "flashback_unable"));
 			}
 		}
-
+		if(talent == PIE_IN_THE_PAPER && hero.pointsInTalent(PIE_IN_THE_PAPER) == 3){
+			Statistics.drawn.remove(Food.class);
+		}
 		if(talent == TRUE_TO_LIFE){
 			GameScene.selectItem(ttlSelector, WndBag.Mode.TRUE_TO_LIFE, Messages.get(Dungeon.hero, "true_to_life"));
 		}
@@ -597,8 +633,8 @@ public enum Talent {
 					toID.add(item);
 				}
 			}
-			Collections.shuffle(toID);
-			if (Random.Int(4) < Dungeon.hero.pointsInTalent(INSPIRATION_MEAL) + 1) {
+			if (Random.Int(4) < Dungeon.hero.pointsInTalent(INSPIRATION_MEAL) + 1 && !toID.isEmpty()) {
+				Collections.shuffle(toID);
 				toID.get(0).identify();
 				GLog.i( Messages.get(Dungeon.hero, "inspiration_meal_identify", toID.get(0)) );
 				Badges.validateItemLevelAquired( toID.get(0) );
@@ -1240,9 +1276,138 @@ public enum Talent {
 		@Override
 		public void onSelect( Item item ) {
 			if (item != null) {
-
+				item.identify();
+				GameScene.show(new TTLWindow(item));
 			}
 		}
 	};
+
+	private static class TTLWindow extends Window {
+		private static Class curGuess = null;
+		private static final int WIDTH = 140;
+		private static final int BTN_SIZE = 20;
+
+		public TTLWindow(final Item item){
+
+			IconTitle titlebar = new IconTitle();
+			titlebar.icon( new ItemSprite(ItemSpriteSheet.UNDONE_MARK, null) );
+			titlebar.label( Messages.titleCase(Messages.get(Dungeon.hero, "true_to_life")) );
+			titlebar.setRect( 0, 0, WIDTH, 0 );
+			add( titlebar );
+
+			RenderedTextBlock text = PixelScene.renderTextBlock(6);
+			text.text( Messages.get(this, "text") );
+			text.setPos(0, titlebar.bottom());
+			text.maxWidth( WIDTH );
+			add(text);
+
+			final RedButton guess = new RedButton(""){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					Buff.append(Dungeon.hero, TTLbuff.class).set(item.getClass(), curGuess);
+					Object o = Reflection.newInstance(curGuess);
+					String TTLname = null;
+					if (o instanceof Potion) {
+						((Potion) o).identify();
+						TTLname = item.name();
+					} else if (o instanceof Scroll) {
+						((Scroll) o).identify();
+						TTLname = item.name();
+					}
+					GLog.i(Messages.get(Dungeon.hero, "ttlchanged", TTLname));
+					hide();
+				}
+			};
+			guess.visible = false;
+			guess.icon( new ItemSprite(item) );
+			guess.enable(false);
+			guess.setRect(0, 120, WIDTH, 20);//change from budding
+			add(guess);
+
+			float left;
+			float top = text.bottom() + 5;
+			int rows;
+			int placed = 0;
+
+			final ArrayList<Class<?extends Item>> unIDed = new ArrayList<>();
+			if (item instanceof Potion){
+				if (item instanceof ExoticPotion) {
+					for (Class<?extends Item> i : Potion.getUnknown()){
+						unIDed.add(ExoticPotion.regToExo.get(i));
+					}
+				} else {
+					unIDed.addAll(Potion.getUnknown());
+				}
+			} else if (item instanceof Scroll){
+				if (item instanceof ExoticScroll) {
+					for (Class<?extends Item> i : Scroll.getUnknown()){
+						unIDed.add(ExoticScroll.regToExo.get(i));
+					}
+				} else {
+					unIDed.addAll(Scroll.getUnknown());
+				}
+			} else {
+				hide();
+				return;
+			}
+
+			if (unIDed.size() <= 5){
+				rows = 1;
+				top += BTN_SIZE/2f;
+				left = (WIDTH - BTN_SIZE*unIDed.size())/2f;
+			} else if (unIDed.size() <=10) {//change from budding
+				rows = 2;
+				left = (WIDTH - BTN_SIZE*((unIDed.size()+1)/2))/2f;
+			} else if (unIDed.size() <=15){//change from budding
+				rows = 3;
+				left = (WIDTH - BTN_SIZE*5)/2f;
+			} else {
+				rows = 4;
+				left = (WIDTH - BTN_SIZE*5)/2f;
+			}
+
+			for (final Class<?extends Item> i : unIDed){
+
+				IconButton btn = new IconButton(){
+					@Override
+					protected void onClick() {
+						curGuess = i;
+						guess.visible = true;
+						guess.text( Messages.titleCase(Messages.get(i, "name")) );
+						guess.enable(true);
+						super.onClick();
+					}
+				};
+				Image im = new Image(Assets.Sprites.ITEM_ICONS);
+				im.frame(ItemSpriteSheet.Icons.film.get(Reflection.newInstance(i).icon));
+				im.scale.set(2f);
+				btn.icon(im);
+				btn.setRect(left + placed*BTN_SIZE, top, BTN_SIZE, BTN_SIZE);
+				add(btn);
+
+				placed++;
+				if (rows == 2 && placed == ((unIDed.size()+1)/2)){
+					placed = 0;
+					if (unIDed.size() % 2 == 1){
+						left += BTN_SIZE/2f;
+					}
+					top += BTN_SIZE;
+				}
+				else if (rows >= 3 && placed%5==0){//change from budding
+					placed = 0;
+					top += BTN_SIZE;
+				}
+			}
+
+			resize(WIDTH, 140);//change from budding
+
+		}
+		@Override
+		public void onBackPressed() {
+			super.onBackPressed();
+			new StoneOfIntuition().collect();
+		}
+	}
 
 }

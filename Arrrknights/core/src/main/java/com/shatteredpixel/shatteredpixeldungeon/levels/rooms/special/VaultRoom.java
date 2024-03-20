@@ -76,7 +76,7 @@ public class VaultRoom extends SpecialRoom {
 		} while (level.adjacent(i1Pos, doorPos) || level.adjacent(i2Pos, doorPos) || level.adjacent(i3Pos, doorPos) || level.adjacent(i4Pos, doorPos));
 
 		level.drop( i1, i1Pos ).type = Heap.Type.CRYSTAL_CHEST;
-		if (Random.Int(10) == 0){
+		if (true){//Random.Int(10) == 0
 			level.mobs.add(Mimic.spawnAt(i2Pos, i2, CrystalMimic.class));
 		} else {
 			level.drop(i2, i2Pos).type = Heap.Type.CRYSTAL_CHEST;

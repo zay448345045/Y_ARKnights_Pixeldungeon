@@ -607,6 +607,9 @@ public class GameScene extends PixelScene {
 				case LARGE:     GLog.w(Messages.get(this, "large"));    break;
 				case TRAPS:     GLog.w(Messages.get(this, "traps"));    break;
 				case SECRETS:   GLog.w(Messages.get(this, "secrets"));  break;
+				case MAZE:   	GLog.w(Messages.get(this, "maze"));	  break;
+				case LOST:   	GLog.w(Messages.get(this, "lost"));     break;
+				case UNKNOWN:   GLog.w(Messages.get(this, "unknown"));  break;
 			}
 
 			for (Mob mob : Dungeon.level.mobs) {
