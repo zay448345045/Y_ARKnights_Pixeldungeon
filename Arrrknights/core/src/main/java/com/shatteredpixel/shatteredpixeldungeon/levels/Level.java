@@ -69,9 +69,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Torch;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
@@ -124,9 +127,14 @@ public abstract class Level implements Bundlable {
 		LARGE,
 		TRAPS,
 		SECRETS,
+		//extra
 		MAZE,
 		LOST,
-		UNKNOWN
+		UNKNOWN,
+		CLOUDY,
+		HEAVYFOG,
+		TEMPEST,
+		TYPHOON
 	}
 
 	protected int width;
@@ -236,7 +244,7 @@ public abstract class Level implements Bundlable {
 
 				if (Dungeon.depth > 1) {
 					//50% chance of getting a level feeling
-					switch (Random.Int(18)) {
+					switch (Random.Int(14)) {
 						case 0:
 							feeling = Feeling.CHASM;
 							break;
@@ -261,15 +269,34 @@ public abstract class Level implements Bundlable {
 						case 6:
 							feeling = Feeling.SECRETS;
 							break;
-						case 7:
-							feeling = Feeling.MAZE;
-							break;
-						case 8:
-							if(Random.Int(2)==0)feeling = Feeling.LOST;
-							break;
-						case 9:
-							if(Random.Int(2)==0)feeling = Feeling.UNKNOWN;
-							break;
+					}
+					if(feeling == Feeling.NONE && Dungeon.isSPChallenged(SPChallenges.FEELINGS)){
+						switch (Random.Int(7)){
+							case 0:
+								feeling = Feeling.MAZE;
+								addItemToSpawn(new ScrollOfTeleportation());
+								break;
+							case 1:
+								feeling = Feeling.LOST;
+								addItemToSpawn(new ScrollOfMagicMapping());
+								break;
+							case 2:
+								feeling = Feeling.UNKNOWN;
+								addItemToSpawn(new PotionOfHealing());
+								break;
+							case 3:
+								feeling = Feeling.CLOUDY;
+								break;
+							case 4:
+								feeling = Feeling.HEAVYFOG;
+								break;
+							case 5:
+								feeling = Feeling.TEMPEST;
+								break;
+							case 6:
+								feeling = Feeling.TYPHOON;
+								break;
+						}
 					}
 				}
 			}}

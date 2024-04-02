@@ -33,7 +33,7 @@ public class Niansword extends MeleeWeapon {
 
     public String statsInfo(){
         if (isIdentified()){
-            return Messages.get(this, "stats_desc", 2+buffedLvl() / 2, 3+3*buffedLvl());
+            return Messages.get(this, "stats_desc", 2+buffedLvl(), 3+3*buffedLvl());
         } else {
             return Messages.get(this, "typical_stats_desc", 2,3);
         }

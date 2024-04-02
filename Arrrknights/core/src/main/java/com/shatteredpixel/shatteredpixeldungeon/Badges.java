@@ -163,6 +163,7 @@ public class Badges {
 		BOSS_SLAIN_3_SWORDMASTER,
 		BOSS_SLAIN_3_SPSHOOTER,
 		BOSS_SLAIN_3_KILLER,
+		BOSS_SLAIN_3_PHANTOM,
 		BOSS_SLAIN_3_MARKSMIDORI,
 		BOSS_SLAIN_3_KEYANIMATOR,
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 112, true ),
@@ -187,7 +188,7 @@ public class Badges {
 		USE_HEALBOX(124, true),
 
 		//RED , 버그 유저
-		BUG (368),
+		//BUG (368)
 
 		//platinum
 		HAPPY_END                   ( 160 ),
@@ -391,24 +392,24 @@ public class Badges {
 
 
 	public static void DestroyGlobal() {
-		if(!global.contains(Badge.BUG)) {
-			global.add(Badge.BUG);
-			saveNeeded = true;
-		}
-
-		if(global.contains(Badge.HAPPY_END)) {
-			global.remove(Badge.HAPPY_END);
-		}
-
-		local.clear();
-		loadGlobal();
+//		if(!global.contains(Badge.BUG)) {
+//			global.add(Badge.BUG);
+//			saveNeeded = true;
+//		}
+//
+//		if(global.contains(Badge.HAPPY_END)) {
+//			global.remove(Badge.HAPPY_END);
+//		}
+//
+//		local.clear();
+//		loadGlobal();
 	}
 
 
 	public static void DestroyBUG() {
-		if(global.contains(Badge.BUG)) {
-			global.remove(Badge.BUG);
-		}
+//		if(global.contains(Badge.BUG)) {
+//			global.remove(Badge.BUG);
+//		}
 	}
 
 	public static void saveGlobal() {
@@ -866,6 +867,9 @@ public class Badges {
 				case KILLER:
 					badge = Badge.BOSS_SLAIN_3_KILLER;
 					break;
+				case PHANTOM:
+					badge = Badge.BOSS_SLAIN_3_PHANTOM;
+					break;
 				case MARKSMIDORI:
 					badge = Badge.BOSS_SLAIN_3_MARKSMIDORI;
 					break;
@@ -905,7 +909,8 @@ public class Badges {
 						(isUnlocked( Badge.BOSS_SLAIN_3_SWORDMASTER ) ||
 						isUnlocked( Badge.BOSS_SLAIN_3_SPSHOOTER ))
 						&&
-						isUnlocked(Badge.BOSS_SLAIN_3_KILLER)
+						isUnlocked(Badge.BOSS_SLAIN_3_KILLER) ||
+						isUnlocked(Badge.BOSS_SLAIN_3_PHANTOM)
 						&&
 						(isUnlocked( Badge.BOSS_SLAIN_3_MARKSMIDORI ) ||
 						isUnlocked( Badge.BOSS_SLAIN_3_KEYANIMATOR ))

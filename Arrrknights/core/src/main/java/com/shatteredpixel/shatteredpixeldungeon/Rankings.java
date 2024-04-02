@@ -195,18 +195,18 @@ public enum Rankings {
 	}
 
 	public static void DestroydChack(int ch, int misc, int ring) {
-		if (ch > 5)
-			if (misc > WndRanking.BugItemLevel || ring > WndRanking.BugItemLevel) {
-			Badges.DestroyGlobal();
-		}
+//		if (ch > 5)
+//			if (misc > WndRanking.BugItemLevel || ring > WndRanking.BugItemLevel) {
+//			Badges.DestroyGlobal();
+//		}
 	}
 
 	// 해당 처리는 0.3.3 버전에서만 적용하며, 그 이후로는 무효화합니다.
 	public static void DestroydChack_Bomb(int ch, float time, int bomb) {
-		if (ch > 5)
-			if (time > 50000 && bomb > 100) {
-				Badges.DestroyGlobal();
-			}
+//		if (ch > 5)
+//			if (time > 50000 && bomb > 100) {
+//				Badges.DestroyGlobal();
+//			}
 	}
 	
 	private static final String RECORDS	= "records";

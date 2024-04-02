@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.Skill;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
 import static com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron.LFPChargeMultiplier;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -15,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Pombbay;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Nervous;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -59,48 +61,30 @@ public class SkillBook extends Item {
 
                         @Override
                         protected void onSelect(int index) {
-                            if (index == 0) {
-                                if (hero.SK1 != null) {
-                                    if (charge < 30 && !Dungeon.isChallenged(Challenges.TEST)) {
-                                        GLog.w(Messages.get(SkillBook.class, "low_charge"));
-                                    } else {
-                                        float chargeDown = 30 / (RingOfSunLight.SPBonus(Dungeon.hero));
-                                        if (chargeDown < 5) chargeDown = 5;
-                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
-                                        charge -= chargeDown;
-                                        updateQuickslot();
-                                        hero.SK1.doSkill();
-                                        Talent.onSkillUsed(Dungeon.hero);
+                            int energy_cost[] = {30,60,100};
+                            int lowest_cost[] ={5,10,15};
+                            float real_cost=energy_cost[index]/(RingOfSunLight.SPBonus(Dungeon.hero));
+                            if(Dungeon.level.feeling == Level.Feeling.CLOUDY) {
+                                real_cost-=30;
+                                Dungeon.level.feeling = Level.Feeling.NONE;
+                            }
+                            if (real_cost<lowest_cost[index]) real_cost=lowest_cost[index];
+                            if ((index==0 && hero.SK1==null) || (index==1 && hero.SK2==null) || (index==2 && hero.SK3==null)){
+                                GLog.w(Messages.get(SkillBook.class, "no_skill"));
+                            }else{
+                                if (charge < real_cost && !Dungeon.isChallenged(TEST)){//change from budding
+                                    GLog.w(Messages.get(SkillBook.class, "low_charge"));
+                                }
+                                else {
+                                    if (!(Dungeon.isChallenged(TEST))){charge-=real_cost;}
+                                    updateQuickslot();
+                                    switch (index){
+                                        case 0:hero.SK1.doSkill();break;
+                                        case 1:hero.SK2.doSkill();break;
+                                        case 2:hero.SK3.doSkill();break;
                                     }
-                                } else GLog.w(Messages.get(SkillBook.class, "no_skill"));
-                            } else if (index == 1) {
-                                if (hero.SK2 != null) {
-                                    if (charge < 60 && !Dungeon.isChallenged(Challenges.TEST)) {
-                                        GLog.w(Messages.get(SkillBook.class, "low_charge"));
-                                    } else {
-                                        float chargeDown = 60 / (RingOfSunLight.SPBonus(Dungeon.hero));
-                                        if (chargeDown < 10) chargeDown = 10;
-                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
-                                        charge -= chargeDown;
-                                        updateQuickslot();
-                                        hero.SK2.doSkill();
-                                        Talent.onSkillUsed(Dungeon.hero);
-                                    }
-                                } else GLog.w(Messages.get(SkillBook.class, "no_skill"));
-                            } else if (index == 2) {
-                                if (hero.SK3 != null) {
-                                    if (charge < 100 && !Dungeon.isChallenged(Challenges.TEST)) {
-                                        GLog.w(Messages.get(SkillBook.class, "low_charge"));
-                                    } else {
-                                        float chargeDown = 100 / (RingOfSunLight.SPBonus(Dungeon.hero));
-                                        if (chargeDown < 15) chargeDown = 15;
-                                        if(Dungeon.isChallenged(Challenges.TEST)) chargeDown = 0;
-                                        charge -= chargeDown;
-                                        updateQuickslot();
-                                        hero.SK3.doSkill();
-                                        Talent.onSkillUsed(Dungeon.hero);
-                                    }
-                                } else GLog.w(Messages.get(SkillBook.class, "no_skill"));
+                                    Talent.onSkillUsed(Dungeon.hero);
+                                }
                             }
                         }
                     });
@@ -164,6 +148,7 @@ public class SkillBook extends Item {
         if (charge > 100) chargepur /= 2;
 
         charge += chargepur * levelPercent * LFPChargeMultiplier();
+        if(Dungeon.level.feeling == Level.Feeling.CLOUDY) charge += chargepur * levelPercent * LFPChargeMultiplier();
         if (charge > 150) charge = 150;
         updateQuickslot();
     }
@@ -171,6 +156,7 @@ public class SkillBook extends Item {
     public void SetCharge(int cha)
     {
         charge += cha;
+        if(Dungeon.level.feeling == Level.Feeling.CLOUDY) charge += cha;
         if (charge > 150) charge = 150;
         updateQuickslot();
     }

@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.DefenderSprite;
@@ -73,7 +74,7 @@ public class ReunionDefender extends Hound {
 	public void damage( int dmg, Object src ){
 		//crab blocks all attacks originating from its current enemy if it sees them.
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
-		if ((enemySeen && state != SLEEPING && paralysed == 0)
+		if ((enemySeen && state != SLEEPING && paralysed == 0 && !(Dungeon.level.feeling == Level.Feeling.TYPHOON))
 				&& ((src instanceof Wand && enemy == Dungeon.hero)
 				|| ((src instanceof Char && enemy == src)&& enemy.invisible == 0)
 				|| (src instanceof Weapon)

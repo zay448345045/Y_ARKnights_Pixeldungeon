@@ -163,7 +163,7 @@ public class WndClass extends WndTabbed {
 					message = HeroSubClass.SWORDMASTER.desc() + "\n\n" + HeroSubClass.SPSHOOTER.desc();
 					break;
 				case RABBIT:
-					message = HeroSubClass.KILLER.desc();
+					message = HeroSubClass.KILLER.desc() + "\n\n" + HeroSubClass.PHANTOM.desc();
 					break;
 				case MIDORI:
 					message = HeroSubClass.MARKSMIDORI.desc() + "\n\n" + HeroSubClass.KEYANIMATOR.desc();

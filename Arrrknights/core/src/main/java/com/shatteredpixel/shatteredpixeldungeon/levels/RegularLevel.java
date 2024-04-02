@@ -547,7 +547,7 @@ public abstract class RegularLevel extends Level {
 	}
 	@Override
 	public void removeRORWalls(){
-		if(!(Dungeon.DLC == ROR)) return;
+		if((!(Dungeon.DLC == ROR)) || !(Dungeon.depth > 30)) return;
 		for(Room r : rooms) {
 			Painter.replaceWithChances(this, r, Terrain.EMPTY, Terrain.STATUE, 0.1f);
 			Painter.replaceWithChances(this, r, Terrain.WALL, Terrain.STATUE, 0.05f);

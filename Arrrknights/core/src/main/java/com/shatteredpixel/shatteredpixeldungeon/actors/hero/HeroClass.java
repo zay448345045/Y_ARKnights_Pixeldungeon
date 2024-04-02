@@ -209,7 +209,7 @@ import java.sql.Ref;
 	ROSECAT("rosecat", HeroSubClass.DESTROYER, HeroSubClass.GUARDIAN, HeroSubClass.WAR),
 	NEARL("nearl", HeroSubClass.KNIGHT, HeroSubClass.SAVIOR, HeroSubClass.FLASH),
 	CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER),
-	RABBIT("rabbit", HeroSubClass.KILLER),
+	RABBIT("rabbit", HeroSubClass.KILLER, HeroSubClass.PHANTOM),
 	MIDORI("midori", HeroSubClass.MARKSMIDORI, HeroSubClass.KEYANIMATOR);
 
 	private String title;
@@ -274,6 +274,7 @@ import java.sql.Ref;
 		if (!Challenges.isItemBlocked(i)) i.collect();
 
 		new ScrollOfIdentify().identify();
+		new ScrollOfWarp().identify();
 
 		new FoodBag().collect();
 		Dungeon.LimitedDrops.FOOD_BAG.drop();

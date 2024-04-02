@@ -334,6 +334,21 @@ public enum Talent {
 			else if (toItem == c) return fromItem;
 			else return null;
 		}
+
+		private static final String FROMITEM	= "fromitem";
+		private static final String TOITEM	= "toitem";
+		@Override
+		public void storeInBundle( Bundle bundle ) {
+			super.storeInBundle( bundle );
+			bundle.put( FROMITEM, fromItem );
+			bundle.put( TOITEM, toItem );
+		}
+		@Override
+		public void restoreFromBundle( Bundle bundle ) {
+			super.restoreFromBundle( bundle );
+			fromItem = bundle.getClass( FROMITEM );
+			toItem = bundle.getClass( TOITEM );
+		}
 	}
 
 	public static class MindCrashMark extends FlavourBuff {

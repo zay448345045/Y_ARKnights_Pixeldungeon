@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.EnragedSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -149,7 +150,12 @@ public class Monk extends Mob {
 		Focus f = buff(Focus.class);
 		if (f == null) {
 			return super.defenseVerb();
-		} else {
+		} else if(Dungeon.level.feeling == Level.Feeling.TYPHOON){
+			f.detach();
+			focusCooldown = Random.NormalFloat( 9,11 );
+			return super.defenseVerb();
+		}
+		else{
 			f.detach();
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
 			focusCooldown = Random.NormalFloat( 9,11 );

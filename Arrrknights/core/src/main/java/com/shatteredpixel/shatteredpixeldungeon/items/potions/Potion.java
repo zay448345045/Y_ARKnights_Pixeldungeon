@@ -397,7 +397,18 @@ public class Potion extends Item {
 	
 	@Override
 	public String info() {
-		return isKnown() ? desc() : Messages.get(this, "unknown_desc");
+		String inf;
+		inf = isKnown() ? desc() : Messages.get(this, "unknown_desc");
+		for(Buff b : Dungeon.hero.buffs()){
+			if(b instanceof Talent.TTLbuff){
+				if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+					inf += "\n\n" + Messages.get(this, "changed_into",
+							((Potion)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass()))).name()
+							);
+				}
+			}
+		}
+		return inf;
 	}
 	
 	@Override

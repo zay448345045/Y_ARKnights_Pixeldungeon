@@ -130,6 +130,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarJournalist
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.items.testtool.ImmortalShield;//change from budding
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
@@ -411,6 +412,7 @@ public abstract class Char extends Actor {
 			}
 
 			enemy.damage( effectiveDamage, this );
+			if(Dungeon.level.feeling == Level.Feeling.HEAVYFOG)this.HP = Math.min(this.HP+effectiveDamage/2, this.HT);
 
 			if(buff(StunGrenade.StunGrenadeBuff.class)!=null) {
 				if(Random.Int(5)==0){
@@ -625,8 +627,12 @@ public abstract class Char extends Actor {
 				Buff.affect(Dungeon.hero,PotatoAimReady.class).set();
 				Buff.affect(Dungeon.hero,PotatoAimReady.class).addCount();
 			}
+		}else{
+			if (Dungeon.hero.buff(PotatoAimReady.class)!=null){
+				Buff.detach( Dungeon.hero, PotatoAimReady.class );
+			}
 		}
-		
+		if(Dungeon.level.feeling == Level.Feeling.TYPHOON) return true;
 		return result;
 	}
 	
@@ -682,6 +688,7 @@ public abstract class Char extends Actor {
 		if ( buff( Haste.class ) != null) speed *= 3f;
 		if ( buff (LanceCharge.class) != null) speed *= 5f;
 		if ( this instanceof Hero && Dungeon.hero.hasTalent(Talent.GALLOP) ) speed *= 1.05f;
+		if(!this.flying && Dungeon.level.feeling == Level.Feeling.TEMPEST) speed *= 1.4f;
 		return speed;
 	}
 	

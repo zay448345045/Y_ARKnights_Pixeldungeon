@@ -62,6 +62,7 @@ public enum HeroSubClass {
 	SPSHOOTER,
 
 	KILLER,
+	PHANTOM,
 
 	MARKSMIDORI,
 	KEYANIMATOR,

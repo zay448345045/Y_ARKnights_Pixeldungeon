@@ -294,7 +294,12 @@ public class FogOfWar extends Image {
 		if (visible[cell]) {
 			return VISIBLE;
 		}
-		else if(level.feeling == Level.Feeling.LOST) return INVISIBLE;
+		else if(level.feeling == Level.Feeling.LOST){
+			if (mapped[cell] ) {
+				return MAPPED;
+			}
+			else return INVISIBLE;
+		}
 		else if (visited[cell]) {
 			return VISITED;
 		} else if (mapped[cell] ) {
