@@ -305,7 +305,6 @@ public class Spriteex extends MissileWeapon {
 
     @Override
     protected void onThrow( int cell ) {
-        Char enemy = Actor.findChar( cell );
         parent = null;
         Splash.at( cell, 0xCC99FFFF, 1 );
         isHit(cell);
@@ -503,8 +502,7 @@ public class Spriteex extends MissileWeapon {
      public Weapon.Augment WeaponAug() {
       if (Dungeon.hero.belongings.weapon == null) return Weapon.Augment.NONE;
       if (Dungeon.hero.belongings.weapon instanceof Pickaxe) return Weapon.Augment.NONE;
-       Weapon.Augment wep = ((MeleeWeapon)Dungeon.hero.belongings.weapon).augment;//change from budding
-       return wep;
+      return ((MeleeWeapon)Dungeon.hero.belongings.weapon).augment;
      }
 
      public static class WarCatBuff1 extends Buff {}

@@ -767,7 +767,7 @@ public class NewPrisonBossLevel extends Level {
 			tileH = 11;
 		}
 		
-		final int TEX_WIDTH = 256;
+		static final int TEX_WIDTH = 256;
 		
 		private static byte[] render = new byte[]{
 				0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
@@ -813,7 +813,7 @@ public class NewPrisonBossLevel extends Level {
 			tileH = 22;
 		}
 		
-		final int TEX_WIDTH = 256;
+		static final int TEX_WIDTH = 256;
 		
 		private static byte[] render = new byte[]{
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,

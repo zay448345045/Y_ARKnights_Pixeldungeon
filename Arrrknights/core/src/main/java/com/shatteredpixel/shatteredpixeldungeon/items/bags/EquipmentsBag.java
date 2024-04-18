@@ -42,8 +42,7 @@ public class EquipmentsBag extends Bag{
 
     @Override
     public ArrayList<String> actions(Hero hero) {
-        ArrayList<String> actions =  super.actions(hero);
-        return actions;
+        return super.actions(hero);
     }
     @Override
     public void execute(Hero hero, String action) {

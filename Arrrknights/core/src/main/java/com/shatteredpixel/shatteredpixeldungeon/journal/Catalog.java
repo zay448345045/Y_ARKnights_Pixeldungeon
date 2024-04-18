@@ -501,7 +501,7 @@ public enum Catalog {
 		SCROLLS.seen.put( ScrollOfWarp.class,      false);
 	}
 
-	public static LinkedHashMap<Catalog, Badges.Badge> catalogBadges = new LinkedHashMap<>();
+	public static final LinkedHashMap<Catalog, Badges.Badge> catalogBadges = new LinkedHashMap<>();
 	static {
 		catalogBadges.put(WEAPONS, Badges.Badge.ALL_WEAPONS_IDENTIFIED);
 		catalogBadges.put(SKILLBOOK, Badges.Badge.ALL_SKILLBOOK_IDENTIFIED);

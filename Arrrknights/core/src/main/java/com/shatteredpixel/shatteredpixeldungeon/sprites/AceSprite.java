@@ -29,9 +29,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 
 public class AceSprite extends MobSprite {
-	
-	private ShieldHalo shield;
-	
+
 	public AceSprite() {
 		super();
 		

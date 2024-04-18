@@ -428,7 +428,7 @@ public class Generators_Melee extends Generators {
         private String enchantDesc() {
             //String desc = Messages.get(BossRushMelee.class, "enchant_id_pre", enchant_rarity);
             String desc = "";
-            String key = "enchant_id_e" + String.valueOf(enchant_rarity);
+            String key = "enchant_id_e" + enchant_rarity;
             Class<? extends Weapon.Enchantment> ench = generateEnchant(enchant_rarity, enchant_id);
             desc += Messages.get(Generators_Melee.class, key, (ench == null ? Messages.get(Generators_Melee.class, "null_enchant") : currentEnchName(ench)));
             return desc;

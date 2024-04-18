@@ -132,8 +132,6 @@ public class W0502 extends Item {
 
         ArrayList<Char> chars = new ArrayList<>();
 
-        Blob web = Dungeon.level.blobs.get(Web.class);
-
         for (int c : beam.subPath(1, maxDistance)) {
 
             Char ch;
@@ -184,8 +182,6 @@ public class W0502 extends Item {
     }
 
     protected void fx( Ballistica beam, Callback callback ) {
-
-        int cell = beam.path.get(Math.min(beam.dist, 8));
         MagicMissile.boltFromChar( curUser.sprite.parent,
                 MagicMissile.FIRE_SHOT,
                 curUser.sprite,

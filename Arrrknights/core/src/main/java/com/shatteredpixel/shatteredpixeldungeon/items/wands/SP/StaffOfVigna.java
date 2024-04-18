@@ -62,7 +62,6 @@ public class StaffOfVigna extends DamageWand {
 
         ArrayList<Char> chars = new ArrayList<>();
 
-        Blob web = Dungeon.level.blobs.get(Web.class);
 
         int terrainPassed = 2, terrainBonus = 0;
         for (int c : beam.subPath(1, maxDistance)) {

@@ -121,12 +121,6 @@ public abstract class Mob extends Char {
 		
 		alignment = Alignment.ENEMY;
 	}
-	
-	private static final String	TXT_DIED	= "You hear something died in the distance";
-	
-	protected static final String TXT_NOTICE1	= "?!";
-	protected static final String TXT_RAGE		= "#$%^";
-	protected static final String TXT_EXP		= "%+dEXP";
 
 	public AiState SLEEPING     = new Sleeping();
 	public AiState HUNTING		= new Hunting();
@@ -1266,7 +1260,7 @@ public abstract class Mob extends Char {
 				for (int cell = 0; cell < PathFinder.distance.length; cell++) {
 					if (PathFinder.distance[cell] < Integer.MAX_VALUE) {
 						Char ch = Actor.findChar(cell);
-						if (ch != null && ch instanceof Hero) {
+						if (ch instanceof Hero) {
 							Buff.detach(this, Camouflage.class);
 						}
 					}

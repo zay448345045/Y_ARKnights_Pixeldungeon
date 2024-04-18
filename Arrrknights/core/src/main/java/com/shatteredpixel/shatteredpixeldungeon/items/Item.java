@@ -264,7 +264,7 @@ public class Item implements Bundlable {
 		}
 
 		items.add( this );
-		collected = true;
+		//collected = true;
 		Dungeon.quickslot.replacePlaceholder(this);
 		updateQuickslot();
 		Collections.sort( items, itemComparator );
@@ -468,7 +468,7 @@ public class Item implements Bundlable {
 			if (!isIdentified()) Talent.onItemIdentified(Dungeon.hero, this);
 		}
 
-		if (Dungeon.hero.hasTalent(Talent.INDUCTION)) {
+		if (!isIdentified() && Dungeon.hero.hasTalent(Talent.INDUCTION)) {
 			if (Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
 				if (Dungeon.hero.buff(Talent.rabbitIdentify.class) != null) {
 					Talent.rabbitIdentify counter = Buff.affect(Dungeon.hero, Talent.rabbitIdentify.class);

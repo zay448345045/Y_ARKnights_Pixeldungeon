@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class Snowsants_Coin extends Item {
     private static final String AC_USE = "USE";
-    private static final float TIME_TO_ACTIVE = 1;
-
     {
         image = ItemSpriteSheet.ARTIFACT_WALLET;
         bones = false;

@@ -41,12 +41,8 @@ public class Kunai extends MissileWeapon {
 		tier = 3;
 		baseUses = 5;
 	}
-	
-	private Char enemy;
-	
 	@Override
 	protected void onThrow(int cell) {
-		enemy = Actor.findChar(cell);
 		super.onThrow(cell);
 	}
 	@Override

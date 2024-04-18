@@ -165,7 +165,6 @@ public class GunWeapon extends MeleeWeapon {
                 if(Dungeon.hero.hasTalent(FREE_FIRE)) {
                     if(Dungeon.hero.pointsInTalent(FREE_FIRE) == 2) precisely = true;
                     Ballistica shot = new Ballistica(attacker.pos, defender.pos, Ballistica.PROJECTILE);
-                    int cell = shot.collisionPos;
                     final GunWeapon ss;
                     ss = this;
                     if(ss.tryToShoot(defender.pos, shot, precisely, 1,Dungeon.hero.pointsInTalent(FREE_FIRE)/2f)){
@@ -373,7 +372,7 @@ public class GunWeapon extends MeleeWeapon {
         this.bulletCap = this.initialCap() + Bonuscharge + Maccessories;
         updateQuickslot();
     }
-    protected static CellSelector.Listener zapper = new CellSelector.Listener() {
+    protected static final CellSelector.Listener zapper = new CellSelector.Listener() {
 
         @Override
         public void onSelect(Integer target) {
@@ -418,7 +417,7 @@ public class GunWeapon extends MeleeWeapon {
             return Messages.get(DP27.class, "prompt");
         }
     };
-    protected static CellSelector.Listener RifleGrenade = new CellSelector.Listener() {
+    protected static final CellSelector.Listener RifleGrenade = new CellSelector.Listener() {
 
         @Override
         public void onSelect(Integer target) {
@@ -458,7 +457,7 @@ public class GunWeapon extends MeleeWeapon {
             return Messages.get(Suffering.class, "prompt");
         }
     };
-    protected static CellSelector.Listener SmokeBomb = new CellSelector.Listener() {
+    protected static final CellSelector.Listener SmokeBomb = new CellSelector.Listener() {
         @Override
         public void onSelect(Integer target) {
             if (target != null) {
@@ -495,7 +494,7 @@ public class GunWeapon extends MeleeWeapon {
             return Messages.get(Suffering.class, "prompt");
         }
     };
-    protected static CellSelector.Listener PoisonGas = new CellSelector.Listener() {
+    protected static final CellSelector.Listener PoisonGas = new CellSelector.Listener() {
         @Override
         public void onSelect(Integer target) {
             if (target != null) {

@@ -21,10 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
-
 public class SPChallenges {
 
     //Some of these internal IDs are outdated and don't represent what these challenges do

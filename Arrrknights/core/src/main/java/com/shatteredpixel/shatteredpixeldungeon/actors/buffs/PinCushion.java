@@ -68,7 +68,6 @@ public class PinCushion extends Buff {
 
 
 	private static final String ITEMS = "items";
-	private static final String REDCHACK = "RedKnifechack";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {

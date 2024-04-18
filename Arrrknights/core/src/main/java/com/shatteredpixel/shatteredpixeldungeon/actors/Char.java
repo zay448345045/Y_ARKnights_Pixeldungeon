@@ -412,7 +412,10 @@ public abstract class Char extends Actor {
 			}
 
 			enemy.damage( effectiveDamage, this );
-			if(Dungeon.level.feeling == Level.Feeling.HEAVYFOG)this.HP = Math.min(this.HP+effectiveDamage/2, this.HT);
+			if(Dungeon.level.feeling == Level.Feeling.HEAVYFOG){
+				if(this instanceof Hero) this.HP = Math.min(this.HP+(int)Math.ceil(effectiveDamage/20f), this.HT);
+				else this.HP = Math.min(this.HP+effectiveDamage/2, this.HT);
+			}
 
 			if(buff(StunGrenade.StunGrenadeBuff.class)!=null) {
 				if(Random.Int(5)==0){
@@ -551,8 +554,8 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public static int INFINITE_ACCURACY = 1_000_000;
-	public static int INFINITE_EVASION = 1_000_000;
+	public static final int INFINITE_ACCURACY = 1_000_000;
+	public static final int INFINITE_EVASION = 1_000_000;
 
 	public static boolean hit( Char attacker, Char defender, boolean magic ) {
 		float acuStat = attacker.attackSkill(defender);

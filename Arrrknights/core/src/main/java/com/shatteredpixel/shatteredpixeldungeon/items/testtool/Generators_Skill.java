@@ -74,7 +74,6 @@ public class Generators_Skill extends Generators {
     private class SettingsWindow extends Window {
 
         private static final int WIDTH = 140;
-        private static final int BTN_SIZE = 16;
         private static final int GAP = 2;
         private OptionSlider o_tier;
         private OptionSlider o_id;
@@ -139,7 +138,7 @@ public class Generators_Skill extends Generators {
         }
             private String skillDesc() {
                 String desc = "";
-                String key = "skill_id_e" + String.valueOf(tier);
+                String key = "skill_id_e" + tier;
                 Class<? extends Item> skl = skillList(tier)[id];
                 desc += Messages.get(Generators_Skill.class, key, (skl == null ? Messages.get(Generators_Skill.class, "null_skill") : Messages.get(skl,"name")));
                 return desc;

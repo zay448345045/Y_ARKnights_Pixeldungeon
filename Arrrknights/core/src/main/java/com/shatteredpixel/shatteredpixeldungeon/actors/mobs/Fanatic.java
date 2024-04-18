@@ -32,9 +32,6 @@ public class Fanatic extends Mob {
         immunities.add(Paralysis.class);
         immunities.add(Silence.class);
     }
-
-    private boolean add = false;
-
     public Fanatic() {
         super();
 

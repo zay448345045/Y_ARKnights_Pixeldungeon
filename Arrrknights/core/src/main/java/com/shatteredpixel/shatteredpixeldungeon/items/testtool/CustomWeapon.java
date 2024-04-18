@@ -71,8 +71,8 @@ public class CustomWeapon extends MeleeWeapon {
     private int s_reach = 1;
 
     private long enchOn = 0L;
-    public static ArrayList<Enchantment> enchList = new ArrayList<>();
-    public static LinkedHashMap<Class<? extends Enchantment>, Integer> enchPrio = new LinkedHashMap<>();
+    public static final ArrayList<Enchantment> enchList = new ArrayList<>();
+    public static final LinkedHashMap<Class<? extends Enchantment>, Integer> enchPrio = new LinkedHashMap<>();
     static{
         enchPrio.put(Blazing.class,1);
         enchPrio.put(Blocking.class, 0);

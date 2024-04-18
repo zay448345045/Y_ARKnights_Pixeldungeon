@@ -110,8 +110,6 @@ public class StaffOfLena extends DamageWand {
 
     @Override
     protected void fx( Ballistica beam, Callback callback ) {
-
-        int cell = beam.path.get(Math.min(beam.dist, distance()));
         callback.call();
     }
 

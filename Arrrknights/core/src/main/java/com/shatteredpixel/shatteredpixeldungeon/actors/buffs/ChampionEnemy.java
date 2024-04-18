@@ -138,8 +138,7 @@ public abstract class ChampionEnemy extends Buff {
 		if (Dungeon.mobsToHonor <= 0){
 			switch (Random.Int(7)){
 				case 0: default:    buffCls = R2Blazing.class;      break;
-				case 1:
-					buffCls = R2Overloading.class;		break;
+				case 1:		buffCls = R2Overloading.class;		break;
 				case 2:     buffCls = R2Glacial.class;      break;
 				case 3:     buffCls = R2Malachite.class;      break;
 				case 4:     buffCls = R2Celestine.class;      break;
@@ -385,7 +384,7 @@ public abstract class ChampionEnemy extends Buff {
 			Dungeon.level.drop(bomb, target.pos);
 			super.detach();
 		}
-		public class GlacialBomb extends Bomb {
+		public static class GlacialBomb extends Bomb {
 			{
 				image = ItemSpriteSheet.FROST_BOMB;
 			}
@@ -489,7 +488,7 @@ public abstract class ChampionEnemy extends Buff {
 			Dungeon.level.drop(bomb, target.pos);
 			super.detach();
 		}
-		public class MendingBomb extends Bomb {
+		public static class MendingBomb extends Bomb {
 			{
 				image = ItemSpriteSheet.FROST_BOMB;
 			}

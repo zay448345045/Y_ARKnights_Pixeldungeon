@@ -25,7 +25,6 @@ public class Closure extends NPC {
         properties.add(Property.IMMOVABLE);
         properties.add(Property.NPC);
     }
-    private static final String AC_ADD = "ADD";
 
     boolean first = false;
 
@@ -36,8 +35,6 @@ public class Closure extends NPC {
             int[] map = Dungeon.level.map;
             boolean[] mapped = Dungeon.level.mapped;
             boolean[] discoverable = Dungeon.level.discoverable;
-
-            boolean noticed = false;
 
             for (int i=0; i < length; i++) {
 
@@ -54,7 +51,6 @@ public class Closure extends NPC {
                             GameScene.discoverTile( i, terr );
                             ScrollOfMagicMapping.discover( i );
 
-                            noticed = true;
                         }
                     }
                 }

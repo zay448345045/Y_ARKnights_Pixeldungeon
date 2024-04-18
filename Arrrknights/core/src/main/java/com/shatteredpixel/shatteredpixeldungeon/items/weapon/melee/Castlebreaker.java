@@ -132,7 +132,7 @@ public class Castlebreaker extends MeleeWeapon {
 		return null;
 	}
 
-	protected static CellSelector.Listener zapper = new CellSelector.Listener() {
+	protected static final CellSelector.Listener zapper = new CellSelector.Listener() {
 
 		@Override
 		public void onSelect(Integer target) {

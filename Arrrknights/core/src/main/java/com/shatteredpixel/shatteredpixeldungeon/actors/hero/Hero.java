@@ -269,8 +269,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-import sun.security.provider.ConfigFile;
-
 public class Hero extends Char {
 
     // 스킨 관련

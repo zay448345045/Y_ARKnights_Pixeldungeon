@@ -23,8 +23,6 @@ public class Firesteel extends MissileWeapon {
         sticky = false;
     }
 
-    private Char enemy;
-
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (defender instanceof Skeleton){

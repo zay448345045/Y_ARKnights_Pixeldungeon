@@ -59,8 +59,8 @@ public class ChimeraGiver extends Generators {
         defaultAction = AC_ATTACH;
     }
     private long chiOn = 0L;
-    public static ArrayList<Weapon.Chimera> chiList = new ArrayList<>();
-    public static LinkedHashMap<Class<? extends Weapon.Chimera>, Integer> chiPrio = new LinkedHashMap<>();
+    public static final ArrayList<Weapon.Chimera> chiList = new ArrayList<>();
+    public static final LinkedHashMap<Class<? extends Weapon.Chimera>, Integer> chiPrio = new LinkedHashMap<>();
     private Weapon selectedWeapon;
     static{
         chiPrio.put(Archery.class, 0);

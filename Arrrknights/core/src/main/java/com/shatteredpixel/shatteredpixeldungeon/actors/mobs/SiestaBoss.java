@@ -172,7 +172,7 @@ public class SiestaBoss extends Mob {
         super.die( cause );
     }
 
-    public static int[] TelPos = new int[]{
+    private static final int[] TelPos = new int[]{
             35, 49, 71, 81,
             93,124,130,174,
             182, 226, 232, 263,

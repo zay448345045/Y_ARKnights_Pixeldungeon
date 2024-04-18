@@ -22,7 +22,6 @@ public class RoseRoom extends SpecialRoom {
 
         Door entrance = entrance();
         entrance.set( Door.Type.HIDDEN );
-        int door = entrance.x + entrance.y * level.width();
 
         Foliage light = (Foliage)level.blobs.get( Foliage.class );
         if (light == null) {

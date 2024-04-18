@@ -117,8 +117,6 @@ public class WarJournalist extends MeleeWeapon {
     public static class PanoramaBuff extends FlavourBuff {
 
         private static final float DURATION = 20f;
-        private static final float SET_DURATION = 15f;
-
         private boolean isDie = true;
 
         @Override

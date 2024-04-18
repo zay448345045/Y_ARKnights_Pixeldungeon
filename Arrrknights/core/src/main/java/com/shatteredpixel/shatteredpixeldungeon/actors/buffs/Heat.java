@@ -24,7 +24,7 @@ public class Heat extends Buff implements ActionIndicator.Action {
     private Heat.State state = Heat.State.NORMAL;
 
     private float power = 0;
-    private final float powercap = 100;
+    private static final float powercap = 100;
     private int overheatlife = 0;
 
     public float power() { return power;}

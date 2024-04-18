@@ -469,7 +469,7 @@ public enum Talent {
 			if (hero.belongings.armor != null)  hero.belongings.armor.identify();
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (hero.belongings.ring instanceof Ring) hero.belongings.ring.identify();
+			if (hero.belongings.ring != null) hero.belongings.ring.identify();
 			if (hero.belongings.misc instanceof Ring) hero.belongings.misc.identify();
 			for (Item item : Dungeon.hero.belongings){
 				if (item instanceof Ring){
@@ -478,7 +478,7 @@ public enum Talent {
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 1){
-			if (hero.belongings.ring instanceof Ring) hero.belongings.ring.setKnown();
+			if (hero.belongings.ring != null) hero.belongings.ring.setKnown();
 			if (hero.belongings.misc instanceof Ring) ((Ring) hero.belongings.misc).setKnown();
 		}
 
@@ -813,7 +813,7 @@ public enum Talent {
 				hero.sprite.emitter().burst(Speck.factory(Speck.QUESTION),3);
 			}
 		}
-
+		item.collected = true;
 	}
 
 	//note that IDing can happen in alchemy scene, so be careful with VFX here

@@ -38,7 +38,6 @@ public class StaffOfVision extends Wand {
     protected int collisionProperties(int target) {
         return Ballistica.STOP_TARGET;
     }
-    private boolean wardAvailable = true;
     @Override
     public boolean tryToZap(Hero owner, int target) {
         int currentWardEnergy = 0;

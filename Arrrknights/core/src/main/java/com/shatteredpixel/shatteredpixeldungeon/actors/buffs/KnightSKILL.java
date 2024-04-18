@@ -214,7 +214,6 @@ public class KnightSKILL extends Buff implements ActionIndicator.Action {
 
         AttackIndicator.target(enemy);
 
-        boolean wasAlly = enemy.alignment == target.alignment;
         Hero hero = (Hero)target;
 
         if (enemy.defenseSkill(target) >= Char.INFINITE_EVASION){

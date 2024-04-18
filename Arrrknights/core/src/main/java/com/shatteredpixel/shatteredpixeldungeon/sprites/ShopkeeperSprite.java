@@ -26,9 +26,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.PixelParticle;
 
 public class ShopkeeperSprite extends MobSprite {
-	
-	private PixelParticle coin;
-	
+
 	public ShopkeeperSprite() {
 		super();
 		

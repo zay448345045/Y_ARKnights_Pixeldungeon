@@ -121,7 +121,6 @@ public class SakuraSword extends MeleeWeapon {
 
         Ballistica beam = new Ballistica(attacker.pos, defender.pos, Ballistica.WONT_STOP);
         int maxDistance = Math.min(dis, beam.dist);
-        int cell = beam.path.get(Math.min(beam.dist, maxDistance));
         for (int c : beam.subPath(1, maxDistance)) {
             CellEmitter.center(c).burst(PurpleParticle.BURST, Random.IntRange(3, 5));
         }

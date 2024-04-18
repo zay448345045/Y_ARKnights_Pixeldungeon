@@ -110,7 +110,7 @@ public class LloydsBeacon extends Artifact {
 
 		super.execute( hero, action );
 
-		if (action == AC_SET || action == AC_RETURN) {
+		if (action.equals(AC_SET) || action.equals(AC_RETURN) ) {
 			
 			if (Dungeon.bossLevel()) {
 				hero.spend( LloydsBeacon.TIME_TO_USE );
@@ -127,7 +127,7 @@ public class LloydsBeacon extends Artifact {
 			}
 		}
 
-		if (action == AC_ZAP ){
+		if (action.equals(AC_ZAP) ){
 
 			curUser = hero;
 			int chargesToUse = Dungeon.depth > 20 ? 2 : 1;

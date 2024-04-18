@@ -90,7 +90,6 @@ public class Generators_Ring extends Generators {
     private static final int RING_CAT = 0;
     private static final int WAND_CAT = 1;
     private static final int WAND_SP  = 2;
-    private static final String AC_SETTING = "setting";
 
     @Override
     public void execute(Hero hero, String action) {

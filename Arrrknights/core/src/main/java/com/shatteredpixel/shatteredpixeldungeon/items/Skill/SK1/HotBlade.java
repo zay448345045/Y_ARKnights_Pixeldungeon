@@ -63,9 +63,7 @@ public class HotBlade extends Skill {
 
         @Override
         protected void onThrow( int cell ) {
-            Char enemy = Actor.findChar( cell );
             parent = null;
-
         }
 
         @Override

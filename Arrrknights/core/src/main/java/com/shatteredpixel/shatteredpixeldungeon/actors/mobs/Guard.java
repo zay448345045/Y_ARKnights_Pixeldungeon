@@ -164,7 +164,7 @@ public class Guard extends Mob {
 		}
 	}
 
-	private final String CHAINSUSED = "chainsused";
+	private static final String CHAINSUSED = "chainsused";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {

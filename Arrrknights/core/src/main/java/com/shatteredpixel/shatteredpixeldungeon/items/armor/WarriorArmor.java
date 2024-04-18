@@ -44,9 +44,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
 public class WarriorArmor extends ClassArmor {
-	
-	private static int LEAP_TIME	= 1;
-	private static int SHOCK_TIME	= 5;
 
 	{
 		image = ItemSpriteSheet.ARMOR_WARRIOR;

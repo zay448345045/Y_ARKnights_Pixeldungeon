@@ -463,7 +463,7 @@ public class SpiritBow extends Weapon {
 	protected WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof Plant.Seed) {
+			if (item instanceof Plant.Seed) {
 				if (EatSeed < 45) {
 					Hero hero = Dungeon.hero;
 					hero.sprite.operate(hero.pos);

@@ -323,8 +323,6 @@ public class NewTengu extends Mob {
 
                 if (level.heroFOV[pos]) CellEmitter.get(pos).burst(Speck.factory(Speck.WOOL), 6);
 
-                int oldpos = pos;
-
                 sprite.move(pos, newPos);
                 move(newPos);
 
@@ -410,9 +408,6 @@ public class NewTengu extends Mob {
         BossHealthBar.assignBoss(this);
         if (HP <= HT / 2) BossHealthBar.bleed(true);
     }
-
-    //don't bother bundling this, as its purely cosmetic
-    private boolean yelledCoward = false;
 
     //tengu is always hunting
     private class Hunting extends Mob.Hunting {
@@ -1134,7 +1129,6 @@ public class NewTengu extends Mob {
     public static boolean throwMine(final Char thrower, final Char target) {
 
         int targetCell = -1;
-        int targetCell2 = -1;
 
         //Targets closest cell which is adjacent to target, and at least 3 tiles away
         for (int i : PathFinder.NEIGHBOURS8) {

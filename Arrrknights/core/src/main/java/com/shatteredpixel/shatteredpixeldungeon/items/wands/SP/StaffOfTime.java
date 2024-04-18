@@ -55,7 +55,6 @@ public class StaffOfTime extends DamageWand {
     protected void onZap( Ballistica bolt ) {
 
         ArrayList<Char> affectedChars = new ArrayList<>();
-        ArrayList<Integer> adjacentCells = new ArrayList<>();
         for( int cell : cone.cells ){
 
             //ignore caster cell

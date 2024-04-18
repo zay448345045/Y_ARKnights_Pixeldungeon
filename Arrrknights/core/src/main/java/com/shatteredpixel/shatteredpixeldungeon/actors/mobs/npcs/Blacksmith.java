@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
@@ -42,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BlacksmithSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBlacksmith;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndBlacksmithAfter;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
@@ -115,7 +117,6 @@ public class Blacksmith extends NPC {
 					if (pick.isEquipped( Dungeon.hero )) {
 						pick.doUnequip( Dungeon.hero, false );
 					}
-					pick.detach( Dungeon.hero.belongings.backpack );
 					tell( Messages.get(this, "completed") );
 					
 					Quest.completed = true;
@@ -135,8 +136,7 @@ public class Blacksmith extends NPC {
 						if (pick.cursed) pick.cursed=false;//change from budding
 						pick.doUnequip( Dungeon.hero, false );
 					}
-					pick.detach( Dungeon.hero.belongings.backpack );
-					gold.detachAll( Dungeon.hero.belongings.backpack );
+					gold.detachAmount( Dungeon.hero.belongings.backpack, 15 );
 					tell( Messages.get(this, "completed") );
 					
 					Quest.completed = true;
@@ -154,9 +154,22 @@ public class Blacksmith extends NPC {
 			});
 			
 		} else {
-			
-			tell( Messages.get(this, "get_lost") );
-			
+			DarkGold gold = Dungeon.hero.belongings.getItem( DarkGold.class );
+			if(Quest.chiFirstTalk && Dungeon.isSPChallenged(SPChallenges.CHIMERA)){
+				Messages.get(this, "chi_first_talk");
+				Quest.chiFirstTalk = false;
+			}
+			else{
+				if(!Dungeon.isSPChallenged(SPChallenges.CHIMERA)){tell( Messages.get(this, "get_lost") );}
+				else if(gold == null || gold.quantity() < 15){tell( Messages.get(this, "chi_not_enough") );}
+				else {Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						GameScene.show( new WndBlacksmithAfter( Blacksmith.this, Dungeon.hero ) );
+					}
+				});}
+			}
+
 		}
 
 		return true;
@@ -270,12 +283,14 @@ public class Blacksmith extends NPC {
 		private static boolean given;
 		private static boolean completed;
 		private static boolean reforged;
+		private static boolean chiFirstTalk;
 		
 		public static void reset() {
 			spawned		= false;
 			given		= false;
 			completed	= false;
 			reforged	= false;
+			chiFirstTalk= true;
 		}
 		
 		private static final String NODE	= "blacksmith";
@@ -285,6 +300,7 @@ public class Blacksmith extends NPC {
 		private static final String GIVEN		= "given";
 		private static final String COMPLETED	= "completed";
 		private static final String REFORGED	= "reforged";
+		private static final String CHIFIRSTTALK	= "chifirsttalk";
 		
 		public static void storeInBundle( Bundle bundle ) {
 			
@@ -297,6 +313,7 @@ public class Blacksmith extends NPC {
 				node.put( GIVEN, given );
 				node.put( COMPLETED, completed );
 				node.put( REFORGED, reforged );
+				node.put( CHIFIRSTTALK, chiFirstTalk );
 			}
 			
 			bundle.put( NODE, node );
@@ -311,6 +328,7 @@ public class Blacksmith extends NPC {
 				given = node.getBoolean( GIVEN );
 				completed = node.getBoolean( COMPLETED );
 				reforged = node.getBoolean( REFORGED );
+				chiFirstTalk = node.getBoolean( CHIFIRSTTALK );
 			} else {
 				reset();
 			}
@@ -324,7 +342,7 @@ public class Blacksmith extends NPC {
 				alternative = Random.Int( 2 ) == 0;
 				
 				given = false;
-				
+				chiFirstTalk = true;
 			}
 			return rooms;
 		}

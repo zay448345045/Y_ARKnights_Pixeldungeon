@@ -196,7 +196,7 @@ public class SandalsOfNature extends Artifact {
 	protected WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof Plant.Seed) {
+			if (item instanceof Plant.Seed) {
 				if (seeds.contains(item.getClass())){
 					GLog.w( Messages.get(SandalsOfNature.class, "already_fed") );
 				} else {

@@ -11,11 +11,6 @@ import com.watabou.noosa.audio.Sample;
 import java.util.ArrayList;
 
 public class Rename extends Item {
-
-    private static final String TXT_UPGRADED = "OriginiumShard";
-
-    private static final float TIME_TO_UPGRADE = 1;
-
     private static final String AC_USE = "USE";
 
     {

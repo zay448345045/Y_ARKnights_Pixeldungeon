@@ -146,7 +146,7 @@ public class Echeveria extends MeleeWeapon{
     protected void onZap( Ballistica bolt ) {
         ArrayList<Integer> respawnPoints = new ArrayList<>();
         Char ch = Actor.findChar( bolt.collisionPos );
-        if (ch != null && ch instanceof Mob) {
+        if (ch instanceof Mob) {
             if (ch.alignment == Char.Alignment.ALLY) return;
             for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
                 int p = ch.pos + PathFinder.NEIGHBOURS8[i];

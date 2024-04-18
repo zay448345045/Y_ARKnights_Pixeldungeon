@@ -345,7 +345,7 @@ public class Goo extends Mob {
 		}
 	}
 
-	private final String PUMPEDUP = "pumpedup";
+	private static final String PUMPEDUP = "pumpedup";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {

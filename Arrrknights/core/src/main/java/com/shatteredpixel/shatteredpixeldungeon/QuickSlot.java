@@ -123,15 +123,15 @@ public class QuickSlot {
 
 		ArrayList<Item> result = new ArrayList<>();
 		for (int i = 0; i < SIZE; i ++)
-		if (getItem(i) != null && !isPlaceholder(i))
+			if (getItem(i) != null && !isPlaceholder(i))
 				result.add(getItem(i));
 
 		return Random.element(result);
 	}
 
-	private final String PLACEHOLDERS = "placeholders";
-	private final String PLACEMENTS = "placements";
-	private final String CCC = "change";
+	private static final String PLACEHOLDERS = "placeholders";
+	private static final String PLACEMENTS = "placements";
+	private static final String CCC = "change";
 
 	/**
 	 * Placements array is used as order is preserved while bundling, but exact index is not, so if we

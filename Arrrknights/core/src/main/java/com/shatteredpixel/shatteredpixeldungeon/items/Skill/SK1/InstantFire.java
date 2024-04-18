@@ -41,7 +41,7 @@ public class InstantFire extends Skill {
             }
         }
     }
-    protected static CellSelector.Listener zapper = new CellSelector.Listener() {
+    protected static final CellSelector.Listener zapper = new CellSelector.Listener() {
 
         @Override
         public void onSelect(Integer target) {

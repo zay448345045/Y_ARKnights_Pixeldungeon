@@ -161,7 +161,6 @@ public class WndTradeItem extends WndInfoItem {
 			pos = btnSteal.bottom();
 
 		} else if (Dungeon.depth == 20) {
-			final float chance = 300;
 			RedButton btnSteal = new RedButton(Messages.get(this, "steal", 33)) {
 			@Override
 			protected void onClick() {

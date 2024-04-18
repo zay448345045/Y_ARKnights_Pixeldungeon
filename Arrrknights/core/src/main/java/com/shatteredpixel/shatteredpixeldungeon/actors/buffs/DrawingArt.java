@@ -27,7 +27,6 @@ import com.watabou.utils.Callback;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-import sun.util.BuddhistCalendar;
 
 public class DrawingArt extends Buff implements ActionIndicator.Action{
     private float pcharge = 0;

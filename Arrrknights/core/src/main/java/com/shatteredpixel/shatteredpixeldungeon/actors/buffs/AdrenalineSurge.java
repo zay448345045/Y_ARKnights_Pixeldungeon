@@ -27,7 +27,7 @@ import com.watabou.utils.Bundle;
 
 public class AdrenalineSurge extends Buff {
 
-	public static float DURATION = 800f;
+	public static final float DURATION = 800f;
 	
 	{
 		type = buffType.POSITIVE;

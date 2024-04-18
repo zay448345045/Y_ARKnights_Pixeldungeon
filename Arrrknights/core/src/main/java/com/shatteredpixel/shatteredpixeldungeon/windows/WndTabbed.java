@@ -133,7 +133,7 @@ public class WndTabbed extends Window {
 	
 	protected class Tab extends Button {
 		
-		protected final int CUT = 5;
+		protected static final int CUT = 5;
 		
 		protected boolean selected;
 		

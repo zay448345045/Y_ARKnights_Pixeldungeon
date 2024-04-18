@@ -132,7 +132,7 @@ public class Longsword extends MeleeWeapon {
 		else arts = bundle.getInt(CHARGE);
 	}
 
-	protected static CellSelector.Listener zapper = new CellSelector.Listener() {
+	protected static final CellSelector.Listener zapper = new CellSelector.Listener() {
 
 		@Override
 		public void onSelect(Integer target) {

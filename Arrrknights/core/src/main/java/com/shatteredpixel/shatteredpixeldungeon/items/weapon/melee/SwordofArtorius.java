@@ -54,7 +54,6 @@ public class SwordofArtorius extends MeleeWeapon {
 
         ArrayList<Char> chars = new ArrayList<>();
 
-        Blob web = Dungeon.level.blobs.get(Web.class);
 
         int terrainPassed = 2;
         for (int c : beam.subPath(1, maxDistance)) {

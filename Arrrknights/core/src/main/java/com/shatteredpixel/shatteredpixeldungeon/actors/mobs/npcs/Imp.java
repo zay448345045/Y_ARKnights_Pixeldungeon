@@ -160,8 +160,7 @@ public class Imp extends NPC {
 		private static final String SPAWNED		= "spawned";
 		private static final String GIVEN		= "given";
 		private static final String COMPLETED	= "completed";
-		private static final String REWARD		= "reward";
-		
+
 		public static void storeInBundle( Bundle bundle ) {
 			
 			Bundle node = new Bundle();

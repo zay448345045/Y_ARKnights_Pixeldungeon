@@ -52,7 +52,7 @@ public class LockedFloor extends Buff {
 		return left >= 1;
 	}
 
-	private final String LEFT = "left";
+	private static final String LEFT = "left";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {

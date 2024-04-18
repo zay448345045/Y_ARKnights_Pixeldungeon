@@ -87,7 +87,7 @@ public class Snake extends Mob {
 	public int defenseSkill(Char src){//change from budding
 		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)){
 			if ((enemySeen && state != SLEEPING && paralysed == 0)
-					&& (src instanceof Char && enemy == src)&& enemy.invisible == 0
+					&& (src != null && enemy == src)&& enemy.invisible == 0
 					&& !(Dungeon.level.feeling == Level.Feeling.TYPHOON)) {
 				return INFINITE_EVASION;
 			}

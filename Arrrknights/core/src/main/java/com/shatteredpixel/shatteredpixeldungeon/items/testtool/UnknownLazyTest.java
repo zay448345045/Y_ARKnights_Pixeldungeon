@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.testtool;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
@@ -26,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.InfernalBrew;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfMagicalSight;
+import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
@@ -78,33 +80,33 @@ public class UnknownLazyTest extends Generators {
     @Override
     public void execute(Hero hero, String action){
         if(action.equals(AC_GIVE)){
-            new PotionOfExperience().quantity(100).collect();
-            new PotionOfFrost().quantity(100).collect();
-            new PotionOfHaste().quantity(100).collect();
-            new PotionOfHealing().quantity(100).collect();
-            new PotionOfInvisibility().quantity(100).collect();
-            new PotionOfLevitation().quantity(100).collect();
-            new PotionOfLiquidFlame().quantity(100).collect();
-            new PotionOfMindVision().quantity(100).collect();
-            new PotionOfParalyticGas().quantity(100).collect();
-            new PotionOfPurity().quantity(100).collect();
-            new PotionOfStrength().quantity(100).collect();
-            new PotionOfToxicGas().quantity(100).collect();
+            Dungeon.level.drop(new PotionOfExperience().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfFrost().quantity(100), Dungeon.hero.pos);
+            //Dungeon.level.drop(new PotionOfHaste().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfHealing().quantity(100), Dungeon.hero.pos);
+            //Dungeon.level.drop(new PotionOfInvisibility().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfLevitation().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfLiquidFlame().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfMindVision().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfParalyticGas().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfPurity().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfStrength().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new PotionOfToxicGas().quantity(100), Dungeon.hero.pos);
 
-            new PotionOfMagicalSight().quantity(100).collect();
+            Dungeon.level.drop(new PotionOfMagicalSight().quantity(100), Dungeon.hero.pos);
 
-            new ScrollOfIdentify().quantity(100).collect();
-            new ScrollOfLullaby().quantity(100).collect();
-            new ScrollOfMagicMapping().quantity(100).collect();
-            new ScrollOfMirrorImage().quantity(100).collect();
-            new ScrollOfRage().quantity(100).collect();
-            new ScrollOfRecharging().quantity(100).collect();
-            new ScrollOfRemoveCurse().quantity(100).collect();
-            new ScrollOfRetribution().quantity(100).collect();
-            new ScrollOfTeleportation().quantity(100).collect();
-            new ScrollOfTerror().quantity(100).collect();
-            new ScrollOfTransmutation().quantity(100).collect();
-            new ScrollOfUpgrade().quantity(100).collect();
+            //Dungeon.level.drop(new ScrollOfIdentify().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfLullaby().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfMagicMapping().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfMirrorImage().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfRage().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfRecharging().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfRemoveCurse().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfRetribution().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfTeleportation().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfTerror().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfTransmutation().quantity(100), Dungeon.hero.pos);
+            Dungeon.level.drop(new ScrollOfUpgrade().quantity(100), Dungeon.hero.pos);
 
             PlateArmor plateArmor = new PlateArmor();
             plateArmor.level(15);

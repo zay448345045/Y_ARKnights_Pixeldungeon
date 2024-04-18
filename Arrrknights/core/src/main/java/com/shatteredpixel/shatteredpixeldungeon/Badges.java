@@ -649,7 +649,6 @@ public class Badges {
 	}
 
 	public static void validateItemsIdentified() {
-		Badge badge = null;
 		for (Catalog cat : Catalog.values()){
 			if (cat.allSeen()){
 				Badge b = Catalog.catalogBadges.get(cat);
