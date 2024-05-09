@@ -21,8 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.android;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +34,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
+import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -49,9 +52,13 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PlatformSupport;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Pattern;
-
 public class AndroidPlatformSupport extends PlatformSupport {
 	
 	public void updateDisplaySize(){
@@ -469,5 +476,31 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			return regularsplitter.split(text);
 		}
 	}
-	
+
+	public void pringLog(String log){
+		final String PATH = Environment.getExternalStorageDirectory().getPath() + "/MyLog//";
+		makeRootDirectory(PATH);
+		try {
+			File file = new File(PATH);
+			FileWriter filerWriter = new FileWriter(file, true);// 后面这个参数代表是不是要接上文件中原来的数据，不进行覆盖
+			BufferedWriter bufWriter = new BufferedWriter(filerWriter);
+			bufWriter.write(log);
+			bufWriter.newLine();
+			bufWriter.close();
+			filerWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private static void makeRootDirectory(String filePath) {
+		File file = null;
+		try {
+			file = new File(filePath);
+			if (!file.exists()) {
+				file.mkdir();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

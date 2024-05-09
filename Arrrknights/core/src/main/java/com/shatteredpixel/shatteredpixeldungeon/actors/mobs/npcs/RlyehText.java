@@ -26,6 +26,7 @@ public class RlyehText extends NPC {
 
     @Override
     public boolean interact(Char c) {
+        if(!(Dungeon.depth == 30)) return true;
         sprite.turnTo(pos, c.pos);
         if (!(Dungeon.DLC == Dungeon.ROR)) {
             Dungeon.DLC = Dungeon.ROR;

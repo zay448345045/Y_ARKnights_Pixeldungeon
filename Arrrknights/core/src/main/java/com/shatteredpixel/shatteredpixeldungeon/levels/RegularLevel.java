@@ -440,7 +440,7 @@ public abstract class RegularLevel extends Level {
 		}
 
 		for (Item item : itemsToSpawn) {
-			if(Dungeon.DLC == ROR &&
+			if(Dungeon.DLC == ROR && Dungeon.depth > 30 &&
 					(item instanceof IronKey || item instanceof PotionOfLiquidFlame || item instanceof StoneOfBlast)
 			){ item = Random.Int(2)==0? new PotionOfLevitation(): new StoneOfBlink();}
 			int cell = randomDropCell();

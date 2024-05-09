@@ -28,6 +28,7 @@ public abstract class PlatformSupport {
 	public abstract void updateDisplaySize();
 	
 	public abstract void updateSystemUI();
+	public abstract void pringLog(String log);
 
 	public abstract boolean connectedToUnmeteredNetwork();
 

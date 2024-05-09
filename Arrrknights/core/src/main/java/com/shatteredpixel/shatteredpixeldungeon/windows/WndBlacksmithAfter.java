@@ -57,6 +57,7 @@ public class WndBlacksmithAfter extends Window {
 
     public WndBlacksmithAfter( Blacksmith troll, Hero hero ) {
         super();
+        Window wba = this;
 
         int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
@@ -76,6 +77,7 @@ public class WndBlacksmithAfter extends Window {
         RedButton addChi = new RedButton(Messages.get(this, "addchi"), 6){
             @Override
             protected void onClick() {
+                wba.hide();
                 GameScene.selectItem( addSelector, WndBag.Mode.WEAPON, Messages.get(this, "select") );
             }
         };
@@ -84,6 +86,7 @@ public class WndBlacksmithAfter extends Window {
         RedButton delChi = new RedButton(Messages.get(this, "delchi"), 6){
             @Override
             protected void onClick() {
+                wba.hide();
                 GameScene.selectItem( delSelector, WndBag.Mode.WEAPON, Messages.get(this, "select") );
             }
         };
@@ -92,6 +95,7 @@ public class WndBlacksmithAfter extends Window {
         RedButton changeChi = new RedButton(Messages.get(this, "changechi"), 6){
             @Override
             protected void onClick() {
+                wba.hide();
                 GameScene.selectItem( changeSelector, WndBag.Mode.WEAPON, Messages.get(this, "select") );
             }
         };

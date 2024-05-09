@@ -22,9 +22,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Rect;
 import com.watabou.utils.Reflection;
@@ -105,9 +107,13 @@ public class Blob extends Actor {
 	
 	@Override
 	public boolean act() {
-		
+		if(SPDSettings.debugPrint()) {
+			GLog.w("BEFORESPEND: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
+		}
 		spend( TICK );
-		
+		if(SPDSettings.debugPrint()) {
+			GLog.w("AFTERSPEND: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
+		}
 		if (volume > 0) {
 
 			if (area.isEmpty())
@@ -127,7 +133,9 @@ public class Blob extends Actor {
 				System.arraycopy(cur, 0, off, 0, cur.length);
 			}
 		}
-		
+		if(SPDSettings.debugPrint()) {
+			GLog.w("ENDOFBLOBACT: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
+		}
 		return true;
 	}
 

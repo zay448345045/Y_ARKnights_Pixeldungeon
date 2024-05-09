@@ -193,8 +193,10 @@ public class WndSettings extends WndTabbed {
 		CheckBox chkSaver;
 		RedButton btnOrientation;
 		ColorBlock sep2;
+		ColorBlock sep3;
 		OptionSlider optBrightness;
 		OptionSlider optVisGrid;
+		CheckBox debugPrint;
 
 		@Override
 		protected void createChildren() {
@@ -286,7 +288,27 @@ public class WndSettings extends WndTabbed {
 			};
 			optVisGrid.setSelectedValue(SPDSettings.visualGrid());
 			add(optVisGrid);
+			sep3 = new ColorBlock(1, 1, 0xFF000000);
+			add(sep3);
+			debugPrint = new CheckBox(Messages.get(this, "debug_print")){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					TomorrowRogueNight.seamlessResetScene(new Game.SceneChangeCallback() {
+						@Override
+						public void beforeCreate() {
+							SPDSettings.debugPrint(checked());
+						}
 
+						@Override
+						public void afterCreate() {
+							//do nothing
+						}
+					});
+				}
+			};
+			debugPrint.checked(SPDSettings.debugPrint());
+			add(debugPrint);
 		}
 
 		@Override
@@ -328,12 +350,23 @@ public class WndSettings extends WndTabbed {
 			if (width > 200){
 				optBrightness.setRect(0, bottom + GAP, width/2-GAP/2, SLIDER_HEIGHT);
 				optVisGrid.setRect(optBrightness.right() + GAP, optBrightness.top(), width/2-GAP/2, SLIDER_HEIGHT);
+				bottom = optVisGrid.bottom();
 			} else {
 				optBrightness.setRect(0, bottom + GAP, width, SLIDER_HEIGHT);
 				optVisGrid.setRect(0, optBrightness.bottom() + GAP, width, SLIDER_HEIGHT);
+				bottom = optVisGrid.bottom();
 			}
-
-			height = optVisGrid.bottom();
+			sep3.size(width, 1);
+			sep3.y = bottom + GAP;
+			bottom = sep3.y + 1;
+			if (width > 200){
+				debugPrint.setRect(0, bottom + GAP, width/2-GAP/2, BTN_HEIGHT);
+				bottom = debugPrint.bottom();
+			} else {
+				debugPrint.setRect(0, bottom + GAP, width, BTN_HEIGHT);
+				bottom = debugPrint.bottom();
+			}
+			height = debugPrint.bottom();
 		}
 
 	}

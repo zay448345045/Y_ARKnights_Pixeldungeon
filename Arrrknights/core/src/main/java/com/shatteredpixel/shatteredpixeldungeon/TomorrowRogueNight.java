@@ -29,6 +29,8 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PlatformSupport;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
+
 public class TomorrowRogueNight extends Game {
 
 	//variable constants for specific older versions of shattered, used for data conversion
@@ -44,10 +46,11 @@ public class TomorrowRogueNight extends Game {
 	public static final int v0_9_2   = 519;
 	public static final int v0_1_2   = 533;
 	public static final int v0_1_2b   = 534;
+	static PlatformSupport PS;
 	
 	public TomorrowRogueNight(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
-
+		PS = platform;
 		//v0.8.0
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredBrute.class,
@@ -152,5 +155,8 @@ public class TomorrowRogueNight extends Game {
 
 	public static void updateSystemUI() {
 		platform.updateSystemUI();
+	}
+	public static PlatformSupport getPlatformSupport(){
+		return PS;
 	}
 }

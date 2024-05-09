@@ -132,10 +132,6 @@ public class Blacksmith extends NPC {
 				} else if (gold == null || gold.quantity() < 15) {
 					tell( Messages.get(this, "gold_2") );
 				} else {
-					if (pick.isEquipped( Dungeon.hero )) {
-						if (pick.cursed) pick.cursed=false;//change from budding
-						pick.doUnequip( Dungeon.hero, false );
-					}
 					gold.detachAmount( Dungeon.hero.belongings.backpack, 15 );
 					tell( Messages.get(this, "completed") );
 					

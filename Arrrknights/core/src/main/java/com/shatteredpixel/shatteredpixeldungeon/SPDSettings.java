@@ -50,6 +50,7 @@ public class SPDSettings extends GameSettings {
 	public static final String KEY_FULLSCREEN	= "fullscreen";
 	public static final String KEY_LANDSCAPE	= "landscape";
 	public static final String KEY_POWER_SAVER 	= "power_saver";
+	public static final String KEY_DEBUG_PRINT 	= "debug_print";
 	public static final String KEY_SCALE		= "scale";
 	public static final String KEY_ZOOM			= "zoom";
 	public static final String KEY_BRIGHTNESS	= "brightness";
@@ -87,6 +88,9 @@ public class SPDSettings extends GameSettings {
 	
 	public static boolean powerSaver(){
 		return getBoolean( KEY_POWER_SAVER, false );
+	}
+	public static boolean debugPrint(){
+		return getBoolean( KEY_DEBUG_PRINT, false );
 	}
 	
 	public static void scale( int value ) {
@@ -270,7 +274,9 @@ public class SPDSettings extends GameSettings {
 	public static void systemFont(boolean value){
 		put(KEY_SYSTEMFONT, value);
 	}
-	
+	public static void debugPrint(boolean value){
+		put(KEY_DEBUG_PRINT, value);
+	}
 	public static boolean systemFont(){
 		return getBoolean(KEY_SYSTEMFONT,
 				(language() == Languages.KOREAN/* || language() == Languages.CHINESE || language() == Languages.JAPANESE*/));

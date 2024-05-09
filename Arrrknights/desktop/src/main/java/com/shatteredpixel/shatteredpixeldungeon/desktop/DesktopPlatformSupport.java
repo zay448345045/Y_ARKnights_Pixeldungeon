@@ -60,7 +60,12 @@ public class DesktopPlatformSupport extends PlatformSupport {
 			}
 		} );
 	}
-	
+
+	@Override
+	public void pringLog(String log) {
+
+	}
+
 	@Override
 	public boolean connectedToUnmeteredNetwork() {
 		return true; //no easy way to check this in desktop, just assume user doesn't care
