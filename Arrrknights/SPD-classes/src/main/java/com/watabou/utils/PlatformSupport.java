@@ -28,7 +28,6 @@ public abstract class PlatformSupport {
 	public abstract void updateDisplaySize();
 	
 	public abstract void updateSystemUI();
-	public abstract void pringLog(String log);
 
 	public abstract boolean connectedToUnmeteredNetwork();
 
@@ -56,5 +55,6 @@ public abstract class PlatformSupport {
 	public abstract BitmapFont getFont(int size, String text);
 	
 	public abstract String[] splitforTextBlock( String text, boolean multiline );
-
+	public abstract void copyToClipboard(String text);
+	public abstract void shareText(String text);
 }

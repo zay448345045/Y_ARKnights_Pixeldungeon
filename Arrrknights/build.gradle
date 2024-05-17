@@ -14,14 +14,14 @@ allprojects {
         appName = '昨日碎梦地牢-S'
         appPackageName = 'com.shatteredpixel.yesterdaypixel'
 
-        appVersionCode = 240504
-        appVersionName = 'Y-0.4.5-EX9-2404504'
+        appVersionCode = 240513
+        appVersionName = 'Y-0.4.5-EX9-2404513'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
-        appAndroidCompileSDK = 30
+        appAndroidCompileSDK = 33
         appAndroidMinSDK = 14   //隔壁是9
-        appAndroidTargetSDK = 30
+        appAndroidTargetSDK = 33
 
         gdxVersion = '1.9.10'
     }

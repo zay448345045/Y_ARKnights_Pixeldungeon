@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
+import com.shatteredpixel.shatteredpixeldungeon.utils.Logger;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
@@ -46,11 +47,13 @@ public class TomorrowRogueNight extends Game {
 	public static final int v0_9_2   = 519;
 	public static final int v0_1_2   = 533;
 	public static final int v0_1_2b   = 534;
-	static PlatformSupport PS;
-	
+	public static Logger actorLogger;
+	public static Logger blobLogger;
+	public static Logger buffLogger;
+
+
 	public TomorrowRogueNight(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
-		PS = platform;
 		//v0.8.0
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredBrute.class,
@@ -85,7 +88,9 @@ public class TomorrowRogueNight extends Game {
 
 		updateSystemUI();
 		SPDAction.loadBindings();
-		
+		actorLogger = new Logger(100, "actor_log.txt");
+		blobLogger = new Logger(100, "blob_log.txt");
+		buffLogger = new Logger(100, "buff_log.txt");
 		Music.INSTANCE.enable( SPDSettings.music() );
 		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( SPDSettings.soundFx() );
@@ -155,8 +160,5 @@ public class TomorrowRogueNight extends Game {
 
 	public static void updateSystemUI() {
 		platform.updateSystemUI();
-	}
-	public static PlatformSupport getPlatformSupport(){
-		return PS;
 	}
 }

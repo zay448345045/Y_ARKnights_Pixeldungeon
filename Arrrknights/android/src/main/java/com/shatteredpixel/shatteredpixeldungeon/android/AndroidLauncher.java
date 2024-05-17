@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.android;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.TextView;
-
+import androidx.core.app.ActivityCompat;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 
@@ -37,6 +38,9 @@ public class AndroidLauncher extends Activity {
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActivityCompat.requestPermissions(this,
+				new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+				1);
 		super.onCreate(savedInstanceState);
 		
 		try {

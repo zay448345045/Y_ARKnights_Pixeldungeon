@@ -176,6 +176,24 @@ public class TitleScene extends PixelScene {
 		GAP /= landscape() ? 3 : 5;
 		GAP = Math.max(GAP, 2);
 
+		StyledButton btnCopy = new StyledButton(GREY_TR, "Clear"){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				TomorrowRogueNight.actorLogger.exportLog("actor_log", "clipboard");
+			}
+		};
+		add(btnCopy);
+
+		StyledButton btnShare = new StyledButton(GREY_TR, "Share"){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				TomorrowRogueNight.actorLogger.exportLog("actor_log", "share");
+			}
+		};
+		add(btnShare);
+
 		if (landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
@@ -186,6 +204,8 @@ public class TitleScene extends PixelScene {
 			btnChanges.setRect(btnNews.left(), btnNews.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
 			btnSettings.setRect(btnNews.right()+2, btnNews.top(), btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnSettings.left(), btnSettings.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
+			btnCopy.setRect(btnSettings.left(), btnSettings.bottom(), 40, 20);
+			btnShare.setRect(btnCopy.left(), btnCopy.bottom(), 40, 20);
 		} else {
 			btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
 			align(btnPlay);
@@ -196,6 +216,8 @@ public class TitleScene extends PixelScene {
 			btnChanges.setRect(btnNews.right()+2, btnNews.top(), btnNews.width(), BTN_HEIGHT);
 			btnSettings.setRect(btnNews.left(), btnNews.bottom()+GAP, btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
+			btnCopy.setRect(btnSettings.left(), btnSettings.bottom(), 40, 20);
+			btnShare.setRect(btnCopy.left(), btnCopy.bottom(), 40, 20);
 		}
 
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);

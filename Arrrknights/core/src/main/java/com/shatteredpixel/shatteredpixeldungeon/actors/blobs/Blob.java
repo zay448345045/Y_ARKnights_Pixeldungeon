@@ -107,13 +107,7 @@ public class Blob extends Actor {
 	
 	@Override
 	public boolean act() {
-		if(SPDSettings.debugPrint()) {
-			GLog.w("BEFORESPEND: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
-		}
 		spend( TICK );
-		if(SPDSettings.debugPrint()) {
-			GLog.w("AFTERSPEND: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
-		}
 		if (volume > 0) {
 
 			if (area.isEmpty())
@@ -132,9 +126,6 @@ public class Blob extends Actor {
 				//clear any values remaining in off
 				System.arraycopy(cur, 0, off, 0, cur.length);
 			}
-		}
-		if(SPDSettings.debugPrint()) {
-			GLog.w("ENDOFBLOBACT: "+this.getClass().getName().replace("com.shatteredpixel.shatteredpixeldungeon.", ""));
 		}
 		return true;
 	}

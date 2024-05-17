@@ -40,6 +40,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
@@ -68,26 +69,23 @@ public abstract class Actor implements Bundlable {
 	protected int actPriority = DEFAULT;
 
 	protected abstract boolean act();
-	public static PlatformSupport platform;
+	public String getHMSM(){
+		Calendar calendar = Calendar.getInstance();
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		int second = calendar.get(Calendar.SECOND);
+		int millisecond = calendar.get(Calendar.MILLISECOND);
+		return hour + ":" + minute+ ":" + second+ ":" + millisecond;
+	}
 	protected void spend( float time ) {
-		if(SPDSettings.debugPrint()) {
-			GLog.w(this.getClass().getName()
-					.replace("com.shatteredpixel.shatteredpixeldungeon.", "")
-					.replace("actors.hero.", "")
-					.replace("actors.mobs.", "")
-					.replace("actors.buffs.", "")
-					.replace("items.rings.", "")
-					.replace("items.artifacts.", "")
-					.replace("items.ror2items.", "")
-			);
-		}//if (platform == null) platform = TomorrowRogueNight.getPlatformSupport();
-		//platform.pringLog(this.getClass().getName());
+		if(SPDSettings.debugPrint()) {GLog.w(this.getClass().getSimpleName());}
 		this.time += time;
 		//if time is very close to a whole number, round to a whole number to fix errors
 		float ex = Math.abs(this.time % 1f);
 		if (ex < .001f){
 			this.time = Math.round(this.time);
 		}
+		TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ": " + this.getClass().getSimpleName() + " spent " + time + " time");
 	}
 
 	public void spendToWhole(){
@@ -102,6 +100,7 @@ public abstract class Actor implements Bundlable {
 			if (ex < .001f){
 				this.time = Math.round(this.time);
 			}
+			TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ": " + this.getClass().getSimpleName() + " postpone " + time + " time");
 		}
 	}
 	

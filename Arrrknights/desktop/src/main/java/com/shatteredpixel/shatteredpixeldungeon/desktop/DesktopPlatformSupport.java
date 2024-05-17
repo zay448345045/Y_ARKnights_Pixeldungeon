@@ -62,11 +62,6 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	}
 
 	@Override
-	public void pringLog(String log) {
-
-	}
-
-	@Override
 	public boolean connectedToUnmeteredNetwork() {
 		return true; //no easy way to check this in desktop, just assume user doesn't care
 	}
@@ -256,5 +251,8 @@ public class DesktopPlatformSupport extends PlatformSupport {
 			return regularsplitter.split(text);
 		}
 	}
-	
+	@Override
+	public void copyToClipboard(String text) {}
+	@Override
+	public void shareText(String text) {}
 }

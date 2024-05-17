@@ -695,7 +695,7 @@ public class GameScene extends PixelScene {
 		}
 
 		super.update();
-		
+		TomorrowRogueNight.actorLogger.update();
 		if (!Emitter.freezeEmitters) water.offset( 0, -5 * Game.elapsed );
 
 		if (!Actor.processing() && Dungeon.hero.isAlive()) {
