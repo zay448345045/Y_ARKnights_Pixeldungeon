@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.android;
 
+import static com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight.LOG_STRINGS;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -500,18 +502,21 @@ public class AndroidPlatformSupport extends PlatformSupport {
 
 	@Override
 	public void shareText(String fileName) {
+		ArrayList<Uri> fileUris = new ArrayList<>();
 		Context context = ((AndroidApplication)Gdx.app).getContext();
-		FileHandle fileHandle = FileUtils.getFileHandle(fileName + ".txt");
-		if (!fileHandle.exists()) {
-			GLog.w("File does not exist");
-			return;
+		for(String str : LOG_STRINGS){
+			FileHandle fileHandle = FileUtils.getFileHandle(str + ".txt");
+			if (!fileHandle.exists()) {
+				GLog.w("File does not exist");
+				return;
+			}
+			File file = fileHandle.file();
+			Uri contentUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+			fileUris.add(contentUri);
 		}
-		File file = fileHandle.file();
-		Uri contentUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-
 		Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+		shareIntent.setType("*/*");
+		shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileUris);
 		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		context.startActivity(Intent.createChooser(shareIntent, "Share File"));
 	}
