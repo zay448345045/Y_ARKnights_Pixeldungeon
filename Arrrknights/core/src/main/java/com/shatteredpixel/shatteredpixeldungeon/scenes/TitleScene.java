@@ -52,7 +52,6 @@ import com.watabou.utils.DeviceCompat;
 import java.util.Date;
 
 public class TitleScene extends PixelScene {
-	
 	@Override
 	public void create() {
 		
@@ -180,7 +179,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				TomorrowRogueNight.actorLogger.exportLog("actor_log", "clipboard");
+				TomorrowRogueNight.actorLogger.exportLog("actor_log", "clear");
 			}
 		};
 		add(btnCopy);
@@ -216,8 +215,8 @@ public class TitleScene extends PixelScene {
 			btnChanges.setRect(btnNews.right()+2, btnNews.top(), btnNews.width(), BTN_HEIGHT);
 			btnSettings.setRect(btnNews.left(), btnNews.bottom()+GAP, btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
-			btnCopy.setRect(btnSettings.left(), btnSettings.bottom(), 40, 20);
-			btnShare.setRect(btnCopy.left(), btnCopy.bottom(), 40, 20);
+			btnCopy.setRect(0, btnSettings.bottom(), 40, 10);
+			btnShare.setRect(0, btnCopy.bottom(), 40, 10);
 		}
 
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);

@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -107,6 +108,7 @@ public class Blob extends Actor {
 	
 	@Override
 	public boolean act() {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act");
 		spend( TICK );
 		if (volume > 0) {
 
@@ -131,6 +133,7 @@ public class Blob extends Actor {
 	}
 
 	public void setupArea(){
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"setArea");
 		for (int cell=0; cell < cur.length; cell++) {
 			if (cur[cell] != 0){
 				area.union(cell%Dungeon.level.width(), cell/Dungeon.level.width());
@@ -143,7 +146,8 @@ public class Blob extends Actor {
 	}
 	
 	protected void evolve() {
-		
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(), "evolve");
+
 		boolean[] blocking = Dungeon.level.solid;
 		int cell;
 		for (int i=area.top-1; i <= area.bottom; i++) {
@@ -196,6 +200,8 @@ public class Blob extends Actor {
 	}
 
 	public void seed( Level level, int cell, int amount ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"seed");
+
 		if (cur == null) cur = new int[level.length()];
 		if (off == null) off = new int[cur.length];
 
@@ -206,12 +212,14 @@ public class Blob extends Actor {
 	}
 	
 	public void clear( int cell ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"clear");
 		if (volume == 0) return;
 		volume -= cur[cell];
 		cur[cell] = 0;
 	}
 
 	public void fullyClear(){
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"fullyClear");
 		volume = 0;
 		area.setEmpty();
 		cur = new int[Dungeon.level.length()];

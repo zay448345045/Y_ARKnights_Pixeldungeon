@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class Logger extends Gizmo {
@@ -35,13 +36,22 @@ public class Logger extends Gizmo {
             GLog.i("Failed to create file handle: " + e.getMessage());
         }
     }
-
-    public void addEntry(String entry) {
-        if (entries.size() >= maxEntries) {
-            entries.removeFirst();  // Remove the oldest entry
-        }
+    public static String getHMSM(){
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        int millisecond = calendar.get(Calendar.MILLISECOND);
+        return hour + ":" + minute+ ":" + second+ ":" + millisecond;
+    }
+    public void addEntry(Class c, String entry) {
+        entry = getHMSM() + "," + c.getSimpleName() + "," + entry ;
         entries.addLast(entry);  // Add new entry
-        if(SPDSettings.debugPrint()) logToFile();
+        /*if(SPDSettings.debugPrint())*/ logToFile();
+    }
+    public void addEntry(String entry) {
+        entries.addLast(entry);  // Add new entry
+        /*if(SPDSettings.debugPrint()) */logToFile();
     }
 
     public void clearEntries() {
@@ -52,9 +62,11 @@ public class Logger extends Gizmo {
         FileHandle fileHandle = FileUtils.getFileHandle(this.logFile.getName());
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileHandle.write(true)));
-            for (String entry : entries) {
-                writer.write(entry + "\n");
-                entries.remove(entry);
+            if(!entries.isEmpty()){
+                for (String entry : entries) {
+                    writer.write(entry + "\n");
+                    entries.remove(entry);
+                }
             }
             writer.close();
         } catch (IOException e) {
@@ -63,8 +75,9 @@ public class Logger extends Gizmo {
     }
 
     public void exportLog(String filename, String method) {
-        if ("clipboard".equals(method)) {
+        if ("clear".equals(method)) {
             clearEntries();
+            Game.platform.clearText(filename);
         } else if ("share".equals(method)) {
             Game.platform.shareText(filename);
         }

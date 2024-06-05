@@ -618,7 +618,7 @@ public class Hero extends Char {
         if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady()){
             if(!(enemy instanceof Hero))PotatoAimReady.PotatoKill(enemy);
         }
-
+        TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"shoot," + enemy.getClass().getSimpleName() + ",by using," + wep.getClass().getSimpleName());
         return hit;
     }
 
@@ -1191,7 +1191,8 @@ public class Hero extends Char {
                 actResult = false;
             }
         }
-
+        TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act," +
+                ((curAction == null) ? "null" : curAction.getClass().getSimpleName()));
         return actResult;
     }
 
@@ -1820,7 +1821,9 @@ public class Hero extends Char {
         }
 
         damage += BounsDamage;
-
+        TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"attack," + enemy.getClass().getSimpleName() + ",by using," +
+                (wep != null ? wep.getClass().getSimpleName() : "null")
+        );
         return damage;
     }
 
@@ -1966,7 +1969,7 @@ public class Hero extends Char {
         }
 
         if(buff(ItsHighNoon.class)!=null) Buff.detach(Dungeon.hero, ItsHighNoon.class);
-
+        TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"defense," + enemy.getClass().getSimpleName());
         return damage;
     }
 

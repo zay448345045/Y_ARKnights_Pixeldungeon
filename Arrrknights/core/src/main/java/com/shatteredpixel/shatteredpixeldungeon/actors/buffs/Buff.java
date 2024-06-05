@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -58,7 +59,7 @@ public class Buff extends Actor {
 	}
 	
 	public boolean attachTo( Char target ) {
-
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"attachTo," + target.getClass().getSimpleName());
 		if (target.isImmune( getClass() )) {
 			return false;
 		}
@@ -76,12 +77,14 @@ public class Buff extends Actor {
 	}
 	
 	public void detach() {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"detach," + target.getClass().getSimpleName());
 		if (target.sprite != null) fx( false );
 		target.remove( this );
 	}
 	
 	@Override
 	public boolean act() {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act");
 		diactivate();
 		return true;
 	}

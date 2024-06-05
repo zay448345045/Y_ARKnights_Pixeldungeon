@@ -252,7 +252,7 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		}
 	}
 	@Override
-	public void copyToClipboard(String text) {}
+	public void clearText(String text) {}
 	@Override
 	public void shareText(String text) {}
 }

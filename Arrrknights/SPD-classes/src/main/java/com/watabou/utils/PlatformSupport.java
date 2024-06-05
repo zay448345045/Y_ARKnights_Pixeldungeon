@@ -55,6 +55,6 @@ public abstract class PlatformSupport {
 	public abstract BitmapFont getFont(int size, String text);
 	
 	public abstract String[] splitforTextBlock( String text, boolean multiline );
-	public abstract void copyToClipboard(String text);
+	public abstract void clearText(String text);
 	public abstract void shareText(String text);
 }

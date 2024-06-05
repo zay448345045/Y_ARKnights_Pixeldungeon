@@ -48,13 +48,6 @@ public class TomorrowRogueNight extends Game {
 	public static final int v0_1_2   = 533;
 	public static final int v0_1_2b   = 534;
 	public static Logger actorLogger;
-	public static Logger buffLogger;
-	public static Logger blobLogger;
-	public static final String[] LOG_STRINGS = {
-			"actor_log",
-			"buff_log",
-			"blob_log"
-	};
 
 	public TomorrowRogueNight(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
@@ -92,9 +85,7 @@ public class TomorrowRogueNight extends Game {
 
 		updateSystemUI();
 		SPDAction.loadBindings();
-		actorLogger = new Logger(100, "actor_log.txt");
-		buffLogger = new Logger(100, "buff_log.txt");
-		blobLogger = new Logger(100, "blob_log.txt");
+		actorLogger = new Logger(100, "actor_log.csv");
 		Music.INSTANCE.enable( SPDSettings.music() );
 		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( SPDSettings.soundFx() );

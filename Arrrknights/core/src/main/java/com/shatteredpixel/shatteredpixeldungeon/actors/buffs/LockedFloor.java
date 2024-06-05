@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
@@ -33,6 +34,7 @@ public class LockedFloor extends Buff {
 
 	@Override
 	public boolean act() {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act start");
 		spend(TICK);
 
 		if (!Dungeon.level.locked)
@@ -40,7 +42,7 @@ public class LockedFloor extends Buff {
 
 		if (left >= 1)
 			left --;
-
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act end");
 		return true;
 	}
 

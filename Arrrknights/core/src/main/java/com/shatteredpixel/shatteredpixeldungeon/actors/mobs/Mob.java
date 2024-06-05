@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
@@ -244,7 +245,7 @@ public abstract class Mob extends Char {
 				Buff.detach(this, WarJournalist.PanoramaBuff.class);
 			}
 		}
-
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act");
 		return state.act( enemyInFOV, justAlerted );
 	}
 	
@@ -377,6 +378,7 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public void add( Buff buff ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"add," + buff.getClass().getSimpleName());
 		super.add( buff );
 		if (buff instanceof Amok || buff instanceof Corruption) {
 			state = HUNTING;
@@ -390,6 +392,7 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public void remove( Buff buff ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"remove," + buff.getClass().getSimpleName());
 		super.remove( buff );
 		if (buff instanceof Terror) {
 			if (enemySeen) {
@@ -402,6 +405,7 @@ public abstract class Mob extends Char {
 	}
 	
 	protected boolean canAttack( Char enemy ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"canAttack," + enemy.getClass().getSimpleName());
 		if (Dungeon.level.adjacent( pos, enemy.pos )){
 			return true;
 		}
@@ -414,7 +418,7 @@ public abstract class Mob extends Char {
 	}
 	
 	protected boolean getCloser( int target ) {
-		
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"getCloser," + target);
 		if (rooted || target == pos) {
 			return false;
 		}
@@ -547,6 +551,7 @@ public abstract class Mob extends Char {
 	}
 	
 	protected boolean getFurther( int target ) {
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"getFurther," + target);
 		if (rooted || target == pos) {
 			return false;
 		}
@@ -576,7 +581,7 @@ public abstract class Mob extends Char {
 	}
 	
 	protected boolean doAttack( Char enemy ) {
-		
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"doAttack," + enemy.getClass().getSimpleName());
 		if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 			sprite.attack( enemy.pos );
 			spend( attackDelay() );

@@ -69,23 +69,14 @@ public abstract class Actor implements Bundlable {
 	protected int actPriority = DEFAULT;
 
 	protected abstract boolean act();
-	public String getHMSM(){
-		Calendar calendar = Calendar.getInstance();
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		int minute = calendar.get(Calendar.MINUTE);
-		int second = calendar.get(Calendar.SECOND);
-		int millisecond = calendar.get(Calendar.MILLISECOND);
-		return hour + ":" + minute+ ":" + second+ ":" + millisecond;
-	}
 	protected void spend( float time ) {
-		if(SPDSettings.debugPrint()) {GLog.w(this.getClass().getSimpleName());}
 		this.time += time;
 		//if time is very close to a whole number, round to a whole number to fix errors
 		float ex = Math.abs(this.time % 1f);
 		if (ex < .001f){
 			this.time = Math.round(this.time);
 		}
-		TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ": " + this.getClass().getSimpleName() + " spent " + time + " time");
+		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"spent" + "," + time);
 	}
 
 	public void spendToWhole(){
@@ -100,7 +91,7 @@ public abstract class Actor implements Bundlable {
 			if (ex < .001f){
 				this.time = Math.round(this.time);
 			}
-			TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ": " + this.getClass().getSimpleName() + " postpone " + time + " time");
+			TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"postpone" + "," + time);
 		}
 	}
 	
@@ -244,10 +235,8 @@ public abstract class Actor implements Bundlable {
 	public static boolean keepActorThreadAlive = true;
 	
 	public static void process() {
-		
 		boolean doNext;
 		boolean interrupted = false;
-
 		do {
 			
 			current = null;
@@ -385,60 +374,4 @@ public abstract class Actor implements Bundlable {
 
 	public static synchronized HashSet<Char> chars() { return new HashSet<>(chars); }
 
-	//region Logs
-	private static final String LOG_DIR = "/storage/emulated/0/Android/data/com.shatteredpixel.yesterdaypixel";
-	private static final String LOG_FILE_NAME = "logs.txt";
-	private static final int MAX_LOG_FILE_SIZE = 1024 * 1024;
-	private static final int MAX_LOG_LINES = 500;
-	private static void appendLogToFile(String tag, String msg) {
-
-		File logDir = new File(LOG_DIR);
-		if (!logDir.exists()) {
-			logDir.mkdirs();
-		}
-		File logFile = new File(logDir, LOG_FILE_NAME);
-		try {
-			FileWriter fileWriter = new FileWriter(logFile, true);
-			fileWriter.write(getLogEntry(tag, msg));
-			fileWriter.close();
-		} catch (IOException e) {
-			GLog.w(e.toString());
-		}
-	}
-	private static void trimLogFileIfNeeded() {
-		File logFile = new File(LOG_DIR, LOG_FILE_NAME);
-		if (logFile.length() > MAX_LOG_FILE_SIZE) {
-			// Read the log file line by line and keep the last MAX_LOG_LINES lines
-			StringBuilder sb = new StringBuilder();
-			try {
-				Process process = Runtime.getRuntime().exec("logcat -d");
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()), 8192);
-
-				String line;
-				while ((line = bufferedReader.readLine()) != null) {
-					sb.append(line).append("\n");
-				}
-			} catch (IOException e) {
-				GLog.w(e.toString());
-			}
-
-			// Split the log file into lines and keep the last MAX_LOG_LINES lines
-			String[] lines = sb.toString().split("\n");
-			int start = Math.max(0, lines.length - MAX_LOG_LINES);
-
-			// Write the last MAX_LOG_LINES lines to the log file
-			try (FileWriter fileWriter = new FileWriter(logFile)) {
-				for (int i = start; i < lines.length; i++) {
-					fileWriter.write(lines[i] + "\n");
-				}
-			} catch (IOException e) {
-				GLog.w(e.toString());
-			}
-		}
-	}
-	private static String getLogEntry(String tag, String msg) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
-		return dateFormat.format(new Date()) + " " + tag + " " + msg + "\n";
-	}
-	//endregion
 }

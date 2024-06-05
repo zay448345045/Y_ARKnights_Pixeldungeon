@@ -71,6 +71,7 @@ public class WildMark extends Buff implements ActionIndicator.Action {
         return Messages.get(this, "desc", charge, Math.floor(pcharge));
     }
 
+    @SuppressWarnings("SuspiciousIndentation")
     public void Charged(float time) {
         if (charge >= maxcharge) {
             ActionIndicator.setAction(this);

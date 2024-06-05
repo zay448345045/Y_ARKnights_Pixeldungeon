@@ -40,6 +40,14 @@ public class ROR_AlphaConstruct extends Mob {
         return 0.5f;
     }
     @Override
+    protected boolean getCloser(int target) {
+        return true;
+    }
+    @Override
+    protected boolean getFurther(int target) {
+        return true;
+    }
+    @Override
     protected boolean canAttack( Char enemy ) {
 
         if (beamCooldown == 0) {
