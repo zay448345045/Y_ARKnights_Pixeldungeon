@@ -34,7 +34,7 @@ public class LockedFloor extends Buff {
 
 	@Override
 	public boolean act() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act start");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"act", "start");
 		spend(TICK);
 
 		if (!Dungeon.level.locked)
@@ -42,7 +42,7 @@ public class LockedFloor extends Buff {
 
 		if (left >= 1)
 			left --;
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act end");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"act", "end");
 		return true;
 	}
 

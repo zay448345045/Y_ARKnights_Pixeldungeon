@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
+import com.shatteredpixel.shatteredpixeldungeon.utils.ActorLogger;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Logger;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
@@ -47,7 +48,7 @@ public class TomorrowRogueNight extends Game {
 	public static final int v0_9_2   = 519;
 	public static final int v0_1_2   = 533;
 	public static final int v0_1_2b   = 534;
-	public static Logger actorLogger;
+	public static ActorLogger actorLogger;
 
 	public TomorrowRogueNight(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
@@ -85,7 +86,7 @@ public class TomorrowRogueNight extends Game {
 
 		updateSystemUI();
 		SPDAction.loadBindings();
-		actorLogger = new Logger(100, "actor_log.csv");
+		actorLogger = new ActorLogger(100, "actor_log.csv");
 		Music.INSTANCE.enable( SPDSettings.music() );
 		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( SPDSettings.soundFx() );

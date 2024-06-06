@@ -59,7 +59,7 @@ public class Buff extends Actor {
 	}
 	
 	public boolean attachTo( Char target ) {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"attachTo," + target.getClass().getSimpleName());
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"attachTo" + target.getClass().getSimpleName());
 		if (target.isImmune( getClass() )) {
 			return false;
 		}
@@ -77,14 +77,14 @@ public class Buff extends Actor {
 	}
 	
 	public void detach() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"detach," + target.getClass().getSimpleName());
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"detach" + target.getClass().getSimpleName());
 		if (target.sprite != null) fx( false );
 		target.remove( this );
 	}
 	
 	@Override
 	public boolean act() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"act");
 		diactivate();
 		return true;
 	}

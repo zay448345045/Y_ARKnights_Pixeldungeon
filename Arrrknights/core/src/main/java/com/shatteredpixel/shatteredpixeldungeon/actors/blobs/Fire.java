@@ -40,7 +40,7 @@ public class Fire extends Blob {
 
 	@Override
 	protected void evolve() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"evolve start");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"evolve start");
 		boolean[] flamable = Dungeon.level.flamable;
 		int cell;
 		int fire;
@@ -97,11 +97,11 @@ public class Fire extends Blob {
 		if (observe) {
 			Dungeon.observe();
 		}
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"evolve end");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"evolve end");
 	}
 	
 	public static void burn( int pos ) {
-		TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ",Fire,burn start");
+		TomorrowRogueNight.actorLogger.logActorEntry(Fire.class, "burn", "start");
 		Char ch = Actor.findChar( pos );
 		if (ch != null && !ch.isImmune(Fire.class)) {
 			Buff.affect( ch, Burning.class ).reignite( ch );
@@ -116,7 +116,7 @@ public class Fire extends Blob {
 		if (plant != null){
 			plant.wither();
 		}
-		TomorrowRogueNight.actorLogger.addEntry(getHMSM() + ",Fire,burn end");
+		TomorrowRogueNight.actorLogger.logActorEntry(Fire.class, "burn", "end");
 	}
 	
 	@Override

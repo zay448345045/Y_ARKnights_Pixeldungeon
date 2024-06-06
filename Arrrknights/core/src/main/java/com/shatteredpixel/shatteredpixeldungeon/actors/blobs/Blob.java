@@ -108,7 +108,7 @@ public class Blob extends Actor {
 	
 	@Override
 	public boolean act() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"act");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"act");
 		spend( TICK );
 		if (volume > 0) {
 
@@ -133,7 +133,7 @@ public class Blob extends Actor {
 	}
 
 	public void setupArea(){
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"setArea");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"setArea");
 		for (int cell=0; cell < cur.length; cell++) {
 			if (cur[cell] != 0){
 				area.union(cell%Dungeon.level.width(), cell/Dungeon.level.width());
@@ -146,7 +146,7 @@ public class Blob extends Actor {
 	}
 	
 	protected void evolve() {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(), "evolve");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(), "evolve");
 
 		boolean[] blocking = Dungeon.level.solid;
 		int cell;
@@ -200,7 +200,7 @@ public class Blob extends Actor {
 	}
 
 	public void seed( Level level, int cell, int amount ) {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"seed");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"seed");
 
 		if (cur == null) cur = new int[level.length()];
 		if (off == null) off = new int[cur.length];
@@ -212,14 +212,14 @@ public class Blob extends Actor {
 	}
 	
 	public void clear( int cell ) {
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"clear");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"clear");
 		if (volume == 0) return;
 		volume -= cur[cell];
 		cur[cell] = 0;
 	}
 
 	public void fullyClear(){
-		TomorrowRogueNight.actorLogger.addEntry(this.getClass(),"fullyClear");
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"fullyClear");
 		volume = 0;
 		area.setEmpty();
 		cur = new int[Dungeon.level.length()];

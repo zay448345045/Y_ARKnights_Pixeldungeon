@@ -90,7 +90,9 @@ public class SPDSettings extends GameSettings {
 		return getBoolean( KEY_POWER_SAVER, false );
 	}
 	public static boolean debugPrint(){
-		return getBoolean( KEY_DEBUG_PRINT, false );
+		return true;
+		//todo: restore this line once the logger function is complete
+//		return getBoolean( KEY_DEBUG_PRINT, false );
 	}
 	
 	public static void scale( int value ) {
