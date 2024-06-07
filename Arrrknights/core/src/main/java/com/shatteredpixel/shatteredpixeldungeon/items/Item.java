@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
@@ -171,6 +172,7 @@ public class Item implements Bundlable {
 	}
 	
 	public void doDrop( Hero hero ) {
+		TomorrowRogueNight.itemLogger.logItemEntry(this.getClass(), "doDrop");
 		hero.spendAndNext(TIME_TO_DROP);
 		int pos = hero.pos;
 		Dungeon.level.drop(detachAll(hero.belongings.backpack), pos).sprite.drop(pos);

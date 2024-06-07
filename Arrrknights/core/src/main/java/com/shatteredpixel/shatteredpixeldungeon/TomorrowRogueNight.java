@@ -25,11 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.shatteredpixel.shatteredpixeldungeon.utils.ActorLogger;
+import com.shatteredpixel.shatteredpixeldungeon.utils.ItemLogger;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Logger;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PlatformSupport;
+
+import java.util.List;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
 
@@ -49,6 +52,8 @@ public class TomorrowRogueNight extends Game {
 	public static final int v0_1_2   = 533;
 	public static final int v0_1_2b   = 534;
 	public static ActorLogger actorLogger;
+	public static ItemLogger itemLogger;
+	public static List<String> logList = new java.util.ArrayList<>();
 
 	public TomorrowRogueNight(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
@@ -86,7 +91,10 @@ public class TomorrowRogueNight extends Game {
 
 		updateSystemUI();
 		SPDAction.loadBindings();
-		actorLogger = new ActorLogger(100, "actor_log.csv");
+		actorLogger = new ActorLogger(500, "actor_log.csv");
+		itemLogger = new ItemLogger(500, "item_log.csv");
+		logList.add("actor_log");
+		logList.add("item_log");
 		Music.INSTANCE.enable( SPDSettings.music() );
 		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( SPDSettings.soundFx() );

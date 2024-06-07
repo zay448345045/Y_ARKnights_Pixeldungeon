@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import static com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight.logList;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -179,6 +181,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
+				//todo: need to also clear multiple files here, I didn't bother to do this, so it's your job now!
 				TomorrowRogueNight.actorLogger.exportLog("actor_log", "clear");
 			}
 		};
@@ -188,7 +191,8 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				TomorrowRogueNight.actorLogger.exportLog("actor_log", "share");
+//				TomorrowRogueNight.actorLogger.exportLog("actor_log", "share");
+				Game.platform.shareZipFiles(logList, "logs.zip");
 			}
 		};
 		add(btnShare);
