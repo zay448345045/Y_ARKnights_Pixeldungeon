@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.utils;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
@@ -56,6 +57,7 @@ public abstract class Logger extends Gizmo {
     public synchronized void addEntry(Map<String, String> entryData) {
         entryData.put("timestamp", getHMSM());
         entryData.put("turn", String.valueOf((int) Actor.now()));
+        entryData.put("depth", String.valueOf(Dungeon.depth));
         if (entryData.size() != entryHeader.length) {
             throw new IllegalArgumentException("Entry data does not match template length.");
         }

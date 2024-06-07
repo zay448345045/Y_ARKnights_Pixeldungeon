@@ -187,12 +187,12 @@ public class TitleScene extends PixelScene {
 		};
 		add(btnCopy);
 
-		StyledButton btnShare = new StyledButton(GREY_TR, "Share"){
+		StyledButton btnShare = new StyledButton(GREY_TR, "Complete Log"){
 			@Override
 			protected void onClick() {
 				super.onClick();
 //				TomorrowRogueNight.actorLogger.exportLog("actor_log", "share");
-				Game.platform.shareZipFiles(logList, "logs.zip");
+				Game.platform.shareZipFiles(logList, "all_logs.zip");
 			}
 		};
 		add(btnShare);
