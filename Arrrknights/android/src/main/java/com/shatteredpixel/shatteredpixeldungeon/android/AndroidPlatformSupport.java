@@ -512,7 +512,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	@Override
 	public void shareText(String fileName) {
 		Context context = ((AndroidApplication)Gdx.app).getContext();
-		FileHandle fileHandle = FileUtils.getFileHandle(fileName + ".csv");
+		FileHandle fileHandle = FileUtils.getFileHandle(fileName);
 		if (!fileHandle.exists()) {
 			GLog.w("File does not exist");
 			return;
@@ -537,7 +537,8 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		byte[] buffer = new byte[1024]; // Buffer for file content
 		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(outputFile))) {
 			for (String fileName : fileNames) {
-				FileHandle fileHandle = FileUtils.getFileHandle(fileName + ".csv");
+				FileHandle fileHandle = FileUtils.getFileHandle(fileName);
+				DeviceCompat.log(TAG, "Adding file: " + fileHandle);
 				if (!fileHandle.exists()) {
 					DeviceCompat.log(TAG, "File does not exist");
 					return;

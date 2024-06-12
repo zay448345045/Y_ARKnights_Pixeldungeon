@@ -8,7 +8,7 @@ import java.util.Map;
 public class ItemLogger extends Logger {
 
     private static final String[] ENTRY_HEADER = {
-            "timestamp", "turn", "itemClass", "method", "act", "param"
+            "timestamp", "turn", "depth", "itemClass", "method", "act", "param"
     };
 
     public ItemLogger(int maxEntries, String filename) {

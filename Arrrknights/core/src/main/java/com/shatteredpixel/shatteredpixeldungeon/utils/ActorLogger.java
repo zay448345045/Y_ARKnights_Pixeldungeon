@@ -8,7 +8,7 @@ import java.util.Map;
 public class ActorLogger extends Logger {
 
     private static final String[] ENTRY_HEADER = {
-            "timestamp", "turn", "actorClass", "method", "param1", "param2"
+            "timestamp", "turn", "depth", "actorClass", "method", "param1", "param2"
     };
 
     public ActorLogger(int maxEntries, String filename) {
