@@ -21,9 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.Bug_ASprite;
 import com.watabou.utils.Random;
@@ -51,4 +53,6 @@ public class Albino extends Slug {
 		
 		return damage;
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

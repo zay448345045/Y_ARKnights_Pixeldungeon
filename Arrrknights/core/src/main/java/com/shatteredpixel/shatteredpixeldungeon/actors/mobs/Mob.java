@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.LiveStart;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
@@ -724,7 +725,6 @@ public abstract class Mob extends Char {
 
 	@Override
 	public void damage( int dmg, Object src ) {
-
 		if (state == SLEEPING) {
 			state = WANDERING;
 		}
@@ -738,6 +738,14 @@ public abstract class Mob extends Char {
 			}
 			else dmg *= 1.5f;
 		}
+
+		if(src instanceof Wand){
+			ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+			if(notebook != null && notebook.checkActiveSkill(DM100.class)){
+				dmg*=2;
+			}
+		}
+
 		if (Dungeon.hero.hasTalent(Talent.DEVELOP_BONUS)) {
 			dmg *= (1f + 0.07f*Dungeon.hero.pointsInTalent(Talent.DEVELOP_BONUS));
 		}
@@ -793,7 +801,6 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public void die( Object cause ) {
-
 		if (cause == Chasm.class){
 			//50% chance to round up, 50% to round down
 			if (EXP % 2 == 1) EXP += Random.Int(2);
@@ -918,6 +925,10 @@ public abstract class Mob extends Char {
 			Bomb bomb = new Bomb();
 			Actor.addDelayed(bomb.fuse = new Bomb.Fuse().ignite(bomb), 2);
 			Dungeon.level.drop(bomb, this.pos);
+		}
+		if(Dungeon.hero.subClass==HeroSubClass.SCHOLAR){
+			ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+			if(notebook!=null) notebook.onKill(this);
 		}
 	}
 	
@@ -1424,5 +1435,8 @@ public abstract class Mob extends Char {
 			}
 		}
 	}
+	public boolean hasNotebookSkill(){ return false;}
+	public void notebookSkill(ScholarNotebook notebook, int index){ }
+
 }
 

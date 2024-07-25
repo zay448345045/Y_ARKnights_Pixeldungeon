@@ -355,4 +355,6 @@ public class Ghoul extends Mob {
 			return null;
 		}
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

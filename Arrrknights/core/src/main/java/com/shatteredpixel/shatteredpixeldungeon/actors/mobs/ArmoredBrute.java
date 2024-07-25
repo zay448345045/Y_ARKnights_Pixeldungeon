@@ -89,4 +89,28 @@ public class ArmoredBrute extends Brute {
 		}
 		
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	public static class NotebookArmoredRage extends Brute.BruteRage {
+
+		@Override
+		public boolean act() {
+
+			if (target.HP > 0){
+				detach();
+				return true;
+			}
+
+			absorbDamage( 2 );
+
+			if (shielding() <= 0){
+				target.die(null);
+			}
+
+			spend( TICK );
+
+			return true;
+		}
+
+	}
 }

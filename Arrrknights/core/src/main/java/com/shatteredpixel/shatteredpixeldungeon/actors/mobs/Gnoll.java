@@ -21,9 +21,14 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.FistSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.InfantrySprite;
 import com.watabou.utils.Random;
 
@@ -57,5 +62,12 @@ public class Gnoll extends Mob {
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 2);
+	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		Buff.affect(Dungeon.hero, Barrier.class).setShield(5);
 	}
 }

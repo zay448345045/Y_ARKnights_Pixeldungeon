@@ -113,6 +113,10 @@ public class Succubus extends Mob {
         if (paralysed == 1) ASPlus = 0;
         return super.act();
     }
+    public void clearASPlus(){
+        if(ASPlus>0)sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "dispel"));
+        ASPlus = 0;
+    }
 
     @Override
     public float speed() {

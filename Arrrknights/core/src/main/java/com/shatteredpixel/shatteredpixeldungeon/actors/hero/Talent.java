@@ -288,12 +288,16 @@ public enum Talent {
 	SMOKE_BOMB(363,3),FULL_FIREPOWER(364,3),MYSTERY_SHOT(365,3),
 	//Midori T3		KeyAnimator
 	SUPERB_ARTS(366,3),PIE_IN_THE_PAPER(367,3),PAPER_BULLET(373,3),
+	//Midori T3		Scholar
+	PERCIPIENT(0,3),ALIENATION(0,3),FREQUENT_USE(0,3),
 	//Midori T4
 	DEVELOP_BONUS(369,3),IMPACT_BULLET(370,3),
 	//Midori T4		MarksMidori
 	SKILL_ENHANCEMENT(371,4),OPTICAL_SIGHT(372,4),
 	//Midori T4		KeyAnimator
 	POTATO_AIM(368,4),INSPIRATION_FLASHBACK(374,4),
+	//Midori T4		Scholar
+	RECYCLE_RESEARCH(0,4),SUMMONING_SPIRIT(0,4),STUDY_STEADILY(0,4)
 	;
 
 
@@ -1069,7 +1073,7 @@ public enum Talent {
 				Collections.addAll(tierTalents,NOCTURNE,MINUET);
 				break;
 			case MIDORI:
-				Collections.addAll(tierTalents,DEVELOP_BONUS,IMPACT_BULLET);
+				Collections.addAll(tierTalents,DEVELOP_BONUS);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1162,6 +1166,9 @@ public enum Talent {
 			case KEYANIMATOR:
 				Collections.addAll(tierTalents, SUPERB_ARTS,PIE_IN_THE_PAPER,PAPER_BULLET);
 				break;
+			case SCHOLAR:
+				Collections.addAll(tierTalents, PERCIPIENT,ALIENATION,FREQUENT_USE);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -1234,10 +1241,13 @@ public enum Talent {
 				Collections.addAll(tierTalents, RHAPSODY,SYMPHONY);
 				break;
 			case MARKSMIDORI:
-				Collections.addAll(tierTalents, SKILL_ENHANCEMENT,OPTICAL_SIGHT);
+				Collections.addAll(tierTalents, IMPACT_BULLET, SKILL_ENHANCEMENT,OPTICAL_SIGHT);
 				break;
 			case KEYANIMATOR:
-				Collections.addAll(tierTalents, POTATO_AIM,INSPIRATION_FLASHBACK);
+				Collections.addAll(tierTalents, IMPACT_BULLET, POTATO_AIM,INSPIRATION_FLASHBACK);
+				break;
+			case SCHOLAR:
+				Collections.addAll(tierTalents, RECYCLE_RESEARCH, SUMMONING_SPIRIT,STUDY_STEADILY);
 				break;
 		}
 		for (Talent talent : tierTalents){

@@ -21,9 +21,14 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CloserangeShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -103,6 +108,24 @@ public class TomeOfMastery extends Item {
 		
 		SpellSprite.show( curUser, SpellSprite.MASTERY );
 		curUser.sprite.emitter().burst( Speck.factory( Speck.MASTERY ), 12 );
-		
+
+		onChooseSubClass(way);
+	}
+	public void onChooseSubClass(HeroSubClass way){
+		switch (way) {
+			case SPSHOOTER:
+					Buff.affect(hero, CloserangeShot.class);
+					Buff.detach(hero, ChenCombo.class);
+				break;
+			case SCHOLAR:
+				ScholarNotebook notebook = new ScholarNotebook();
+				if (notebook.doPickUp( hero )) {
+					GLog.i( Messages.get(hero, "you_now_have", notebook.name()) );
+				} else {
+					Dungeon.level.drop( notebook, hero.pos ).sprite.drop();
+				}
+				break;
+			default:
+		}
 	}
 }

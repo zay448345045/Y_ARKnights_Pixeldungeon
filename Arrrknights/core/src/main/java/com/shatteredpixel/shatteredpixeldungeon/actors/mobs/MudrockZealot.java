@@ -55,12 +55,14 @@ public class MudrockZealot extends Mob {
     @Override
     public void damage(int dmg, Object src) {
         if (src instanceof Wand && barrier) {
-            barrier = false;
-            sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "brack"));
+            this.breakBarrier();
         }
         super.damage(dmg, src);
     }
-
+    public void breakBarrier(){
+        if(barrier)sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "brack"));
+        barrier = false;
+    }
     private static final String BARR = "barrier";
 
     @Override
@@ -74,4 +76,6 @@ public class MudrockZealot extends Mob {
         super.restoreFromBundle(bundle);
         barrier = bundle.getBoolean(BARR);
     }
+    @Override
+    public boolean hasNotebookSkill(){ return true;}
 }

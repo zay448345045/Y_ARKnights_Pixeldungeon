@@ -21,23 +21,51 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EarthParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MidnightSword;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.S_GolemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Camera;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DM200 extends Mob {
 
@@ -217,5 +245,84 @@ public class DM200 extends Mob {
 			}
 		}
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		GameScene.selectCell(caster);
+	}
+	private CellSelector.Listener caster = new CellSelector.Listener(){
+		@Override
+		public void onSelect(Integer target) {
+			if(target == null) return;
+			ArrayList<Integer> rockCells = new ArrayList<>();
+			for (int i : PathFinder.NEIGHBOURS9){
+				if (!Dungeon.level.solid[target+i]){
+					rockCells.add(target+i);
+				}
+			}
+			Buff.append(hero,NotebookFallingRockBuff.class,1f).setRockPositions(rockCells);
+		}
+		@Override
+		public String prompt() {
+			return Messages.get(EtherealChains.class, "prompt");
+		}
+	};
 
+	public static class NotebookFallingRockBuff extends FlavourBuff {
+		private int[] rockPositions;
+		private ArrayList<Emitter> rockEmitters = new ArrayList<>();
+		public void setRockPositions(List<Integer> rockPositions) {
+			this.rockPositions = new int[rockPositions.size()];
+			for (int i = 0; i < rockPositions.size(); i++) {
+				this.rockPositions[i] = rockPositions.get(i);
+			}
+
+			fx(true);
+		}
+		@Override
+		public boolean act() {
+			for (int i : rockPositions) {
+				CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+				Char ch = Actor.findChar(i);
+				if (ch != null) {
+					Buff.prolong(ch, Paralysis.class, 3);
+				}
+			}
+
+			Camera.main.shake(3, 0.7f);
+			Sample.INSTANCE.play(Assets.Sounds.ROCKS);
+
+			detach();
+			return super.act();
+		}
+		@Override
+		public void fx(boolean on) {
+			if (on && rockPositions != null) {
+				for (int i : this.rockPositions) {
+					Emitter e = CellEmitter.get(i);
+					e.y -= DungeonTilemap.SIZE * 0.2f;
+					e.height *= 0.4f;
+					e.pour(EarthParticle.FALLING, 0.1f);
+					rockEmitters.add(e);
+				}
+			} else {
+				for (Emitter e : rockEmitters) {
+					e.on = false;
+				}
+			}
+		}
+		private static final String POSITIONS = "positions";
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(POSITIONS, rockPositions);
+		}
+
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			rockPositions = bundle.getIntArray(POSITIONS);
+		}
+	}
 }

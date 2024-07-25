@@ -87,4 +87,6 @@ public class Slime extends Mob {
 		w.level(0);
 		return w;
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

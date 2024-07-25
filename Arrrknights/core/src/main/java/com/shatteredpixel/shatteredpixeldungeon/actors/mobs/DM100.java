@@ -129,5 +129,6 @@ public class DM100 extends Mob implements Callback {
 	public void call() {
 		next();
 	}
-	
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

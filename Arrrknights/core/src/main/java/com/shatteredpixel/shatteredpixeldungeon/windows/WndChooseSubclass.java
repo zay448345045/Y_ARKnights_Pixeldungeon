@@ -75,9 +75,6 @@ public class WndChooseSubclass extends Window {
 							if (index == 0 && WndChooseSubclass.this.parent != null){
 								WndChooseSubclass.this.hide();
 								tome.choose( subCls );
-								if (hero.subClass == HeroSubClass.SPSHOOTER) {
-									Buff.affect(hero, CloserangeShot.class);
-									Buff.detach(hero, ChenCombo.class); }
 							}
 						}
 					});

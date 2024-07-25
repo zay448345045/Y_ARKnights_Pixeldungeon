@@ -162,4 +162,6 @@ public class Brute extends Mob {
 			immunities.add(Terror.class);
 		}
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

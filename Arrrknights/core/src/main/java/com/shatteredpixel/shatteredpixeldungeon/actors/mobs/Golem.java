@@ -21,21 +21,35 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ActiveOriginium;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
+import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MidnightSword;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GolemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -252,4 +266,29 @@ public class Golem extends Mob {
 		}
 	}
 
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		GameScene.selectCell(caster);
+	}
+	private CellSelector.Listener caster = new CellSelector.Listener(){
+		@Override
+		public void onSelect(Integer target) {
+			if (target == null) return;
+			if (Actor.findChar(target) == null) {
+				GLog.i(Messages.get(Bandit.class, "notarget"));return;
+			}
+			Char m = Actor.findChar(target);
+			if(!(m instanceof Mob)){
+				GLog.i(Messages.get(Bandit.class, "notamob"));return;
+			}
+			Buff.affect(m, Silence.class, 5f);
+			Buff.affect( m, Roots.class, 5f );
+		}
+		@Override
+		public String prompt() {
+			return Messages.get(EtherealChains.class, "prompt");
+		}
+	};
 }

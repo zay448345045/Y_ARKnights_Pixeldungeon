@@ -24,7 +24,11 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HaundSprite;
 import com.watabou.utils.Random;
@@ -62,5 +66,12 @@ public class Hound extends Mob {
 	@Override
 	public int drRoll() {
 		return Random.NormalIntRange(0, 4);
+	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		Buff.affect(Dungeon.hero, Stamina.class, 10f);
 	}
 }

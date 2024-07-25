@@ -66,6 +66,7 @@ public enum HeroSubClass {
 
 	MARKSMIDORI,
 	KEYANIMATOR,
+	SCHOLAR,
 	;
 
 	public String title() {

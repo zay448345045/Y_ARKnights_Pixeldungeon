@@ -40,7 +40,7 @@ public class ChainHook extends Skill {
                 PathFinder.buildDistanceMap(target, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
                 if (PathFinder.distance[curUser.pos] == Integer.MAX_VALUE){
                     GLog.w( Messages.get(ChainHook.class, "fail") );
-                    Buff.affect(curUser, Stamina.class, 3f);
+                    if(bySkillBook)Buff.affect(curUser, Stamina.class, 3f);
                     return;
                 }
 
@@ -53,7 +53,7 @@ public class ChainHook extends Skill {
                 }
                 throwSound();
                 Sample.INSTANCE.play( Assets.Sounds.CHAINS );
-            } Buff.affect(curUser, Stamina.class, 3f);
+            } if(bySkillBook)Buff.affect(curUser, Stamina.class, 3f);
 
         }
 
@@ -68,7 +68,7 @@ public class ChainHook extends Skill {
 
         if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
             int dmg = Random.NormalIntRange(4, curUser.STR * 2);
-            enemy.damage(dmg,enemy);
+            if(bySkillBook)enemy.damage(dmg,enemy);
             return;//change from budding
         }
 
@@ -104,7 +104,7 @@ public class ChainHook extends Skill {
                 }));
                 int dmg = Random.NormalIntRange(4, 6 + curUser.STR);
                 enemy.damage(dmg,enemy);
-                Buff.affect(enemy, Paralysis.class, 2f);
+                if(bySkillBook)Buff.affect(enemy, Paralysis.class, 2f);
                 hero.next();
             }
         }));
@@ -116,14 +116,14 @@ public class ChainHook extends Skill {
         //don't pull if rooted
         if (hero.rooted){
             GLog.w( Messages.get(ChainHook.class, "fail") );
-            Buff.affect(curUser, Stamina.class, 6f);
+            if(bySkillBook)Buff.affect(curUser, Stamina.class, 6f);
             return;
         }
 
         //don't pull if the collision spot is in a wall
         if (Dungeon.level.solid[chain.collisionPos]){
             GLog.i( Messages.get(ChainHook.class, "fail"));
-            Buff.affect(curUser, Stamina.class, 6f);
+            if(bySkillBook)Buff.affect(curUser, Stamina.class, 6f);
             return;
         }
 
@@ -137,7 +137,7 @@ public class ChainHook extends Skill {
         }
         if (!solidFound){
             GLog.i( Messages.get(ChainHook.class, "fail") );
-            Buff.affect(curUser, Stamina.class, 6f);
+            if(bySkillBook)Buff.affect(curUser, Stamina.class, 6f);
             return;
         }
 
@@ -155,7 +155,7 @@ public class ChainHook extends Skill {
                         GameScene.updateFog();
                     }
                 }));
-                Buff.affect(hero, Stamina.class, 3f);
+                if(bySkillBook)Buff.affect(hero, Stamina.class, 3f);
                 hero.next();
             }
         }));

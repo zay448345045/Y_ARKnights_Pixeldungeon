@@ -23,10 +23,22 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.MudrockZealot;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.NewDM300;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Pompeii;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Raider;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Succubus;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogDzewa;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.BloodMagister;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Faust;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Mon3tr;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -79,11 +91,10 @@ public class BattleAxe extends MeleeWeapon {
 				updateQuickslot();
 				hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(BattleAxe.class, "charge"));
 				if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class) != null) {
-				if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class).isEquipped(Dungeon.hero)) {
-					curUser.spendAndNext(0.75f);
-
-				}
-				else curUser.spendAndNext(2f);
+					if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class).isEquipped(Dungeon.hero)) {
+						curUser.spendAndNext(0.75f);
+					}
+					else curUser.spendAndNext(2f);
 				}
 				else curUser.spendAndNext(2f);
 			} else
@@ -96,7 +107,7 @@ public class BattleAxe extends MeleeWeapon {
 	public int proc(Char attacker, Char defender, int damage) {
 
 		if (starpower >= 1 && attacker instanceof Hero) {
-			for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
 					int dmg = attacker.damageRoll() - defender.drRoll();
 					dmg = Math.round(dmg * (starpower * 0.7f));
@@ -104,7 +115,10 @@ public class BattleAxe extends MeleeWeapon {
 					mob.damage(dmg, attacker);
 				}
 			}
-			if (starpower == 3) GameScene.flash( 0x80FFFFFF );
+			if (starpower == 3) {
+				GameScene.flash(0x80FFFFFF);
+				dispel(defender);
+			}
 			Camera.main.shake(2, starpower / 3);
 
 			Sample.INSTANCE.play(Assets.Sounds.HIT_SLASH, 1.76f, 1.76f);
@@ -144,5 +158,32 @@ public class BattleAxe extends MeleeWeapon {
 		super.restoreFromBundle(bundle);
 		if (starpowercap > 0) starpower = Math.min(starpowercap, bundle.getInt(POWER));
 		else starpower = bundle.getInt(POWER);
+	}
+
+	private void dispel(Char defender) {
+		for (Buff b : defender.buffs()) {
+			if (b.type == Buff.buffType.POSITIVE) {
+				b.detach();
+			}
+		}
+		defender.addImmune(Camouflage.class);
+		if (defender instanceof MudrockZealot) ((MudrockZealot) defender).breakBarrier();
+		if (defender instanceof BloodMagister) ((BloodMagister) defender).clearAttackPower();
+		if (defender instanceof NewDM300) {
+			if(((NewDM300) defender).DamageUP>0)defender.sprite.showStatus( CharSprite.NEGATIVE, Messages.get(NewDM300.class, "dispel"));
+			((NewDM300) defender).DamageUP = 0;
+		}
+		if(defender instanceof Faust) ((Faust) defender).clearCharge();
+		if(defender instanceof Succubus) ((Succubus) defender).clearASPlus();
+		if(defender instanceof Raider) ((Raider) defender).clearASPlus();
+		if(defender instanceof YogDzewa) {
+			if(Statistics.spawnersAlive != 0)defender.sprite.showStatus( CharSprite.NEGATIVE, Messages.get(YogDzewa.class, "dispel"));
+			Statistics.spawnersAlive = 0;
+		}
+		if(defender instanceof Mon3tr) ((Mon3tr) defender).clearSkill();
+		if(defender instanceof Pompeii) {
+			if(Statistics.coreAlive>0)defender.sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Pompeii.class, "dispel"));
+			Statistics.coreAlive = 0;
+		}
 	}
 }

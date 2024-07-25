@@ -34,6 +34,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Chains;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.ChainHook;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -197,5 +199,14 @@ public class Guard extends Mob {
 			}
 			
 		}
+	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		ChainHook ch = new ChainHook();
+		ch.activatedBySkillbook(false);
+		ch.doSkill();
 	}
 }

@@ -88,5 +88,6 @@ public class Bat extends Mob {
 		Dungeon.LimitedDrops.BAT_HP.count++;
 		return super.createLoot();
 	}
-	
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ActiveOriginium;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
@@ -87,9 +88,18 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Twilight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WildMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WindEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredBrute;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Brute;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM100;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Ghoul;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.MudrockZealot;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.NewDM300;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Senior;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Slime;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Snake;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.BloodMagister;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.ImpShopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -106,6 +116,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BountyHunter;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.ChainHook;
@@ -214,6 +225,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
@@ -686,7 +698,16 @@ public class Hero extends Char {
             }
             return INFINITE_EVASION;
         }
-
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+        if(notebook != null && notebook.checkPassiveSkill(Snake.class)){
+            return INFINITE_EVASION;
+        }
+        if (notebook != null && notebook.checkPassiveSkill(Monk.class)){
+            return INFINITE_EVASION;
+        }
+        if (notebook != null && notebook.checkPassiveSkill(Senior.class)){
+            return INFINITE_EVASION;
+        }
         float evasion = defenseSkill;
 
         evasion *= RingOfEvasion.evasionMultiplier(this);
@@ -896,6 +917,11 @@ public class Hero extends Char {
             speed *= stome.speedMultiplier();
         }
 
+        BloodMagister.NotebookMadness nbm = buff(BloodMagister.NotebookMadness.class);
+        if(nbm != null){
+            speed *= 3;
+        }
+
         float spup = 0f;
 
         // 광붕이
@@ -1000,8 +1026,13 @@ public class Hero extends Char {
             //This is for that one guy, you shall get your fists of fury!
             dly = RingOfFuror.attackDelayMultiplier(this);
         }
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+        if(notebook != null && notebook.checkPassiveSkill(Senior.class, false)){
+            dly *= 0.5f;
+        }
         if(this.buff(LightFluxPauldron.LightFluxPauldronBuff.class) != null) dly *= 2f;
         if(this.buff(ActiveOriginium.class) != null) dly *=0.5f;
+        if(this.buff(BloodMagister.NotebookMadness.class) != null) dly *=0.33f;
         return dly;
     }
 
@@ -1813,6 +1844,9 @@ public class Hero extends Char {
             damage = r2i.attackProc(this, enemy, damage);
         }
 
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+        if(notebook!=null) damage = notebook.attackProc(this, enemy, damage);
+
         if(buff(ItsHighNoon.class)!=null &&
                 !(enemy.properties().contains(Char.Property.MINIBOSS)) &&
                 !(enemy.properties().contains(Char.Property.BOSS)))
@@ -1968,6 +2002,11 @@ public class Hero extends Char {
             damage = r2i.defenseProc(enemy, this, damage);
         }
 
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+        if(notebook != null){
+            notebook.defenseProc(enemy,damage);
+        }
+
         if(buff(ItsHighNoon.class)!=null) Buff.detach(Dungeon.hero, ItsHighNoon.class);
         TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"defense", enemy.getClass().getSimpleName());
         return damage;
@@ -1977,6 +2016,8 @@ public class Hero extends Char {
     public void damage(int dmg, Object src) {
         if (buff(TimekeepersHourglass.timeStasis.class) != null)
             return;
+
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
 
         if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
             interrupt();
@@ -1994,6 +2035,11 @@ public class Hero extends Char {
         }
 
         dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
+
+        if (AntiMagic.RESISTS.contains(src.getClass()) && notebook.checkPassiveSkill(MudrockZealot.class,false)){
+            dmg -= 5;
+            if (dmg < 0) dmg = 0;
+        }
 
         //TODO improve this when I have proper damage source logic
         if (belongings.armor != null && belongings.armor.hasGlyph(AntiMagic.class, this)
@@ -2066,6 +2112,9 @@ public class Hero extends Char {
             if (buff(Heat.class).state() == Heat.State.OVERHEAT && hasTalent(Talent.HEAT_OF_PROTECTION)) {
                 dmg *= 0.95f - (pointsInTalent(Talent.HEAT_OF_PROTECTION) * 0.05f);
             }
+        }
+        if(notebook != null && notebook.checkPassiveSkill(Slime.class)){
+            dmg = Math.min(5, dmg);
         }
         if(buff(TougherTimes.TougherTimesBuff.class)!=null){
             if(Random.Int(100) < 15){
@@ -2380,6 +2429,10 @@ public class Hero extends Char {
                     Gear.artsused = 0;
                 }
 
+                ScholarNotebook notebook = this.belongings.getItem(ScholarNotebook.class);
+                if(notebook != null){
+                    notebook.updateLevel();
+                }
                 updateHT(true);
                 attackSkill++;
                 defenseSkill++;
@@ -2488,6 +2541,22 @@ public class Hero extends Char {
                 HP = 1;
                 heat.powerDown();
                 sprite.showStatus(CharSprite.WARNING, heat.power()+"%");
+                return;
+            }
+        }
+        ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+        if(notebook != null){
+            if(notebook.checkPassiveSkill(Brute.class)){
+                Buff.affect(this, Brute.BruteRage.class).setShield(HT/2);
+                sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Brute.class, "enraged") );
+                return;
+            }else if(notebook.checkPassiveSkill(ArmoredBrute.class)){
+                Buff.affect(this, ArmoredBrute.NotebookArmoredRage.class).setShield(HT);
+                sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Brute.class, "enraged") );
+                return;
+            }
+            if(notebook.checkPassiveSkill(Ghoul.class)){
+                HP = Math.max(1,Math.round(HT/4f));
                 return;
             }
         }
@@ -2629,10 +2698,16 @@ public class Hero extends Char {
 
     @Override
     public boolean isAlive() {
-
+        boolean isAlive = false;
         if (HP <= 0) {
-            if (berserk == null) berserk = buff(Berserk.class);
-            return berserk != null && berserk.berserking();
+            if (berserk == null && !isAlive) {
+                berserk = buff(Berserk.class);
+                isAlive = berserk != null && berserk.berserking();
+            }
+            if((!buffs(Brute.BruteRage.class).isEmpty() || !buffs(ArmoredBrute.NotebookArmoredRage.class).isEmpty()) && !isAlive){
+                isAlive = true;
+            }
+            return isAlive;
         } else {
             berserk = null;
             return super.isAlive();
@@ -2773,7 +2848,12 @@ public class Hero extends Char {
 
     @Override
     public boolean isInvulnerable(Class effect) {
-        return super.isInvulnerable(effect) || buff(AnkhInvulnerability.class) != null;
+        if(buff(AnkhInvulnerability.class) != null) return true;
+        NewDM300.NotebookPylon notebookPylon = buff(NewDM300.NotebookPylon.class);
+        if (notebookPylon != null) {
+            if(notebookPylon.getFloor() == Dungeon.depth) return true;
+        }
+        return super.isInvulnerable(effect);
     }
 
     public boolean search(boolean intentional) {

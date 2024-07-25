@@ -65,7 +65,6 @@ public class Vampiric extends Weapon.Enchantment {
 
 		return damage;
 	}
-	
 	@Override
 	public Glowing glowing() {
 		return RED;

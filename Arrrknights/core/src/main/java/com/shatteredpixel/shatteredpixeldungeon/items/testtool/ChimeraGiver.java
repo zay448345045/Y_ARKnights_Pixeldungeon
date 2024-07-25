@@ -1,9 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.testtool;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.InventoryStone;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Archery;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Artorius;

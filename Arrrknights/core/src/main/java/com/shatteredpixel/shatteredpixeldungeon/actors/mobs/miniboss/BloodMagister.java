@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -8,11 +10,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CavesLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.PrisonLevel;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.Blood_ShamanSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.LancerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SarkazSniperEliteSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -68,7 +73,10 @@ public class BloodMagister extends Mob {
         attackpower +=6;
         return super.attackProc(enemy, damage);
     }
-
+    public void clearAttackPower(){
+        if(attackpower!=0)sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "dispel"));
+        attackpower = 0;
+    }
     @Override
     public boolean act() {
         if (buff(rage.class) == null && state == HUNTING)
@@ -149,6 +157,48 @@ public class BloodMagister extends Mob {
             return Messages.get(this, "name");
         }
 
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc");
+        }
+    }
+    @Override
+    public boolean hasNotebookSkill(){ return true;}
+    @Override
+    public void notebookSkill(ScholarNotebook notebook, int index){
+        Buff.affect(hero,NotebookMadness.class).set(20f);
+    }
+    public static class NotebookMadness extends Buff {
+        {
+            type = buffType.NEGATIVE;
+            announced = true;
+        }
+        float left;
+        private void set(float turns){
+            left = turns;
+        }
+        @Override
+        public boolean act() {
+            int preHP = target.HP;
+            target.HP = Math.max(1,target.HP - Math.round(target.HT/20f));
+            target.sprite.showStatus(CharSprite.DEFAULT, Integer.toString(preHP - target.HP));
+            left--;
+            if(left<=0 || target.HP == 1) detach();
+            spend( TICK );
+            return true;
+        }
+        @Override
+        public int icon() {
+            return BuffIndicator.BERSERK;
+        }
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0.25f, 1.5f, 1f);
+        }
+        @Override
+        public String toString() {
+            return Messages.get(this, "name");
+        }
         @Override
         public String desc() {
             return Messages.get(this, "desc");

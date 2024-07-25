@@ -60,4 +60,6 @@ public class CausticSlime extends Slime {
 		} while (Dungeon.level.solid[pos + ofs] && !Dungeon.level.passable[pos + ofs]);
 		Dungeon.level.drop( new GooBlob(), pos + ofs ).sprite.drop( pos );
 	}
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

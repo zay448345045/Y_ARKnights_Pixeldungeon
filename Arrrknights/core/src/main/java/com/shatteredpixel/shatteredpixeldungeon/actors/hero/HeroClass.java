@@ -39,6 +39,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
  import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookCaerbannogNoSekai;
  import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK3.BookHighNoon;
  import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SkillBook;
+ import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
  import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
  import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
  import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SealOfLight;
@@ -122,7 +123,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 	NEARL("nearl", HeroSubClass.KNIGHT, HeroSubClass.SAVIOR, HeroSubClass.FLASH),
 	CHEN("chen", HeroSubClass.SWORDMASTER, HeroSubClass.SPSHOOTER),
 	RABBIT("rabbit", HeroSubClass.KILLER, HeroSubClass.PHANTOM),
-	MIDORI("midori", HeroSubClass.MARKSMIDORI, HeroSubClass.KEYANIMATOR);
+	MIDORI("midori", HeroSubClass.MARKSMIDORI, HeroSubClass.KEYANIMATOR, HeroSubClass.SCHOLAR);
 
 	private String title;
 	private HeroSubClass[] subClasses;
@@ -510,9 +511,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 		 new DewVial().collect();
 
 		 if(Dungeon.isChallenged(Challenges.TEST)){
-			 new BookInstantFire().collect();
-			 new BookCollecting().collect();
-			 new BookHighNoon().collect();
+			 new TomeOfMastery().collect();
 			 new MagicPaper().quantity(99).collect();
 			 new Sandvich().collect();
 			 new PotionOfMindVision().quantity(11).collect();

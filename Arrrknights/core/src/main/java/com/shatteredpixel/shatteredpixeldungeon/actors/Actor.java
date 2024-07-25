@@ -76,6 +76,7 @@ public abstract class Actor implements Bundlable {
 		if (ex < .001f){
 			this.time = Math.round(this.time);
 		}
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"spend");
 	}
 
 	public void spendToWhole(){
@@ -91,6 +92,7 @@ public abstract class Actor implements Bundlable {
 				this.time = Math.round(this.time);
 			}
 		}
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"postpone");
 	}
 	
 	public float cooldown() {

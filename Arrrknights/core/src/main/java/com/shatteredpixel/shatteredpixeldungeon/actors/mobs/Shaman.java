@@ -21,24 +21,40 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.SSP.StaffOfMageHand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MidnightSword;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CasterSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public abstract class Shaman extends Mob {
@@ -193,4 +209,48 @@ public abstract class Shaman extends Mob {
 			return PurpleShaman.class;
 		}
 	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		GameScene.selectCell(caster);
+	}
+	private CellSelector.Listener caster = new CellSelector.Listener(){
+		@Override
+		public void onSelect(Integer target) {
+			if (target == null) return;
+			final Ballistica shot = new Ballistica( hero.pos, target, Ballistica.MAGIC_BOLT);
+			int cell = shot.collisionPos;
+			if (target == hero.pos || cell == hero.pos) {
+				GLog.i( Messages.get(Wand.class, "self_target") );
+				return;
+			}
+			Char ch = Actor.findChar( shot.collisionPos );
+			if(ch == null)return;
+			hero.sprite.zap(cell);
+			if (hero.buff(MagicImmune.class) != null || hero.buff(Silence.class) != null){
+				GLog.w( Messages.get(MidnightSword.class, "no_magic") );
+				return;
+			}
+			hero.busy();
+			MagicMissile.boltFromChar( hero.sprite.parent,
+					MagicMissile.EARTH,
+					hero.sprite,
+					cell,
+					new Callback() {
+						@Override
+						public void call() {
+						}
+					} );
+			debuff( ch );
+			int dmg = Random.NormalIntRange( 12, 30 );
+			ch.damage( dmg, new EarthenBolt() );
+			hero.next();
+		}
+		@Override
+		public String prompt() {
+			return Messages.get(EtherealChains.class, "prompt");
+		}
+	};
 }

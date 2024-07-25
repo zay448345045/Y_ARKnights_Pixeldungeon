@@ -54,6 +54,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Gunaccessories.Accessories
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.MagicPaper;
 import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
@@ -588,6 +589,8 @@ public class GunWeapon extends MeleeWeapon {
                         Buff.detach(ch, Camouflage.class);
                     }
                 }
+                ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
+                if(notebook!=null) dmg = notebook.shootProc(Dungeon.hero, ch, dmg);
 
                 if(Dungeon.hero.subClass == HeroSubClass.MARKSMIDORI && Dungeon.hero.hasTalent(MYSTERY_SHOT)){
                     MysteryShotHandler(ch, dmg);

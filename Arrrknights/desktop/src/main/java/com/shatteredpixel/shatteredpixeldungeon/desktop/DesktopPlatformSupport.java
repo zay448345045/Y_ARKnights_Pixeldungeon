@@ -35,6 +35,7 @@ import com.watabou.utils.Point;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class DesktopPlatformSupport extends PlatformSupport {
@@ -255,4 +256,9 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	public void clearText(String text) {}
 	@Override
 	public void shareText(String text) {}
+
+	@Override
+	public void shareZipFiles(List<String> files, String outputFile) {
+
+	}
 }

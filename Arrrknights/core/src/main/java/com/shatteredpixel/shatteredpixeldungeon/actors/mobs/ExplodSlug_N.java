@@ -21,8 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
@@ -32,8 +34,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ExplodSulgSprite;
 import com.watabou.utils.Bundle;
@@ -267,4 +273,30 @@ public class ExplodSlug_N extends Mob {
 			}
 		}
 	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
+	@Override
+	public void notebookSkill(ScholarNotebook notebook, int index){
+		GameScene.selectCell(caster);
+	}
+	private CellSelector.Listener caster = new CellSelector.Listener(){
+		@Override
+		public void onSelect(Integer target) {
+			if(target == null) return;
+			if (Dungeon.level.passable[target]) {
+				GameScene.add(Blob.seed(target, 20, Web.class));
+			}
+			for (int n : PathFinder.NEIGHBOURS4) {
+				int c = target + n;
+				if (Dungeon.level.passable[c]) {
+					GameScene.add(Blob.seed(c, 20, Web.class));
+				}
+			}
+		}
+		@Override
+		public String prompt() {
+			return Messages.get(EtherealChains.class, "prompt");
+		}
+	};
 }

@@ -213,4 +213,7 @@ public class Monk extends Mob {
 			return Messages.get(this, "desc");
 		}
 	}
+
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

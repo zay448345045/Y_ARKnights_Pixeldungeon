@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -54,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookExecutionMode;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookFate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK1.BookPowerfulStrike;
@@ -69,6 +72,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookRockfailHamm
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookUnwelcomeGift;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.BookWolfPack;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Token1;
@@ -80,6 +84,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MudrockSprite;
@@ -231,10 +236,10 @@ public class NewDM300 extends Mob {
             //determine if DM can reach its enemy
             boolean canReach;
             if (enemy == null) {
-                if (Dungeon.level.adjacent(pos, Dungeon.hero.pos)) {
+                if (Dungeon.level.adjacent(pos, hero.pos)) {
                     canReach = true;
                 } else {
-                    canReach = (Dungeon.findStep(this, Dungeon.hero.pos, Dungeon.level.openSpace, fieldOfView, true) != -1);
+                    canReach = (Dungeon.findStep(this, hero.pos, Dungeon.level.openSpace, fieldOfView, true) != -1);
                 }
             } else {
                 if (Dungeon.level.adjacent(pos, enemy.pos)) {
@@ -245,12 +250,12 @@ public class NewDM300 extends Mob {
             }
 
             if (state != HUNTING) {
-                if (Dungeon.hero.invisible <= 0 && canReach) {
-                    beckon(Dungeon.hero.pos);
+                if (hero.invisible <= 0 && canReach) {
+                    beckon(hero.pos);
                 }
             } else {
 
-                if (enemy == null && Dungeon.hero.invisible <= 0) enemy = Dungeon.hero;
+                if (enemy == null && hero.invisible <= 0) enemy = hero;
 
                 //more aggressive ability usage when DM can't reach its target
                 if (enemy != null && !canReach) {
@@ -342,10 +347,10 @@ public class NewDM300 extends Mob {
                 chargeAnnounced = true;
             }
 
-            if (Dungeon.hero.invisible <= 0) {
-                beckon(Dungeon.hero.pos);
+            if (hero.invisible <= 0) {
+                beckon(hero.pos);
                 state = HUNTING;
-                enemy = Dungeon.hero;
+                enemy = hero;
             }
 
         }
@@ -367,7 +372,7 @@ public class NewDM300 extends Mob {
     protected Char chooseEnemy() {
         Char enemy = super.chooseEnemy();
         if (supercharged && enemy == null) {
-            enemy = Dungeon.hero;
+            enemy = hero;
         }
         return enemy;
     }
@@ -429,7 +434,7 @@ public class NewDM300 extends Mob {
     }
 
     public void ventGas(Char target) {
-        Dungeon.hero.interrupt();
+        hero.interrupt();
 
         int gasVented = 0;
 
@@ -459,15 +464,15 @@ public class NewDM300 extends Mob {
 
     public void dropRocks(Char target) {
 
-        Dungeon.hero.interrupt();
+        hero.interrupt();
         final int rockCenter;
 
         if (Dungeon.level.adjacent(pos, target.pos)) {
             int oppositeAdjacent = target.pos + (target.pos - pos);
             Ballistica trajectory = new Ballistica(target.pos, oppositeAdjacent, Ballistica.MAGIC_BOLT);
             WandOfBlastWave.throwChar(target, trajectory, 2, false, false);
-            if (target == Dungeon.hero) {
-                Dungeon.hero.interrupt();
+            if (target == hero) {
+                hero.interrupt();
             }
             rockCenter = trajectory.path.get(Math.min(trajectory.dist, 2));
         } else {
@@ -519,7 +524,7 @@ public class NewDM300 extends Mob {
 
         int dmgTaken = preHP - HP;
         if (dmgTaken > 0) {
-            LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+            LockedFloor lock = hero.buff(LockedFloor.class);
             if (lock != null && !isImmune(src.getClass())) lock.addTime(dmgTaken * 1.5f);
         }
 
@@ -619,7 +624,7 @@ public class NewDM300 extends Mob {
             Dungeon.level.drop(new Token3(), pos + ofs).sprite.drop(pos);
         }
 
-        switch (Dungeon.hero.heroClass) {
+        switch (hero.heroClass) {
             case WARRIOR:
                 Dungeon.level.drop(new BookEmergencyDefibrillator(), pos).sprite.drop(pos);
                 break;
@@ -648,7 +653,7 @@ public class NewDM300 extends Mob {
 
         Badges.validateBossSlain();
 
-        LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
+        LloydsBeacon beacon = hero.belongings.getItem(LloydsBeacon.class);
         if (beacon != null) {
             beacon.upgrade();
         }
@@ -811,5 +816,35 @@ public class NewDM300 extends Mob {
             super.restoreFromBundle(bundle);
             rockPositions = bundle.getIntArray(POSITIONS);
         }
+    }
+
+    @Override
+    public boolean hasNotebookSkill(){ return true;}
+    @Override
+    public void notebookSkill(ScholarNotebook notebook, int index){
+        GameScene.selectCell(caster);
+    }
+    private CellSelector.Listener caster = new CellSelector.Listener(){
+        @Override
+        public void onSelect(Integer target) {
+            if(target == null) return;
+            if(!Dungeon.level.passable[target] || Actor.findChar(target) != null) return;
+            Pylon notebookPylon = new Pylon();
+            notebookPylon.pos = target;
+            GameScene.add(notebookPylon);
+            Dungeon.level.occupyCell(notebookPylon);
+            notebookPylon.activate();
+            notebookPylon.alignment = Alignment.ALLY;
+            Buff.affect(hero,NotebookPylon.class).setFloor(Dungeon.depth);
+        }
+        @Override
+        public String prompt() {
+            return Messages.get(EtherealChains.class, "prompt");
+        }
+    };
+    public static class NotebookPylon extends Buff {
+        private int floor;
+        private void setFloor(int f){floor = f;}
+        public int getFloor(){return floor;}
     }
 }

@@ -68,4 +68,6 @@ public class MagicGolem extends Mob {
         Dungeon.level.drop(new ScrollOfSacrifice(), pos).sprite.drop(pos);
         Dungeon.level.drop(new Certificate(1), pos).sprite.drop(pos);
     }
+    @Override
+    public boolean hasNotebookSkill(){ return true;}
 }

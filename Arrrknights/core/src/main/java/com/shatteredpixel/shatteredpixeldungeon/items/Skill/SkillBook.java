@@ -76,6 +76,9 @@ public class SkillBook extends Item {
                                     GLog.w(Messages.get(SkillBook.class, "low_charge"));
                                 }
                                 else {
+                                    hero.SK1.activatedBySkillbook(true);
+                                    hero.SK2.activatedBySkillbook(true);
+                                    hero.SK3.activatedBySkillbook(true);
                                     if (!(Dungeon.isChallenged(TEST))){charge-=real_cost;}
                                     updateQuickslot();
                                     switch (index){

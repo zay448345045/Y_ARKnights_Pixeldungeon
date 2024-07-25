@@ -123,5 +123,6 @@ public class Skeleton extends Mob {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 5);
 	}
-
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

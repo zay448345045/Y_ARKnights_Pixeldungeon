@@ -54,5 +54,6 @@ public class Senior extends Monk {
 		}
 		return Random.NormalIntRange( 12, 28 );
 	}
-	
+	@Override
+	public boolean hasNotebookSkill(){ return true;}
 }

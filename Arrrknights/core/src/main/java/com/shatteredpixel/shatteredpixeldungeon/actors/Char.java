@@ -1052,6 +1052,12 @@ public abstract class Char extends Actor {
 		return false;
 	}
 
+	public void addImmune(Class effect){
+		if(!this.isImmune(effect)){
+			this.immunities.add(effect);
+		}
+	}
+
 	//similar to isImmune, but only factors in damage.
 	//Is used in AI decision-making
 	public boolean isInvulnerable( Class effect ){

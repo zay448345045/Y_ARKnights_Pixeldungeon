@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
@@ -39,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.levels.NewCavesBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -113,11 +115,16 @@ public class Pylon extends Mob {
 
 		targetNeighbor = (targetNeighbor+1)%8;
 
+
+			if (this.alignment == Alignment.ALLY && this.buff(StoneOfAggression.Aggression.class) == null) {
+				Buff.prolong(this, StoneOfAggression.Aggression.class, StoneOfAggression.Aggression.DURATION);
+			}
+
 		return true;
 	}
 
 	private void shockChar( Char ch ){
-		if (ch != null && !(ch instanceof NewDM300)){
+		if (ch != null && !(ch instanceof NewDM300) && ch.alignment != this.alignment){
 			ch.sprite.flash();
 			ch.damage(Random.NormalIntRange(10, 20), new Electricity());
 			if (Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
@@ -187,6 +194,10 @@ public class Pylon extends Mob {
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
+		if(this.alignment == Alignment.ALLY && Dungeon.hero.buff(NewDM300.NotebookPylon.class)!=null) {
+			Buff.detach(Dungeon.hero, NewDM300.NotebookPylon.class);
+			return;
+		}
 		((NewCavesBossLevel)Dungeon.level).eliminatePylon();
 	}
 

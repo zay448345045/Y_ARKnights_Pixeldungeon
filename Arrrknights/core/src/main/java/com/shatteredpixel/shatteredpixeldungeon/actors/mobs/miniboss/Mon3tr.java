@@ -22,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BreakerSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.Mon3terSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -59,6 +60,10 @@ public class Mon3tr extends Mob {
 
     public void teleportSpend(){
         spend(TICK);
+    }
+    public void clearSkill(){
+        if(spell!=0) sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "dispel"));
+        spell = 0;
     }
 
     @Override

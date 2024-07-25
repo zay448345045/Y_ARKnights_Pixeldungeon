@@ -8,12 +8,15 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CavesLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CityLevel;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FaustSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.LancerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SarkazSniperSprite;
@@ -78,6 +81,10 @@ public class Faust extends Mob {
 
         return damage;
     }
+    public void clearCharge(){
+        if(charge>0)sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "dispel"));
+        charge = 0;
+    }
 
     @Override
     public void damage(int dmg, Object src) {
@@ -140,6 +147,5 @@ public class Faust extends Mob {
     public void restoreFromBundle( Bundle bundle ) {
         super.restoreFromBundle( bundle );
         charge = bundle.getInt(SKILLCD);
-
     }
 }
