@@ -29,9 +29,9 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x Arrrknights/gradlew
+      run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./Arrrknights/gradlew --settings-file=./Arrrknights/settings.gradle assembleDebug
+      run: ./gradlew assembleDebug
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact
