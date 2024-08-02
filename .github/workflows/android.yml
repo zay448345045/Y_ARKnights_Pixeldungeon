@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-   #   env:
+      env:
         # Set the PATH environment variable to include the folder directory
   #     PATH: $/Arrrknights/:$PATH
-# PATH: ${{ github.workspace }}/Arrrknights/:$PATH
+       PATH: ${{ github.workspace }}/Arrrknights/:$PATH
 
     - name: set up JDK 
       uses: actions/setup-java@v4
