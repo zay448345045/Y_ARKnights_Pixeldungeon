@@ -1,10 +1,15 @@
 buildscript {
+    ext {
+    androidPluginVersion = '8.1.4'
+    }
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'com.android.tools.build:gradle:8.5.1'
+        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
     }
 }
 
@@ -14,13 +19,13 @@ allprojects {
         appName = '昨日碎梦地牢-S'
         appPackageName = 'com.shatteredpixel.yesterdaypixel'
 
-        appVersionCode = 240617
-        appVersionName = 'Y-0.4.5-EX9-240617'
+        appVersionCode = 240728
+        appVersionName = 'Y-0.4.5-EX9-240728'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
         appAndroidCompileSDK = 33
-        appAndroidMinSDK = 14   //隔壁是9
+        appAndroidMinSDK = 19   //隔壁是9
         appAndroidTargetSDK = 33
 
         gdxVersion = '1.9.10'

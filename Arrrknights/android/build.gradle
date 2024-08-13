@@ -1,6 +1,13 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.shatteredpixel.yesterdaypixel"
     compileSdkVersion appAndroidCompileSDK
     compileOptions.sourceCompatibility = compileOptions.targetCompatibility = appJavaCompatibility
 
@@ -20,6 +27,7 @@ android {
         //noinspection MinSdkTooLow
         minSdkVersion appAndroidMinSDK
         targetSdkVersion appAndroidTargetSDK
+        multiDexEnabled true
 
         resConfigs "en_US", "cs", "tr", "ca", "ko", "pl", "it", "ja",
                 "eo", "ru", "zh_CN", "de", "fr", "es", "pt", "fi", "hu", "in"
@@ -48,7 +56,7 @@ android {
                 releaseImplementation project(':services:updates:githubUpdates')
                 releaseImplementation project(':services:news:shatteredNews')
             }
-            applicationIdSuffix '.Release'
+            //applicationIdSuffix '.Release'
             versionNameSuffix '-Release'
 
         }
@@ -85,6 +93,13 @@ dependencies {
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
     implementation 'androidx.core:core:1.8.0'
+
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 // called every time gradle gets executed, takes the native dependencies of

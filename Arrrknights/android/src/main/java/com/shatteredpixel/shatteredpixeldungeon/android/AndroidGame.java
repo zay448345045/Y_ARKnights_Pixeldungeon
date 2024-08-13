@@ -26,6 +26,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.multidex.MultiDex;
+
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -46,6 +48,7 @@ public class AndroidGame extends AndroidApplication {
 	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
+		MultiDex.install(this);
 		super.onCreate(savedInstanceState);
 
 		//there are some things we only need to set up on first launch

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "488356936918",
+    "project_id": "y-arkpd-indev",
+    "storage_bucket": "y-arkpd-indev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488356936918:android:eac37cc7ae3e16f5351d77",
+        "android_client_info": {
+          "package_name": "com.shatteredpixel.yesterdaypixel.indev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyQk16yuqRWKCeOoCAAqxlYbfeHbyPMDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

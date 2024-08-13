@@ -196,6 +196,13 @@ public class TitleScene extends PixelScene {
 			}
 		};
 		add(btnShare);
+		StyledButton crashButton = new StyledButton(GREY_TR,"Test Crash") {@Override
+			protected void onClick() {
+				super.onClick();
+				throw new RuntimeException("Test Crash");
+			}
+		};
+		add(crashButton);
 
 		if (landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
@@ -209,6 +216,7 @@ public class TitleScene extends PixelScene {
 			btnAbout.setRect(btnSettings.left(), btnSettings.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
 			btnCopy.setRect(btnSettings.left(), btnSettings.bottom(), 40, 20);
 			btnShare.setRect(btnCopy.left(), btnCopy.bottom(), 40, 20);
+			//crashButton.setRect(btnShare.left(), btnShare.bottom(), 40, 20);
 		} else {
 			btnPlay.setRect(title.x, topRegion+GAP, title.width(), BTN_HEIGHT);
 			align(btnPlay);
@@ -221,6 +229,7 @@ public class TitleScene extends PixelScene {
 			btnAbout.setRect(btnSettings.right()+2, btnSettings.top(), btnSettings.width(), BTN_HEIGHT);
 			btnCopy.setRect(0, btnSettings.bottom(), 40, 10);
 			btnShare.setRect(0, btnCopy.bottom(), 40, 10);
+			//crashButton.setRect(0, btnShare.bottom(), 40, 10);
 		}
 
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);

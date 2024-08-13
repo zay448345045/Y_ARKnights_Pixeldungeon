@@ -2036,7 +2036,7 @@ public class Hero extends Char {
 
         dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
 
-        if (AntiMagic.RESISTS.contains(src.getClass()) && notebook.checkPassiveSkill(MudrockZealot.class,false)){
+        if (notebook != null && AntiMagic.RESISTS.contains(src.getClass()) && notebook.checkPassiveSkill(MudrockZealot.class,false)){
             dmg -= 5;
             if (dmg < 0) dmg = 0;
         }
