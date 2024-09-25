@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.NewGameItem.Certificate;
 import com.shatteredpixel.shatteredpixeldungeon.items.Pombbay;
 import com.shatteredpixel.shatteredpixeldungeon.items.Skill.SK2.Nervous;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSunLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -63,7 +64,7 @@ public class SkillBook extends Item {
                         protected void onSelect(int index) {
                             int energy_cost[] = {30,60,100};
                             int lowest_cost[] ={5,10,15};
-                            float real_cost=energy_cost[index]/(RingOfSunLight.SPBonus(Dungeon.hero));
+                            float real_cost=energy_cost[index]/(RingOfSunLight.SPBonus(Dungeon.hero) + Badge.SunlightMultiper()-1);
                             if(Dungeon.level.feeling == Level.Feeling.CLOUDY) {
                                 real_cost-=30;
                                 Dungeon.level.feeling = Level.Feeling.NONE;

@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
@@ -116,7 +117,7 @@ public class FreshInspiration extends GunWeapon{
                     float turnsToCharge = (40f - level()*1.5f - (float) Maccessories - (Dungeon.hero.pointsInTalent(Talent.INSPIRATION)*2-1));
                     if(turnsToCharge<5) turnsToCharge=5;
                     float chargeToGain = (1f / turnsToCharge);
-                    chargeToGain *= RingOfMistress.SPMultiplier(Dungeon.hero);
+                    chargeToGain *= (RingOfMistress.SPMultiplier(Dungeon.hero) + Badge.MistressMultiper() -1);
                     particalBullets += chargeToGain;
                 }
 

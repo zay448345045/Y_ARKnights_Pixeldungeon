@@ -113,6 +113,9 @@ public class BattleAxe extends MeleeWeapon {
 					dmg = Math.round(dmg * (starpower * 0.7f));
 
 					mob.damage(dmg, attacker);
+					if (starpower == 3) {
+						dispel(mob);
+					}
 				}
 			}
 			if (starpower == 3) {

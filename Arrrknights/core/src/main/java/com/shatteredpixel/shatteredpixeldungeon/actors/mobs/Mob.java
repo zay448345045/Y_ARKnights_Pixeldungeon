@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
@@ -43,6 +44,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SoulMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
@@ -77,6 +79,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfCommand;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.BadgeOfCharger;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Perforator;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
@@ -820,6 +823,17 @@ public abstract class Mob extends Char {
 			if (cause == Dungeon.hero
 			&& Dungeon.hero.hasTalent(Talent.DURABLE_PROJECTILES)) {
 				Buff.affect(Dungeon.hero, Stamina.class, 1+Dungeon.hero.pointsInTalent(Talent.DURABLE_PROJECTILES));
+			}
+			BadgeOfCharger boc = Dungeon.hero.belongings.getItem(BadgeOfCharger.class);
+			if (cause == Dungeon.hero
+					&& boc!=null
+					&& boc.isEquipped(Dungeon.hero)
+					&& Dungeon.hero.buff(Stamina.class)!=null) {
+				Buff.prolong(Dungeon.hero, Recharging.class, boc.level()/3f);
+				Buff.affect(Dungeon.hero, ArtifactRecharge.class).prolong(boc.level()/3f);
+				SkillBook Item = Dungeon.hero.belongings.getItem(SkillBook.class);
+				Item.SetCharge(1);
+				Dungeon.level.curMoves -= boc.level();
 			}
 
 			if(Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR){

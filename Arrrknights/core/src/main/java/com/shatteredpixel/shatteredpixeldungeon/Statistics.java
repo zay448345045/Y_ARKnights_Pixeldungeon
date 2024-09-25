@@ -45,10 +45,12 @@ public class Statistics {
 	public static int coreAlive;
 	
 	public static float duration;
+	public static int prevFloorMoves;
 	
 	public static boolean qualifiedForNoKilling = false;
 	public static boolean completedWithNoKilling = false;
 	public static boolean ver0_3_2firstrun = false;
+	public static int victoryLapRounds;
 	
 	public static boolean amuletObtained = false;
 
@@ -72,7 +74,9 @@ public class Statistics {
 		coreAlive   = 0;
 		
 		duration	= 0;
-		
+		prevFloorMoves = 0;
+		victoryLapRounds = 0;
+
 		qualifiedForNoKilling = false;
 		
 		amuletObtained = false;
@@ -96,6 +100,8 @@ public class Statistics {
 	private static final String CORE	= "coreAlive";
 	
 	private static final String DURATION	= "duration";
+	private static final String PREVFLOORMOVES = "prevfloormoves";
+	private static final String VICTORYLAPROUNDS = "victorylaprounds";
 
 	private static final String NO_KILLING_QUALIFIED	= "qualifiedForNoKilling";
 	
@@ -121,7 +127,8 @@ public class Statistics {
 		bundle.put( CORE,	coreAlive );
 		
 		bundle.put( DURATION,	duration );
-
+		bundle.put( PREVFLOORMOVES, prevFloorMoves);
+		bundle.put( VICTORYLAPROUNDS, victoryLapRounds);
 		bundle.put(NO_KILLING_QUALIFIED, qualifiedForNoKilling);
 		
 		bundle.put( AMULET,		amuletObtained );
@@ -147,6 +154,8 @@ public class Statistics {
 		coreAlive   = bundle.getInt( CORE );
 		
 		duration		= bundle.getFloat( DURATION );
+		prevFloorMoves	= bundle.getInt(PREVFLOORMOVES);
+		victoryLapRounds= bundle.getInt(VICTORYLAPROUNDS);
 
 		qualifiedForNoKilling = bundle.getBoolean( NO_KILLING_QUALIFIED );
 		

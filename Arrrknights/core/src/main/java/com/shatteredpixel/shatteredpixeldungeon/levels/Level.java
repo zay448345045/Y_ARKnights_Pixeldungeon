@@ -144,7 +144,8 @@ public abstract class Level implements Bundlable {
 	protected static final float TIME_TO_RESPAWN	= 50;
 
 	public int version;
-	
+	public float curMoves = 0;
+
 	public int[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
@@ -205,6 +206,7 @@ public abstract class Level implements Bundlable {
 	private static final String MOBS		= "mobs";
 	private static final String BLOBS		= "blobs";
 	private static final String FEELING		= "feeling";
+	private static final String CURMOVES		= "curmoves";
 
 	public void create() {
 
@@ -394,6 +396,7 @@ public abstract class Level implements Bundlable {
 		exit		= bundle.getInt( EXIT );
 
 		locked      = bundle.getBoolean( LOCKED );
+		curMoves = bundle.getFloat(CURMOVES);
 		
 		Collection<Bundlable> collection = bundle.getCollection( HEAPS );
 		for (Bundlable h : collection) {
@@ -482,6 +485,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( TRAPS, traps.valueList() );
 		bundle.put( CUSTOM_TILES, customTiles );
 		bundle.put( CUSTOM_WALLS, customWalls );
+		bundle.put( CURMOVES, curMoves);
 		bundle.put( MOBS, mobs );
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );

@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.features;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
@@ -86,7 +87,7 @@ public class Chasm implements Hero.Doom {
 		buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
 		buff = Dungeon.hero.buff(RabbitTime.class);
-		if (buff != null) buff.detach();
+		if (buff != null) ((RabbitTime)buff).erasePresses();
 		
 		if (Dungeon.hero.isAlive()) {
 			Dungeon.hero.interrupt();
@@ -97,6 +98,7 @@ public class Chasm implements Hero.Doom {
 			} else {
 				InterlevelScene.fallIntoPit = false;
 			}
+			if(Dungeon.depth == Statistics.deepestFloor) Statistics.prevFloorMoves = (int)Math.floor(Dungeon.level.curMoves);
 			Game.switchScene( InterlevelScene.class );
 		} else {
 			Dungeon.hero.sprite.visible = false;

@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CustomeSet;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.CrabGun;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class Breeder extends Weapon.Chimera {
     @Override
-    public String beforeName() {
+    public String afterName() {
         return Messages.get(this, "name");
     }
 
@@ -76,7 +77,7 @@ public class Breeder extends Weapon.Chimera {
     }
     public void SPCharge(int value) {
         int chargevalue = value;
-        chargevalue *= RingOfMistress.SPMultiplier(Dungeon.hero);
+        chargevalue *= Math.round(RingOfMistress.SPMultiplier(Dungeon.hero) + Badge.MistressMultiper() -1);
         charge = Math.min(charge+chargevalue, chargeCap);
     }
     private static final String CHARGE = "charge";

@@ -4,6 +4,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.testtool;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.AnnihilationGear;
 import com.shatteredpixel.shatteredpixeldungeon.items.ArmorUpKit;
@@ -559,6 +560,7 @@ public class Generators_Misc extends Generators{
             case 29: return Ironsight.class;
             case 30: return Muzzlebrake.class;
             case 31: return DarkGold.class;
+            case 32: return Amulet.class;
         }
     }
 
@@ -569,7 +571,7 @@ public class Generators_Misc extends Generators{
             case 8: return 14;
             case 9: return 19;
             case 10: return 18;
-            case 11: return 31;
+            case 11: return 32;
             case 0: case 1: case 2: case 3: case 7: default:return 11;
         }
     }

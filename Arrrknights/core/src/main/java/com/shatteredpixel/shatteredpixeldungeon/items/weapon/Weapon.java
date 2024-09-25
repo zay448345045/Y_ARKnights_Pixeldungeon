@@ -44,6 +44,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.IsekaiItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Archery;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Artorius;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
@@ -631,7 +632,7 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 				if (Dungeon.hero.belongings.getItem(RingOfMistress.class) != null){
 					if (Dungeon.hero.belongings.getItem(RingOfMistress.class).isEquipped(Dungeon.hero)){
-						multi += RingOfMistress.SPMultiplier(Dungeon.hero)-1;
+						multi += (RingOfMistress.SPMultiplier(Dungeon.hero) + Badge.MistressMultiper())-2;
 					}
 				}
 				if(Dungeon.hero.hasTalent(Talent.OCCULTISM)){

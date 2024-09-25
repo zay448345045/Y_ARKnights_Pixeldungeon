@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfDominate;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.BadgeOfCharger;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -178,6 +179,8 @@ public class LazyTest extends Generators {
             new GooBlob().quantity(100).collect();
             new MetalShard().quantity(100).collect();
             new InfernalBrew().quantity(100).collect();
+
+            new BadgeOfCharger().identify().collect();
 
             detach(hero.belongings.backpack);
         }

@@ -114,9 +114,6 @@ public class Blacksmith extends NPC {
 				} else if (!pick.bloodStained) {
 					tell( Messages.get(this, "blood_2") );
 				} else {
-					if (pick.isEquipped( Dungeon.hero )) {
-						pick.doUnequip( Dungeon.hero, false );
-					}
 					tell( Messages.get(this, "completed") );
 					
 					Quest.completed = true;

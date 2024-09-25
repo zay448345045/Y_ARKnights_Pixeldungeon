@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+ import static com.shatteredpixel.shatteredpixeldungeon.items.Generator.Category.WEP_T5;
+
  import com.shatteredpixel.shatteredpixeldungeon.Assets;
  import com.shatteredpixel.shatteredpixeldungeon.Badges;
  import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -721,6 +723,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 	public static HeroClass restoreInBundle( Bundle bundle ) {
 		String value = bundle.getString( CLASS );
 		return value.length() > 0 ? valueOf( value ) : ROGUE;
+
 	}
 
 }

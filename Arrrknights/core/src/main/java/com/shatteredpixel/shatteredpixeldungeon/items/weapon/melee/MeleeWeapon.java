@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.MidoriAccessories;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMistress;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -112,7 +113,7 @@ public class MeleeWeapon extends Weapon {
 	}
 	public void SPCharge(int value) {
 		int chargevalue = value;
-		chargevalue *= RingOfMistress.SPMultiplier(Dungeon.hero);
+		chargevalue *= Math.round(RingOfMistress.SPMultiplier(Dungeon.hero)+ Badge.MistressMultiper() -1);
 		charge = Math.min(charge+chargevalue, chargeCap);
 		updateQuickslot();
 	}

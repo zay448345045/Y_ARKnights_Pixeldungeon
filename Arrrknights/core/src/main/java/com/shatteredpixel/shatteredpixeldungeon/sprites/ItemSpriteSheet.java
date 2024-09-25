@@ -582,6 +582,8 @@ public class ItemSpriteSheet {
 	public static final int ARTIFACT_NEARL      = ARTIFACTS+41;
 	public static final int ARTIFACT_CAMERA      = ARTIFACTS+42;
 	public static final int ARTIFACT_WALLET      = ARTIFACTS+43;
+
+	public static final int BADGE_CHARGER		= ARTIFACTS+16;
 	static{
 		assignItemRect(ARTIFACT_CLOAK,      16, 16);
 		assignItemRect(ARTIFACT_ARMBAND,    16, 16);
@@ -611,6 +613,8 @@ public class ItemSpriteSheet {
 		assignItemRect(ARTIFACT_NEARL,      16, 16);
 		assignItemRect(ARTIFACT_CAMERA,      16, 16);
 		assignItemRect(ARTIFACT_WALLET,      16, 16);
+
+		assignItemRect(BADGE_CHARGER,      16, 16);
 	}
 
 	                                                                                    //16 free slots

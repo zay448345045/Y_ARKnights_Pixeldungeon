@@ -800,7 +800,7 @@ public class Generator {
                     //purple
                     };
             ROR2ITEM.defaultProbs = new float[]
-                    {10, 10, 10, 10, 10, 10, 10, 10, 10,//white
+                    {8, 8, 8, 8, 8, 8, 8, 8, 8,//white
                     1, 1, 1, 1,//red
                     2, 2,//yellow
                     3,//orange

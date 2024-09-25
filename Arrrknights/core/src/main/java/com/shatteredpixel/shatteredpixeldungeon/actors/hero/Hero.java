@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.items.Generator.Category.WEP_T5;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -208,6 +210,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
@@ -898,7 +901,7 @@ public class Hero extends Char {
 
         float speed = super.speed();
 
-        speed *= RingOfHaste.speedMultiplier(this);
+        speed *= (RingOfHaste.speedMultiplier(this) + Badge.HasteMultiplier() - 1);
 
         if (belongings.armor != null) {
             speed = belongings.armor.speedFactor(this, speed);
@@ -1132,7 +1135,7 @@ public class Hero extends Char {
                 if (ch != null&& !(ch instanceof Hero) && ch.alignment == Alignment.ENEMY) {
                     Buff.detach(this, com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage.class); }}}
 
-
+        if(Dungeon.depth==Statistics.deepestFloor)Dungeon.level.curMoves+=time;
 
         super.spend(time);
     }
@@ -1537,6 +1540,7 @@ public class Hero extends Char {
             RabbitTime rbt = Dungeon.hero.buff(RabbitTime.class);
             if (rbt != null) rbt.erasePresses();
 
+            if(Dungeon.depth == Statistics.deepestFloor) Statistics.prevFloorMoves = (int)Math.floor(Dungeon.level.curMoves);
 
             InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
             Game.switchScene(InterlevelScene.class);

@@ -24,9 +24,16 @@ package com.shatteredpixel.shatteredpixeldungeon.scenes;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
+import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
@@ -79,6 +86,15 @@ public class AmuletScene extends PixelScene {
 		};
 		btnStay.setSize( WIDTH, BTN_HEIGHT );
 		add( btnStay );
+
+		RedButton btnVictoryLap = new RedButton( Messages.get(this, "victory_lap") ) {
+			@Override
+			protected void onClick() {
+				victoryLap();
+			}
+		};
+		btnVictoryLap.setSize( WIDTH, BTN_HEIGHT );
+		add( btnVictoryLap );
 		
 		float height;
 		if (noText) {
@@ -90,6 +106,7 @@ public class AmuletScene extends PixelScene {
 
 			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, amulet.y + amulet.height + LARGE_GAP );
 			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
+			btnVictoryLap.setPos( btnStay.left(), btnStay.bottom() + SMALL_GAP );
 			
 		} else {
 			height = amulet.height + LARGE_GAP + text.height() + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
@@ -103,6 +120,7 @@ public class AmuletScene extends PixelScene {
 			
 			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, text.top() + text.height() + LARGE_GAP );
 			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
+			btnVictoryLap.setPos( btnStay.left(), btnStay.bottom() + SMALL_GAP );
 		}
 
 		new Flare( 8, 48 ).color( 0xFFDDBB, true ).show( amulet, 0 ).angularSpeed = +30;
@@ -129,5 +147,20 @@ public class AmuletScene extends PixelScene {
 			star.reset( 0, amulet.x + 10.5f, amulet.y + 5.5f, Speck.DISCOVER );
 			add( star );
 		}
+	}
+	private void victoryLap(){
+		Statistics.victoryLapRounds++;
+		Statistics.deepestFloor = 0;
+		Dungeon.depth = 0; //@
+		Dungeon.mboss4 = Dungeon.mboss9 = Dungeon.mboss14 = Dungeon.mboss19 = 1;
+		Notes.reset();
+		Ghost.Quest.reset();
+		Wandmaker.Quest.reset();
+		Blacksmith.Quest.reset();
+		Imp.Quest.reset();
+		Generator.fullReset();
+
+		InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+		Game.switchScene( InterlevelScene.class );
 	}
 }

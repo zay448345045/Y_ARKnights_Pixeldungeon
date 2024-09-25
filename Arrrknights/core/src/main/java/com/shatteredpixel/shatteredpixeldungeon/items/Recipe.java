@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfI
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfSoulBreak;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirsOfSoulProtection;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.BadgeOfCharger;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfWarp;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
@@ -258,6 +259,7 @@ public abstract class Recipe {
             new ElixirsOfIronSkin.Recipe(),
             new KollamSword.Recipe(),
             new SakuraProof.Recipe(),
+            new BadgeOfCharger.Recipe()
     };
 
     public static Recipe findRecipe(ArrayList<Item> ingredients) {
