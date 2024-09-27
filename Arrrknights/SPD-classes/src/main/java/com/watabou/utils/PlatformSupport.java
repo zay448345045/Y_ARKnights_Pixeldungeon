@@ -21,6 +21,7 @@
 
 package com.watabou.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.io.File;
@@ -37,7 +38,11 @@ public abstract class PlatformSupport {
 	//FIXME this is a temporary method to workaround a bug in libGDX with Android 11+
 	//it can be removed once Shattered is updated to libGDX 1.9.14+
 	public abstract boolean openURI( String URI );
-	
+
+	public void setOnscreenKeyboardVisible(boolean value){
+		Gdx.input.setOnscreenKeyboardVisible(value);
+	}
+
 	//FIXME this is currently used because no platform-agnostic text input has been implemented.
 	//should look into doing that using either plain openGL or libgdx's libraries
 	public abstract void promptTextInput( String title, String hintText, int maxLen, boolean multiLine,

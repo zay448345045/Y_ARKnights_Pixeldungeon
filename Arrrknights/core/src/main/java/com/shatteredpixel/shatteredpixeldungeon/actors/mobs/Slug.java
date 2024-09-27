@@ -32,6 +32,8 @@ public class Slug extends Mob {
 		spriteClass = BugSprite.class;
 		
 		HP = HT = 8;
+		damageMax = 4;
+		damageMin = 1;
 		defenseSkill = 2;
 		
 		maxLvl = 5;
@@ -41,7 +43,7 @@ public class Slug extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 1, 4 );
+		return Random.NormalIntRange( damageMin, damageMax );
 	}
 	
 	@Override

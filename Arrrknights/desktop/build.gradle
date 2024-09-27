@@ -20,6 +20,7 @@ task debug(dependsOn: classes, type: JavaExec) {
 
     main = appMainClass
     systemProperty 'Specification-Title', appName
+    systemProperty 'Implementation-Title', appPackageName
     systemProperty 'Specification-Version', appVersionName + "-INDEV"
     systemProperty 'Implementation-Version', appVersionCode
 
@@ -42,6 +43,7 @@ task release(dependsOn: compileForRelease, type: Jar) {
 
     manifest {
         attributes 'Main-Class': appMainClass
+        attributes 'Implementation-Title': appPackageName
         attributes 'Specification-Title': appName
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode
@@ -60,15 +62,16 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
 
-    //we use LWJGL tinyFD directly to display crash messages and (for now) single-line text input
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.1"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.1:natives-windows"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.1:natives-macos"
-    implementation "org.lwjgl:lwjgl-tinyfd:3.2.1:natives-linux"
+    //we use LWJGL tinyFD directly to display crash messages
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-windows"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-macos"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-macos-arm64"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-linux"
+    implementation "org.lwjgl:lwjgl-tinyfd:3.3.3:natives-linux-arm64"
 
-    //Need these at compile time to prevent errors there.
-    // The actual dependency used at runtime will vary based on source set.
-    compileOnly project(':services:updates:debugUpdates')
-    compileOnly project(':services:news:debugNews')
+    implementation project(':services:updates:githubUpdates')
+    implementation project(':services:news:shatteredNews')
 }

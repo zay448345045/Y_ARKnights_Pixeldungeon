@@ -139,6 +139,10 @@ public abstract class Mob extends Char {
 	protected int target = -1;
 	
 	protected int defenseSkill = 0;
+	protected int damageMax = 0;
+	protected int damageMin = 0;
+	protected int drMax = 0;
+	protected int attackSkill = 0;
 	
 	public int EXP = 1;
 	public int maxLvl = Hero.MAX_LEVEL;
@@ -1452,5 +1456,13 @@ public abstract class Mob extends Char {
 	public boolean hasNotebookSkill(){ return false;}
 	public void notebookSkill(ScholarNotebook notebook, int index){ }
 
+	public void addHTandHP(int ht){this.HP = this.HT = this.HT+ht;}
+	public void addDamageMax(int dmx){this.damageMax += dmx;}
+	public void addDamageMin(int dmm){this.damageMin += dmm;}
+	public void addDrMax(int drm){this.drMax += drm;}
+	public void addEvasion(int eva){this.defenseSkill += eva;}
+	public void addAccuracy(int acc){this.attackSkill += acc;}
+	public void addExp(int exp){this.EXP += exp;}
+	public void addMaxLvl(int mxl){this.maxLvl += mxl;}
 }
 

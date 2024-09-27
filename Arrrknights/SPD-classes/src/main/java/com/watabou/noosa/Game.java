@@ -75,7 +75,7 @@ public class Game implements ApplicationListener {
 	public static float timeTotal = 0f;
 	public static long realTime = 0;
 	
-	protected static InputHandler inputHandler;
+	public static InputHandler inputHandler;
 	
 	public static PlatformSupport platform;
 	

@@ -4,7 +4,7 @@ buildscript {
     }
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.5.1'
@@ -17,10 +17,10 @@ allprojects {
 
     ext {
         appName = '昨日碎梦地牢-S'
-        appPackageName = 'com.shatteredpixel.yesterdaypixel'
+        appPackageName = 'com.shatteredpixel.yesterdaypixel.indev'
 
-        appVersionCode = 240820
-        appVersionName = 'Y-0.4.5-EX9-240820'
+        appVersionCode = 240926
+        appVersionName = 'Y-0.4.5-EX9-240926'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
@@ -28,13 +28,16 @@ allprojects {
         appAndroidMinSDK = 19   //隔壁是9
         appAndroidTargetSDK = 33
 
-        gdxVersion = '1.9.10'
+        gdxVersion = '1.12.1'
+        gdxControllersVersion = '2.2.4-SNAPSHOT'
+        robovmVersion = '2.3.20'
     }
     version = appVersionName
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 
 }

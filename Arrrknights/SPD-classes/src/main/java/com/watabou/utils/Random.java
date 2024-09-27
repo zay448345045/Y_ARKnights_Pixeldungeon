@@ -84,6 +84,26 @@ public class Random {
 	public static synchronized int Int( int max ) {
 		return max > 0 ? generators.peek().nextInt(max) : 0;
 	}
+	public static int IntUsingLuck(int max, int luck) {
+		if (luck == 0) return Int(max);
+
+		int result;
+		if (luck > 0) {
+			result = Int(max);
+			for (int i = 1; i <= luck; i++) {
+				int randomValue = Int(max);
+				result = Math.max(result, randomValue);
+			}
+		} else {
+			result = Int(max);
+			for (int i = 1; i <= -luck; i++) {
+				int randomValue = Int(max);
+				result = Math.min(result, randomValue);
+			}
+		}
+
+		return result;
+	}
 
 	//returns a uniformly distributed int in the range [min, max)
 	public static int Int( int min, int max ) {

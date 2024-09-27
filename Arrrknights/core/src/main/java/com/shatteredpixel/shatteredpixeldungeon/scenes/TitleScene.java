@@ -298,7 +298,7 @@ public class TitleScene extends PixelScene {
 				protected void onSelect(int index) {
 					if (index == 0) {
 						String link = "https://mizq4482.tistory.com/";
-						DeviceCompat.openURI(link);
+						TomorrowRogueNight.platform.openURI(link);
 					} else if (index == 1) {
 						ChangesScene.changesSelected = 0;
 						TomorrowRogueNight.switchNoFade(ChangesScene.class);

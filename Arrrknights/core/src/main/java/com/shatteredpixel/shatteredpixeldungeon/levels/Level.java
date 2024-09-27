@@ -22,6 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.ROR;
+import static com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy.toChampion;
+import static com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy.toHonor;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
@@ -533,6 +535,7 @@ public abstract class Level implements Bundlable {
 		if (!(m instanceof Originiutant) && !(m instanceof GiantMushroom)){
 			ChampionEnemy.rollForHonor(m);
 		}
+		if(m!=null && Statistics.victoryLapRounds>0) setVictoryLapBonus(m);
 		return m;
 	}
 
@@ -1437,6 +1440,29 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "empty_well_desc");
 			default:
 				return "";
+		}
+	}
+	private void setVictoryLapBonus(Mob m){
+		int rounds = Statistics.victoryLapRounds;
+		m.addHTandHP(100*rounds);
+		m.addDamageMin(32*rounds);
+		m.addDamageMax(40*rounds);
+		m.addDrMax(15*rounds);
+		m.addEvasion(22*rounds);
+		m.addAccuracy(34*rounds);
+		m.addExp(Math.round((13.5f)*rounds));
+		m.addMaxLvl(22*rounds);
+		if(Random.Float(1)< (rounds/(rounds+2f))){
+			int championTimes = Random.IntUsingLuck(rounds+2,-1);
+			for(int i=0; i<championTimes; i++){
+				toChampion(m);
+			}
+		}
+		if(Random.Float(1)< (rounds/(rounds+2f))) {
+			int honorTimes = Random.IntUsingLuck(rounds + 2, -1);
+			for (int i = 0; i < honorTimes; i++) {
+				toHonor(m);
+			}
 		}
 	}
 }

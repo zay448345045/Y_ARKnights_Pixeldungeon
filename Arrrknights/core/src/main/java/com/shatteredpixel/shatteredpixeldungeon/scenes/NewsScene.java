@@ -78,7 +78,7 @@ public class NewsScene extends PixelScene {
 				super.onClick();
 				String link = "https://www.pixiv.net/users/14086167";
 				//tracking codes, so that the website knows where this pageview came from
-				DeviceCompat.openURI(link);
+				TomorrowRogueNight.platform.openURI(link);
 			}
 		};
 		StyledButton btnSite2 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "read_more2")){
@@ -87,7 +87,7 @@ public class NewsScene extends PixelScene {
 				super.onClick();
 				String link = "https://mizq4482.tistory.com/";
 				//tracking codes, so that the website knows where this pageview came from
-				DeviceCompat.openURI(link);
+				TomorrowRogueNight.platform.openURI(link);
 			}
 		};
 		StyledButton btnSite3 = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "read_more3")){
@@ -96,7 +96,7 @@ public class NewsScene extends PixelScene {
 				super.onClick();
 				String link = "https://docs.google.com/forms/d/19Lpo9rxfD3MNvfFKqYoRQhi-3HPxcitiCZDvkI2aokA/edit";
 				//tracking codes, so that the website knows where this pageview came from
-				DeviceCompat.openURI(link);
+				TomorrowRogueNight.platform.openURI(link);
 			}
 		};
 		btnSite.icon(Icons.get(Icons.NAMSEK));
