@@ -67,6 +67,15 @@ public class Thief extends Mob {
 		spriteClass = ThiefSprite.class;
 		
 		HP = HT = 20;
+		damageMax = 10;
+		damageMaxIncRate = 20;
+		damageMaxInc = damageMaxIncRate*rounds;
+		damageMin = 1;
+		damageMinIncRate = 16;
+		damageMinInc = damageMinIncRate * rounds;
+		drMax = 3;
+		drMin = 0;
+		attackSkill = 12;
 		defenseSkill = 12;
 		
 		EXP = 5;
@@ -107,12 +116,6 @@ public class Thief extends Mob {
 		if (item != null && Camouflage.CamoFlageEnemy(this)) Buff.affect(this, Camouflage.class, 10f);
 		return super.act();
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 1, 10 );
-	}
-
 	@Override
 	protected float attackDelay() {
 		return super.attackDelay()*0.5f;
@@ -137,17 +140,6 @@ public class Thief extends Mob {
 		Dungeon.LimitedDrops.THEIF_MISC.count++;
 		return super.createLoot();
 	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 3);
-	}
-
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );

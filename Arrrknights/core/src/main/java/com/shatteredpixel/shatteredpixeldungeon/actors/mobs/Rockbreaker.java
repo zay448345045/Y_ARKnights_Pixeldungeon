@@ -21,6 +21,10 @@ public class Rockbreaker extends Mob {
         spriteClass = RockbreakerSprite.class;
 
         HP = HT = 200;
+        damageMax = 60;
+        damageMin = 45;
+        drMax = 4;
+        drMin = 0;
         defenseSkill = 0;
 
         maxLvl = 36;
@@ -31,19 +35,8 @@ public class Rockbreaker extends Mob {
         loot = Generator.Category.SKL_RND;
         lootChance = 0.2f;
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 45, 60 );
-    }
-
     @Override
     public int attackSkill( Char target ) {
-        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return 60;
-        return 45; }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 4);
-    }
+        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return 60+attackSkillInc;
+        return 45+attackSkillInc; }
 }

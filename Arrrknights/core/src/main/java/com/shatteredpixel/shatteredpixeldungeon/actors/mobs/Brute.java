@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
@@ -44,6 +45,9 @@ public class Brute extends Mob {
 		spriteClass = RivengerSprite.class;
 		
 		HP = HT = 40;
+		drMax = 8;
+		drMin = 0;
+		attackSkill = 20;
 		defenseSkill = 15;
 		
 		EXP = 8;
@@ -59,20 +63,9 @@ public class Brute extends Mob {
 	@Override
 	public int damageRoll() {
 		return buff(BruteRage.class) != null ?
-			Random.NormalIntRange( 15, 40 ) :
-			Random.NormalIntRange( 5, 25 );
+			Random.NormalIntRange( 15 + damageMinInc, 40 + damageMaxInc ) :
+			Random.NormalIntRange( 5 + damageMinInc, 25 + damageMaxInc );
 	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 20;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 8);
-	}
-
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
@@ -125,14 +118,14 @@ public class Brute extends Mob {
 		
 		@Override
 		public boolean act() {
-			
+			int rounds = Statistics.victoryLapRounds;
 			if (target.HP > 0){
 				detach();
 				return true;
 			}
 
-			if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) absorbDamage(2);
-			else absorbDamage( 4 );
+			if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) absorbDamage(2+2*rounds);
+			else absorbDamage( 4+4*rounds );
 			
 			if (shielding() <= 0){
 				target.die(null);

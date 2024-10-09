@@ -13,6 +13,9 @@ public class Striker extends Mob{
         spriteClass = StrikerSprite.class;
 
         HP = HT = 100;
+        drMax = 24;
+        drMin = 8;
+        attackSkill = 30;
         defenseSkill = 20;
 
         EXP = 14;
@@ -31,19 +34,9 @@ public class Striker extends Mob{
 
     @Override
     public int damageRoll() {
-        if (HP <= HT/2) return Random.NormalIntRange(33,45);
-        return Random.NormalIntRange(22,33);
+        if (HP <= HT/2) return Random.NormalIntRange(33+damageMinInc,45+damageMaxInc);
+        return Random.NormalIntRange(22+damageMinInc,33+damageMaxInc);
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 30;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(8, 24); }
-
     @Override
     public void damage(int dmg, Object src) {
         if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) dmg *= 0.8f;

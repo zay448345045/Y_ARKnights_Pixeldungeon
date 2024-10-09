@@ -26,6 +26,9 @@ public class Piersailor extends Mob {
         spriteClass = PiersailorSprite.class;
 
         HP = HT = 180;
+        damageMax = 48;
+        damageMin = 36;
+        attackSkill = 35;
         defenseSkill = 0; //see damage()
 
         maxLvl = 30;
@@ -33,23 +36,11 @@ public class Piersailor extends Mob {
 
         immunities.add(Silence.class);
     }
-
-    public int damageRoll() {
-        return Random.NormalIntRange(36, 48);
-    }
-
     @Override
     public int drRoll() {
-        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(4, 24);
-        return Random.NormalIntRange(2, 20);
+        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(4+drMinInc, 24+drMaxInc);
+        return Random.NormalIntRange(2+drMinInc, 20+drMaxInc);
     }
-
-    @Override
-    public int attackSkill(Char target) {
-        return 35;
-    }
-
-
     @Override
     protected boolean act() {
         if (Dungeon.level.map[this.pos] == Terrain.WATER && state == HUNTING) {

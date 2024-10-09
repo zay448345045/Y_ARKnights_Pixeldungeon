@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
@@ -28,6 +29,9 @@ public class Agent extends Mob {
         spriteClass = Siesta_AgentSprite.class;
 
         HP = HT = 125;
+        drMax = 20;
+        drMin = 0;
+        attackSkill = 42;
         defenseSkill = 26;
 
         EXP = 16;
@@ -107,35 +111,13 @@ public class Agent extends Mob {
             }
             return false;
         }
-
-        /*if (!enemy.isAlive() && visibleFight) {
-            if (enemy == Dungeon.hero) {
-
-                Dungeon.fail( getClass() );
-                GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
-            }
-        }
-
-        return true;*/
-
     }
 
     @Override
     public int damageRoll() {
-        if (buff(Silence.class) != null) return Random.NormalIntRange( 14, 26 );
-        else return Random.NormalIntRange( 22, 31 );
+        if (buff(Silence.class) != null) return Random.NormalIntRange( 14+(damageMinIncRate/2)*rounds, 26+(damageMaxIncRate/2)*rounds );
+        else return Random.NormalIntRange( 22+(damageMinIncRate/2)*rounds, 31+(damageMaxIncRate/2)*rounds );
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 42;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 20);
-    }
-
 
     @Override
     public void rollToDropLoot() {

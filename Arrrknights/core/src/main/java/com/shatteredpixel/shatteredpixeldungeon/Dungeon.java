@@ -162,6 +162,24 @@ public class Dungeon {
 				lim.count = 0;
 			}
 		}
+		public static void victoryLapReset(){
+			STRENGTH_POTIONS.count = 0;
+			UPGRADE_SCROLLS.count = 0;
+			ARCANE_STYLI.count = 0;
+			SWARM_HP.count = 0;
+			NECRO_HP.count = 0;
+			BAT_HP.count = 0;
+			WARLOCK_HP.count = 0;
+			SNIPER_HP.count = 0;
+			COOKING_HP.count = 0;
+			SLIME_WEP.count = 0;
+			SKELE_WEP.count = 0;
+			THEIF_MISC.count = 0;
+			GUARD_ARM.count = 0;
+			SHAMAN_WAND.count = 0;
+			DM200_EQUIP.count = 0;
+			GOLEM_EQUIP.count = 0;
+		}
 
 		public static void store( Bundle bundle ){
 			for (LimitedDrops lim : values()){

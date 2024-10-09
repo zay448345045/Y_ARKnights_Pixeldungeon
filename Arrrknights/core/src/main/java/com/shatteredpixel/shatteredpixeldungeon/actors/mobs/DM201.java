@@ -43,17 +43,13 @@ public class DM201 extends DM200 {
 		spriteClass = I_GolemSprite.class;
 
 		HP = HT = 80;
+		damageMax = 45;
+		damageMin = 35;
 
 		properties.add(Property.IMMOVABLE);
 
 		HUNTING = new Mob.Hunting();
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 35, 45 );
-	}
-
 	private boolean threatened = false;
 
 	@Override

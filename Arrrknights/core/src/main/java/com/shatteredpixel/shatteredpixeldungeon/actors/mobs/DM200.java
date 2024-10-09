@@ -73,6 +73,11 @@ public class DM200 extends Mob {
 		spriteClass = S_GolemSprite.class;
 
 		HP = HT = 88;
+		damageMax = 25;
+		damageMin = 15;
+		drMax = 8;
+		drMin = 0;
+		attackSkill = 20;
 		defenseSkill = 12;
 
 		EXP = 9;
@@ -87,22 +92,6 @@ public class DM200 extends Mob {
 
 		HUNTING = new Hunting();
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 15, 25 );
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 20;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 8);
-	}
-
 	@Override
 	public void rollToDropLoot() {
 		//each drop makes future drops 1/2 as likely

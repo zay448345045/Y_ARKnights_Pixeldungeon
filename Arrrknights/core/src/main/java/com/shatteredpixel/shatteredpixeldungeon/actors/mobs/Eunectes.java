@@ -31,6 +31,11 @@ public class Eunectes extends Mob {
         spriteClass = Jumama_BossSprite.class;
 
         HT = HP = 800;
+        damageMax = 60;
+        damageMin = 48;
+        drMax = 24;
+        drMin = 0;
+        attackSkill = 45;
         defenseSkill = 25;
 
         state = HUNTING;
@@ -40,22 +45,6 @@ public class Eunectes extends Mob {
     }
 
     private boolean isBarrier = false;
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 48, 60 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 45;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 24);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (dmg > HT / 2) {

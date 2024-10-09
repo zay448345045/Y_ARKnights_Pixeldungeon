@@ -26,6 +26,11 @@ public class TiacauhAddict extends Mob {
         baseSpeed = 2f;
 
         HP = HT = 120;
+        damageMax = 46;
+        damageMin = 36;
+        drMax = 14;
+        drMin = 0;
+        attackSkill = 42;
         defenseSkill = 24;
 
         EXP = 14;
@@ -37,22 +42,6 @@ public class TiacauhAddict extends Mob {
         immunities.add(Silence.class);
         immunities.add(ToxicGas.class);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 36, 46 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 42;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 14);
-    }
-
     @Override
     public int attackProc(Char enemy, int damage) {
         if (Random.Int(2) == 0) {

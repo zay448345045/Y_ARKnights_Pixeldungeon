@@ -61,6 +61,11 @@ public abstract class Shaman extends Mob {
 	
 	{
 		HP = HT = 35;
+		damageMax = 10;
+		damageMin = 5;
+		drMax = 6;
+		drMin = 0;
+		attackSkill = 18;
 		defenseSkill = 15;
 		
 		EXP = 8;
@@ -69,22 +74,6 @@ public abstract class Shaman extends Mob {
 		loot = Generator.Category.WAND;
 		lootChance = 0.03f; //initially, see rollToDropLoot
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 5, 10 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 18;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 6);
-	}
-	
 	@Override
 	protected boolean canAttack( Char enemy ) {
 		if(this.buff(Silence.class) != null) return false;
@@ -142,7 +131,7 @@ public abstract class Shaman extends Mob {
 				if (enemy == Dungeon.hero) Sample.INSTANCE.play( Assets.Sounds.DEBUFF );
 			}
 			
-			int dmg = Random.NormalIntRange( 6, 15 );
+			int dmg = Random.NormalIntRange( 6+damageMinInc/2, 15+damageMaxInc/2 );
 			enemy.damage( dmg, new EarthenBolt() );
 			
 			if (!enemy.isAlive() && enemy == Dungeon.hero) {

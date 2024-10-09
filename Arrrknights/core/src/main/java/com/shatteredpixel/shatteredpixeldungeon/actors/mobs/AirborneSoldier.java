@@ -19,36 +19,25 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class AirborneSoldier extends Mob{
-    private int blinkCooldown = 0;
-    {
-    spriteClass = AirborneSprite .class;
+	private int blinkCooldown = 0;
+	{
+		spriteClass = AirborneSprite.class;
 
-    HP = HT = 20;
-    defenseSkill = 5;
+		HP = HT = 20;
+		damageMax =9;
+		damageMin =2;
+		drMax =4;
+		drMin =0;
+		attackSkill =12;
+		defenseSkill = 5;
 
-    EXP = 4;
-    maxLvl = 12;
+		EXP = 4;
+		maxLvl = 12;
 
-    loot = Gold .class;
-    lootChance = 0.3f;
-    immunities.add(Silence.class);
-}
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 2, 9 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 12;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 4);
-    }
-
+		loot = Gold.class;
+		lootChance = 0.3f;
+		immunities.add(Silence.class);
+	}
 
 	@Override
 	protected boolean getCloser( int target ) {

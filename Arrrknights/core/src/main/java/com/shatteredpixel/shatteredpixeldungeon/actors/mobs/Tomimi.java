@@ -53,6 +53,11 @@ public class Tomimi extends Mob {
         spriteClass = Tomimi_BossSprite.class;
 
         HP = HT = 1500;
+        damageMax = 48;
+        damageMin = 36;
+        drMax = 18;
+        drMin = 0;
+        attackSkill = 35;
         defenseSkill = 20;
 
         state = HUNTING;
@@ -70,22 +75,6 @@ public class Tomimi extends Mob {
     private int BurstPos = -1;
     private int BurstTime = 0;
     public static int tomimitower = 0;
-
-    @Override
-    public int attackSkill(Char target) {
-        return 35;
-    }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(36, 48);
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 18);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (phase == 2) {
@@ -206,7 +195,7 @@ public class Tomimi extends Mob {
                     CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                     Char ch = Actor.findChar(cell);
                     if (ch != null) {
-                        int damage = Random.NormalIntRange(65, 90);
+                        int damage = Random.NormalIntRange(65+damageMinInc, 90+damageMaxInc);
                         if (ch != Dungeon.hero) damage *= 2;
                         ch.damage(damage - ch.drRoll(),RPG7.class);
                         if (!ch.isAlive() && ch == Dungeon.hero) {

@@ -18,6 +18,11 @@ public class MutantSpider extends Mob {
         spriteClass = Mutant_SpiderSprite.class;
 
         HP = HT = 250;
+        damageMax = 40;
+        damageMin = 32;
+        drMax = 18;
+        drMin = 4;
+        attackSkill = 37;
         defenseSkill = 18;
 
         EXP = 23;
@@ -43,19 +48,4 @@ public class MutantSpider extends Mob {
         Buff.affect(enemy, Slow.class, 2f);
         return super.attackProc(enemy, damage);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(32,40);
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 37;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(4, 18); }
-
 }

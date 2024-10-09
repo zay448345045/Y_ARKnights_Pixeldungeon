@@ -52,6 +52,11 @@ public class ExplodSlug_N extends Mob {
 		spriteClass = ExplodSulgSprite.Normal.class;
 
 		HP = HT = 45;
+		damageMax = 24;
+		damageMin = 8;
+		drMax = 6;
+		drMin = 0;
+		attackSkill = 22;
 		defenseSkill = 14;
 
 		EXP = 9;
@@ -64,22 +69,6 @@ public class ExplodSlug_N extends Mob {
 
 		properties.add(Property.INFECTED);
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(8, 24);
-	}
-
-	@Override
-	public int attackSkill(Char target) {
-		return 22;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 6);
-	}
-
 	private int webCoolDown = 0;
 	private int lastEnemyPos = -1;
 

@@ -50,6 +50,10 @@ public class Eye extends Mob {
 		spriteClass = A_master2Sprite.class;
 		
 		HP = HT = 90;
+		damageMax = 35;
+		damageMin = 20;
+		drMax = 12;
+		drMin = 0;
 		defenseSkill = 12;
 		viewDistance = Light.DISTANCE;
 		
@@ -65,23 +69,11 @@ public class Eye extends Mob {
 
 		properties.add(Property.DRONE);
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(20, 35);
-	}
-
 	@Override
 	public int attackSkill( Char target ) {
-		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE))	return 45;
-		return 30;
+		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE))	return 45+attackSkillInc;
+		return 30+attackSkillInc;
 	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 12);
-	}
-	
 	private Ballistica beam;
 	private int beamTarget = -1;
 	private int beamCooldown;
@@ -187,7 +179,7 @@ public class Eye extends Mob {
 			}
 
 			if (hit( this, ch, true )) {
-				ch.damage( Random.NormalIntRange( 30, 55 ), new DeathGaze() );
+				ch.damage( Random.NormalIntRange( 30+damageMinInc, 55+damageMaxInc), new DeathGaze() );
 
 				if (Dungeon.level.heroFOV[pos]) {
 					ch.sprite.flash();

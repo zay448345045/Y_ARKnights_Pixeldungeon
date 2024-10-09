@@ -68,6 +68,8 @@ public class Necromancer extends Mob {
 		spriteClass = ScoutSprite.class;
 		
 		HP = HT = 20;
+		drMax = 5;
+		drMin = 0;
 		defenseSkill = 14;
 		
 		EXP = 7;
@@ -107,12 +109,6 @@ public class Necromancer extends Mob {
 		}
 		super.damage(dmg, src);
 	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 5);
-	}
-	
 	@Override
 	public void rollToDropLoot() {
 		lootChance *= ((6f - Dungeon.LimitedDrops.NECRO_HP.count) / 6f);

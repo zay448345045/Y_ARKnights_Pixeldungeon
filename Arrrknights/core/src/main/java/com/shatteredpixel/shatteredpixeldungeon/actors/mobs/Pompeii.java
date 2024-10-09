@@ -67,6 +67,9 @@ public class Pompeii extends Mob {
         spriteClass = PompeiiSprite.class;
 
         HP = HT = 2300;
+        drMax = 24;
+        drMin = 0;
+        attackSkill = 48;
         defenseSkill = 25;
 
         EXP = 100;
@@ -101,21 +104,9 @@ public class Pompeii extends Mob {
 
     @Override
     public int damageRoll() {
-        if (phase == 3) return Random.NormalIntRange(55, 65);
-        return Random.NormalIntRange(45, 55);
+        if (phase == 3) return Random.NormalIntRange(55+damageMinInc, 65+damageMaxInc);
+        return Random.NormalIntRange(45+damageMinInc, 55+damageMaxInc);
     }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0,24);
-    }
-
-    @Override
-    public int attackSkill(Char target) {
-       return 48;
-    }
-
-
     @Override
     public void damage(int dmg, Object src) {
 

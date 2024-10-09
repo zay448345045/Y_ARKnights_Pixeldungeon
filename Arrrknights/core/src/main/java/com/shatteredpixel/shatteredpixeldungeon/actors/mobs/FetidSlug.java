@@ -37,6 +37,9 @@ public class FetidSlug extends Slug {
 		spriteClass = SpitterSprite.class;
 
 		HP = HT = 20;
+		drMax = 2;
+		drMin = 0;
+		attackSkill = 12;
 		defenseSkill = 5;
 
 		EXP = 4;
@@ -46,17 +49,6 @@ public class FetidSlug extends Slug {
 		properties.add(Property.MINIBOSS);
 		properties.add(Property.INFECTED);
 	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 2);
-	}
-
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );

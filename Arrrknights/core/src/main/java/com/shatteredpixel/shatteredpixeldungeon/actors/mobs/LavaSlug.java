@@ -21,6 +21,11 @@ public class LavaSlug extends Mob {
         spriteClass = LavaSlugSprite.class;
 
         HP = HT = 155;
+        damageMax = 45;
+        damageMin = 31;
+        drMax = 12;
+        drMin = 0;
+        attackSkill = 40;
         defenseSkill = 27;
 
         maxLvl = 34;
@@ -30,21 +35,6 @@ public class LavaSlug extends Mob {
         immunities.add(WandOfFireblast.class);
         properties.add(Property.INFECTED);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 31, 45 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {return 40; }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 12);
-    }
-
-
     @Override
     public int attackProc(Char enemy, int damage) {
 

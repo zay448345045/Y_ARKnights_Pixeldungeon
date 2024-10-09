@@ -22,6 +22,11 @@ public class MetalCrab extends Mob{
         spriteClass = Metal_CrabSprite.class;
 
         HP = HT = 140;
+        damageMax = 52;
+        damageMin = 40;
+        drMax = 32;
+        drMin = 0;
+        attackSkill = 38;
         defenseSkill = 0;
 
         maxLvl = 35;
@@ -32,21 +37,6 @@ public class MetalCrab extends Mob{
         immunities.add(Roots.class);
         properties.add(Property.INFECTED);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 40, 52 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {return 38; }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 32);
-    }
-
-
     @Override
     public int attackProc(Char enemy, int damage) {
         float bufftime = 1f;

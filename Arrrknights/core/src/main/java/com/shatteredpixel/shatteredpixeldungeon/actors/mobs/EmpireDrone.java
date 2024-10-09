@@ -29,6 +29,10 @@ public class EmpireDrone extends Mob {
         spriteClass = Imperial_artillerySprite.class;
 
         HP = HT = 140;
+        damageMax = 65;
+        damageMin = 55;
+        drMax = 20;
+        drMin = 0;
         defenseSkill = 18;
 
         EXP = 35;
@@ -46,17 +50,6 @@ public class EmpireDrone extends Mob {
 
     private int CoolDown = 0;
     private int LastPos = -1;
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 55, 65 );
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange( 0, 20 );
-    }
-
     @Override
     protected boolean canAttack(Char enemy) {
         return false;

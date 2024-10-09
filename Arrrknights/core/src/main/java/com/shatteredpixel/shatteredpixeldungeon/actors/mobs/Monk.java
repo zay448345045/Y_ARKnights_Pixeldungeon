@@ -48,6 +48,8 @@ public class Monk extends Mob {
 		spriteClass = EnragedSprite.class;
 		
 		HP = HT = 105;
+		drMax = 2;
+		drMin = 0;
 		defenseSkill = 18;
 		
 		EXP = 11;
@@ -64,15 +66,15 @@ public class Monk extends Mob {
 	{
 		Focus f = buff(Focus.class);
 		if (f != null) {
-			return Random.NormalIntRange( 20, 32 );
+			return Random.NormalIntRange( 20+damageMinInc/2, 32+damageMaxInc/2 );
 		}
-		return Random.NormalIntRange( 10, 27 );
+		return Random.NormalIntRange( 10+damageMinInc/2, 27+damageMaxInc/2 );
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
 		Buff.affect(this, ActiveOriginium.class).set(HT * 0.1f);
-		return 30;
+		return 30+attackSkillInc;
 	}
 	
 	@Override
@@ -93,12 +95,6 @@ public class Monk extends Mob {
 		}
 		return super.speed();
 	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 2);
-	}
-	
 	@Override
 	public void rollToDropLoot() {
 		if(buff(StaffOfMageHand.MageHandStolenTracker.class)==null) {

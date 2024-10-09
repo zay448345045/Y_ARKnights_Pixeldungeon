@@ -19,6 +19,7 @@ public class MudrockZealot extends Mob {
         spriteClass = ZealotSprite.class;
 
         HP = HT = 50;
+        attackSkill = 18;
         defenseSkill = 6;
 
         EXP = 7;
@@ -34,22 +35,16 @@ public class MudrockZealot extends Mob {
 
     @Override
     public int damageRoll() {
-        if (barrier) return Random.NormalIntRange(7, 21);
-        return Random.NormalIntRange(5, 16);
+        if (barrier) return Random.NormalIntRange(7+damageMinInc, 21+damageMaxInc);
+        return Random.NormalIntRange(5+damageMinInc, 16+damageMaxInc);
     }
-
-    @Override
-    public int attackSkill(Char target) {
-        return 18;
-    }
-
     @Override
     public int drRoll() {
         if (barrier) {
-            if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(8, 14);
-            return Random.NormalIntRange(4, 12);
+            if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(8+drMinInc, 14+Math.round(drMaxInc*1.5f));
+            return Random.NormalIntRange(4+drMinInc, 12+Math.round(drMaxInc*1.5f));
         }
-        return Random.NormalIntRange(0, 5);
+        return Random.NormalIntRange(0+drMinInc, 5+drMaxInc);
     }
 
     @Override

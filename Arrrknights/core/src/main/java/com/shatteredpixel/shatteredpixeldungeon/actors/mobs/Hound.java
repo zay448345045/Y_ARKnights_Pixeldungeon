@@ -39,6 +39,10 @@ public class Hound extends Mob {
 		spriteClass = HaundSprite.class;
 		
 		HP = HT = 15;
+		damageMax = 6;
+		drMax = 4;
+		drMin = 0;
+		attackSkill = 12;
 		defenseSkill = 5;
 		baseSpeed = 2f;
 		
@@ -54,20 +58,9 @@ public class Hound extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(2,6);
-		return Random.NormalIntRange( 1, 6 );
+		if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) return Random.NormalIntRange(2+damageMinInc, 6+damageMaxInc);
+		return Random.NormalIntRange( 1+damageMinInc, 6+damageMaxInc);
 	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 4);
-	}
-
 	@Override
 	public boolean hasNotebookSkill(){ return true;}
 	@Override

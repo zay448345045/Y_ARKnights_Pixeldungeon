@@ -47,6 +47,11 @@ public class Ghoul extends Mob {
 		spriteClass = PossessedSprite.class;
 		
 		HP = HT = 45;
+		damageMax = 22;
+		damageMin = 16;
+		drMax = 4;
+		drMin = 0;
+		attackSkill = 24;
 		defenseSkill = 20;
 		
 		EXP = 5;
@@ -61,22 +66,6 @@ public class Ghoul extends Mob {
 
 		immunities.add(Silence.class);
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 16, 22 );
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 24;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 4);
-	}
-
 	@Override
 	public float spawningWeight() {
 		return 0.5f;

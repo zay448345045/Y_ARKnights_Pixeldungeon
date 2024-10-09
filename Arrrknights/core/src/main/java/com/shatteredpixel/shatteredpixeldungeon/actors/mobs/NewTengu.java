@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
@@ -230,7 +231,7 @@ public class NewTengu extends Mob {
     @Override
     public void die(Object cause) {
 
-        if (Dungeon.hero.subClass == HeroSubClass.NONE) {
+        if (Dungeon.hero.subClass == HeroSubClass.NONE || Statistics.victoryLapRounds>0) {
             Dungeon.level.drop(new TomeOfMastery(), pos).sprite.drop();
             if (Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
                 Dungeon.level.drop(new Token2(), pos).sprite.drop(pos);

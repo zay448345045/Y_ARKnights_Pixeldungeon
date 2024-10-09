@@ -29,6 +29,7 @@ public class HeavyBoat extends Mob {
         spriteClass = HeavyBoatSprite.class;
 
         HP = HT = 300;
+        attackSkill = 35;
         defenseSkill = 0; //see damage()
         baseSpeed = 1f;
 
@@ -40,21 +41,15 @@ public class HeavyBoat extends Mob {
     }
 
     public int damageRoll() {
-        if (Dungeon.level.map[this.pos] != Terrain.WATER) return Random.NormalIntRange(25, 40);
-        return Random.NormalIntRange(45, 60);
+        if (Dungeon.level.map[this.pos] != Terrain.WATER) return Random.NormalIntRange(25+damageMinInc, 40+damageMaxInc);
+        return Random.NormalIntRange(45+damageMinInc, 60+damageMaxInc);
     }
 
     @Override
     public int drRoll() {
-        if (Dungeon.level.map[this.pos] != Terrain.WATER) return Random.NormalIntRange(1, 12);
-        return Random.NormalIntRange(2, 24);
+        if (Dungeon.level.map[this.pos] != Terrain.WATER) return Random.NormalIntRange(1+drMinInc, 12+drMaxInc);
+        return Random.NormalIntRange(2+drMinInc, 24+drMaxInc);
     }
-
-    @Override
-    public int attackSkill(Char target) {
-        return 35;
-    }
-
     @Override
     public float speed() {
         if (Dungeon.level.map[this.pos] != Terrain.WATER) return super.speed();

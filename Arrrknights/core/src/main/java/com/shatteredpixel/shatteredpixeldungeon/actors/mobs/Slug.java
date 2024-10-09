@@ -30,27 +30,16 @@ public class Slug extends Mob {
 
 	{
 		spriteClass = BugSprite.class;
-		
 		HP = HT = 8;
 		damageMax = 4;
 		damageMin = 1;
+		drMax = 1;
+		drMin = 0;
+		attackSkill = 8;
 		defenseSkill = 2;
 		
 		maxLvl = 5;
 		immunities.add(Silence.class);
 		properties.add(Property.INFECTED);
-	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( damageMin, damageMax );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {return 8; }
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 1);
 	}
 }

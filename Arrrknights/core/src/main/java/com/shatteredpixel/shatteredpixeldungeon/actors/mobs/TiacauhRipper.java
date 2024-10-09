@@ -14,6 +14,15 @@ public class TiacauhRipper extends Mob {
         spriteClass = Tiacauh_RipperSprite.class;
 
         HP = HT = 85;
+        damageMax = 38;
+        damageMaxIncRate = 16;
+        damageMaxInc = damageMaxIncRate*rounds;
+        damageMin = 24;
+        damageMinIncRate = 13;
+        damageMinInc = damageMinIncRate*rounds;
+        drMax = 16;
+        drMin = 0;
+        attackSkill = 38;
         defenseSkill = 45;
 
         EXP = 16;
@@ -21,31 +30,14 @@ public class TiacauhRipper extends Mob {
 
         immunities.add(Silence.class);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 24, 38 );
-    }
-
     @Override
     protected float attackDelay() {
         return super.attackDelay() * 0.4f;
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 38;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 16);
-    }
-
     @Override
     public int attackProc(Char enemy, int damage) {
         int dmgbouns = enemy.drRoll() / 4;
-        dmgbouns = Math.min(dmgbouns, 9);
+        dmgbouns = Math.min(dmgbouns, 9+9*rounds);
         damage += dmgbouns;
         return super.attackProc(enemy, damage);
 

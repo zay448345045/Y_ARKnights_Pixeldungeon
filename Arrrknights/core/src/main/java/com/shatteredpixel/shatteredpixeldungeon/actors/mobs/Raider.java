@@ -20,6 +20,8 @@ public class Raider extends Succubus {
         spriteClass = Urusus_RaiderSprite.class;
 
         HP = HT = 110;
+        damageMax = 40;
+        damageMin = 24;
         defenseSkill = 25;
         viewDistance = Light.DISTANCE;
 
@@ -32,12 +34,6 @@ public class Raider extends Succubus {
     }
 
     private int ASPlus;
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(24, 40);
-    }
-
     @Override
     public int attackProc(Char enemy, int damage) {
         damage = super.attackProc(enemy, damage);

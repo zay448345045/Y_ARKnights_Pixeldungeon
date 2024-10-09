@@ -25,6 +25,11 @@ public class WaveCaster extends Mob {
         spriteClass = WaveCasterSprite.class;
 
         HP = HT = 115;
+        damageMax = 32;
+        damageMin = 24;
+        drMax = 12;
+        drMin = 0;
+        attackSkill = 32;
         defenseSkill = 22;
 
         EXP = 24;
@@ -35,22 +40,6 @@ public class WaveCaster extends Mob {
         immunities.add(Silence.class);
 
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 24, 32 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 32;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 12);
-    }
-
     @Override
     protected boolean canAttack( Char enemy ) {
         return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;

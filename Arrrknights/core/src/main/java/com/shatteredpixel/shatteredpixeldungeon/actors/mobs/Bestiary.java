@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Bestiary {
 		ArrayList<Class<? extends Mob>> mobs = standardMobRotation( depth );
 		addRareMobs(depth, mobs);
 		swapMobAlts(mobs);
+		swapMobVictoryLapAlts(mobs);
 		Random.shuffle(mobs);
 		return mobs;
 	}
@@ -408,6 +410,30 @@ public class Bestiary {
 				cl = Crownslayer_shadow.class;
 				rotation.set(i, cl);
 			}
+		}
+	}
+	private static void swapMobVictoryLapAlts(ArrayList<Class<?extends Mob>> rotation){
+		int rounds = Statistics.victoryLapRounds;
+		for (int i = 0; i < rotation.size(); i++) {
+			Class<? extends Mob> cl = rotation.get(i);
+			if (rounds > 0 && Random.Float()< ((rounds+10f)/(rounds+19f))) {//TODO 临时改成10，记得改回1
+				if (cl == Slug.class) {
+					switch(Random.Int(3)){
+						default:
+						case 0: cl = Albino.class; break;
+						case 1: cl = BlackwaterSlug.class; break;
+						case 2: cl = RoughlyRaisedSlug.class; break;
+					}
+				} else if (cl == Gnoll.class) {
+					switch(Random.Int(3)){
+						default:
+						case 0: cl = Gnoll.class; break;
+						case 1: cl = Gnoll.class; break;
+						case 2: cl = Gnoll.class; break;
+					}
+				}
+			}
+			rotation.set(i, cl);
 		}
 	}
 }

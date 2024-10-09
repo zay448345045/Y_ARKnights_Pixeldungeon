@@ -62,6 +62,11 @@ public class King extends Mob {
 		spriteClass = MephistoSprite.class;
 		
 		HP = HT = 300;
+		damageMax = 40;
+		damageMin = 25;
+		drMax = 14;
+		drMin = 0;
+		attackSkill = 32;
 		EXP = 40;
 		defenseSkill = 25;
 		
@@ -86,22 +91,6 @@ public class King extends Mob {
 		nextPedestal = bundle.getBoolean( PEDESTAL );
 		BossHealthBar.assignBoss(this);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 25, 40 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 32;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 14);
-	}
-	
 	@Override
 	protected boolean getCloser( int target ) {
 		return canTryToSummon() ?

@@ -58,7 +58,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Originiutant;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogFist;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Lens;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlowParticle;
@@ -73,8 +72,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourg
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAmplified;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAssassin;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
@@ -89,7 +86,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.HighGrass;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -1444,25 +1440,26 @@ public abstract class Level implements Bundlable {
 	}
 	private void setVictoryLapBonus(Mob m){
 		int rounds = Statistics.victoryLapRounds;
-		m.addHTandHP(100*rounds);
-		m.addDamageMin(32*rounds);
-		m.addDamageMax(40*rounds);
-		m.addDrMax(15*rounds);
-		m.addEvasion(22*rounds);
-		m.addAccuracy(34*rounds);
-		m.addExp(Math.round((13.5f)*rounds));
-		m.addMaxLvl(22*rounds);
-		if(Random.Float(1)< (rounds/(rounds+2f))){
+		m.addHTandHP(m.hthpInc);
+		m.addDamageMax(m.damageMaxInc);
+		m.addDamageMin(m.damageMinInc);
+		m.addDrMax(m.drMaxInc);
+		m.addDefenseSkill(m.defenseSkillInc);
+		m.addAttackSkill(m.attackSkillInc);
+		m.addExp(m.EXPInc);
+		m.addMaxLvl(m.maxLvlInc);
+		if(Random.Float()< (rounds/(rounds+4f))){
 			int championTimes = Random.IntUsingLuck(rounds+2,-1);
 			for(int i=0; i<championTimes; i++){
 				toChampion(m);
 			}
 		}
-		if(Random.Float(1)< (rounds/(rounds+2f))) {
+		if(Random.Float()< (rounds/(rounds+4f))) {
 			int honorTimes = Random.IntUsingLuck(rounds + 2, -1);
 			for (int i = 0; i < honorTimes; i++) {
 				toHonor(m);
 			}
 		}
+
 	}
 }

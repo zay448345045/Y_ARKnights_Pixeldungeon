@@ -24,6 +24,7 @@ public class TiacauhBrave extends Mob {
         spriteClass = Tiacauh_BraveSprite.class;
 
         HP = HT = 165;
+        attackSkill = 47;
         defenseSkill = 18;
 
         EXP = 20;
@@ -41,20 +42,14 @@ public class TiacauhBrave extends Mob {
     @Override
     public int damageRoll() {
 
-        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE))  return Random.NormalIntRange( 44, 57 );
-        return Random.NormalIntRange( 35, 57 );
+        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE))  return Random.NormalIntRange( 44+damageMinInc, 57+damageMaxInc );
+        return Random.NormalIntRange( 35+damageMinInc, 57+damageMaxInc );
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 47;
-    }
-
     @Override
     public int drRoll()
     {
-        if (!isAttack) return Random.NormalIntRange(20, 50);
-        return Random.NormalIntRange(0, 18);
+        if (!isAttack) return Random.NormalIntRange(20+drMinInc, 50+drMaxInc);
+        return Random.NormalIntRange(0+drMinInc, 18+drMaxInc);
     }
 
     @Override

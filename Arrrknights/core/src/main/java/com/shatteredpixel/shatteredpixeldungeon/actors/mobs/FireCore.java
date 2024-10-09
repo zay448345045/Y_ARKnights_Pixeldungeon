@@ -63,7 +63,7 @@ public class FireCore extends Mob{
 
     @Override
     public void damage(int dmg, Object src) {
-        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && dmg > 20) dmg = 20;
+        if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && dmg > 20+20*rounds) dmg = 20+20*rounds;
         super.damage(dmg, src);
     }
 

@@ -17,6 +17,11 @@ public class TiacauhWarrior extends Mob {
         spriteClass = Tiacauh_warriorSprite.class;
 
         HP = HT = 110;
+        damageMax = 40;
+        damageMin = 28;
+        drMax = 16;
+        drMin = 0;
+        attackSkill = 38;
         defenseSkill = 18;
 
         EXP = 14;
@@ -27,22 +32,6 @@ public class TiacauhWarrior extends Mob {
 
         immunities.add(Silence.class);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 28, 40 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 38;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 16);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         int grassCells = 0;

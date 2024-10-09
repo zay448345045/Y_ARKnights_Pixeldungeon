@@ -48,9 +48,14 @@ public class Snake extends Mob {
 		spriteClass = BabyBugSprite.class;
 		
 		HP = HT = 1;
+		hthpIncRate = 10;
+		hthpInc = hthpIncRate*rounds;
 		defenseSkill = 35;
 		
 		EXP = 2;
+		damageMax = 2;
+		damageMin = 1;
+		attackSkill = 10;
 		maxLvl = 7;
 		
 		loot = Generator.Category.SEED;
@@ -61,17 +66,6 @@ public class Snake extends Mob {
 		immunities.add(ChampionEnemy.R2Overloading.class);
 		properties.add(Property.INFECTED);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 1, 2 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 10;
-	}
-
 
 	private static int dodges = 0;
 

@@ -15,6 +15,8 @@ public class TiacauhSniper extends TiacauhLancer {
         spriteClass = Tiacauh_ImpalerSprite.class;
 
         HP = HT = 125;
+        damageMax = 42;
+        damageMin = 30;
         defenseSkill = 16;
 
         EXP = 17;
@@ -32,12 +34,6 @@ public class TiacauhSniper extends TiacauhLancer {
         if (super.canAttack(enemy)) return true;//change from budding
         return this.fieldOfView[enemy.pos] && Dungeon.level.distance(this.pos, enemy.pos) <= 4;
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(30,42);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (src == Burning.class) dmg *= 2;

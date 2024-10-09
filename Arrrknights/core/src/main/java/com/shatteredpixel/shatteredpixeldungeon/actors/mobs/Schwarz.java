@@ -32,6 +32,7 @@ public class Schwarz extends Mob {
         spriteClass = SchwarzSprite.class;
 
         HP = HT = 1000;
+        attackSkill = 40;
         defenseSkill = 100;
 
         state = HUNTING;
@@ -55,10 +56,6 @@ public class Schwarz extends Mob {
         if (Phase==2) return Random.NormalIntRange( 65, 80 );
         return Random.NormalIntRange( 50, 70 );
     }
-
-    @Override
-    public int attackSkill( Char target ) {return 40; }
-
     @Override
     public void damage(int dmg, Object src) {
         Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));

@@ -26,6 +26,11 @@ public class Sniper extends Mob {
         spriteClass = Siesta_SniperSprite.class;
 
         HP = HT = 120;
+        damageMax = 48;
+        damageMin = 32;
+        drMax = 12;
+        drMin = 0;
+        attackSkill = 44;
         defenseSkill = 22;
 
         EXP = 16;
@@ -38,22 +43,6 @@ public class Sniper extends Mob {
     }
 
     private int charge = 0; // 2이 될경우 강화 사격
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange(32, 48);
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 44;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 12);
-    }
-
     @Override
     protected boolean canAttack( Char enemy ) {
         Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);

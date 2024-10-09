@@ -59,6 +59,11 @@ public class Golem extends Mob {
 		spriteClass = GolemSprite.class;
 		
 		HP = HT = 95;
+		damageMax = 30;
+		damageMin = 25;
+		drMax = 12;
+		drMin = 0;
+		attackSkill = 28;
 		defenseSkill = 15;
 		
 		EXP = 12;
@@ -74,22 +79,6 @@ public class Golem extends Mob {
 		WANDERING = new Wandering();
 		HUNTING = new Hunting();
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 25, 30 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 28;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 12);
-	}
-
 	@Override
 	public void rollToDropLoot() {
 		if(buff(StaffOfMageHand.MageHandStolenTracker.class)==null) {

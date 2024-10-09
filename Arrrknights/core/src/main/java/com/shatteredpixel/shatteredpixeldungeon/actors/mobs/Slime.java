@@ -40,6 +40,9 @@ public class Slime extends Mob {
 		spriteClass = ShieldedSprite.class;
 		
 		HP = HT = 22;
+		damageMax = 6;
+		damageMin = 2;
+		attackSkill = 12;
 		defenseSkill = 5;
 		
 		EXP = 4;
@@ -50,22 +53,11 @@ public class Slime extends Mob {
 
 		immunities.add(Silence.class);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 2, 6 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}
-	
 	@Override
 	public void damage(int dmg, Object src) {
-		if (dmg >= 5){
+		if (dmg >= 5+20*rounds){
 			//takes 5/6/7/8/9/10 dmg at 5/7/10/14/19/25 incoming dmg
-			dmg = 4 + (int)(Math.sqrt(8*(dmg - 4) + 1) - 1)/2;
+			dmg = 4 + (int)(Math.sqrt(8*(dmg - 4) + 1) - 1)/2 + 20*rounds;
 		}
 		super.damage(dmg, src);
 	}

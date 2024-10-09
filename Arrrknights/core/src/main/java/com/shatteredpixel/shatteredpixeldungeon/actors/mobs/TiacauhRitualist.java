@@ -25,6 +25,11 @@ public class TiacauhRitualist extends Mob{
         spriteClass = TiacauhRitualistSprite.class;
 
         HP = HT = 115;
+        damageMax = 48;
+        damageMin = 38;
+        drMax = 16;
+        drMin = 0;
+        attackSkill = 40;
         defenseSkill = 23;
 
         EXP = 17;
@@ -34,22 +39,6 @@ public class TiacauhRitualist extends Mob{
         lootChance = 0.5f;
 
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 38, 48 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 40;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 16);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (src == Burning.class) dmg *= 2;
@@ -76,7 +65,7 @@ public class TiacauhRitualist extends Mob{
             spend( TIME_TO_ZAP );
 
             if (hit( this, enemy, true )) {
-                int dmg = Random.NormalIntRange(12, 18);
+                int dmg = Random.NormalIntRange(12+damageMinInc/2, 18+damageMaxInc/2);
                 enemy.damage( dmg, new TiacauhRitualist.TiacauhBolat() );
 
                 if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && Random.Int(2) == 0) {

@@ -14,6 +14,11 @@ public class Infantry extends Mob {
         spriteClass = Siesta_InfantrySprite.class;
 
         HP = HT = 125;
+        damageMax = 45;
+        damageMin = 35;
+        drMax = 20;
+        drMin = 0;
+        attackSkill = 40;
         defenseSkill = 25;
 
         EXP = 15;
@@ -24,22 +29,6 @@ public class Infantry extends Mob {
 
         immunities.add(Silence.class);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 33, 45 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 40;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 20);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
 

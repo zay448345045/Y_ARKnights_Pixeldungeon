@@ -54,6 +54,11 @@ public class Guard extends Mob {
 		spriteClass = SarkazCasterSprite.class;
 
 		HP = HT = 40;
+		damageMax = 12;
+		damageMin = 4;
+		drMax = 7;
+		drMin = 0;
+		attackSkill = 12;
 		defenseSkill = 10;
 
 		EXP = 7;
@@ -67,12 +72,6 @@ public class Guard extends Mob {
 		properties.add(Property.SARKAZ);
 		immunities.add(Silence.class);
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(4, 12);
-	}
-
 	private boolean chain(int target){
 		if (chainsUsed || enemy.properties().contains(Property.IMMOVABLE))
 			return false;
@@ -132,17 +131,6 @@ public class Guard extends Mob {
 			GameScene.updateFog();
 		}
 	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 7);
-	}
-
 	@Override
 	public void rollToDropLoot() {
 		//each drop makes future drops 1/2 as likely

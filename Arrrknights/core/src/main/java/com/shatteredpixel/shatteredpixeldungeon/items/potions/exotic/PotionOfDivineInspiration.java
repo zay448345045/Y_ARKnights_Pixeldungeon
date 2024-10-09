@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
@@ -65,7 +66,7 @@ public class PotionOfDivineInspiration extends ExoticPotion{
         ){
             @Override
             protected boolean enabled(int index) {
-                return enabled[index+1];
+                return (enabled[index+1] || Statistics.victoryLapRounds>0);
             }
 
             @Override
@@ -123,6 +124,7 @@ public class PotionOfDivineInspiration extends ExoticPotion{
         }
 
         private boolean[] boostedTiers = new boolean[5];
+        private int[] tierBoostedCounts = new int[5];
 
         private static final String BOOSTED_TIERS = "boosted_tiers";
 
@@ -140,11 +142,14 @@ public class PotionOfDivineInspiration extends ExoticPotion{
 
         public void setBoosted( int tier ){
             boostedTiers[tier] = true;
+            tierBoostedCounts[tier] += 2;
         }
 
         public boolean isBoosted( int tier ){
             return boostedTiers[tier];
         }
-
+        public int boostedCounts( int tier ){
+            return tierBoostedCounts[tier];
+        }
     }
 }

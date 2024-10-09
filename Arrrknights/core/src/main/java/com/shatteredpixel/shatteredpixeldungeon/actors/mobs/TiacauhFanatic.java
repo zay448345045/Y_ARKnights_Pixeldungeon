@@ -18,6 +18,15 @@ public class TiacauhFanatic extends Mob {
         spriteClass = Tiacauh_fanaticSprite.class;
 
         HP = HT = 75;
+        damageMax = 32;
+        damageMaxIncRate = 16;
+        damageMaxInc = damageMaxIncRate*rounds;
+        damageMin = 20;
+        damageMinIncRate = 13;
+        damageMinInc = damageMinIncRate*rounds;
+        drMax = 14;
+        drMin = 0;
+        attackSkill = 36;
         defenseSkill = 40;
 
         EXP = 14;
@@ -28,31 +37,14 @@ public class TiacauhFanatic extends Mob {
 
         immunities.add(Silence.class);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 20, 32 );
-    }
-
     @Override
     protected float attackDelay() {
         return super.attackDelay() * 0.4f;
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 36;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 14);
-    }
-
     @Override
     public int attackProc(Char enemy, int damage) {
         int dmgbouns = enemy.drRoll() / 4;
-        dmgbouns = Math.min(dmgbouns, 8);
+        dmgbouns = Math.min(dmgbouns, 8+8*rounds);
         damage += dmgbouns;
         return super.attackProc(enemy, damage);
     }

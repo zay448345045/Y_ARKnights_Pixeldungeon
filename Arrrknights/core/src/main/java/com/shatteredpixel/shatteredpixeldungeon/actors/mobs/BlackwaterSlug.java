@@ -21,42 +21,37 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
-import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.FistSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.InfantrySprite;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.Bug_ASprite;
 import com.watabou.utils.Random;
 
-public class Gnoll extends Mob {
-	
-	{
-		spriteClass = InfantrySprite.class;
-		
-		HP = HT = 12;
-		damageMax = 6;
-		damageMin = 1;
-		drMax = 2;
-		drMin = 0;
-		attackSkill = 10;
-		defenseSkill = 4;
-		
-		EXP = 2;
-		maxLvl = 8;
-		
-		loot = Gold.class;
-		lootChance = 0.5f;
+public class BlackwaterSlug extends Slug {
 
-		immunities.add(Silence.class);
-	}
-	@Override
-	public boolean hasNotebookSkill(){ return true;}
-	@Override
-	public void notebookSkill(ScholarNotebook notebook, int index){
-		Buff.affect(Dungeon.hero, Barrier.class).setShield(5);
-	}
+    {
+        spriteClass = Bug_ASprite.class;
+
+        HP = HT = 15;
+        damageMaxIncRate = 45;
+        damageMaxInc = damageMaxIncRate*rounds;
+        damageMinIncRate = 35;
+        damageMinInc = damageMinIncRate*rounds;
+        drMaxIncRate = 10;
+        drMaxInc = drMaxIncRate*rounds;
+        EXP = 2;
+
+        properties.add(Property.INFECTED);
+    }
+
+    @Override
+    public int attackProc(Char enemy, int damage) {
+        damage = super.attackProc(enemy, damage);
+        if (Random.Int(2) == 0) {
+            Buff.affect(enemy, Ooze.class).set(Ooze.DURATION);
+            enemy.sprite.burst(0x000000, 5);
+        }
+
+        return damage;
+    }
 }

@@ -37,6 +37,11 @@ public class Bat extends Mob {
 		spriteClass = BreakerSprite.class;
 		
 		HP = HT = 32;
+		damageMax = 17;
+		damageMin = 5;
+		drMax = 4;
+		drMin = 0;
+		attackSkill = 16;
 		defenseSkill = 15;
 		baseSpeed = 2f;
 		
@@ -46,22 +51,6 @@ public class Bat extends Mob {
 		loot = new PotionOfHealing();
 		lootChance = 0.2f; //by default, see rollToDropLoot()
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 5, 17 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 16;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 4);
-	}
-	
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );

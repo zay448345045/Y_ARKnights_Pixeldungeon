@@ -20,6 +20,11 @@ public class ExplodeSlug_A extends Mob {
         spriteClass = ExplodSulgSprite.Elite.class;
 
         HP = HT = 165;
+        damageMax = 46;
+        damageMin = 38;
+        drMax = 24;
+        drMin = 0;
+        attackSkill = 45;
         defenseSkill = 28;
 
         EXP = 21;
@@ -31,12 +36,6 @@ public class ExplodeSlug_A extends Mob {
        immunities.add(Burning.class);
         properties.add(Property.INFECTED);
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 38,46 );
-    }
-
     @Override
     public void die( Object cause ) {
         boolean Silenced = false;
@@ -50,7 +49,7 @@ public class ExplodeSlug_A extends Mob {
             for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
                 Char ch = findChar(pos + PathFinder.NEIGHBOURS8[i]);
                 if (ch != null && ch.isAlive()) {
-                    int damage = Random.NormalIntRange(70, 100);
+                    int damage = Random.NormalIntRange(70+50*rounds, 100+70*rounds);
                     damage = Math.max(0, damage - (ch.drRoll() + ch.drRoll()));
                     ch.damage(damage, this);
                     if (ch.isAlive()) Buff.affect(ch, Burning.class).reignite(ch);
@@ -64,15 +63,5 @@ public class ExplodeSlug_A extends Mob {
                 Dungeon.fail(getClass());
                 GLog.n(Messages.get(this, "explo_kill"));
             }
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 45;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 24);
     }
 }

@@ -63,6 +63,10 @@ public class Warlock extends Mob implements Callback {
 		spriteClass = ThrowerSprite.class;
 		
 		HP = HT = 75;
+		damageMax = 18;
+		damageMin = 12;
+		drMax = 8;
+		drMin = 0;
 		defenseSkill = 18;
 		
 		EXP = 11;
@@ -72,16 +76,10 @@ public class Warlock extends Mob implements Callback {
 		lootChance = 0.5f;
 
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 12, 18 );
-	}
-	
 	@Override
 	public int attackSkill( Char target ) {
 		Buff.affect(this, ActiveOriginium.class).set(HT * 0.1f);
-		return 25;
+		return 25+attackSkillInc;
 	}
 
 	@Override
@@ -93,12 +91,6 @@ public class Warlock extends Mob implements Callback {
 			return super.attackDelay() * 0.5f;
 		}
 	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 8);
-	}
-	
 	@Override
 	protected boolean canAttack( Char enemy ) {
 		if(this.buff(Silence.class) != null) return false;
@@ -131,7 +123,7 @@ public class Warlock extends Mob implements Callback {
 
 		if (hit( this, enemy, true )) {
 
-			int dmg = Random.NormalIntRange( 14, 18 );
+			int dmg = Random.NormalIntRange( 14+damageMinInc/2, 18+damageMaxInc/2 );
 			enemy.damage( dmg, new DarkBolt() );
 			if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE)) Buff.affect(enemy, Weakness.class, 2f);
 			

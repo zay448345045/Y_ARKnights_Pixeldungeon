@@ -159,6 +159,7 @@ public class AmuletScene extends PixelScene {
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 		Generator.fullReset();
+		Dungeon.LimitedDrops.victoryLapReset();//重置升级、力量、敌人掉落的治疗、装备等
 
 		InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 		Game.switchScene( InterlevelScene.class );

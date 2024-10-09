@@ -126,7 +126,7 @@ public class Pylon extends Mob {
 	private void shockChar( Char ch ){
 		if (ch != null && !(ch instanceof NewDM300) && ch.alignment != this.alignment){
 			ch.sprite.flash();
-			ch.damage(Random.NormalIntRange(10, 20), new Electricity());
+			ch.damage(Random.NormalIntRange(10+damageMinInc, 20+damageMaxInc), new Electricity());
 			if (Dungeon.isChallenged(Challenges.DECISIVE_BATTLE)) {
 				Buff.affect(ch, Silence.class,50f);
 				Buff.affect(ch, Paralysis.class,1f);
@@ -184,9 +184,9 @@ public class Pylon extends Mob {
 		if (alignment == Alignment.NEUTRAL){
 			return;
 		}
-		if (dmg >= 15){
+		if (dmg >= (15+15*rounds)){
 			//takes 15/16/17/18/19/20 dmg at 15/17/20/24/29/36 incoming dmg
-			dmg = 14 + (int)(Math.sqrt(8*(dmg - 14) + 1) - 1)/2;
+			dmg = 14 + (int)(Math.sqrt(8*(dmg - 14) + 1) - 1)/2 + 15*rounds;
 		}
 		super.damage(dmg, src);
 	}

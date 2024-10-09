@@ -34,6 +34,15 @@ public class Ergate extends Mob {
         spriteClass = ErgateSprite.class;
 
         HP = HT = 75;
+        damageMax = 35;
+        damageMaxIncRate = 20;
+        damageMaxInc = damageMaxIncRate*rounds;
+        damageMin = 24;
+        damageMinIncRate = 16;
+        damageMinInc = damageMinIncRate*rounds;
+        drMax = 6;
+        drMin = 0;
+        attackSkill = 35;
         defenseSkill = 40;
 
         EXP = 15;
@@ -45,12 +54,6 @@ public class Ergate extends Mob {
         lootChance = 0.2f;
 
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 24, 35 );
-    }
-
     @Override
     protected float attackDelay() {
         return super.attackDelay()*0.5f;
@@ -79,17 +82,6 @@ public class Ergate extends Mob {
         }
         return loot;
     }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 35;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 6);
-    }
-
     @Override
     public int attackProc( Char enemy, int damage ) {
         damage = super.attackProc( enemy, damage );

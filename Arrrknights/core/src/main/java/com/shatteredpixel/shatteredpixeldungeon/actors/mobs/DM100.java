@@ -44,6 +44,12 @@ public class DM100 extends Mob implements Callback {
 		spriteClass = A_master1Sprite.class;
 		
 		HP = HT = 20;
+
+		damageMax = 2;
+		damageMin = 8;
+		drMax = 4;
+		drMin = 0;
+		attackSkill = 11;
 		defenseSkill = 8;
 		
 		EXP = 6;
@@ -57,21 +63,6 @@ public class DM100 extends Mob implements Callback {
 		properties.add(Property.ELECTRIC);
 		properties.add(Property.INORGANIC);
 		properties.add(Property.DRONE);
-	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 2, 8 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 11;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 4);
 	}
 	
 	@Override
@@ -95,7 +86,7 @@ public class DM100 extends Mob implements Callback {
 			spend( TIME_TO_ZAP );
 			
 			if (hit( this, enemy, true )) {
-				int dmg = Random.NormalIntRange(3, 10);
+				int dmg = Random.NormalIntRange(3+(damageMinIncRate/2)*rounds, 10+(damageMaxIncRate/2)*rounds);
 				enemy.damage( dmg, new LightningBolt() );
 
 				if (enemy.sprite.visible) {

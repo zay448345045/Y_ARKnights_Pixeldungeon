@@ -41,6 +41,8 @@ public class SiestaBoss extends Mob {
         spriteClass = CroninSprite.class;
 
         HP = HT = 1200;
+        drMax = 10;
+        drMin = 0;
         defenseSkill = 0;
 
         EXP = 40;
@@ -72,12 +74,6 @@ public class SiestaBoss extends Mob {
     protected Char chooseEnemy() {
         return null;
     }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 10);
-    }
-
     @Override
     protected boolean act() {
         if(Dungeon.hero!=null){//change from budding

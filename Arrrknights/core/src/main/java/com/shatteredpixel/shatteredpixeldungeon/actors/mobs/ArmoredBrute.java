@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -37,15 +38,12 @@ public class ArmoredBrute extends Brute {
 
 	{
 		spriteClass = AvengerSprite.class;
-		
+
+		drMax = 10;
+		drMin = 6;
 		//see rollToDropLoot
 		loot = Generator.Category.ARMOR;
 		lootChance = 1f;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(6, 10);
 	}
 	
 	@Override
@@ -71,13 +69,13 @@ public class ArmoredBrute extends Brute {
 		
 		@Override
 		public boolean act() {
-			
+			int rounds = Statistics.victoryLapRounds;
 			if (target.HP > 0){
 				detach();
 				return true;
 			}
 			
-			absorbDamage( 1 );
+			absorbDamage( 1+rounds );
 			
 			if (shielding() <= 0){
 				target.die(null);

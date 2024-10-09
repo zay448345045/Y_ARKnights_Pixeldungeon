@@ -16,6 +16,11 @@ public class Cannot extends Mob {
         spriteClass = CannotSprite.class;
 
         HP = HT = 250;
+        damageMax = 40;
+        damageMin = 35;
+        drMax = 12;
+        drMin = 0;
+        attackSkill = 35;
         defenseSkill = 20;
 
         EXP = 15;
@@ -32,21 +37,6 @@ public class Cannot extends Mob {
     }
 
     @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 35, 40 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 35;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 12);
-    }
-
-    @Override
     protected boolean canAttack(Char enemy) {
         if (this.fieldOfView[enemy.pos]){ return true; }
         return false;
@@ -54,7 +44,7 @@ public class Cannot extends Mob {
 
     @Override
     public int attackProc( Char enemy, int damage ) {
-        Buff.affect(enemy, Bleeding.class).set(10);
+        Buff.affect(enemy, Bleeding.class).set(10 + 5*rounds);
         Buff.affect(enemy, Vertigo.class, 2f);
 
         return damage;

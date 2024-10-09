@@ -96,6 +96,11 @@ public class DwarfKing extends Mob {
 		spriteClass = MephistoSprite.class;
 
 		HP = HT = 300;
+		damageMax = 25;
+		damageMin = 15;
+		drMax = 10;
+		drMin = 0;
+		attackSkill = 26;
 		EXP = 40;
 		defenseSkill = 22;
 
@@ -107,22 +112,6 @@ public class DwarfKing extends Mob {
 	{
 		super();
 	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 15, 25 );
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 26;
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 10);
-	}
-
 	private int phase = 1;
 	private int summonsMade = 0;
 

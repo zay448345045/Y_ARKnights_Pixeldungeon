@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
@@ -22,6 +23,11 @@ public class AcidSlug_A extends Mob implements Callback {
         spriteClass = Acid_AlphaSprite.class;
 
         HP = HT = 150;
+        damageMax = 48;
+        damageMin = 36;
+        drMax = 20;
+        drMin = 0;
+        attackSkill = 40;
         defenseSkill = 30;
 
         EXP = 22;
@@ -32,21 +38,6 @@ public class AcidSlug_A extends Mob implements Callback {
 
         properties.add(Property.INFECTED);
 
-    }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 36, 48 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 40;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 20);
     }
 
     @Override
@@ -81,7 +72,7 @@ public class AcidSlug_A extends Mob implements Callback {
 
         if (hit( this, enemy, true )) {
 
-            int dmg = Random.NormalIntRange( 38, 44 );
+            int dmg = Random.NormalIntRange( 38+(damageMaxIncRate/2)*rounds, 44+(damageMaxIncRate/2)*rounds );
             enemy.damage( dmg, new AcidSlug_A.AcidBolt() );
             if (enemy.isAlive()) {
                 Buff.affect(enemy, Ooze.class).set(Ooze.DURATION);

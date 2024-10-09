@@ -28,6 +28,8 @@ public class GiantMushroom extends Mob {
         spriteClass = GiantMushRoomSprtie.class;
 
         HP = HT = 250;
+        drMax = 24;
+        drMin = 0;
         defenseSkill = 0;
 
         EXP = 20;
@@ -42,12 +44,6 @@ public class GiantMushroom extends Mob {
 
         state = PASSIVE;
     }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 24);
-    }
-
     @Override
     protected boolean act() {
         PathFinder.buildDistanceMap(this.pos, BArray.not(Dungeon.level.solid, null), 2);

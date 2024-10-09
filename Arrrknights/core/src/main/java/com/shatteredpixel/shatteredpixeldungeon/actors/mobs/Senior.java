@@ -50,9 +50,9 @@ public class Senior extends Monk {
 	{
 		Focus f = buff(Focus.class);
 		if (f != null) {
-			return Random.NormalIntRange( 21, 33 );
+			return Random.NormalIntRange( 21+damageMinInc/2, 33+damageMaxInc/2 );
 		}
-		return Random.NormalIntRange( 12, 28 );
+		return Random.NormalIntRange( 12+damageMinInc/2, 28+damageMaxInc/2 );
 	}
 	@Override
 	public boolean hasNotebookSkill(){ return true;}

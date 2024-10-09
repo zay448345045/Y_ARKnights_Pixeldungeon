@@ -45,6 +45,11 @@ public class Scorpio extends Mob {
 		spriteClass = SarkazSniperSprite.class;
 		
 		HP = HT = 110;
+		damageMax = 44;
+		damageMin = 32;
+		drMax = 16;
+		drMin = 0;
+		attackSkill = 42;
 		defenseSkill = 24;
 		viewDistance = Light.DISTANCE;
 		
@@ -57,22 +62,6 @@ public class Scorpio extends Mob {
 		properties.add(Property.SARKAZ);
 		immunities.add(Silence.class);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 32, 44 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 42;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 16);
-	}
-	
 	@Override
 	protected boolean canAttack( Char enemy ) {
 		Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);

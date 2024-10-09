@@ -79,26 +79,16 @@ public abstract class Elemental extends Mob {
 		defenseSkill = 20;
 		
 		EXP = 10;
+		damageMax = 25;
+		damageMin = 20;
+		drMax = 5;
+		drMin = 0;
+		attackSkill = 25;
 		maxLvl = 20;
 		
 		flying = true;
 
 		properties.add(Property.DRONE);
-	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 20, 25 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 25;
-	}
-	
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 5);
 	}
 	
 	private int rangedCooldown = Random.NormalIntRange( 3, 5 );

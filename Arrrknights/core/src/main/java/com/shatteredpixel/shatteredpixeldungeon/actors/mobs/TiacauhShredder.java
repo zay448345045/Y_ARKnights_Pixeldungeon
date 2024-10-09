@@ -18,6 +18,11 @@ public class TiacauhShredder extends Mob {
         spriteClass = Tiacauh_ShredderSprite.class;
 
         HP = HT = 180;
+        damageMax = 48;
+        damageMin = 38;
+        drMax = 20;
+        drMin = 0;
+        attackSkill = 40;
         defenseSkill = 24;
 
         EXP = 15;
@@ -37,22 +42,6 @@ public class TiacauhShredder extends Mob {
         }
         return super.act();
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 38, 48 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 40;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 20);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (src == Burning.class) dmg *= 2;

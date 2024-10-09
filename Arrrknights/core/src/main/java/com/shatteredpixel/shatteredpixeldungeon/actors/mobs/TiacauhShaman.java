@@ -23,26 +23,15 @@ public class TiacauhShaman extends TiacauhRitualist {
         spriteClass = TiacauhShamanSprite.class;
 
         HP = HT = 130;
+        damageMax = 64;
+        damageMin = 48;
+        drMax = 16;
+        drMin = 0;
+        attackSkill = 40;
 
         loot = Generator.Category.SKL_RND;
         lootChance = 1f;
     }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 48, 64 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 40;
-    }
-
-    @Override
-    public int drRoll() {
-        return Random.NormalIntRange(0, 16);
-    }
-
     @Override
     public void damage(int dmg, Object src) {
         if (src == Burning.class) dmg *= 2;
@@ -69,7 +58,7 @@ public class TiacauhShaman extends TiacauhRitualist {
             spend( TIME_TO_ZAP );
 
             if (hit( this, enemy, true )) {
-                int dmg = Random.NormalIntRange(12, 18);
+                int dmg = Random.NormalIntRange(12+damageMinInc/2, 18+drMaxIncRate/2);
                 enemy.damage( dmg, new TiacauhShaman.TiacauhBolat() );
 
                 if (Dungeon.isChallenged(Challenges.TACTICAL_UPGRADE) && Random.Int(2) == 0) {

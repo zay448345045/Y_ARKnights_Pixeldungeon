@@ -24,6 +24,11 @@ public class Originiutant extends Mob {
         spriteClass = OriginiutantSprite.class;
 
         HP = HT = 800;
+        damageMax = 90;
+        damageMin = 70;
+        drMax = 0;
+        drMin = 0;
+        attackSkill = 44;
         defenseSkill = 12;
 
         EXP = 27;
@@ -84,20 +89,5 @@ public class Originiutant extends Mob {
 
         return true;
 
-    }
-
-    @Override
-    public int damageRoll() {
-        return Random.NormalIntRange( 70, 90 );
-    }
-
-    @Override
-    public int attackSkill( Char target ) {
-        return 44;
-    }
-
-    @Override
-    public int drRoll() {
-        return 0;
     }
 }

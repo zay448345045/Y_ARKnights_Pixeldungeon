@@ -109,6 +109,7 @@ public class NewDM300 extends Mob {
         spriteClass = MudrockSprite.class;
 
         HP = HT = 300;
+        attackSkill = 20;
         EXP = 30;
         defenseSkill = 15;
 
@@ -129,22 +130,16 @@ public class NewDM300 extends Mob {
 
     @Override
     public int damageRoll() {
-        return Random.NormalIntRange(12, 22 + DamageUP);
+        return Random.NormalIntRange(12 +damageMinInc, 22 + DamageUP+damageMaxInc);
     }
-
-    @Override
-    public int attackSkill(Char target) {
-        return 20;
-    }
-
     @Override
     public int drRoll() {
-        if (!Finalcharged) return Random.NormalIntRange(0, 10);
+        if (!Finalcharged) return Random.NormalIntRange(0+drMinInc, 10+drMaxInc);
         else {
             if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.mboss14 == 1) {
-                return Random.NormalIntRange(12, 24);
+                return Random.NormalIntRange(12+drMinInc, 24+drMaxInc);
             }
-            else return Random.NormalIntRange(3, 10);
+            else return Random.NormalIntRange(3+drMinInc, 10+drMaxInc);
         }
     }
 
