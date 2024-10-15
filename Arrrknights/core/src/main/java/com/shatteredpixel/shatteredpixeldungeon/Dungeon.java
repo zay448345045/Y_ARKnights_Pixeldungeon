@@ -87,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
@@ -476,7 +477,6 @@ public class Dungeon {
 		}
 		
 		level.create();
-		
 		Statistics.qualifiedForNoKilling = !bossLevel();
 
 		BadgeOfCharger boc = Dungeon.hero.belongings.getItem(BadgeOfCharger.class);
@@ -560,7 +560,7 @@ public class Dungeon {
 		}
 		
 		hero.curAction = hero.lastAction = null;
-		
+
 		observe();
 		try {
 			saveAll();

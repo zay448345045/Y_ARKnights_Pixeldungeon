@@ -48,8 +48,6 @@ import com.watabou.utils.Random;
 public class Guard extends Mob {
 
 	//they can only use their chains once
-	private boolean chainsUsed = false;
-
 	{
 		spriteClass = SarkazCasterSprite.class;
 
@@ -70,12 +68,10 @@ public class Guard extends Mob {
 		HUNTING = new Hunting();
 
 		properties.add(Property.SARKAZ);
-		immunities.add(Silence.class);
 	}
+	private int chainCooldown = 0;
 	private boolean chain(int target){
-		if (chainsUsed || enemy.properties().contains(Property.IMMOVABLE))
-			return false;
-
+		if (chainCooldown>0 || enemy.properties().contains(Property.IMMOVABLE)) return false;
 		Ballistica chain = new Ballistica(pos, target, Ballistica.PROJECTILE);
 
 		if (chain.collisionPos != enemy.pos
@@ -116,7 +112,7 @@ public class Guard extends Mob {
 				}
 			}
 		}
-		chainsUsed = true;
+		chainCooldown = 15;
 		return true;
 	}
 
@@ -154,31 +150,32 @@ public class Guard extends Mob {
 		}
 	}
 
-	private static final String CHAINSUSED = "chainsused";
+	private static final String CHAINCOOLDOWN = "chaincooldown";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put(CHAINSUSED, chainsUsed);
+		bundle.put(CHAINCOOLDOWN, chainCooldown);
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		chainsUsed = bundle.getBoolean(CHAINSUSED);
+		chainCooldown = bundle.getInt(CHAINCOOLDOWN);
 	}
 	
 	private class Hunting extends Mob.Hunting{
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
+			if(Dungeon.level.heraldAlive) chainCooldown--;
 			enemySeen = enemyInFOV;
-			
-			if (!chainsUsed
+			if(buff(Silence.class) != null) return super.act( enemyInFOV, justAlerted );
+			if (chainCooldown<=0
 					&& enemyInFOV
 					&& !isCharmedBy( enemy )
 					&& !canAttack( enemy )
-					&& Dungeon.level.distance( pos, enemy.pos ) < 5
-					&& Random.Int(3) == 0
+					&& Dungeon.level.distance( pos, enemy.pos ) < 5+(Dungeon.level.heraldAlive?2:0)
+					&& (Random.Int(3) == 0 || (Dungeon.level.heraldAlive&&Random.Int(2) == 0))
 					
 					&& chain(enemy.pos)){
 				return !(sprite.visible || enemy.sprite.visible);

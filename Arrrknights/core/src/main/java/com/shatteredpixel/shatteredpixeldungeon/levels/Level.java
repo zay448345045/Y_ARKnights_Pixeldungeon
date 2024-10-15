@@ -22,6 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.ROR;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.eazymode;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy.toChampion;
 import static com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy.toHonor;
 
@@ -54,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GiantMushroom;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GuerrillaHerald;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Originiutant;
@@ -171,6 +174,7 @@ public abstract class Level implements Bundlable {
 
 	//when a boss level has become locked.
 	public boolean locked = false;
+	public boolean heraldAlive = false;
 	
 	public HashSet<Mob> mobs;
 	public SparseArray<Heap> heaps;
@@ -196,6 +200,7 @@ public abstract class Level implements Bundlable {
 	private static final String ENTRANCE	= "entrance";
 	private static final String EXIT		= "exit";
 	private static final String LOCKED      = "locked";
+	private static final String HERALDALIVE      = "heraldalive";
 	private static final String HEAPS		= "heaps";
 	private static final String PLANTS		= "plants";
 	private static final String TRAPS       = "traps";
@@ -394,6 +399,7 @@ public abstract class Level implements Bundlable {
 		exit		= bundle.getInt( EXIT );
 
 		locked      = bundle.getBoolean( LOCKED );
+		heraldAlive = bundle.getBoolean(HERALDALIVE);
 		curMoves = bundle.getFloat(CURMOVES);
 		
 		Collection<Bundlable> collection = bundle.getCollection( HEAPS );
@@ -478,6 +484,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( ENTRANCE, entrance );
 		bundle.put( EXIT, exit );
 		bundle.put( LOCKED, locked );
+		bundle.put( HERALDALIVE, heraldAlive );
 		bundle.put( HEAPS, heaps.valueList() );
 		bundle.put( PLANTS, plants.valueList() );
 		bundle.put( TRAPS, traps.valueList() );
@@ -532,6 +539,9 @@ public abstract class Level implements Bundlable {
 			ChampionEnemy.rollForHonor(m);
 		}
 		if(m!=null && Statistics.victoryLapRounds>0) setVictoryLapBonus(m);
+		if(m instanceof GuerrillaHerald){
+			heraldAlive = true;
+		}
 		return m;
 	}
 
@@ -646,6 +656,14 @@ public abstract class Level implements Bundlable {
 					}
 					if (!mob.buffs(ChampionEnemy.class).isEmpty()){
 						GLog.w(Messages.get(ChampionEnemy.class, "warn"));
+					}
+					if(mob instanceof GuerrillaHerald){
+						GLog.w(Messages.get(GuerrillaHerald.class, "warn"));
+						if(Dungeon.level.heraldAlive){
+							for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])) {
+								if(!m.sprite.hasEmitter(CharSprite.State.HIKARI)) m.sprite.add(CharSprite.State.HIKARI);
+							}
+						}
 					}
 					spend(Dungeon.level.respawnCooldown());
 				} else {

@@ -672,6 +672,12 @@ public abstract class Mob extends Char {
 	protected boolean hitWithRanged = false;
 
 	@Override
+	public int attackProc( Char enemy, int damage ) {
+		if(Dungeon.level.heraldAlive)damage = Math.round(damage*1.1f);
+		return super.attackProc(enemy,damage);
+	}
+
+	@Override
 	public int defenseProc( Char enemy, int damage ) {
 
 		Badges.validateLazyUnlock();
@@ -751,6 +757,8 @@ public abstract class Mob extends Char {
 				Dungeon.hero.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			}
 		}
+
+		if(Dungeon.level.heraldAlive) damage = Math.round(damage*0.9f);
 
 		return damage;
 	}

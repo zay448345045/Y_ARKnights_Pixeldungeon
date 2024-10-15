@@ -139,7 +139,44 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		super();
 		listener = this;
 	}
-	
+	public boolean hasEmitter(State s){
+		switch (s) {
+			case BURNING:
+				return burning!=null;
+			case LEVITATING:
+				return levitation !=null;
+			case INVISIBLE:
+				return invisible != null;
+			case PARALYSED:
+				return paused; 
+			case FROZEN:
+				return iceBlock != null;
+			case ILLUMINATED:
+				return light != null;
+			case CHILLED:
+				return chilled != null;
+			case DARKENED:
+				return darkBlock != null;
+			case MARKED:
+				return marked != null;
+			case HEALING:
+				return healing != null;
+			case SHIELDED:
+				return shield != null;
+			case TALU_BOSS:
+				return (taluboss != null || taluboss2 != null);
+			case HIKARI:
+				return hikari != null;
+			case BLACK_FOG:
+				return blackfog != null;
+			case HUNTING_MARK:
+				return huntingmark != null;
+			case VANISH:
+				return vanish != null;
+			default:
+				return false;
+		}
+	}
 	@Override
 	public void play(Animation anim) {
 		//Shouldn't interrupt the dieing animation

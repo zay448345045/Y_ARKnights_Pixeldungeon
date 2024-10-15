@@ -416,7 +416,7 @@ public class Bestiary {
 		int rounds = Statistics.victoryLapRounds;
 		for (int i = 0; i < rotation.size(); i++) {
 			Class<? extends Mob> cl = rotation.get(i);
-			if (rounds > 0 && Random.Float()< ((rounds+10f)/(rounds+19f))) {//TODO 临时改成10，记得改回1
+			if (rounds > 0 && Random.Float()< ((rounds+2f)/(rounds+5f))) {
 				if (cl == Slug.class) {
 					switch(Random.Int(3)){
 						default:
@@ -425,11 +425,48 @@ public class Bestiary {
 						case 2: cl = RoughlyRaisedSlug.class; break;
 					}
 				} else if (cl == Gnoll.class) {
+					switch(Random.Int(2)){
+						default:
+						case 0: cl = RioterLeader.class; break;
+						case 1: cl = CocktailThrower.class; break;
+					}
+				}
+				else if (cl == Hound.class) {
+					switch(Random.Int(2)){
+						default:
+						case 1: cl = Gloompincer.class; break;
+						case 2: cl = Rodent.class; break;
+					}
+				}else if (cl == Slime.class) {
 					switch(Random.Int(3)){
 						default:
-						case 0: cl = Gnoll.class; break;
-						case 1: cl = Gnoll.class; break;
-						case 2: cl = Gnoll.class; break;
+						case 0: cl = CausticSlime.class; break;
+						case 1: cl = LightArmoredSoldier.class; break;
+						case 2: cl = ShieldedGuard.class; break;
+					}
+				}else if (cl == Skeleton.class) {
+					switch(Random.Int(2)){
+						default:
+						case 0: cl = Skeleton.class; break;
+						case 2: cl = Bombtail.class; break;
+					}
+				}else if (cl == AirborneSoldier.class) {
+					switch(Random.Int(2)){
+						default:
+						case 0: cl = UrsusCrossbowman.class; break;
+						case 1: cl = GuerrillaSiegebreaker.class; break;
+					}
+				}else if (cl == Guard.class) {
+					switch(Random.Int(2)){
+						default:
+						case 0: cl = Guard.class; break;
+						case 1: cl = SarkazGuerrillaFighter.class; break;
+					}
+				}else if (cl == Necromancer.class) {
+					switch(Random.Int(2)){
+						default:
+						case 0: cl = Necromancer.class; break;
+						case 1: cl = GuerrillaHerald.class; break;
 					}
 				}
 			}

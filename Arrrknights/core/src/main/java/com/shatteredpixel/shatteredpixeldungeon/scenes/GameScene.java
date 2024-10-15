@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DemonSpawner;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FireCore;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GuerrillaHerald;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BannerSprites;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
@@ -336,6 +337,11 @@ public class GameScene extends PixelScene {
 			}
 		}
 
+		if(Dungeon.level.heraldAlive){
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+				mob.sprite.add(CharSprite.State.HIKARI);
+			}
+		}
 		walls = new DungeonWallsTilemap();
 		add(walls);
 
@@ -618,6 +624,9 @@ public class GameScene extends PixelScene {
 			for (Mob mob : Dungeon.level.mobs) {
 				if (!mob.buffs(ChampionEnemy.class).isEmpty()) {
 					GLog.w(Messages.get(ChampionEnemy.class, "warn"));
+				}
+				if(mob instanceof GuerrillaHerald){
+					GLog.w(Messages.get(GuerrillaHerald.class, "warn"));
 				}
 			}
 

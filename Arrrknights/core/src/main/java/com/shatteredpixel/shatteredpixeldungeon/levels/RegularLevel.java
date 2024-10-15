@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.ROR;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 
 import com.badlogic.gdx.utils.Pool;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
@@ -313,7 +314,6 @@ public abstract class RegularLevel extends Level {
 				map[m.pos] = Terrain.GRASS;
 				losBlocking[m.pos] = false;
 			}
-
 		}
 
 	}
