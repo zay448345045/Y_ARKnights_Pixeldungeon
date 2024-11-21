@@ -12,7 +12,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.BugSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.LavaSlugSprite;
 import com.watabou.utils.Random;
 

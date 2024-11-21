@@ -55,7 +55,7 @@ public class Yukjeon extends Food {
     }
 
     public static void effect(Hero hero){
-        if (Dungeon.hero.subClass == HeroSubClass.DESTROYER) { Buff.affect(hero, MeatPower_Chargrilled.class, MeatPower_Frozen.DURATION); }
+        if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) { Buff.affect(hero, MeatPower_Chargrilled.class, MeatPower_Frozen.DURATION); }
 
         if (hero.hasTalent(Talent.LOVEMEAT))
         {

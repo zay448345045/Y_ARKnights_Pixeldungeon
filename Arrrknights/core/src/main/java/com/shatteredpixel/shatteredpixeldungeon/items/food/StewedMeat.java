@@ -47,7 +47,7 @@ public class StewedMeat extends Food {
 	}
 
 	public static void effect(Hero hero){
-		if (Dungeon.hero.subClass == HeroSubClass.DESTROYER) { Buff.affect(hero, MeatPower_Stewed.class, MeatPower_Stewed.DURATION); }
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) { Buff.affect(hero, MeatPower_Stewed.class, MeatPower_Stewed.DURATION); }
 		if (hero.hasTalent(Talent.LOVEMEAT))
 		{
 			Buff.affect(hero, WellFed.class).set(hero.pointsInTalent(Talent.LOVEMEAT) * 20);

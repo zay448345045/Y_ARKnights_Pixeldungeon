@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Challenges.TEST;
 
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
@@ -44,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Badges {
 
@@ -802,82 +804,31 @@ public class Badges {
 				}
 			} else
 			if (badge == Badge.BOSS_SLAIN_3) {
-				switch (Dungeon.hero.subClass) {
-				case GLADIATOR:
-					badge = Badge.BOSS_SLAIN_3_GLADIATOR;
-					break;
-				case BERSERKER:
-					badge = Badge.BOSS_SLAIN_3_BERSERKER;
-					break;
-				case HEAT:
-					badge = Badge.BOSS_SLAIN_3_HEAT;
-					break;
-				case WARLOCK:
-					badge = Badge.BOSS_SLAIN_3_WARLOCK;
-					break;
-				case CHAOS:
-					badge = Badge.BOSS_SLAIN_3_CHAOS;
-					break;
-				case BATTLEMAGE:
-					badge = Badge.BOSS_SLAIN_3_BATTLEMAGE;
-					break;
-				case FREERUNNER:
-					badge = Badge.BOSS_SLAIN_3_FREERUNNER;
-					break;
-				case ASSASSIN:
-					badge = Badge.BOSS_SLAIN_3_ASSASSIN;
-					break;
-				case WILD:
-					badge = Badge.BOSS_SLAIN_3_WILD;
-					break;
-				case SNIPER:
-					badge = Badge.BOSS_SLAIN_3_SNIPER;
-					break;
-				case WARDEN:
-					badge = Badge.BOSS_SLAIN_3_WARDEN;
-					break;
-				case STOME:
-					badge = Badge.BOSS_SLAIN_3_STOME;
-					break;
-				case DESTROYER:
-					badge = Badge.BOSS_SLAIN_3_DESTROY;
-					break;
-				case GUARDIAN:
-					badge = Badge.BOSS_SLAIN_3_GUARDIAN;
-					break;
-				case WAR:
-					badge = Badge.BOSS_SLAIN_3_WAR;
-					break;
-				case KNIGHT:
-					badge = Badge.BOSS_SLAIN_3_KNIGHT;
-					break;
-				case SAVIOR:
-					badge = Badge.BOSS_SLAIN_3_SAVIOR;
-					break;
-				case FLASH:
-					badge = Badge.BOSS_SLAIN_3_FLASH;
-					break;
-				case SWORDMASTER:
-					badge = Badge.BOSS_SLAIN_3_SWORDMASTER;
-					break;
-				case SPSHOOTER:
-					badge = Badge.BOSS_SLAIN_3_SPSHOOTER;
-					break;
-				case KILLER:
-					badge = Badge.BOSS_SLAIN_3_KILLER;
-					break;
-				case PHANTOM:
-					badge = Badge.BOSS_SLAIN_3_PHANTOM;
-					break;
-				case MARKSMIDORI:
-					badge = Badge.BOSS_SLAIN_3_MARKSMIDORI;
-					break;
-				case KEYANIMATOR:
-					badge = Badge.BOSS_SLAIN_3_KEYANIMATOR;
-					break;
-				default:
-					return;
-				}
+				Set<HeroSubClass> subClassSet = new HashSet<>(Dungeon.hero.subClass);
+				if(subClassSet.contains(HeroSubClass.GLADIATOR)) badge = Badge.BOSS_SLAIN_3_GLADIATOR;
+				if(subClassSet.contains(HeroSubClass.BERSERKER)) badge = Badge.BOSS_SLAIN_3_BERSERKER;
+				if(subClassSet.contains(HeroSubClass.HEAT)) badge = Badge.BOSS_SLAIN_3_HEAT;
+				if(subClassSet.contains(HeroSubClass.WARLOCK)) badge = Badge.BOSS_SLAIN_3_WARLOCK;
+				if(subClassSet.contains(HeroSubClass.CHAOS)) badge = Badge.BOSS_SLAIN_3_CHAOS;
+				if(subClassSet.contains(HeroSubClass.BATTLEMAGE)) badge = Badge.BOSS_SLAIN_3_BATTLEMAGE;
+				if(subClassSet.contains(HeroSubClass.FREERUNNER)) badge = Badge.BOSS_SLAIN_3_FREERUNNER;
+				if(subClassSet.contains(HeroSubClass.ASSASSIN)) badge = Badge.BOSS_SLAIN_3_ASSASSIN;
+				if(subClassSet.contains(HeroSubClass.WILD)) badge = Badge.BOSS_SLAIN_3_WILD;
+				if(subClassSet.contains(HeroSubClass.SNIPER)) badge = Badge.BOSS_SLAIN_3_SNIPER;
+				if(subClassSet.contains(HeroSubClass.WARDEN)) badge = Badge.BOSS_SLAIN_3_WARDEN;
+				if(subClassSet.contains(HeroSubClass.STOME)) badge = Badge.BOSS_SLAIN_3_STOME;
+				if(subClassSet.contains(HeroSubClass.DESTROYER)) badge = Badge.BOSS_SLAIN_3_DESTROY;
+				if(subClassSet.contains(HeroSubClass.GUARDIAN)) badge = Badge.BOSS_SLAIN_3_GUARDIAN;
+				if(subClassSet.contains(HeroSubClass.WAR)) badge = Badge.BOSS_SLAIN_3_WAR;
+				if(subClassSet.contains(HeroSubClass.KNIGHT)) badge = Badge.BOSS_SLAIN_3_KNIGHT;
+				if(subClassSet.contains(HeroSubClass.SAVIOR)) badge = Badge.BOSS_SLAIN_3_SAVIOR;
+				if(subClassSet.contains(HeroSubClass.FLASH)) badge = Badge.BOSS_SLAIN_3_FLASH;
+				if(subClassSet.contains(HeroSubClass.SWORDMASTER)) badge = Badge.BOSS_SLAIN_3_SWORDMASTER;
+				if(subClassSet.contains(HeroSubClass.SPSHOOTER)) badge = Badge.BOSS_SLAIN_3_SPSHOOTER;
+				if(subClassSet.contains(HeroSubClass.KILLER)) badge = Badge.BOSS_SLAIN_3_KILLER;
+				if(subClassSet.contains(HeroSubClass.PHANTOM)) badge = Badge.BOSS_SLAIN_3_PHANTOM;
+				if(subClassSet.contains(HeroSubClass.MARKSMIDORI)) badge = Badge.BOSS_SLAIN_3_MARKSMIDORI;
+				if(subClassSet.contains(HeroSubClass.KEYANIMATOR)) badge = Badge.BOSS_SLAIN_3_KEYANIMATOR;
 				local.add( badge );
 				unlock(badge);
 

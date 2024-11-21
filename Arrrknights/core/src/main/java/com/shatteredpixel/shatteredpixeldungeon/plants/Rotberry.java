@@ -40,7 +40,7 @@ public class Rotberry extends Plant {
 
 	@Override
 	public void activate( Char ch ) {
-		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
+		if (ch instanceof Hero && ((Hero) ch).subClassSet.contains(HeroSubClass.WARDEN)){
 			Buff.affect(ch, AdrenalineSurge.class).reset(1, 200f);
 		}
 		

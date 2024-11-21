@@ -1175,7 +1175,7 @@ public abstract class Level implements Bundlable {
 		if (sighted) {
 			boolean[] blocking;
 			
-			if ((c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN)
+			if ((c instanceof Hero && ((Hero) c).subClassSet.contains(HeroSubClass.WARDEN))
 				|| c instanceof YogFist.SoiledFist
 				|| (c instanceof Hero && ((Hero) c).hasTalent(Talent.NOCTURNE))) {
 				blocking = Dungeon.level.losBlocking.clone();
@@ -1207,7 +1207,7 @@ public abstract class Level implements Bundlable {
 			if (c.buff(MagicalSight.class) != null){
 				sense = 8;
 			}
-			if (((Hero)c).subClass == HeroSubClass.SNIPER){
+			if (((Hero)c).subClassSet.contains(HeroSubClass.SNIPER)){
 				sense *= 1.5f;
 			}
 		}

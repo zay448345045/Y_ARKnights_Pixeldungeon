@@ -58,7 +58,7 @@ public class Viscosity extends Glyph {
 		//account for huntress armor piercing
 		if (attacker instanceof Hero
 				&& ((Hero) attacker).belongings.weapon instanceof MissileWeapon
-				&& ((Hero) attacker).subClass == HeroSubClass.SNIPER
+				&& ((Hero) attacker).subClassSet.contains(HeroSubClass.SNIPER)
 				&& !Dungeon.level.adjacent(attacker.pos, defender.pos)){
 			realDamage = damage;
 		}

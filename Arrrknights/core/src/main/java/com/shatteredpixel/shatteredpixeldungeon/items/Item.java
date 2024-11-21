@@ -665,7 +665,7 @@ public class Item implements Bundlable {
 									Buff.affect(curUser, Talent.ImprovisedProjectileCooldown.class, 25f);
 								}
 							}
-							if (curUser.subClass == HeroSubClass.BERSERKER
+							if (curUser.subClassSet.contains(HeroSubClass.BERSERKER)
 									&& !(Item.this instanceof MissileWeapon)
 									&& curUser.buff(RageThrowCooldown.class) == null){
 								Sample.INSTANCE.play(Assets.Sounds.HIT);

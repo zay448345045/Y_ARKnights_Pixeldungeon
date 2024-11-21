@@ -100,7 +100,7 @@ public class TomeOfMastery extends Item {
 		curUser.spend( TomeOfMastery.TIME_TO_READ );
 		curUser.busy();
 		
-		curUser.subClass = way;
+		curUser.subClass.add(way);
 		Talent.initSubclassTalents(curUser);
 		
 		curUser.sprite.operate( curUser.pos );

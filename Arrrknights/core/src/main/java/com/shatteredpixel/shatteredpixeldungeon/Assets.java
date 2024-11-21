@@ -338,9 +338,12 @@ public class Assets {
 
 		public static final String BABYBUG	= "sprites/babybug.png";
 		public static final String BUG		= "sprites/bug.png";
+		public static final String BUG_RUN		= "sprites/bug_run.png";
 		public static final String BUG_A		= "sprites/bug_a.png";
+		public static final String BUG_BLACKWATER		= "sprites/bug_blackwater.png";
 		public static final String SPITTER		= "sprites/spitter.png";
 		public static final String INFANTRY	= "sprites/Infantry.png";
+		public static final String RIOTER	= "sprites/rioter.png";
 		public static final String CROSSBOWMAN	= "sprites/crossbowman.png";
 		public static final String SHILDED	= "sprites/Shielded.png";
 		public static final String SHILDED_L	= "sprites/ShieldedLeader.png";

@@ -2,7 +2,10 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
 import com.shatteredpixel.shatteredpixeldungeon.items.ScholarNotebook;
@@ -31,5 +34,14 @@ public class Gloompincer extends Hound{
         lootChance = 0.167f;
 
         properties.add(Property.INFECTED);
+    }
+    @Override
+    public int attackProc(Char enemy, int damage) {
+        damage = super.attackProc(enemy, damage);
+        if (Random.Int(2) == 0) {
+            Buff.affect(enemy, Cripple.class, rounds);
+            enemy.sprite.burst(0x000000, 5);
+        }
+        return damage;
     }
 }

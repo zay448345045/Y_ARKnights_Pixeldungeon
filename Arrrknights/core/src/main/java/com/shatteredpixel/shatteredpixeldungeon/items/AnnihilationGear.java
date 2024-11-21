@@ -89,13 +89,13 @@ public class AnnihilationGear extends Item {
         return 6 + buffedLvl() + (Dungeon.hero.pointsInTalent(Talent.RHODES_WEAPON) * 2); }
 
     public int max() {
-        if (Dungeon.hero.subClass == HeroSubClass.DESTROYER) return 10 + Dungeon.hero.lvl + (buffedLvl() * 2) + (Dungeon.hero.pointsInTalent(Talent.RHODES_WEAPON) * 2);
+        if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) return 10 + Dungeon.hero.lvl + (buffedLvl() * 2) + (Dungeon.hero.pointsInTalent(Talent.RHODES_WEAPON) * 2);
         return 10 + Dungeon.hero.lvl + buffedLvl() + (Dungeon.hero.pointsInTalent(Talent.RHODES_WEAPON) * 2); }
 
     @Override
     public String desc() {
         if (arts != 0) {
-            if (Dungeon.hero.subClass == HeroSubClass.DESTROYER) {
+            if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) {
                 switch (arts) {
                     case 0:
                     default:
@@ -107,7 +107,7 @@ public class AnnihilationGear extends Item {
                     case 3:
                         return Messages.get(this, "desc_arts3_destroy", min(), max());
                 }
-            } else if (Dungeon.hero.subClass == HeroSubClass.GUARDIAN) {
+            } else if (Dungeon.hero.subClassSet.contains(HeroSubClass.GUARDIAN)) {
                 switch (arts) {
                     case 0:
                     default:
@@ -119,7 +119,7 @@ public class AnnihilationGear extends Item {
                     case 3:
                         return Messages.get(this, "desc_arts3_guardian", min(), max());
                 }
-            } else if (Dungeon.hero.subClass == HeroSubClass.WAR) {
+            } else if (Dungeon.hero.subClassSet.contains(HeroSubClass.WAR)) {
                 switch (arts) {
                     case 0:
                     default:
@@ -138,7 +138,7 @@ public class AnnihilationGear extends Item {
 
     @Override
     public String info() {
-        if (Dungeon.hero.subClass != HeroSubClass.WAR) return  desc();
+        if (!Dungeon.hero.subClassSet.contains(HeroSubClass.WAR)) return  desc();
         String aug;
         switch (WeaponAug()) {
             case NONE: default:
@@ -315,7 +315,7 @@ public class Spriteex extends MissileWeapon {
     {
         Char mob = Actor.findChar(target);
         if (mob != null) {
-            if (mob instanceof EX44 && arts == 3 && Dungeon.hero.subClass == HeroSubClass.WAR) {
+            if (mob instanceof EX44 && arts == 3 && Dungeon.hero.subClassSet.contains(HeroSubClass.WAR)) {
                 CellEmitter.center(target).burst(BlastParticle.FACTORY, 10);
                 Sample.INSTANCE.play(Assets.Sounds.HIT_WALL2);
                 mob.die(new WarCatArts3());
@@ -325,7 +325,7 @@ public class Spriteex extends MissileWeapon {
             Sample.INSTANCE.play(Assets.Sounds.HIT_WALL2);}
         }
         else {
-            if (Dungeon.hero.subClass == HeroSubClass.WAR) SpawnEX44(target);
+            if (Dungeon.hero.subClassSet.contains(HeroSubClass.WAR)) SpawnEX44(target);
 
             CellEmitter.center(target).burst(BlastParticle.FACTORY, 10);
             Sample.INSTANCE.play(Assets.Sounds.HIT_WALL2);
@@ -399,7 +399,7 @@ public class Spriteex extends MissileWeapon {
 
         // 마법 부여 효과
 
-        if (curUser.subClass == HeroSubClass.DESTROYER){
+        if (curUser.subClassSet.contains(HeroSubClass.DESTROYER)){
             switch (arts) {
                 case 0: default: break;
                 case 1:
@@ -419,7 +419,7 @@ public class Spriteex extends MissileWeapon {
                     else dmg = Math.round(dmg * (DamageLevel * 1.2f));
                     break;
             }}
-        else if (curUser.subClass == HeroSubClass.GUARDIAN){
+        else if (curUser.subClassSet.contains(HeroSubClass.GUARDIAN)){
             switch (arts) {
                 case 0: default: break;
                 case 1:
@@ -458,7 +458,7 @@ public class Spriteex extends MissileWeapon {
 
 
         // 서브 직업이 파괴라면, 집중 버프 부여
-        if (curUser.subClass == HeroSubClass.DESTROYER)
+        if (curUser.subClassSet.contains(HeroSubClass.DESTROYER))
             Buff.affect(curUser, Rose_Force.class, Rose_Force.DURATION);
 
         // 마비

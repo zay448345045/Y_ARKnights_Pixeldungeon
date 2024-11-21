@@ -24,13 +24,14 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.BlackWaterSlugSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.Bug_ASprite;
 import com.watabou.utils.Random;
 
 public class BlackwaterSlug extends Slug {
 
     {
-        spriteClass = Bug_ASprite.class;
+        spriteClass = BlackWaterSlugSprite.class;
 
         HP = HT = 15;
         damageMaxIncRate = 45;

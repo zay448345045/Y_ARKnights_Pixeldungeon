@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Guardoper_ItermUpgrade;
@@ -165,7 +166,6 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 	@Override
 	public int proc( Char attacker, Char defender, int damage ) {
-
 		if (attacker instanceof Hero) {
 		if (Dungeon.hero.belongings.ring instanceof RingOfDominate || Dungeon.hero.belongings.misc instanceof RingOfDominate)
 		{

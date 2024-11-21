@@ -201,7 +201,7 @@ public abstract class Wand extends Item {
 		}
 
 		if (target != Dungeon.hero &&
-				Dungeon.hero.subClass == HeroSubClass.WARLOCK &&
+				Dungeon.hero.subClassSet.contains(HeroSubClass.WARLOCK) &&
 				//standard 1 - 0.95^x chance, plus 7%. Starts at 15%, 특성으로 0.8부분에 수치당 +0.83.. 3업시 0.25
 				Random.Float() > (Math.pow(0.95f - Dungeon.hero.pointsInTalent(Talent.EMOTION) / 15f, (wandLevel*chargesUsed)+1) - 0.07f)){//change from budding
 			SoulMark.prolong(target, SoulMark.class, SoulMark.DURATION + wandLevel + (Dungeon.hero.pointsInTalent(Talent.LORD) * 2));
@@ -260,7 +260,7 @@ public abstract class Wand extends Item {
 			desc += "\n\n" + Messages.get(Wand.class, "not_cursed");
 		}
 
-		if (Dungeon.hero.subClass == HeroSubClass.BATTLEMAGE){
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.BATTLEMAGE)){
 			desc += "\n\n" + Messages.get(this, "bmage_desc");
 		}
 

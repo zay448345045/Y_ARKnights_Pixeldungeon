@@ -95,7 +95,7 @@ public class SpiritBow extends Weapon {
 		ArrayList<String> actions = super.actions(hero);
 		actions.remove(AC_EQUIP);
 		actions.add(AC_SHOOT);
-		if (hero.subClass == HeroSubClass.WARDEN && EatSeed < 45) actions.add(AC_SEED);
+		if (hero.subClassSet.contains(HeroSubClass.WARDEN) && EatSeed < 45) actions.add(AC_SEED);
 		return actions;
 	}
 	
@@ -161,7 +161,7 @@ public class SpiritBow extends Weapon {
 		
 		info += "\n\n" + Messages.get(MissileWeapon.class, "distance");
 
-		if (Dungeon.hero.subClass==HeroSubClass.WARDEN) {
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.WARDEN)) {
 			info+="\n\n"+Messages.get(SpiritBow.class, "seed", EatSeed, 45);
 			if (EatSeed == 45) info+="\n\n"+Messages.get(SpiritBow.class, "power3");
 			else if (EatSeed >= 30) info+="\n\n"+Messages.get(SpiritBow.class, "power2");
@@ -239,7 +239,7 @@ public class SpiritBow extends Weapon {
 					break;
 			}
 		}
-		else if (curUser.subClass == HeroSubClass.SNIPER) {
+		else if (curUser.subClassSet.contains(HeroSubClass.SNIPER)) {
 			damage = Math.round(damage * 1.1f);
 		}
 		
@@ -335,7 +335,7 @@ public class SpiritBow extends Weapon {
 				}
 			}
 
-			if (Dungeon.hero.subClass == HeroSubClass.STOME) {
+			if (Dungeon.hero.subClassSet.contains(HeroSubClass.STOME)) {
 				WindEnergy wind = Buff.affect(Dungeon.hero, WindEnergy.class);
 				wind.GetEnergy(15); }
 

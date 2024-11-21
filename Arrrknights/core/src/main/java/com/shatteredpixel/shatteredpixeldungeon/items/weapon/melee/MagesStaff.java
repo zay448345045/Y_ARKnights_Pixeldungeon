@@ -91,7 +91,7 @@ public class MagesStaff extends MeleeWeapon {
 
 	@Override
 	public int max(int lvl) {
-		if (Dungeon.hero.subClass == HeroSubClass.WARLOCK)
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.WARLOCK))
 			return  3*(tier+1) +    // 6 + 1
 					lvl*(tier);   //scaling unaffected
 		else
@@ -185,7 +185,7 @@ public class MagesStaff extends MeleeWeapon {
 		}
 
 		if (wand != null &&
-				attacker instanceof Hero && ((Hero)attacker).subClass == HeroSubClass.BATTLEMAGE) {
+				attacker instanceof Hero && ((Hero)attacker).subClassSet.contains(HeroSubClass.BATTLEMAGE)) {
 			if (wand.curCharges < wand.maxCharges) {
 				float charged = 0.4f;
 				if (((Hero) attacker).hasTalent(Talent.SWORDOFLORD)) {
@@ -204,12 +204,12 @@ public class MagesStaff extends MeleeWeapon {
 		int reach = super.reachFactor(owner);
 		if (owner instanceof Hero
 				&& wand instanceof WandOfDisintegration
-				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
+				&& ((Hero)owner).subClassSet.contains(HeroSubClass.BATTLEMAGE)){
 			reach++;
 		}
 		else if (owner instanceof Hero
 				&& wand instanceof StaffOfVigna
-				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
+				&& ((Hero)owner).subClassSet.contains(HeroSubClass.BATTLEMAGE)){
 			reach++;
 		}
 		return reach;
@@ -390,7 +390,7 @@ public class MagesStaff extends MeleeWeapon {
 			if (!cursed || !cursedKnown)    info += " " + wand.statsDesc();
 			else                            info += " " + Messages.get(this, "cursed_wand");
 
-			if (Dungeon.hero.subClass == HeroSubClass.BATTLEMAGE){
+			if (Dungeon.hero.subClassSet.contains(HeroSubClass.BATTLEMAGE)){
 				info += "\n\n" + Messages.get(wand, "bmage_desc");
 			}
 		}

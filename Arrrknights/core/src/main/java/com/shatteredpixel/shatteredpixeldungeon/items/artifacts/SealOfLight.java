@@ -71,10 +71,10 @@ public class SealOfLight extends Artifact {
                 else {
                     Buff.affect(hero, RadiantKnight.class, RadiantKnight.DURATION);
 
-                    if (hero.subClass == HeroSubClass.KNIGHT) {
+                    if (hero.subClassSet.contains(HeroSubClass.KNIGHT)) {
                         Buff.affect(hero, Haste.class, 5f +  hero.pointsInTalent(Talent.QUICK_TACTICS));
                     }
-                    else if (hero.subClass == HeroSubClass.FLASH) {
+                    else if (hero.subClassSet.contains(HeroSubClass.FLASH)) {
                         boolean knightglory = (hero.hasTalent(Talent.KNIGHT_GLORY));
                         for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
                             if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
@@ -148,8 +148,8 @@ public class SealOfLight extends Artifact {
                 if (charge < chargeCap && !cursed) {
                     // 약 300 턴마다 100%충전 (기본)
                     float chargeGain = 0.34f;
-                    if (Dungeon.hero.subClass == HeroSubClass.SAVIOR) chargeGain += 0.07f;
-                    if (Dungeon.hero.subClass == HeroSubClass.FLASH) chargeGain += 0.51f;
+                    if (Dungeon.hero.subClassSet.contains(HeroSubClass.SAVIOR)) chargeGain += 0.07f;
+                    if (Dungeon.hero.subClassSet.contains(HeroSubClass.FLASH)) chargeGain += 0.51f;
                     if (Dungeon.hero.hasTalent(Talent.LIGHT_OF_GLORY)) chargeGain += Dungeon.hero.pointsInTalent(Talent.LIGHT_OF_GLORY) * 0.05f;
 
                     chargeGain *= RingOfEnergy.artifactChargeMultiplier(target)*LFPChargeMultiplier();

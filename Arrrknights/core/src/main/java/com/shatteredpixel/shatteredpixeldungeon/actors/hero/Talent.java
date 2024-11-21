@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -545,7 +547,7 @@ public enum Talent {
 		}
 		if (talent == INSPIRATION_FLASHBACK){
 			if(MagicPaper.isLegal()){
-				for(int i =0;i<=Dungeon.hero.pointsInTalent(INSPIRATION_FLASHBACK);i++){
+				for(int i = 0; i<= Dungeon.hero.pointsInTalent(INSPIRATION_FLASHBACK); i++){
 					Item item = (Item)Reflection.newInstance(MagicPaper.getLegalRandomDrawn());
 					if(item!=null){
 						item.collect(hero.belongings.backpack);
@@ -636,7 +638,7 @@ public enum Talent {
 			Buff.affect(hero, Invisibility.class, hero.pointsInTalent(LATENT_MEAL));
 		}
 
-		if (hero.subClass == HeroSubClass.DESTROYER)
+		if (hero.subClassSet.contains(HeroSubClass.DESTROYER))
 			Buff.affect(hero, Rose_Force.class, 10f);
 
 		if(hero.hasTalent(INSTANT_MEAL)){
@@ -766,7 +768,7 @@ public enum Talent {
 			MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
 			if (staff != null){
 				staff.gainCharge(hero.pointsInTalent(ENERGIZING_UPGRADE), true);
-				ScrollOfRecharging.charge( Dungeon.hero );
+				ScrollOfRecharging.charge(Dungeon.hero);
 				SpellSprite.show( hero, SpellSprite.CHARGE );
 			}
 		}
@@ -901,7 +903,7 @@ public enum Talent {
 		}
 
 		if(Dungeon.hero.hasTalent(Talent.SLEEVE_TRICK)){
-			if(Random.Int(100)<Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*5){
+			if(Random.Int(100)< Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*5){
 				switch (Random.Int(5)){
 					case 0:
 						Buff.affect(enemy, Bleeding.class).set(Dungeon.hero.pointsInTalent(Talent.SLEEVE_TRICK)*2);
@@ -1086,8 +1088,14 @@ public enum Talent {
 		initSubclassTalents( hero.subClass, hero.talents );
 	}
 
-	public static void initSubclassTalents( HeroSubClass cls, ArrayList<LinkedHashMap<Talent, Integer>> talents ){
-		if (cls == HeroSubClass.NONE) return;
+	public static void initSubclassTalents(HeroSubClass subCls, ArrayList<LinkedHashMap<Talent, Integer>> talentList) {
+		ArrayList<HeroSubClass> cls = new ArrayList<>();
+		cls.add(subCls);
+		initSubclassTalents(cls, talentList);
+	}
+
+	public static void initSubclassTalents( ArrayList<HeroSubClass> cls, ArrayList<LinkedHashMap<Talent, Integer>> talents ){
+		if (cls == null) return;
 
 		while (talents.size() < MAX_TALENT_TIERS){
 			talents.add(new LinkedHashMap<>());
@@ -1096,79 +1104,55 @@ public enum Talent {
 		ArrayList<Talent> tierTalents = new ArrayList<>();
 
 		//tier 3
-		switch (cls){
-			case BERSERKER: default:
+		for (HeroSubClass subClasses: cls){
+			if(subClasses == HeroSubClass.BERSERKER)
 				Collections.addAll(tierTalents, ENDLESS_RAGE, BERSERKING_STAMINA, ENRAGED_CATALYST);
-				break;
-			case GLADIATOR:
+			if(subClasses == HeroSubClass.GLADIATOR)
 				Collections.addAll(tierTalents, CLEAVE, FINALBLOW, ENHANCED_COMBO);
-				break;
-			case HEAT:
+			if(subClasses == HeroSubClass.HEAT)
 				Collections.addAll(tierTalents, HEAT_BLOW, HEAT_OF_PROTECTION, HEAT_OF_RECOVERY);
-				break;
-			case BATTLEMAGE:
+			if(subClasses == HeroSubClass.BATTLEMAGE)
 				Collections.addAll(tierTalents, EMPOWERED_STRIKE, MYSTICAL_CHARGE, EXCESS_CHARGE);
-				break;
-			case WARLOCK:
+			if(subClasses == HeroSubClass.WARLOCK)
 				Collections.addAll(tierTalents, SOUL_EATER, SOUL_SIPHON, NECROMANCERS_MINIONS);
-				break;
-			case CHAOS:
+			if(subClasses == HeroSubClass.CHAOS)
 				Collections.addAll(tierTalents, CHIMERA, RESTRICTION, EMOTION_ABSORPTION);
-				break;
-			case ASSASSIN:
+			if(subClasses == HeroSubClass.ASSASSIN)
 				Collections.addAll(tierTalents, ENHANCED_LETHALITY, ASSASSINS_REACH, BOUNTY_HUNTER);
-				break;
-			case FREERUNNER:
+			if(subClasses == HeroSubClass.FREERUNNER)
 				Collections.addAll(tierTalents, EVASIVE_ARMOR, PROJECTILE_MOMENTUM, SPEEDY_STEALTH);
-				break;
-			case WILD:
+			if(subClasses == HeroSubClass.WILD)
 				Collections.addAll(tierTalents, WIND_SCAR, OPPORTUNIST, WIND_ROAD);
-				break;
-			case SNIPER:
+			if(subClasses == HeroSubClass.SNIPER)
 				Collections.addAll(tierTalents, FARSIGHT, SHARPSHOOTER, SHARED_UPGRADES);
-				break;
-			case WARDEN:
+			if(subClasses == HeroSubClass.WARDEN)
 				Collections.addAll(tierTalents, DURABLE_TIPS, BARKSKIN, SAVIOR_PRAY);
-				break;
-			case STOME:
+			if(subClasses == HeroSubClass.STOME)
 				Collections.addAll(tierTalents, SONG_OF_STOME, ENERGY_STORAGE, WIND_BLESSING);
-				break;
-			case DESTROYER:
+			if(subClasses == HeroSubClass.DESTROYER)
 				Collections.addAll(tierTalents, FOCUSED_ATTACK, PHYSICAL_ATTACK, BATTLEFLOW);
-				break;
-			case GUARDIAN:
+			if(subClasses == HeroSubClass.GUARDIAN)
 				Collections.addAll(tierTalents, BARRIER_OPERATION, BARRIER_REPAIR, RHODES_CAT);
-				break;
-			case WAR:
+			if(subClasses == HeroSubClass.WAR)
 				Collections.addAll(tierTalents, OBLIVION, WEAKNESS_COVER, MENTALAMPLIFICATION);
-				break;
-			case KNIGHT:
+			if(subClasses == HeroSubClass.KNIGHT)
 				Collections.addAll(tierTalents, INTO_FRAY, BLITZKRIEG, SKILL_MASTERY);
-				break;
-			case SAVIOR:
+			if(subClasses == HeroSubClass.SAVIOR)
 				Collections.addAll(tierTalents, SHIELD_OF_LIGHT, PEGASUS_WING, HOPELIGHT);
-				break;
-			case FLASH:
+			if(subClasses == HeroSubClass.FLASH)
 				Collections.addAll(tierTalents, FLASH_SPEAR, KNIGHT_GLORY, LIGHT_OF_GLORY);
-				break;
-			case SWORDMASTER:
+			if(subClasses == HeroSubClass.SWORDMASTER)
 				Collections.addAll(tierTalents, UP_SP1, UP_SP2, UP_SP3, BLADE_ART, DOUBLE_SWORD);
-				break;
-			case SPSHOOTER:
+			if(subClasses == HeroSubClass.SPSHOOTER)
 				Collections.addAll(tierTalents, GORGEOUS_VACATION, TAC_DEF, PINPOINT, FRUGALITY, WATER_PLAY);
-				break;
-			case KILLER:
+			if(subClasses == HeroSubClass.KILLER)
 				Collections.addAll(tierTalents, LINGER_ON,ACCURATE_HIT,DANGER_DANCE);
-				break;
-			case MARKSMIDORI:
+			if(subClasses == HeroSubClass.MARKSMIDORI)
 				Collections.addAll(tierTalents, SMOKE_BOMB,FULL_FIREPOWER,MYSTERY_SHOT);
-				break;
-			case KEYANIMATOR:
+			if(subClasses == HeroSubClass.KEYANIMATOR)
 				Collections.addAll(tierTalents, SUPERB_ARTS,PIE_IN_THE_PAPER,PAPER_BULLET);
-				break;
-			case SCHOLAR:
+			if(subClasses == HeroSubClass.SCHOLAR)
 				Collections.addAll(tierTalents, PERCIPIENT,ALIENATION,FREQUENT_USE);
-				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(2).put(talent, 0);
@@ -1176,79 +1160,55 @@ public enum Talent {
 		tierTalents.clear();
 
 		//tier4
-		switch (cls){
-			case BERSERKER: default:
+		for (HeroSubClass subClasses: cls){
+			if(subClasses == HeroSubClass.BERSERKER)
 				Collections.addAll(tierTalents, INFINITE_RAGE, INFINITE_BATTLE);
-				break;
-			case GLADIATOR:
+			if(subClasses == HeroSubClass.GLADIATOR)
 				Collections.addAll(tierTalents, SPARKOFLIFE, DEADLY_REACH);
-				break;
-			case HEAT:
+			if(subClasses == HeroSubClass.HEAT)
 				Collections.addAll(tierTalents, HEAT_OF_ABSORPTION, REDCOMET);
-				break;
-			case BATTLEMAGE:
+			if(subClasses == HeroSubClass.BATTLEMAGE)
 				Collections.addAll(tierTalents, AZURE_FURY, SWORDOFLORD);
-				break;
-			case WARLOCK:
+			if(subClasses == HeroSubClass.WARLOCK)
 				Collections.addAll(tierTalents, EMOTION, LORD);
-				break;
-			case CHAOS:
+			if(subClasses == HeroSubClass.CHAOS)
 				Collections.addAll(tierTalents, STABILIZE, MIND_CRASH);
-				break;
-			case ASSASSIN:
+			if(subClasses == HeroSubClass.ASSASSIN)
 				Collections.addAll(tierTalents, SWEEP, HOWLING);
-				break;
-			case FREERUNNER:
+			if(subClasses == HeroSubClass.FREERUNNER)
 				Collections.addAll(tierTalents, SPECIAL_OPERATIONS, BLOODBATH_OPERATIONS);
-				break;
-			case WILD:
+			if(subClasses == HeroSubClass.WILD)
 				Collections.addAll(tierTalents, SWORD_WIND_UPGRADE, SHADOW_HUNTER);
-				break;
-			case SNIPER:
+			if(subClasses == HeroSubClass.SNIPER)
 				Collections.addAll(tierTalents, SNIPING);
-				break;
-			case WARDEN:
+			if(subClasses == HeroSubClass.WARDEN)
 				Collections.addAll(tierTalents, SAVIOR_BELIEF);
-				break;
-			case STOME:
+			if(subClasses == HeroSubClass.STOME)
 				Collections.addAll(tierTalents, GALEFORCE);
-				break;
-			case DESTROYER:
+			if(subClasses == HeroSubClass.DESTROYER)
 				Collections.addAll(tierTalents, ESTHESIA);
-				break;
-			case GUARDIAN:
+			if(subClasses == HeroSubClass.GUARDIAN)
 				Collections.addAll(tierTalents, SPEED_COMABT);
-				break;
-			case WAR:
+			if(subClasses == HeroSubClass.WAR)
 				Collections.addAll(tierTalents, CRYSTALLIZE);
-				break;
-			case KNIGHT:
+			if(subClasses == HeroSubClass.KNIGHT)
 				Collections.addAll(tierTalents, QUICK_TACTICS);
-				break;
-			case SAVIOR:
+			if(subClasses == HeroSubClass.SAVIOR)
 				Collections.addAll(tierTalents, BLESSED_CHAMPION);
-				break;
-			case FLASH:
+			if(subClasses == HeroSubClass.FLASH)
 				Collections.addAll(tierTalents, ETERNAL_GLORY);
-				break;
-			case SWORDMASTER:
+			if(subClasses == HeroSubClass.SWORDMASTER)
 				Collections.addAll(tierTalents, UP_EX1, UP_EX2, UP_EX3, AWAKE);
-				break;
-			case SPSHOOTER:
+			if(subClasses == HeroSubClass.SPSHOOTER)
 				Collections.addAll(tierTalents, TAC_SHOT, TECHNICAL, ZERO_RANGE_SHOT, BF_RULL);
-				break;
-			case KILLER:
+			if(subClasses == HeroSubClass.KILLER)
 				Collections.addAll(tierTalents, RHAPSODY,SYMPHONY);
-				break;
-			case MARKSMIDORI:
+			if(subClasses == HeroSubClass.MARKSMIDORI)
 				Collections.addAll(tierTalents, IMPACT_BULLET, SKILL_ENHANCEMENT,OPTICAL_SIGHT);
-				break;
-			case KEYANIMATOR:
+			if(subClasses == HeroSubClass.KEYANIMATOR)
 				Collections.addAll(tierTalents, IMPACT_BULLET, POTATO_AIM,INSPIRATION_FLASHBACK);
-				break;
-			case SCHOLAR:
+			if(subClasses == HeroSubClass.SCHOLAR)
 				Collections.addAll(tierTalents, RECYCLE_RESEARCH, SUMMONING_SPIRIT,STUDY_STEADILY);
-				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(3).put(talent, 0);
@@ -1316,7 +1276,7 @@ public enum Talent {
 
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon( new ItemSprite(ItemSpriteSheet.UNDONE_MARK, null) );
-			titlebar.label( Messages.titleCase(Messages.get(Dungeon.hero, "true_to_life")) );
+			titlebar.label( Messages.titleCase(Messages.get(hero, "true_to_life")) );
 			titlebar.setRect( 0, 0, WIDTH, 0 );
 			add( titlebar );
 
@@ -1330,7 +1290,7 @@ public enum Talent {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					Buff.append(Dungeon.hero, TTLbuff.class).set(item.getClass(), curGuess);
+					Buff.append(hero, TTLbuff.class).set(item.getClass(), curGuess);
 					Object o = Reflection.newInstance(curGuess);
 					String TTLname = null;
 					if (o instanceof Potion) {
@@ -1340,7 +1300,7 @@ public enum Talent {
 						((Scroll) o).identify();
 						TTLname = item.name();
 					}
-					GLog.i(Messages.get(Dungeon.hero, "ttlchanged", TTLname));
+					GLog.i(Messages.get(hero, "ttlchanged", TTLname));
 					hide();
 				}
 			};

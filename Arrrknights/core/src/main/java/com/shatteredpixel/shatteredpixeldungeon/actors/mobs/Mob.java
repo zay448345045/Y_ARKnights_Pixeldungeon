@@ -797,7 +797,7 @@ public abstract class Mob extends Char {
 			alerted = true;
 		}
 
-		if (Dungeon.hero.subClass == HeroSubClass.CHAOS && src instanceof Wand) {
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.CHAOS) && src instanceof Wand) {
 			if (Dungeon.hero.hasTalent(Talent.CHIMERA)) {
 				dmg *= 1.5f + (Dungeon.hero.pointsInTalent(Talent.CHIMERA) * 0.1f);
 			}
@@ -898,7 +898,7 @@ public abstract class Mob extends Char {
 				Dungeon.level.curMoves -= boc.level();
 			}
 
-			if(Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR){
+			if(Dungeon.hero.subClassSet.contains(HeroSubClass.KEYANIMATOR)){
 				MagicPaper mp = new MagicPaper();
 				Dungeon.level.drop(mp, this.pos).sprite.drop();
 				if(Dungeon.hero.isStarving() && Dungeon.hero.pointsInTalent(Talent.PIE_IN_THE_PAPER)>=2){
@@ -923,7 +923,7 @@ public abstract class Mob extends Char {
 				if (Dungeon.hero.pointsInTalent(Talent.SWEEP) > 1)  Buff.affect(Dungeon.hero, MagicalSight.class, 3f);
 			}}
 
-		if (Dungeon.hero.subClass== HeroSubClass.DESTROYER) {
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) {
 			if (2 + Dungeon.hero.pointsInTalent(Talent.BATTLEFLOW) > Random.Int(25)) {
 				AnnihilationGear Gear = Dungeon.hero.belongings.getItem(AnnihilationGear.class);
 				if (this instanceof Sheep) {
@@ -1002,7 +1002,7 @@ public abstract class Mob extends Char {
 			Actor.addDelayed(bomb.fuse = new Bomb.Fuse().ignite(bomb), 2);
 			Dungeon.level.drop(bomb, this.pos);
 		}
-		if(Dungeon.hero.subClass==HeroSubClass.SCHOLAR){
+		if(Dungeon.hero.subClassSet.contains(HeroSubClass.SCHOLAR)){
 			ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
 			if(notebook!=null) notebook.onKill(this);
 		}

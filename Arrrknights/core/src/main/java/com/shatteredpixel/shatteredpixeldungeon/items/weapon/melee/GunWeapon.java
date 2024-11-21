@@ -155,7 +155,7 @@ public class GunWeapon extends MeleeWeapon {
     public int proc(Char attacker, Char defender, int damage) {
         if (attacker instanceof Hero) {
             curUser = Dungeon.hero;
-            if (Dungeon.hero.subClass == HeroSubClass.GLADIATOR) {
+            if (Dungeon.hero.subClassSet.contains(HeroSubClass.GLADIATOR)) {
                 if (Random.Int(4) < 1) {
                     bullet = Math.min(bullet +1, bulletCap);
                     updateQuickslot();
@@ -196,7 +196,7 @@ public class GunWeapon extends MeleeWeapon {
         if (closerrange != null && Dungeon.hero.hasTalent(Talent.PINPOINT)) {
             acc += Dungeon.hero.pointsInTalent(Talent.PINPOINT) * 0.2f;
         }
-        if(Dungeon.hero.subClass == HeroSubClass.MARKSMIDORI) acc *= 1.25f;
+        if(Dungeon.hero.subClassSet.contains(HeroSubClass.MARKSMIDORI)) acc *= 1.25f;
         acc *= tryShootAccFactor;
 
         return acc;
@@ -249,7 +249,7 @@ public class GunWeapon extends MeleeWeapon {
         actions.add(AC_ZAP);
         actions.add(AC_RELOAD);
         if (GunAccessories != null) actions.add(AC_REMOVE);
-        if (hero.subClass == HeroSubClass.MARKSMIDORI){
+        if (hero.subClassSet.contains(HeroSubClass.MARKSMIDORI)){
             actions.add(AC_SPAMMO);
         }
         return actions;
@@ -276,7 +276,7 @@ public class GunWeapon extends MeleeWeapon {
             curUser = hero;
             if(Dungeon.hero.heroClass == HeroClass.MIDORI) {
                 if (
-                (Dungeon.hero.subClass == HeroSubClass.KEYANIMATOR) && Dungeon.hero.hasTalent(PAPER_BULLET)){
+                (Dungeon.hero.subClassSet.contains(HeroSubClass.KEYANIMATOR)) && Dungeon.hero.hasTalent(PAPER_BULLET)){
                     GameScene.selectItem(itemSelector, WndBag.Mode.MIDORI_AMMO, Messages.get(this, "prompt"));
                 }else{
                     GameScene.selectItem(itemSelector, WndBag.Mode.AMMO, Messages.get(this, "prompt"));
@@ -344,7 +344,7 @@ public class GunWeapon extends MeleeWeapon {
         spshot = sp;
         if(Dungeon.hero.hasTalent(PREWAR)&&Dungeon.hero.pointsInTalent(PREWAR)==2) Buff.affect(Dungeon.hero, Barrier.class).incShield(2);
 
-        if (Dungeon.hero.subClass == HeroSubClass.FREERUNNER) Dungeon.hero.spendAndNext(RELOAD_TIME / 2);
+        if (Dungeon.hero.subClassSet.contains(HeroSubClass.FREERUNNER)) Dungeon.hero.spendAndNext(RELOAD_TIME / 2);
         else Dungeon.hero.spendAndNext(RELOAD_TIME);
         Dungeon.hero.sprite.operate( Dungeon.hero.pos );
         defaultAction=AC_ZAP;
@@ -565,7 +565,7 @@ public class GunWeapon extends MeleeWeapon {
             int dmg = Fire_dmgFactor(ShotDamageRoll());
 
             // 사격 스롯 판정
-            if (Dungeon.hero.subClass == HeroSubClass.SNIPER) dmg -= (ch.drRoll() / 2);
+            if (Dungeon.hero.subClassSet.contains(HeroSubClass.SNIPER)) dmg -= (ch.drRoll() / 2);
             else dmg -= ch.drRoll();
 
             if (this instanceof R4C && Dungeon.hero.belongings.getItem(IsekaiItem.class) != null) {
@@ -592,7 +592,7 @@ public class GunWeapon extends MeleeWeapon {
                 ScholarNotebook notebook = Dungeon.hero.belongings.getItem(ScholarNotebook.class);
                 if(notebook!=null) dmg = notebook.shootProc(Dungeon.hero, ch, dmg);
 
-                if(Dungeon.hero.subClass == HeroSubClass.MARKSMIDORI && Dungeon.hero.hasTalent(MYSTERY_SHOT)){
+                if(Dungeon.hero.subClassSet.contains(HeroSubClass.MARKSMIDORI) && Dungeon.hero.hasTalent(MYSTERY_SHOT)){
                     MysteryShotHandler(ch, dmg);
                 }
                 else ch.damage(dmg, this);
@@ -611,10 +611,10 @@ public class GunWeapon extends MeleeWeapon {
 
                 // 사격 그레이스롯 판정
                 int bonusTurns = Dungeon.hero.hasTalent(Talent.SHARED_UPGRADES) ? this.buffedLvl() : 0;
-                if (Dungeon.hero.subClass == HeroSubClass.SNIPER) Buff.prolong(Dungeon.hero, SnipersMark.class, SnipersMark.DURATION).set(ch.id(), bonusTurns);
+                if (Dungeon.hero.subClassSet.contains(HeroSubClass.SNIPER)) Buff.prolong(Dungeon.hero, SnipersMark.class, SnipersMark.DURATION).set(ch.id(), bonusTurns);
 
                 // 연계 블레이즈 판정
-                if (Dungeon.hero.subClass == HeroSubClass.GLADIATOR) {
+                if (Dungeon.hero.subClassSet.contains(HeroSubClass.GLADIATOR)) {
                     Buff.affect(Dungeon.hero, Combo.class).hit(ch);
 
                     if (Dungeon.hero.hasTalent(Talent.CLEAVE)) {
@@ -625,7 +625,7 @@ public class GunWeapon extends MeleeWeapon {
                 }
 
                 // 산사수 첸 판정
-                if (Dungeon.hero.subClass == HeroSubClass.SPSHOOTER && ch.isAlive() && Dungeon.hero.buff(ChenShooterBuff.TACMoveCooldown.class) == null) {
+                if (Dungeon.hero.subClassSet.contains(HeroSubClass.SPSHOOTER) && ch.isAlive() && Dungeon.hero.buff(ChenShooterBuff.TACMoveCooldown.class) == null) {
                         Buff.prolong(Dungeon.hero, ChenShooterBuff.class, 5f).set(ch.id());
                 }
 

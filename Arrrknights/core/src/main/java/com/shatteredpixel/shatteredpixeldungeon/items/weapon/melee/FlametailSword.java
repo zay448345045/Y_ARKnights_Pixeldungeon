@@ -38,7 +38,7 @@ public class FlametailSword extends MeleeWeapon {
                 attacker.attack(defender);
                 defender.sprite.bloodBurstA( defender.sprite.center(), 4 );
                 defender.sprite.flash();
-                if (attacker instanceof Hero && Dungeon.hero.subClass == HeroSubClass.GLADIATOR) {
+                if (attacker instanceof Hero && Dungeon.hero.subClassSet.contains(HeroSubClass.GLADIATOR)) {
                     Buff.affect(attacker, Combo.class).bounshit(defender);
                 }
                 else if (attacker instanceof Hero && Dungeon.hero.heroClass == HeroClass.CHEN) {

@@ -8,12 +8,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Silence;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CockTailThrowerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.InfantrySprite;
 import com.watabou.utils.Random;
 
 public class CocktailThrower extends Mob{
     {
-        spriteClass = InfantrySprite.class;
+        spriteClass = CockTailThrowerSprite.class;
 
         HP = HT = 12;
         damageMax = 1;

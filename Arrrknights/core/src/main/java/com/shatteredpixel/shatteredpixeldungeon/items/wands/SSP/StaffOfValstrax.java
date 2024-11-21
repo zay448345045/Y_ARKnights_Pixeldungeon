@@ -156,7 +156,7 @@ public class StaffOfValstrax extends DamageWand {
                             Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = ch.id();
                         }
                         if (ch != Dungeon.hero &&
-                                Dungeon.hero.subClass == HeroSubClass.WARLOCK &&
+                                Dungeon.hero.subClassSet.contains(HeroSubClass.WARLOCK) &&
                                 Random.Float() > (Math.pow(0.95f - Dungeon.hero.pointsInTalent(Talent.EMOTION) / 15f, (wandLevel*originphase)+1) - 0.07f)){//change from budding
                             SoulMark.prolong(ch, SoulMark.class, SoulMark.DURATION + wandLevel + (Dungeon.hero.pointsInTalent(Talent.LORD) * 2));
                         }

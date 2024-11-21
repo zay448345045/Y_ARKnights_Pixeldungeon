@@ -168,7 +168,7 @@ public class GamesInProgress {
 		public int ht;
 		public int shld;
 		public HeroClass heroClass;
-		public HeroSubClass subClass;
+		public ArrayList<HeroSubClass> subClass = new ArrayList<>();
 		public int armorTier;
 		
 		public int goldCollected;

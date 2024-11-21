@@ -128,7 +128,7 @@ public abstract class Plant implements Bundlable {
 	
 	public String desc() {
 		String desc = Messages.get(this, "desc");
-		if (Dungeon.hero.subClass == HeroSubClass.WARDEN){
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.WARDEN)){
 			desc += "\n\n" + Messages.get(this, "warden_desc");
 		}
 		return desc;
@@ -162,7 +162,7 @@ public abstract class Plant implements Bundlable {
 				super.onThrow( cell );
 			} else {
 				Dungeon.level.plant( this, cell );
-				if (Dungeon.hero.subClass == HeroSubClass.WARDEN) {
+				if (Dungeon.hero.subClassSet.contains(HeroSubClass.WARDEN)) {
 					for (int i : PathFinder.NEIGHBOURS8) {
 						int c = Dungeon.level.map[cell + i];
 						if ( c == Terrain.EMPTY || c == Terrain.EMPTY_DECO
@@ -219,7 +219,7 @@ public abstract class Plant implements Bundlable {
 		@Override
 		public String desc() {
 			String desc = Messages.get(plantClass, "desc");
-			if (Dungeon.hero.subClass == HeroSubClass.WARDEN){
+			if (Dungeon.hero.subClassSet.contains(HeroSubClass.WARDEN)){
 				desc += "\n\n" + Messages.get(plantClass, "warden_desc");
 			}
 			return desc;

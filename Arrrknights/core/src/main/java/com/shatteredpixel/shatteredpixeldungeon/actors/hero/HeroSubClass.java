@@ -30,6 +30,9 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public enum HeroSubClass {
 
 	NONE,

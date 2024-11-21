@@ -60,10 +60,10 @@ public class TalentsPane extends ScrollPane {
 					&& Dungeon.hero.lvl+1 >= Talent.tierLevelThresholds[tiersAvailable+1]){
 				tiersAvailable++;
 			}
-			if (tiersAvailable > 2 && Dungeon.hero.subClass == HeroSubClass.NONE){
+			if (tiersAvailable > 2 && Dungeon.hero.subClass == null){
 				tiersAvailable = 2;
 			}
-			if (tiersAvailable > 3 && Dungeon.hero.subClass == HeroSubClass.NONE){
+			if (tiersAvailable > 3 && Dungeon.hero.subClass == null){
 				tiersAvailable = 3;
 			}
 		}
@@ -217,15 +217,36 @@ public class TalentsPane extends ScrollPane {
 				left += 6;
 			}
 
-			float gap = (width - buttons.size()*TalentButton.WIDTH)/(buttons.size()+1);
+			//region MultiRows
+			final int MAX_TALENTS_PER_ROW = 6;
+			int rows = 1+(buttons.size()-1)/MAX_TALENTS_PER_ROW;
+			int buttonsPerRow = buttons.size() / rows;
+			int extra = buttons.size() % rows;
+			if (extra > 0) buttonsPerRow++;
+
+			//endregion
+
+			float gap = (width - buttonsPerRow*TalentButton.WIDTH)/(buttonsPerRow+1);
+			float bottom = title.bottom();
+			int placed = 0;
 			left = x + gap;
 			for (TalentButton btn : buttons){
-				btn.setPos(left, title.bottom() + 4);
+				btn.setPos(left, bottom + 4);
 				PixelScene.align(btn);
 				left += btn.width() + gap;
+				if(++placed == buttonsPerRow && --rows >= 0) {
+					if (--extra == 0) {
+						buttonsPerRow--;
+						// copy-pasted from above
+						gap = (width - buttonsPerRow*TalentButton.WIDTH)/(buttonsPerRow+1);
+					}
+					left = x + gap;
+					bottom = btn.bottom();
+					placed = 0;
+				}
 			}
 
-			height = buttons.get(0).bottom() - y;
+			height = bottom - y;
 
 		}
 

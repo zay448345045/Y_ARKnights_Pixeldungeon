@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.sun.org.apache.bcel.internal.generic.FSUB;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.Bundle;
@@ -64,10 +65,14 @@ public class WndGameInProgress extends Window {
 		TomorrowRogueNight.initializeLoggers(slot);
 
 		final GamesInProgress.Info info = GamesInProgress.check(slot);
-		
+
+		StringBuilder sb = new StringBuilder();
 		String className = null;
-		if (info.subClass != HeroSubClass.NONE){
-			className = info.subClass.title();
+		if (info.subClass != null){
+			for(HeroSubClass sc : info.subClass){
+				sb.append(sc.title()).append(" ");
+			}
+			className = sb.toString();
 		} else {
 			className = info.heroClass.title();
 		}

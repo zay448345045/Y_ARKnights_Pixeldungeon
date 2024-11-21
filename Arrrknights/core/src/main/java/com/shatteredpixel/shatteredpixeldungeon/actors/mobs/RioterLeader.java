@@ -3,11 +3,12 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.InfantrySprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.RioterLeaderSprite;
 import com.watabou.utils.Random;
 
 public class RioterLeader extends Gnoll{
     {
-        spriteClass = InfantrySprite.class;
+        spriteClass = RioterLeaderSprite.class;
 
         HP = HT = 12;
         damageMax = 10;

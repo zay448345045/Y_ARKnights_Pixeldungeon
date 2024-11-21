@@ -294,8 +294,8 @@ public class Armor extends EquipableItem {
 		}
 
 		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
-		if (Dungeon.hero.subClass == HeroSubClass.CHAOS) max /= 2;
-		if (Dungeon.hero.subClass == HeroSubClass.KILLER) max /= 2;
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.CHAOS)) max /= 2;
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.KILLER)) max /= 2;
 
 		if (lvl > max){
 			return ((lvl - max)+1)/2;
@@ -571,7 +571,7 @@ public class Armor extends EquipableItem {
 			req -= (Dungeon.hero.pointsInTalent(Talent.STRONGMAN)+2)/2;
 		}
 
-		if (Dungeon.hero.subClass == HeroSubClass.FREERUNNER) req--;
+		if (Dungeon.hero.subClassSet.contains(HeroSubClass.FREERUNNER)) req--;
 
 		return req;
 	}

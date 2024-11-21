@@ -47,7 +47,7 @@ public class NotBarFood extends Food {
             hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
         }
 
-        if (Dungeon.hero.subClass == HeroSubClass.DESTROYER) { Buff.affect(hero, MeatPower_Chargrilled.class, MeatPower_Frozen.DURATION); }
+        if (Dungeon.hero.subClassSet.contains(HeroSubClass.DESTROYER)) { Buff.affect(hero, MeatPower_Chargrilled.class, MeatPower_Frozen.DURATION); }
 
         if (hero.hasTalent(Talent.LOVEMEAT))
         {

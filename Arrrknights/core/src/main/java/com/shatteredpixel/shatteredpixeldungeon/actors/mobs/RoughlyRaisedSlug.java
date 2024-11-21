@@ -30,11 +30,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.Bug_ASprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.RoughlyRaisedSlugSprite;
+import com.watabou.noosa.MovieClip;
 
 public class RoughlyRaisedSlug extends Slug {
-
+    private Mob curMob;
     {
-        spriteClass = Bug_ASprite.class;
+        spriteClass = RoughlyRaisedSlugSprite.class;
 
         HP = HT = 15;
         hthpIncRate = 90;
@@ -45,12 +47,14 @@ public class RoughlyRaisedSlug extends Slug {
         WANDERING = new RoughlyRaisedSlug.Wandering();
         FLEEING = new RoughlyRaisedSlug.Fleeing();
         properties.add(Property.INFECTED);
+        curMob = this;
     }
 
     @Override
     public void damage(int dmg, Object src) {
         super.damage(dmg, src);
         if (state != FLEEING && HP * 2 < HT) state = FLEEING;
+        ((RoughlyRaisedSlugSprite)curMob.sprite).switchToEscapeSprite();
     }
 
     @Override
@@ -68,6 +72,7 @@ public class RoughlyRaisedSlug extends Slug {
             //if an enemy is just noticed and the thief posses an item, run, don't fight.
             if (state == HUNTING && HP * 2 < HT) {
                 state = FLEEING;
+                ((RoughlyRaisedSlugSprite)curMob.sprite).switchToEscapeSprite();
             }
 
             return true;

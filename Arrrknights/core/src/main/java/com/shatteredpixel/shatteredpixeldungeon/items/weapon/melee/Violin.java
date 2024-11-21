@@ -294,7 +294,7 @@ public class Violin extends MeleeWeapon {
     }
 
     public void ProcessHuntingMark(Char enemy){
-        if(Dungeon.hero.subClass == HeroSubClass.KILLER ) {
+        if(Dungeon.hero.subClassSet.contains(HeroSubClass.KILLER) ) {
             if(enemy.buff(HuntingMark.class) != null){
                 Buff.prolong(enemy, HuntingMark.class, 5 + Dungeon.hero.pointsInTalent(Talent.RHAPSODY));
             }else if (marked < 1 +

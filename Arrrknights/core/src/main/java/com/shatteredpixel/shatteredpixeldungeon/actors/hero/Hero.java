@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
-import static com.shatteredpixel.shatteredpixeldungeon.items.Generator.Category.WEP_T5;
-
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -39,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ActiveOriginium;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
@@ -50,8 +47,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CloserangeShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DangerDanceBonus;
@@ -92,7 +87,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WildMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WindEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredBrute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Brute;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM100;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Ghoul;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
@@ -225,15 +219,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Assault;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.EX;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Horoscope;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Hyphen200;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Surrender;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Teller;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Winter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Decapitator;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Echeveria;
@@ -282,7 +272,9 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class Hero extends Char {
 
@@ -323,8 +315,10 @@ public class Hero extends Char {
     private static final float HUNGER_FOR_SEARCH = 6f;
 
     public HeroClass heroClass = HeroClass.ROGUE;
-    public HeroSubClass subClass = HeroSubClass.NONE;
+    public ArrayList<HeroSubClass> subClass = new ArrayList<>();
+    public Set<HeroSubClass> subClassSet = new HashSet<>(subClass);
     public ArrayList<LinkedHashMap<Talent, Integer>> talents = new ArrayList<>();
+    public LinkedHashMap<Talent, Talent> metamorphedTalents = new LinkedHashMap<>();
 
     private int attackSkill = 10;
     //private int attackSkill = 1000;
@@ -367,7 +361,6 @@ public class Hero extends Char {
     //This list is maintained so that some logic checks can be skipped
     // for enemies we know we aren't seeing normally, resultign in better performance
     public ArrayList<Mob> mindVisionEnemies = new ArrayList<>();
-
     public Hero() {
         super();
 
@@ -425,6 +418,8 @@ public class Hero extends Char {
         return STR;
     }
 
+    private static final String SUBCLASS = "subclass";
+
     private static final String ATTACK = "attackSkill";
     private static final String DEFENSE = "defenseSkill";
     private static final String STRENGTH = "STR";
@@ -443,7 +438,14 @@ public class Hero extends Char {
         super.storeInBundle(bundle);
 
         heroClass.storeInBundle(bundle);
-        subClass.storeInBundle(bundle);
+        int[] subClassIndexes = new int[subClass.size()];
+        int count = 0;
+        for(HeroSubClass heroSubClass:subClass){
+            subClassIndexes[count] = heroSubClass.ordinal();
+            count++;
+        }
+        bundle.put(SUBCLASS, subClassIndexes);
+
         Talent.storeTalentsInBundle(bundle, this);
 
         bundle.put(ATTACK, attackSkill);
@@ -479,7 +481,15 @@ public class Hero extends Char {
         super.restoreFromBundle(bundle);
 
         heroClass = HeroClass.restoreInBundle(bundle);
-        subClass = HeroSubClass.restoreInBundle(bundle);
+        int[] subClassIndexes = bundle.getIntArray(SUBCLASS);
+        HeroSubClass[] origin = HeroSubClass.values();
+        ArrayList<HeroSubClass> subClasses = new ArrayList<>();
+        for(int hsc: subClassIndexes){
+            subClasses.add(origin[hsc]);
+        }
+        subClass = subClasses;
+        subClassSet = new HashSet<>(subClass);
+
         Talent.restoreTalentsFromBundle(bundle, this);
 
         attackSkill = bundle.getInt(ATTACK);
@@ -512,7 +522,13 @@ public class Hero extends Char {
         info.ht = bundle.getInt(Char.TAG_HT);
         info.shld = bundle.getInt(Char.TAG_SHLD);
         info.heroClass = HeroClass.restoreInBundle(bundle);
-        info.subClass = HeroSubClass.restoreInBundle(bundle);
+        int[] subClassIndexes = bundle.getIntArray(SUBCLASS);
+        HeroSubClass[] origin = HeroSubClass.values();
+        ArrayList<HeroSubClass> subClasses = new ArrayList<>();
+        for(int hsc: subClassIndexes){
+            subClasses.add(origin[hsc]);
+        }
+        info.subClass = subClasses;
         Belongings.preview(info, bundle);
     }
 
@@ -548,7 +564,7 @@ public class Hero extends Char {
 
     public int talentPointsAvailable(int tier) {
         if (lvl < Talent.tierLevelThresholds[tier]
-                || (tier == 3 && subClass == HeroSubClass.NONE)) {
+                || (tier == 3 && subClass == null)) {
             return 0;
         } else if (lvl >= Talent.tierLevelThresholds[tier + 1]) {
             return Talent.tierLevelThresholds[tier + 1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier)+ bonusTalentPoints(tier);
@@ -559,7 +575,7 @@ public class Hero extends Char {
 
     public int bonusTalentPoints(int tier){
         if (lvl < (Talent.tierLevelThresholds[tier]-1)
-                || (tier == 3 && subClass == HeroSubClass.NONE)) {
+                || (tier == 3 && subClass == null)) {
             return 0;
         } else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
                 && buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
@@ -570,11 +586,13 @@ public class Hero extends Char {
     }
 
     public String className() {
-		/*if (named != null) {
-			return  named;
-		}
-		else*/
-        return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
+        String titles = "";
+		if(subClass!=null){
+            for(HeroSubClass sc: subClass){
+                titles += sc.title() + " ";
+            }
+        }
+        return subClass == null ? heroClass.title() : titles;
     }
 
     @Override
@@ -627,7 +645,7 @@ public class Hero extends Char {
         belongings.weapon = belongings.stashedWeapon;
         belongings.stashedWeapon = null;
 
-        if (hit && subClass == HeroSubClass.GLADIATOR) {
+        if (hit && subClassSet.contains(HeroSubClass.GLADIATOR)) {
             Buff.affect(this, Combo.class).hit(enemy);
         }
         if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady()){
@@ -648,9 +666,9 @@ public class Hero extends Char {
             if (Dungeon.level.adjacent(pos, target.pos)) {
                 accuracy *= (0.5f + 0.15f * pointsInTalent(Talent.DURABLE_TIPS));
             } else {
-                if (this.subClass == HeroSubClass.SNIPER){
+                if (this.subClassSet.contains(HeroSubClass.SNIPER)){
                     accuracy *= 1.75f + (pointsInTalent(Talent.FARSIGHT) * 0.1f);
-                }else if(this.subClass == HeroSubClass.MARKSMIDORI){
+                }else if(this.subClassSet.contains(HeroSubClass.MARKSMIDORI)){
                     accuracy *= 1.75f;
                 }
                 else accuracy *= 1.5f;
@@ -1078,7 +1096,7 @@ public class Hero extends Char {
         if (mark != null) {
             mark.Charged(time);
         }
-        else if (subClass == HeroSubClass.WILD) Buff.affect(this, WildMark.class);
+        else if (subClassSet.contains(HeroSubClass.WILD)) Buff.affect(this, WildMark.class);
 
         HonedArts honedArts = buff(HonedArts.class);
         if (honedArts == null && Dungeon.hero.hasTalent(Talent.HONED_ARTS)) Buff.affect(this, HonedArts.class);
@@ -1087,7 +1105,7 @@ public class Hero extends Char {
         if (drawingArt != null) {
             drawingArt.Charged(time);
         }
-        else if (subClass == HeroSubClass.MARKSMIDORI) Buff.affect(this, DrawingArt.class);
+        else if (subClassSet.contains(HeroSubClass.MARKSMIDORI)) Buff.affect(this, DrawingArt.class);
 
         if (belongings.weapon instanceof PatriotSpear) {
             if (belongings.armor instanceof PlateArmor) {
@@ -1122,7 +1140,7 @@ public class Hero extends Char {
             ((Suffering) belongings.weapon).SPCharge( (int)(Suffering.partialcharge_suf));//change from budding
             Suffering.partialcharge_suf-=(int)(Suffering.partialcharge_suf);//change from budding
         }//change from budding
-        if (subClass == HeroSubClass.HEAT) {
+        if (subClassSet.contains(HeroSubClass.HEAT)) {
             Heat heat = buff(Heat.class);
             if (heat == null) {
                 Buff.affect(this, Heat.class);
@@ -1696,8 +1714,8 @@ public class Hero extends Char {
         }
 
         if (buff(RadiantKnight.class) != null) {
-            if (subClass == HeroSubClass.SAVIOR) damage *= 1.55f;
-            else if (subClass == HeroSubClass.FLASH) damage *= 1.25f;
+            if (subClassSet.contains(HeroSubClass.SAVIOR)) damage *= 1.55f;
+            else if (subClassSet.contains(HeroSubClass.FLASH)) damage *= 1.25f;
             else damage *= 1.4f;
 
             // 난입 특성
@@ -1739,32 +1757,29 @@ public class Hero extends Char {
             Buff.affect(this, Talent.PushAttackCooldown.class, 80);
         }
 
-        switch (subClass) {
-            case SNIPER:
-                if (wep instanceof MissileWeapon && !(wep instanceof SpiritBow.SpiritArrow) && enemy != this) {
-                    Actor.add(new Actor() {
+        if(subClassSet.contains(HeroSubClass.SNIPER)) {
+            if (wep instanceof MissileWeapon && !(wep instanceof SpiritBow.SpiritArrow) && enemy != this) {
+                Actor.add(new Actor() {
 
-                        {
-                            actPriority = VFX_PRIO;
-                        }
+                    {
+                        actPriority = VFX_PRIO;
+                    }
 
-                        @Override
-                        protected boolean act() {
-                            if (enemy.isAlive()) {
-                                int bonusTurns = hasTalent(Talent.SHARED_UPGRADES) ? wep.buffedLvl() * 2 : 0;
-                                Buff.prolong(Hero.this, SnipersMark.class, SnipersMark.DURATION + bonusTurns).set(enemy.id(), bonusTurns);
-                            }
-                            Actor.remove(this);
-                            return true;
+                    @Override
+                    protected boolean act() {
+                        if (enemy.isAlive()) {
+                            int bonusTurns = hasTalent(Talent.SHARED_UPGRADES) ? wep.buffedLvl() * 2 : 0;
+                            Buff.prolong(Hero.this, SnipersMark.class, SnipersMark.DURATION + bonusTurns).set(enemy.id(), bonusTurns);
                         }
-                    });
-                }
-                break;
-            case KNIGHT:
-                if (buff(Haste.class) != null)
-                    damage *= 1.2f;
-                break;
-            default:
+                        Actor.remove(this);
+                        return true;
+                    }
+                });
+            }
+        }
+        if(subClassSet.contains(HeroSubClass.KNIGHT)) {
+            if (buff(Haste.class) != null)
+                damage *= 1.2f;
         }
 
         if (hasTalent(Talent.SAVIOR_BELIEF) && (enemy.buff(Roots.class) != null || enemy.buff(Paralysis.class) != null)) {
@@ -1867,7 +1882,7 @@ public class Hero extends Char {
 
     @Override
     public int defenseProc(Char enemy, int damage) {
-        if (RingOfDominate.Dominate_curse(this) == true) {
+        if (RingOfDominate.Dominate_curse(this)) {
             if (Random.Int(HT) > HP * 3) {
                 Buff.affect(this, Corruption.class);
                 Dungeon.hero.die(RingOfDominate.class);
@@ -1878,7 +1893,7 @@ public class Hero extends Char {
             }
         }
 
-        if (damage > 0 && subClass == HeroSubClass.BERSERKER) {
+        if (damage > 0 && subClassSet.contains(HeroSubClass.BERSERKER)) {
             Berserk berserk = Buff.affect(this, Berserk.class);
             berserk.damage(damage);
 
@@ -1918,7 +1933,7 @@ public class Hero extends Char {
 
         AnnihilationGear Gear = Dungeon.hero.belongings.getItem(AnnihilationGear.class);
         if (Gear != null) {
-            if (Dungeon.hero.subClass == HeroSubClass.GUARDIAN) {
+            if (Dungeon.hero.subClassSet.contains(HeroSubClass.GUARDIAN)) {
                 if (Gear.charge > 0) {
                     if (buff(Barrier.class) == null) {
                         Buff.affect(this, Barrier.class).setShield(HT / 8);
@@ -1972,7 +1987,7 @@ public class Hero extends Char {
 
         // 혼돈 아미야 관련
 
-        if (subClass == HeroSubClass.CHAOS) {
+        if (subClassSet.contains(HeroSubClass.CHAOS)) {
             float bounsdamage = 1.5f;
                 if (hasTalent(Talent.CHIMERA)) {
                     bounsdamage += pointsInTalent(Talent.CHIMERA) * 0.1f;
@@ -2094,9 +2109,9 @@ public class Hero extends Char {
             if (buff(Bonk.BonkBuff.class) != null) dmg = 0;
         }
 
-        if (buff(RadiantKnight.class) != null && subClass != HeroSubClass.FLASH) {
+        if (buff(RadiantKnight.class) != null && (!subClassSet.contains(HeroSubClass.FLASH) || (Statistics.victoryLapRounds>0&&subClassSet.contains(HeroSubClass.FLASH)))) {
             float redu = 0.8f;
-            if (subClass == HeroSubClass.SAVIOR) {
+            if (subClassSet.contains(HeroSubClass.SAVIOR)) {
                 redu = 0.6f;
                 if (hasTalent(Talent.HOPELIGHT)) {
                     float hope = pointsInTalent(Talent.HOPELIGHT) * 0.05f;
@@ -2283,11 +2298,11 @@ public class Hero extends Char {
 
         if (step != -1) {
 
-            if (subClass == HeroSubClass.FREERUNNER) {
+            if (subClassSet.contains(HeroSubClass.FREERUNNER)) {
                 Buff.affect(this, Momentum.class).gainStack();
             }
 
-            if (subClass == HeroSubClass.STOME && buff(WindEnergy.class) != null) {
+            if (subClassSet.contains(HeroSubClass.STOME) && buff(WindEnergy.class) != null) {
                 boolean chack = true;
                 if (hasTalent(Talent.ENERGY_STORAGE)) {
                     if (buff(WindEnergy.class).Eneray() <= 25+(pointsInTalent(Talent.ENERGY_STORAGE) * 15)) {
@@ -2760,16 +2775,16 @@ public class Hero extends Char {
             }
         }
 
-        if (hit && subClass == HeroSubClass.GLADIATOR) {
+        if (hit && subClassSet.contains(HeroSubClass.GLADIATOR)) {
             Buff.affect(this, Combo.class).hit(enemy);
         }
 
-        if (hit && heroClass == HeroClass.CHEN && subClass != HeroSubClass.SPSHOOTER) {
+        if (hit && heroClass == HeroClass.CHEN && !subClassSet.contains(HeroSubClass.SPSHOOTER)) {//TODO 改成水陈剑陈双转亦可？
             Buff.affect(this, ChenCombo.class).hit(enemy);
             if (hasTalent(Talent.BLADE_ART) && Random.Int(20) < 1 + pointsInTalent(Talent.BLADE_ART)) Buff.affect(this, ChenCombo.class).hit(enemy);
         }
 
-        if (hit && subClass == HeroSubClass.KNIGHT) {
+        if (hit && subClassSet.contains(HeroSubClass.KNIGHT)) {
             Buff.affect(this, KnightSKILL.class).hit(enemy);
         }
 

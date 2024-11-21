@@ -345,13 +345,13 @@ public abstract class Char extends Actor {
 			if (this instanceof Hero){
 				Hero h = (Hero)this;
 				if (h.belongings.weapon instanceof MissileWeapon
-						&& h.subClass == HeroSubClass.SNIPER
+						&& h.subClassSet.contains(HeroSubClass.SNIPER)
 						&& !Dungeon.level.adjacent(h.pos, enemy.pos)){
 					dr = 0; }
 
 				SpiritBow weapon = h.belongings.getItem(SpiritBow.class);
 					if (weapon != null && h.belongings.weapon instanceof SpiritBow.SpiritArrow
-							&& h.subClass == HeroSubClass.WARDEN) {
+							&& h.subClassSet.contains(HeroSubClass.WARDEN)) {
 						if (weapon.EatSeed >= 15) dr/=2;
 					}
 				if (h.belongings.weapon instanceof ThermiteBlade) dr = 0;
@@ -462,7 +462,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if(Dungeon.hero.subClass == HeroSubClass.KILLER && Dungeon.hero.hasTalent(Talent.DANGER_DANCE)){
+			if(Dungeon.hero.subClassSet.contains(HeroSubClass.KILLER) && Dungeon.hero.hasTalent(Talent.DANGER_DANCE)){
 				if(this instanceof Hero){
 					Buff.affect(this, DangerDanceBonus.class).add(4-Dungeon.hero.pointsInTalent(Talent.DANGER_DANCE));
 				}else if(enemy instanceof Hero){
@@ -474,7 +474,7 @@ public abstract class Char extends Actor {
 						new FlavourBuff(){
 							{actPriority = VFX_PRIO;}
 							public boolean act() {
-								if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.KILLER){
+								if (target instanceof Hero && ((Hero) target).subClassSet.contains(HeroSubClass.KILLER)){
 									Buff.affect(target, RabbitTime.class).add(0.5f);
 									if(Dungeon.hero.hasTalent(Talent.LINGER_ON)){
 										Buff.affect(target, RabbitTime.class).add(Dungeon.hero.pointsInTalent(Talent.LINGER_ON)*0.5f);
@@ -536,7 +536,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if(Dungeon.hero.subClass == HeroSubClass.KILLER){
+			if(Dungeon.hero.subClassSet.contains(HeroSubClass.KILLER)){
 				if(enemy instanceof Hero) {
 					Buff.affect(enemy, RabbitTime.class).add(0.2f + Dungeon.hero.pointsInTalent(Talent.LINGER_ON) * 0.1f);
 				}
@@ -626,7 +626,7 @@ public abstract class Char extends Actor {
 
 		if(Dungeon.hero.buff(PotatoAimReady.class)!=null && Dungeon.hero.buff(PotatoAimReady.class).isReady())return true;
 		if(!result) {
-			if (attacker instanceof Hero && ((Hero) attacker).subClass == HeroSubClass.KEYANIMATOR && ((Hero) attacker).hasTalent(Talent.POTATO_AIM)) {
+			if (attacker instanceof Hero && ((Hero) attacker).subClassSet.contains(HeroSubClass.KEYANIMATOR) && ((Hero) attacker).hasTalent(Talent.POTATO_AIM)) {
 				Buff.affect(Dungeon.hero,PotatoAimReady.class).set();
 				Buff.affect(Dungeon.hero,PotatoAimReady.class).addCount();
 			}
