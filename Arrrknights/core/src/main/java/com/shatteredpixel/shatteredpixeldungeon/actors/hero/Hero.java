@@ -46,6 +46,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionHero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChenCombo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
@@ -206,6 +208,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.SP.Badge;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Aegis;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.FrostRelic;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LightFluxPauldron;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
@@ -217,6 +220,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMappi
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.SP.StaffOfMudrock;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.chimera.Frostcraft;
@@ -264,6 +268,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
@@ -1001,6 +1006,11 @@ public class Hero extends Char {
         if (Dungeon.level.adjacent(pos, enemy.pos)) {
             return true;
         }
+        for (ChampionHero buff : buffs(ChampionHero.class)){
+            if (buff.canAttackWithExtraReach( enemy )){
+                return true;
+            }
+        }
 
         KindOfWeapon wep = Dungeon.hero.belongings.weapon;
 
@@ -1087,11 +1097,6 @@ public class Hero extends Char {
             return;
         }
 
-//        CloserangeShot crshot = buff(CloserangeShot.class);
-//        if (crshot != null) {
-//            crshot.isActived();
-//        }
-
         WildMark mark = buff(WildMark.class);
         if (mark != null) {
             mark.Charged(time);
@@ -1154,6 +1159,14 @@ public class Hero extends Char {
                     Buff.detach(this, com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage.class); }}}
 
         if(Dungeon.depth==Statistics.deepestFloor)Dungeon.level.curMoves+=time;
+
+        FrostRelic fr = Dungeon.hero.belongings.getItem(FrostRelic.class);
+        if(fr != null && buff(FrostRelic.FrostRelicBuff.class) != null){
+                    for (Emitter e : fr.frostRelicEmitters){
+                        e.on = false;
+                    }
+                    fr.frostRelicEmitters.clear();
+        }
 
         super.spend(time);
     }

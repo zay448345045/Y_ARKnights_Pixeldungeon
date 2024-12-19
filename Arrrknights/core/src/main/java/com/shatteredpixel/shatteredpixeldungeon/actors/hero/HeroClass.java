@@ -64,6 +64,10 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
  import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticGas;
  import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
  import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
+ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.FrostRelic;
+ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.SymbioticScorpion;
+ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.UnstableTeslaCoil;
+ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.WakeOfVultures;
  import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
  import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
  import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -240,6 +244,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 			new ChimeraGiver().collect();
 
 			new FlameKatana().chimera(Reflection.newInstance(Flame.class)).chimera(Reflection.newInstance(Sylvestris.class)).chimera(Reflection.newInstance(Blossoming.class)).identify().collect();
+			new SymbioticScorpion().collect();
 		}
 	}
 

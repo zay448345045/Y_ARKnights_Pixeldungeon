@@ -162,6 +162,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TopazBrooch;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TougherTimes;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.Transcendence;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.TriTipDagger;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.WakeOfVultures;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -788,6 +789,7 @@ public class Generator {
                     Behemoth.class,
                     LuckyLeaf.class,
                     Raincoat.class,
+                    WakeOfVultures.class,
                     //yellow
                     Perforator.class,
                     TitanicKnurl.class,
@@ -801,7 +803,7 @@ public class Generator {
                     };
             ROR2ITEM.defaultProbs = new float[]
                     {8, 8, 8, 8, 8, 8, 8, 8, 8,//white
-                    1, 1, 1, 1,//red
+                    1, 1, 1, 1, 1,//red
                     2, 2,//yellow
                     3,//orange
                     2, 2,//blue

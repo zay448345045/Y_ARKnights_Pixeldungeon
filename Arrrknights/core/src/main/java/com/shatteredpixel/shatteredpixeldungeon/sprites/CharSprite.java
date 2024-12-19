@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnowParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -87,7 +88,23 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, TALU_BOSS, HIKARI, BLACK_FOG, HUNTING_MARK, VANISH
+		BURNING,
+		LEVITATING,
+		INVISIBLE,
+		PARALYSED,
+		FROZEN,
+		ILLUMINATED,
+		CHILLED,
+		DARKENED,
+		MARKED,
+		HEALING,
+		SHIELDED,
+		TALU_BOSS,
+		HIKARI,
+		BLACK_FOG,
+		HUNTING_MARK,
+		VANISH,
+		ELECTRIC
 	}
 	protected Animation idle;
 	protected Animation run;
@@ -111,6 +128,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter hikari;
 	protected Emitter blackfog;
 	protected Emitter huntingmark;
+	protected Emitter electric;
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
@@ -173,6 +191,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				return huntingmark != null;
 			case VANISH:
 				return vanish != null;
+			case ELECTRIC:
+				return electric != null;
 			default:
 				return false;
 		}
@@ -480,6 +500,10 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				} else
 					alpha( 0.4f );
 				break;
+			case ELECTRIC:
+				electric = emitter();
+				electric.pour(SparkParticle.FACTORY, 0.04f);
+				break;
 		}
 	}
 	
@@ -578,6 +602,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 					vanish = null;
 				}
 				alpha( 1f );
+				break;
+			case ELECTRIC:
+				if (electric != null){
+					electric.on = false;
+					electric = null;
+				}
 				break;
 		}
 	}

@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionHero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
@@ -60,6 +61,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MechanicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Oblivion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PermanentArmorReduction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PotatoAimReady;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
@@ -97,6 +99,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.LuckyLeaf;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.ROR2item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.StunGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.ror2items.WakeOfVultures;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -376,7 +379,9 @@ public abstract class Char extends Actor {
 					if (Random.Int(10) < h.pointsInTalent(Talent.ZANTETSUKEN)) dr = 0;
 				}
 			}
-			
+			PermanentArmorReduction par = enemy.buff(PermanentArmorReduction.class);
+			if(par!=null) dr -= par.get();
+
 			int dmg;
 			Preparation prep = buff(Preparation.class);
 			if (prep != null){
@@ -605,7 +610,9 @@ public abstract class Char extends Actor {
 		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)) {
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
-
+		for (ChampionHero buff : attacker.buffs(ChampionHero.class)) {
+			acuRoll *= buff.evasionAndAccuracyFactor();
+		}
 
 		float defRoll;
 		if (defender.buff(LuckyLeaf.LuckyLeafBuff.class) != null) {
@@ -620,6 +627,9 @@ public abstract class Char extends Actor {
 		if (defender.buff(Hex.class) != null) defRoll *= 0.8f;
 		if (defender.buff(HuntingMark.class) != null) defRoll *= 0.8f;
 		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)) {
+			defRoll *= buff.evasionAndAccuracyFactor();
+		}
+		for (ChampionHero buff : defender.buffs(ChampionHero.class)) {
 			defRoll *= buff.evasionAndAccuracyFactor();
 		}
 		boolean result = (magic ? acuRoll * 2 : acuRoll) >= defRoll;
@@ -667,6 +677,9 @@ public abstract class Char extends Actor {
 			damage *= 0.67f;
 		}
 		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+			damage *= buff.meleeDamageFactor();
+			buff.onAttackProc( enemy, damage );
+		}for (ChampionHero buff : buffs(ChampionHero.class)){
 			damage *= buff.meleeDamageFactor();
 			buff.onAttackProc( enemy, damage );
 		}
@@ -724,6 +737,9 @@ public abstract class Char extends Actor {
 		}
 
 		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
+		}
+		for (ChampionHero buff : buffs(ChampionHero.class)){
 			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
 		}
 
@@ -808,7 +824,7 @@ public abstract class Char extends Actor {
 			}
 		}
 		if (!Dummy.kkdy && !ImmortalShield.isImmortal(this))HP -= dmg;//change from budding
-		
+
 		if (sprite != null) {
 			if(AntiMagic.RESISTS.contains(src.getClass())){
 				sprite.showStatus(CharSprite.MAGIC,
@@ -818,6 +834,10 @@ public abstract class Char extends Actor {
 							CharSprite.NEGATIVE,
 					Integer.toString(dmg + shielded));}
 		}//显示伤害数字部分
+		if(Dungeon.hero.belongings.misc instanceof WakeOfVultures && !isAlive()){
+			WakeOfVultures wov = (WakeOfVultures)Dungeon.hero.belongings.misc;
+			wov.VulturesUponKill(Dungeon.hero, this);
+		}
 
 		if (HP < 0) HP = 0;
 
@@ -1070,6 +1090,9 @@ public abstract class Char extends Actor {
 		HashSet<Property> props = new HashSet<>(properties);
 		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 		if (buff(ChampionEnemy.Giant.class) != null) {
+			props.add(Property.LARGE);
+		}
+		if (buff(ChampionHero.Giant.class) != null) {
 			props.add(Property.LARGE);
 		}
 		return props;
