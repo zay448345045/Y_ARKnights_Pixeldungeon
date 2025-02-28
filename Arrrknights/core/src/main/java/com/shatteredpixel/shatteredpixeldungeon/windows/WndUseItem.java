@@ -29,9 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import java.util.ArrayList;
 
 public class WndUseItem extends WndInfoItem {
-	
-	//only one wnduseitem can appear at a time
-	private static WndUseItem INSTANCE;
+
 
 	private static final float BUTTON_HEIGHT	= 16;
 	
@@ -40,11 +38,6 @@ public class WndUseItem extends WndInfoItem {
 	public WndUseItem(final WndBag owner, final Item item ) {
 		
 		super(item);
-		
-		if( INSTANCE != null ){
-			INSTANCE.hide();
-		}
-		INSTANCE = this;
 	
 		float y = height + GAP;
 		
@@ -57,7 +50,9 @@ public class WndUseItem extends WndInfoItem {
 					protected void onClick() {
 						hide();
 						if (owner != null && owner.parent != null) owner.hide();
-						if (Dungeon.hero.isAlive()) item.execute( Dungeon.hero, action );
+						if (Dungeon.hero.isAlive() && Dungeon.hero.belongings.contains(item)){
+							item.execute( Dungeon.hero, action );
+						}
 					}
 				};
 				btn.setSize( btn.reqWidth(), BUTTON_HEIGHT );
@@ -162,14 +157,6 @@ public class WndUseItem extends WndInfoItem {
 		}
 		
 		return y - 1;
-	}
-	
-	@Override
-	public void hide() {
-		super.hide();
-		if (INSTANCE == this){
-			INSTANCE = null;
-		}
 	}
 
 }

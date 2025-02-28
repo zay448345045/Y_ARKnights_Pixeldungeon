@@ -105,7 +105,13 @@ public class Faust extends Mob {
     public float speed() {
         return super.speed() * 0.8f;
     }
-
+    @Override
+    public void aggro(Char ch) {
+        //cannot be aggroed to something it can't see
+        if (fieldOfView == null || fieldOfView[ch.pos]) {
+            super.aggro(ch);
+        }
+    }
     @Override
     protected boolean getCloser( int target ) {
         if (state == HUNTING) {

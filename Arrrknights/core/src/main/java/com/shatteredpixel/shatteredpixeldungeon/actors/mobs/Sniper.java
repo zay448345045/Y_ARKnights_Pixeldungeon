@@ -68,7 +68,13 @@ public class Sniper extends Mob {
         charge = 0;
         super.move(step, travelling);
     }
-
+    @Override
+    public void aggro(Char ch) {
+        //cannot be aggroed to something it can't see
+        if (fieldOfView == null || fieldOfView[ch.pos]) {
+            super.aggro(ch);
+        }
+    }
     @Override
     protected boolean getCloser( int target ) {
         if (state == HUNTING) {

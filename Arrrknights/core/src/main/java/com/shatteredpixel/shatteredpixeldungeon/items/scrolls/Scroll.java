@@ -168,8 +168,18 @@ public abstract class Scroll extends Item {
 
 		super.execute( hero, action );
 
+		boolean changedRemoveCurse = false;
 		if (action.equals( AC_READ )) {
-			
+			if(Dungeon.hero.hasTalent(Talent.TRUE_TO_LIFE)){
+				for(Buff b : Dungeon.hero.buffs()){
+					if(b instanceof Talent.TTLbuff){
+						if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+							if(((Talent.TTLbuff) b).change(this.getClass()) == ScrollOfRemoveCurse.class) changedRemoveCurse = true;
+						}
+					}
+				}
+			}
+
 			if (hero.buff(MagicImmune.class) != null) {
 				GLog.w(Messages.get(this, "no_magic"));
 			}else if (hero.buff(Silence.class) != null){
@@ -178,7 +188,7 @@ public abstract class Scroll extends Item {
 				GLog.w( Messages.get(this, "blinded") );
 			} else if (hero.buff(UnstableSpellbook.bookRecharge.class) != null
 					&& hero.buff(UnstableSpellbook.bookRecharge.class).isCursed()
-					&& !(this instanceof ScrollOfRemoveCurse || this instanceof ScrollOfAntiMagic)){
+					&& !(this instanceof ScrollOfRemoveCurse || this instanceof ScrollOfAntiMagic || changedRemoveCurse)){
 				GLog.n( Messages.get(this, "cursed") );}
 				else if (Dungeon.isChallenged(Challenges.SPECIAL_BOSS) && Dungeon.mboss19 == 1 && Dungeon.depth > 20 && Dungeon.depth < 27 && Dungeon.bossLevel() && Dungeon.talucount < 4){
 				GLog.n( Messages.get(this, "miniboss") );}
@@ -186,12 +196,14 @@ public abstract class Scroll extends Item {
 				curUser = hero;
 				curItem = detach( hero.belongings.backpack );
 				boolean jump = false;
-				for(Buff b : Dungeon.hero.buffs()){
-					if(b instanceof Talent.TTLbuff){
-						if(((Talent.TTLbuff) b).willChange(this.getClass())) {
-							curItem = ((Scroll)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass())));
-							((Scroll)curItem).doRead();
-							jump = true;
+				if(Dungeon.hero.hasTalent(Talent.TRUE_TO_LIFE)){
+					for(Buff b : Dungeon.hero.buffs()){
+						if(b instanceof Talent.TTLbuff){
+							if(((Talent.TTLbuff) b).willChange(this.getClass())) {
+								curItem = ((Scroll)Reflection.newInstance(((Talent.TTLbuff) b).change(this.getClass())));
+								((Scroll)curItem).doRead();
+								jump = true;
+							}
 						}
 					}
 				}

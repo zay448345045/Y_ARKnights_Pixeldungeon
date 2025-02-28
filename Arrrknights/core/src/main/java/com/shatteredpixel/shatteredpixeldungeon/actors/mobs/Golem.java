@@ -224,7 +224,8 @@ public class Golem extends Mob {
 				int oldPos = pos;
 
 				if (enemyTeleCooldown <= 0 && Random.Int(100/distance(enemy)) == 0
-						&& !Char.hasProp(enemy, Property.IMMOVABLE)){
+						&& !Char.hasProp(enemy, Property.IMMOVABLE)
+						&& distance(enemy) >= 1){
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 						sprite.zap( enemy.pos );
 						return false;

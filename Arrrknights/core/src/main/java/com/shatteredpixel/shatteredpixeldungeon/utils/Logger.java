@@ -13,12 +13,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Logger extends Gizmo {
-    private LinkedList<Map<String, String>> entries;
+    private List<Map<String, String>> entries;
     private int maxEntries;
     private File logFile;
     private float time;
@@ -27,10 +28,11 @@ public abstract class Logger extends Gizmo {
     private static final String TAG = "Logger";
     private final String[] entryHeader;
     private boolean headerWritten = false;
+    private final Object lock = new Object();
 
     public Logger(int maxEntries, String filename, String[] entryHeader) {
         DeviceCompat.log(TAG, "Logger Created");
-        this.entries = new LinkedList<>();
+        this.entries = new CopyOnWriteArrayList<>();
         this.maxEntries = maxEntries;
         this.time = logExportInterval;
         this.entryHeader = entryHeader;
@@ -51,7 +53,7 @@ public abstract class Logger extends Gizmo {
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
         int millisecond = calendar.get(Calendar.MILLISECOND);
-        return String.format(Locale.CHINA,"%02d:%02d:%02d:%03d", hour, minute, second, millisecond);
+        return String.format(Locale.CHINA, "%02d:%02d:%02d:%03d", hour, minute, second, millisecond);
     }
 
     public synchronized void addEntry(Map<String, String> entryData) {
@@ -61,15 +63,19 @@ public abstract class Logger extends Gizmo {
         if (entryData.size() != entryHeader.length) {
             throw new IllegalArgumentException("Entry data does not match template length.");
         }
-        entries.addLast(entryData);
-        if (entries.size() > maxEntries) {
-            entries.removeFirst();
+        synchronized (lock) {
+            entries.add(entryData);
+            if (entries.size() > maxEntries) {
+                entries.remove(0);
+            }
         }
         logToFile();
     }
 
     public synchronized void clearEntries() {
-        entries.clear();
+        synchronized (lock) {
+            entries.clear();
+        }
     }
 
     public synchronized void logToFile() {
@@ -83,7 +89,8 @@ public abstract class Logger extends Gizmo {
                 headerWritten = true;
             }
             while (!entries.isEmpty()) {
-                Map<String, String> entry = entries.poll();
+                Map<String, String> entry = entries.get(0);
+                entries.remove(0);
                 writer.write(formatEntry(entry) + "\n");
             }
         } catch (IOException e) {

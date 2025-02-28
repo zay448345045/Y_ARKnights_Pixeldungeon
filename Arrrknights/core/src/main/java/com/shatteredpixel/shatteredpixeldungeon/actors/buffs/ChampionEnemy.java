@@ -148,7 +148,7 @@ public abstract class ChampionEnemy extends Buff {
 	}
 
 	public static void rollForHonor(Mob m){
-		if (Dungeon.mobsToHonor <= 0) Dungeon.mobsToHonor = Random.IntRange(7,10);
+		Dungeon.mobsToHonor = Random.IntRange(7,10);
 
 		Dungeon.mobsToHonor--;
 		Class<?extends ChampionEnemy> buffCls;

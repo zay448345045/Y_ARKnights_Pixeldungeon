@@ -25,6 +25,8 @@ import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Group extends Gizmo {
 
@@ -160,7 +162,7 @@ public class Group extends Gizmo {
 			g.parent.remove( g );
 		}
 		
-		if (members.get( 0 ) == null) {
+		if (!members.isEmpty() && members.get( 0 ) == null) {
 			members.set( 0, g );
 			g.parent = this;
 			return g;
@@ -307,6 +309,15 @@ public class Group extends Gizmo {
 			return g;
 		} else {
 			return null;
+		}
+	}
+	public synchronized void sort(Comparator c){
+		//only sort if we aren't already sorted
+		for (int i=0; i < length-1; i++) {
+			if (c.compare(members.get(i), members.get(i+1)) > 0) {
+				Collections.sort(members, c);
+				return;
+			}
 		}
 	}
 }

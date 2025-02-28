@@ -83,6 +83,7 @@ public class ScoutSprite extends MobSprite {
 		super.die();
 		if (summoningBones != null){
 			summoningBones.on = false;
+			summoningBones = null;
 		}
 	}
 
@@ -90,22 +91,27 @@ public class ScoutSprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (summoningBones != null){
-			summoningBones.killAndErase();
+			summoningBones.on = false;
+			summoningBones = null;
 		}
 	}
 
 	public void cancelSummoning(){
 		if (summoningBones != null){
 			summoningBones.on = false;
+			summoningBones = null;
 		}
 	}
 
 	public void finishSummoning(){
-		if (summoningBones.visible) {
-			Sample.INSTANCE.play(Assets.Sounds.BONES);
-			summoningBones.burst(Speck.factory(Speck.RATTLE), 5);
-		} else {
-			summoningBones.on = false;
+		if (summoningBones != null) {
+			if (summoningBones.visible) {
+				Sample.INSTANCE.play(Assets.Sounds.BONES);
+				summoningBones.burst(Speck.factory(Speck.RATTLE), 5);
+			} else {
+				summoningBones.on = false;
+			}
+			summoningBones = null;
 		}
 		idle();
 	}

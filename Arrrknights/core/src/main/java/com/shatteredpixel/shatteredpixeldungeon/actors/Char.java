@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPChallenges;
+import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
@@ -974,6 +975,7 @@ public abstract class Char extends Actor {
 	}
 	
 	public synchronized void updateSpriteState() {
+		TomorrowRogueNight.actorLogger.logActorEntry(this.getClass(),"updateSpriteState");
 		for (Buff buff:buffs) {
 			buff.fx( true );
 		}
