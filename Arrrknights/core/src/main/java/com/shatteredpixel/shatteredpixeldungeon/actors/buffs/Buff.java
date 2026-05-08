@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.TomorrowRogueNight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
@@ -115,8 +116,14 @@ public class Buff extends Actor {
 		return null;
 	}
 
+	public String name() {
+		return Messages.get(this, "name");
+	}
+	public String toString() {
+		return Messages.get(this, "name");
+	}
 	public String desc(){
-		return "";
+		return Messages.get(this, "desc");
 	}
 
 	//to handle the common case of showing how many turns are remaining in a buff description.

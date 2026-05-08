@@ -6,8 +6,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HuntingMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitTime;
@@ -381,5 +384,15 @@ public class Violin extends MeleeWeapon {
 
             return true;
         }
+    }
+
+    @Override
+    protected void duelistAbility(Hero hero, Integer target) {
+        hero.belongings.abilityWeapon = this;
+        MeleeWeapon wep = this;
+        wep.beforeAbilityUsed(hero, null);
+        Buff.affect( Dungeon.hero, Bless.class ,5f+2*buffedLvl());
+        Buff.affect( Dungeon.hero, Adrenaline.class ,5f+2*buffedLvl());
+        wep.afterAbilityUsed(hero);
     }
 }

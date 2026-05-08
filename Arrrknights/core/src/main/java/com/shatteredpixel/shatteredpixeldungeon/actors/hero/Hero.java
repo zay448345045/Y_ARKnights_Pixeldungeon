@@ -1913,7 +1913,6 @@ public class Hero extends Char {
                 }
             }
         }
-
         if (hasTalent(Talent.WIND_ROAD)) {
             WildMark mark = buff(WildMark.class);
             if (mark != null) {

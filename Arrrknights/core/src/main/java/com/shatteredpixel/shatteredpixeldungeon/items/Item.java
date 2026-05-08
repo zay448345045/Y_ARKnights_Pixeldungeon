@@ -209,7 +209,7 @@ public class Item implements Bundlable {
 	}
 	
 	public void execute( Hero hero ) {
-		execute( hero, defaultAction );
+		execute( hero, defaultAction() );
 	}
 	
 	protected void onThrow( int cell ) {

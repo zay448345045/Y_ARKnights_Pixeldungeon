@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Twilight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -151,5 +152,14 @@ public class WarJournalist extends MeleeWeapon {
             super.restoreFromBundle(bundle);
             isDie = bundle.getBoolean(ISDIE);
         }
+    }
+
+    @Override
+    protected void duelistAbility(Hero hero, Integer target) {
+        hero.belongings.abilityWeapon = this;
+        MeleeWeapon wep = this;
+        wep.beforeAbilityUsed(hero, null);
+        Buff.affect( Dungeon.hero, Invisibility.class ,5f+buffedLvl());
+        wep.afterAbilityUsed(hero);
     }
 }
