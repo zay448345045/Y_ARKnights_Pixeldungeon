@@ -166,7 +166,7 @@ public abstract class ChampionEnemy extends Buff {
 					break;
 				case 6:     buffCls = R2Mending.class;      break;
 			}
-			if (Dungeon.mobsToChampion <= 0 && Dungeon.isSPChallenged(SPChallenges.HONOR) && buffCls != null) {
+			if (Dungeon.mobsToHonor <= 0 && Dungeon.isSPChallenged(SPChallenges.HONOR) && buffCls != null) {
 				Buff.affect(m, buffCls);
 				if(buffCls == R2Overloading.class) Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT/2, true);
 				if(buffCls == R2Perfected.class) Buff.affect(m, ROR2Shield.class).setMaxShield(m.HT, true);
