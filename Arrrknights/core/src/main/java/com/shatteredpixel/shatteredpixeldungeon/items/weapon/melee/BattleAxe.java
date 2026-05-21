@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Camouflage;
@@ -41,6 +42,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogDzewa;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.BloodMagister;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Faust;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Mon3tr;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Effects;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -48,8 +51,13 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.Game;
+import com.watabou.noosa.Group;
+import com.watabou.noosa.Halo;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PointF;
 
 import java.util.ArrayList;
 
@@ -83,6 +91,19 @@ public class BattleAxe extends MeleeWeapon {
 	}
 
 	@Override
+	public boolean doEquip(Hero hero) {
+		boolean result = super.doEquip(hero);
+		if (result && starpower > 0) {
+			Buff.affect(hero, StarpowerBuff.class);
+		}
+		return result;
+	}
+	@Override
+	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+		Buff.detach(hero, StarpowerBuff.class);
+		return super.doUnequip(hero, collect, single);
+	}
+	@Override
 	public void execute(Hero hero, String action) {
 
 		super.execute(hero, action);
@@ -92,6 +113,9 @@ public class BattleAxe extends MeleeWeapon {
 				starpower++;
 				updateQuickslot();
 				hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(BattleAxe.class, "charge"));
+				if (hero.buff(StarpowerBuff.class) == null) {
+					Buff.affect(hero, StarpowerBuff.class);
+				}
 				if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class) != null) {
 					if (Dungeon.hero.belongings.getItem(TalismanOfForesight.class).isEquipped(Dungeon.hero)) {
 						curUser.spendAndNext(0.75f);
@@ -129,6 +153,7 @@ public class BattleAxe extends MeleeWeapon {
 
 		starpower = 0;
 		updateQuickslot();
+		Buff.detach(attacker, StarpowerBuff.class);
 		return super.proc(attacker, defender, damage);
 	}
 
@@ -189,6 +214,133 @@ public class BattleAxe extends MeleeWeapon {
 		}
 		if(defender instanceof Brute){
 			if(defender.HP <= 0) defender.die(null);
+		}
+	}
+
+	public static class StarpowerBuff extends Buff {
+		private ArrayList<OrbitingParticle> particles = new ArrayList<>();
+		private int lastStarpower = -1;
+		@Override
+		public boolean act() {
+			if (target == null || !target.isAlive()) {
+				detach();
+				return true;
+			}
+			Hero hero = (Hero) target;
+			if (hero.belongings.weapon == null || !(hero.belongings.weapon instanceof BattleAxe)) {
+				detach();
+				return true;
+			}
+			BattleAxe axe = (BattleAxe) hero.belongings.weapon;
+			int sp = axe.starpower;
+
+			if (sp <= 0) {
+				detach();
+				return true;
+			}
+			if (sp != lastStarpower) {
+				updateParticles(sp);
+				lastStarpower = sp;
+			}
+			if (target.sprite != null) {
+				for (OrbitingParticle p : particles) {
+					if (p != null) p.visible = target.sprite.visible;
+				}
+			}
+			spend(TICK);
+			return true;
+		}
+		private void updateParticles(int count) {
+			for (OrbitingParticle p : particles) {
+				if (p != null) p.killAndErase();
+			}
+			particles.clear();
+			CharSprite sprite = (CharSprite) target.sprite;
+			for (int i = 0; i < count; i++) {
+				float phaseOffset = (float) i / count * 2f * (float) Math.PI;
+				particles.add(new OrbitingParticle(sprite, phaseOffset));
+			}
+		}
+
+		@Override
+		public void detach() {
+			super.detach();
+			for (OrbitingParticle p : particles) {
+				if (p != null) p.killAndErase();
+			}
+			particles.clear();
+			lastStarpower = -1;
+		}
+	}
+
+	// 放在 BattleAxe 类内部
+	public static class OrbitingParticle extends Image {
+
+		private CharSprite target;
+		private float phase;          // 固定相位偏移
+		private float angle;          // 当前旋转角度（弧度）
+		private float angularSpeed = 2.094f; // 120度/秒 => 2π/3 rad/s
+
+		public OrbitingParticle(CharSprite target, float phaseOffset) {
+			super(new Speck().image(Speck.STAR));
+			scale.set(1f);
+			color(0xAAAAFF);
+			this.target = target;
+			this.phase = phaseOffset;
+			this.angle = 0f;
+			if (target != null && target.parent != null) {
+				target.parent.add(this);
+				visible = target.visible;
+			}
+		}
+
+		@Override
+		public void update() {
+			super.update();
+			if (target == null || target.parent == null) {
+				killAndErase();
+				return;
+			}
+			angle += angularSpeed * Game.elapsed;
+			float totalAngle = angle + phase;
+			PointF center = target.center();
+			float baseRadius = (target.width() + target.height()) / 4f + 4f;
+			float radiusX = baseRadius * 1f;
+			float radiusY = baseRadius * 0.4f;
+
+			float px = center.x + (float) Math.cos(totalAngle) * radiusX - width() / 2f;
+			float py = center.y + (float) Math.sin(totalAngle) * radiusY - height() / 2f;
+			point(px, py);
+
+			visible = target.visible;
+
+			adjustDepth(center.y);
+		}
+		private void adjustDepth(float targetCenterY) {
+			Group parent = target.parent;
+			if (parent == null) return;
+
+			int targetIdx = parent.indexOf(target);
+			int myIdx = parent.indexOf(this);
+			if (targetIdx < 0 || myIdx < 0) return;
+
+			float myCenterY = this.y + height() / 2f;
+			boolean isAbove = myCenterY < targetCenterY;
+
+			if (isAbove) {
+				if (myIdx > targetIdx) {
+					parent.sendToBack(this);
+				}
+			} else {
+				if (myIdx < targetIdx) {
+					parent.bringToFront(this);
+				}
+			}
+		}
+		public OrbitingParticle point(float x, float y ) {
+			this.x = x;
+			this.y = y;
+			return this;
 		}
 	}
 }
