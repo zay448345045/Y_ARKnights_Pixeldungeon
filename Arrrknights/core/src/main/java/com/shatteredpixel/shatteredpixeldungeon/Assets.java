@@ -541,7 +541,7 @@ public class Assets {
 		public static final String GHOST1	= "sprites/ghost_1.png";
 		public static final String OBELISK	= "sprites/Obelisk.png";
 
-
+		public static final String VOID_INFESTOR	= "sprites/void_infestor.png";
 
 		// 방벽
 		public static final String EX42	= "sprites/ex42.png";

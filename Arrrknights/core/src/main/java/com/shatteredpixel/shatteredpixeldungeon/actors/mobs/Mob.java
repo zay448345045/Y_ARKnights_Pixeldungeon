@@ -246,6 +246,14 @@ public abstract class Mob extends Char {
 		EXP = bundle.getInt(EXPGAIN);
 	}
 
+	@Override
+	public String name() {
+		String name = super.name();
+		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+			name = buff.rename(name);
+		}
+		return name;
+	}
 	public CharSprite sprite() {
 		return Reflection.newInstance(spriteClass);
 	}
@@ -351,7 +359,7 @@ public abstract class Mob extends Char {
 			HashSet<Char> enemies = new HashSet<>();
 
 			//if the mob is amoked...
-			if ( buff(Amok.class) != null) {
+			if ( buff(Amok.class) != null || buff(ChampionEnemy.R2Void.class)!=null) {
 				//try to find an enemy mob to attack first.
 				for (Mob mob : Dungeon.level.mobs)
 					if (mob.alignment == Alignment.ENEMY && mob != this

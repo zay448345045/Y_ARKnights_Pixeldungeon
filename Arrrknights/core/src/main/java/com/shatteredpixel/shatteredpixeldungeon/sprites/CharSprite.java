@@ -868,7 +868,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 						buff instanceof ChampionEnemy.R2Malachite||
 						buff instanceof ChampionEnemy.R2Celestine||
 						buff instanceof ChampionEnemy.R2Perfected||
-						buff instanceof ChampionEnemy.R2Mending) {
+						buff instanceof ChampionEnemy.R2Mending||
+						buff instanceof ChampionEnemy.R2Void
+				) {
 					hardlight(buff.color);
 				}
 			}

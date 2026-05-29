@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.VoidInfestor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.FrostBomb;
@@ -76,6 +77,9 @@ public abstract class ChampionEnemy extends Buff {
 		else target.sprite.clearAura();
 	}
 
+	public String rename(String name) {
+		return name;
+	}
 	@Override
 	public String toString() {
 		return Messages.get(this, "name");
@@ -552,6 +556,90 @@ public abstract class ChampionEnemy extends Buff {
 			@Override
 			public String desc() {
 				return Messages.get(this, "desc");
+			}
+		}
+	}
+
+	public static class R2Void extends ChampionEnemy {
+		{
+			color = 0x9900FF;
+		}
+		private int shieldCooldown = 10;
+
+		@Override
+		public void onAttackProc(Char enemy, int damage) {
+			if(enemy.buff(Collapse.class)!=null) Buff.affect(enemy, Collapse.class).stack();
+			else Buff.affect(enemy, Collapse.class).setup(enemy,damage);
+		}
+		@Override
+		public boolean act() {
+			if(shieldCooldown >= 0) shieldCooldown--;
+			if (shieldCooldown <= 0) {
+				target.sprite.add(CharSprite.State.SHIELDED);
+			} else {
+				target.sprite.remove(CharSprite.State.SHIELDED);
+			}
+			spend(TICK);
+			return true;
+		}
+		@Override
+		public float damageTakenFactor() {
+			if(shieldCooldown <= 0) {
+				shieldCooldown = 10;
+				return 0f;
+			}
+			else return 1f;
+		}
+		@Override
+		public void detach() {
+			VoidInfestor.spawnAt(target.pos);
+			super.detach();
+		}
+		@Override
+		public String rename(String name) {
+			return "<#CC33FF>" + name + "<RGB>";
+		}
+		public static class Collapse extends Buff{
+			private Char victim;
+			private int left;
+			private int damage;
+			private int stacks;
+			@Override
+			public int icon() {
+				return BuffIndicator.POISON;
+			}
+			@Override
+			public String desc() {
+				return Messages.get(this, "desc", damage, stacks, left);
+			}
+			@Override
+			public void tintIcon(Image icon) {
+				icon.hardlight(0.6f, 0f, 1f);
+			}
+			public void setup( Char victim,int damage){
+				this.victim = victim;
+				this.damage = damage;
+				this.stacks = 1;
+				left = 3;
+			}
+			public void stack(){
+				this.stacks++;
+			}
+			@Override
+			public boolean act() {
+				left--;
+				if (left <= 0){
+					victim.damage(damage*stacks,this);
+					if (victim==Dungeon.hero && !Dungeon.hero.isAlive()) {
+						Dungeon.fail( getClass() );
+						GLog.n( Messages.get(this, "collapse_kill") );
+					}
+					next();
+					detach();
+					return false;
+				}
+				spend( TICK );
+				return true;
 			}
 		}
 	}

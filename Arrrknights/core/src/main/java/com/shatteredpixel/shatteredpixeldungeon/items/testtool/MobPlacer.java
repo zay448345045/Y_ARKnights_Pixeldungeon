@@ -6,105 +6,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.AcidSlug_A;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Acidic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Agent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.AirborneSoldier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Albino;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredBrute;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ArmoredStatue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bandit;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bat;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.BlackwaterSlug;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bombtail;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Brute;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Cannot;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CausticSlime;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CocktailThrower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Crownslayer_shadow;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.EmpireDrone;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Ergate;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ExplodeSlug_A;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Fanatic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FireCore;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FloatingSeaDrifter;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Frostfang;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GiantMushroom;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Gloompincer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GuerrillaHerald;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GuerrillaSiegebreaker;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.HeavyBoat;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Hound;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM100;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM200;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM201;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DemonSpawner;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Eye;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FetidSlug;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Ghoul;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Gnoll;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollTrickster;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Golem;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Infantry;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.LavaSlug;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.LightArmoredSoldier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.MetalCrab;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.MudrockZealot;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.MutantSpider;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Originiutant;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Piersailor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Raider;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Razorfrost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ReunionDefender;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Guard;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Piranha;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RioterLeader;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rockbreaker;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rodent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RoughlyRaisedSlug;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.SandPillar;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.SarkazGuerrillaFighter;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.SeaReaper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.SeaRunner;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ShieldedGuard;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Slug;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RipperDemon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RotHeart;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RotLasher;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Scorpio;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Senior;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Shaman;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Skeleton;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Slime;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Snake;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 //import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.SpectralNecromancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.ExplodSlug_N;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Sniper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Statue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Striker;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.StrikerElite;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Succubus;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Swarm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Thief;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhAddict;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhBrave;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhFanatic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhLancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhRipper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhRitualist;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhShaman;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhShredder;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhSniper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TiacauhWarrior;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.UrsusCrossbowman;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Warlock;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.WaveCaster;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YetiOperative;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.BloodMagister;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.Centurion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.miniboss.EmperorPursuer;
@@ -153,7 +56,7 @@ public class MobPlacer extends Generators {
     private int mobTier = 1;
     private int mobIndex = 0;
     private int elite = 0;
-    private static final int MAX_ELITE = 13;
+    private static final int MAX_ELITE = 14;
     private int elite_op = 0;
 
     private final ArrayList<Class<? extends ChampionEnemy>> eliteBuffs = new ArrayList<>();
@@ -171,6 +74,7 @@ public class MobPlacer extends Generators {
         eliteBuffs.add(ChampionEnemy.R2Celestine.class);
         eliteBuffs.add(ChampionEnemy.R2Perfected.class);
         eliteBuffs.add(ChampionEnemy.R2Mending.class);
+        eliteBuffs.add(ChampionEnemy.R2Void.class);
     };
 
     @Override
@@ -195,7 +99,7 @@ public class MobPlacer extends Generators {
                                 m.pos = cell;
                                 GameScene.add(m);
                                 if(elite_op>0){
-                                    for(int i=0;i<MAX_ELITE;++i){
+                                    for(int i=0;i<eliteBuffs.size();++i){
                                         if((elite_op & (1<<i))>0){
                                             Buff.affect(m, eliteBuffs.get(i));
                                         }
@@ -575,6 +479,7 @@ public class MobPlacer extends Generators {
         FANATIC(Fanatic.class,-41),
         SAND(SandPillar.class,-43),
         MON3TR(Mon3tr.class,-50),
+        VOID_INFESTOR(VoidInfestor.class, DictSpriteSheet.WRAITH),
         PIRANHA(Piranha.class, DictSpriteSheet.FISH),
 
         INFANTRY(Infantry.class,-7),
