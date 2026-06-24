@@ -1,19 +1,30 @@
 name: Android CI
-
 on:
-  push:
+ workflow_dispatch:
+    inputs:
+      branch:
+        description: '选择构建的分支'
+        required: true
+        default: 'main2'
+#on:
+#  push:
 #    branches: [ "main" ]
 #  pull_request:
 #    branches: [ "main" ]
-    paths:
-     - 'action.on' # 只有 特定 文件的更改才构建
+#    paths:
+#     - 'action.on' # 只有 特定 文件的更改才构建
 jobs:
   build:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
+      with:
+      
+        # 核心逻辑：直接检出用户指定的分支
+        ref: ${{ github.event.inputs.branch }}
+        fetch-depth: 0
 #      with:
  #       path: .Arrrknights
  #     env:
@@ -23,19 +34,47 @@ jobs:
   #     PATH: $/Arrrknights:$PATH
 
     - name: set up JDK 
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
-        java-version: '23'
+        java-version: '25'
         distribution: 'temurin'
         cache: gradle
-
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v6
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       working-directory: ./Arrrknights
     - name: Build with Gradle
       run: ./gradlew assembleDebug
       working-directory: ./Arrrknights
-    - uses: actions/upload-artifact@v4
+ #   - uses: actions/upload-artifact@v4
+ #     with:
+ #       name: my-artifact
+ #       path: '**/*.apk'
+    - name: 更新 Nightly
+      uses: softprops/action-gh-release@v2
+#        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+#      if: github.event_name == 'workflow_dispatch'
       with:
-        name: my-artifact
-        path: '**/*.apk'
+          tag_name: build-${{ github.run_number }}
+          name: "Nightly Build#${{ github.run_number }}"
+          prerelease: true
+          overwrite: true
+          body: |
+            ### 构建信息
+            - **安卓壳分支**: `${{ github.event.inputs.branch }}`
+            - **子模块分支**: `easy`
+            - **构建时间**: ${{ github.event.repository.updated_at }}
+            Commit: ${{ github.sha }}
+          files: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/debug/*.apk
+            android-project/app/build/outputs/apk/**/*.apk
+#          tag_name: debug-build-${{ github.run_number }}
+#          name: Debug Build ${{ github.run_number }}
+   #       body: |
+   #         包含构建目录下的所有 APK 文件。
+            
+          draft: true
+    env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
