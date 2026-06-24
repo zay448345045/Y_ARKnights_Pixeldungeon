@@ -7,10 +7,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:9.1.1'
-        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.android.tools.build:gradle:9.4.0-alpha01'
+/*        classpath 'com.google.gms:google-services:4.4.2'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
-    }
+ */   }
 }
 
 allprojects {
@@ -22,7 +22,7 @@ allprojects {
         appVersionCode = 260529
         appVersionName = 'Y-0.4.5-EX9-260529'
 
-        appJavaCompatibility = JavaVersion.VERSION_11
+        appJavaCompatibility = JavaVersion.VERSION_25
 
         appAndroidCompileSDK = 36
         appAndroidMinSDK = 24   //隔壁是9
