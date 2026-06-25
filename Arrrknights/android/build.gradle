@@ -2,37 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
-/*
+apply plugin: 'com.android.application'
+
 android {
-    // 使用 rootProject.ext 获取根目录定义的属性
-    namespace 'com.shatteredpixel.yesterdaypixel'
-    compileSdk rootProject.ext.appAndroidCompileSDK
-    
-    defaultConfig {
-        applicationId rootProject.ext.appPackageName
-        minSdk rootProject.ext.appAndroidMinSDK
-        targetSdk rootProject.ext.appAndroidTargetSDK
-        versionCode rootProject.ext.appVersionCode
-        versionName rootProject.ext.appVersionName
-    }
-}
-*/
-
-    android {
-        namespace 'com.shatteredpixel.yesterdaypixel'
- 
-       compileSdk 36
-        
-        defaultConfig {
-            applicationId 'com.shatteredpixel.yesterdaypixel'
-            minSdk 24
-            targetSdk 36
-// 根目录下的 build.gradle
-/*
-compileSdkVersion appAndroidCompileSDK
+    namespace "com.shatteredpixel.yesterdaypixel"
+    compileSdkVersion appAndroidCompileSDK
     compileOptions.sourceCompatibility = compileOptions.targetCompatibility = appJavaCompatibility
-
-*/
 
     sourceSets.main.assets.srcDirs = [new File(project(':core').projectDir, "/src/main/assets")]
 
@@ -82,11 +57,11 @@ compileSdkVersion appAndroidCompileSDK
             versionNameSuffix '-Release'
 
         }
-/*        applicationVariants.all { variant ->
+        applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = parent.project.getName() + "-v${variant.versionName}.apk"}}
     }
-*/
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -113,12 +88,7 @@ dependencies {
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
     implementation 'androidx.core:core:1.17.0'
 
-   /* implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-   */ implementation('com.android.support:multidex:2.0.1')
+ implementation('com.android.support:multidex:2.0.1')
 }
 
 // called every time gradle gets executed, takes the native dependencies of
