@@ -11,6 +11,7 @@ buildscript {
 plugins {
     id 'com.android.application'
 }
+
 android {
 namespace "com.shatteredpixel.yesterdaypixel"
     compileSdkVersion appAndroidCompileSDK
