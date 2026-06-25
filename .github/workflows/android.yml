@@ -43,10 +43,10 @@ jobs:
       uses: gradle/actions/setup-gradle@v6
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-#      working-directory: ./Arrrknights
+      working-directory: ./Arrrknights
     - name: Build with Gradle
       run: ./gradlew :android:assembleDebug
-#      working-directory: ./Arrrknights
+      working-directory: ./Arrrknights
  #   - uses: actions/upload-artifact@v4
  #     with:
  #       name: my-artifact
