@@ -1,1 +1,17 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    // 使用 rootProject.ext 获取根目录定义的属性
+    namespace 'com.shatteredpixel.yesterdaypixel'
+    compileSdk rootProject.ext.appAndroidCompileSDK
+    
+    defaultConfig {
+        applicationId rootProject.ext.appPackageName
+        minSdk rootProject.ext.appAndroidMinSDK
+        targetSdk rootProject.ext.appAndroidTargetSDK
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
+    }
+}
