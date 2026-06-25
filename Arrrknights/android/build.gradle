@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
 }
 
+/*
 android {
     // 使用 rootProject.ext 获取根目录定义的属性
     namespace 'com.shatteredpixel.yesterdaypixel'
@@ -13,5 +14,19 @@ android {
         targetSdk rootProject.ext.appAndroidTargetSDK
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
+    }
+}
+*/
+
+configure(project(':android')) {
+    android {
+        namespace 'com.shatteredpixel.yesterdaypixel'
+        compileSdk 34
+        
+        defaultConfig {
+            applicationId 'com.shatteredpixel.yesterdaypixel'
+            minSdk 24
+            targetSdk 36
+        }
     }
 }
