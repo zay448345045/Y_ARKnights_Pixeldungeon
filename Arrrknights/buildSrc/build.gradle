@@ -1,0 +1,8 @@
+repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+}
+dependencies {
+    implementation  'com.android.tools.build:gradle:9.4.0-alpha01'
+}
