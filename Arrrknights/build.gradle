@@ -1,9 +1,5 @@
 buildscript {
-/*
-    ext {
-    androidPluginVersion = '8.1.4'
-    }
-*/
+
     repositories {
         google()
         mavenCentral()
@@ -11,11 +7,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:9.4.0-alpha01'
 
-/*
-        classpath 'com.google.gms:google-services:4.4.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
- */
-   
 }
 }
 
