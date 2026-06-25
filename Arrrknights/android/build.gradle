@@ -4,7 +4,7 @@ plugins {
 //    id 'com.google.firebase.crashlytics'
 }
 
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
 
 android {
     namespace "com.shatteredpixel.yesterdaypixel"
